@@ -158,15 +158,14 @@ These files are published so that journalists, partners, integrators and custome
 - Not use the assets for products, services, or content that compete with or disparage Openline
 - Respect Openline's trademarks: "Openline" and the Openline mark are trademarks of Openline
 
-For anything beyond standard editorial / partner usage — co-branding, merchandise, paid placement — email **hello@openline.com** before you ship.
+For anything beyond standard editorial / partner usage — co-branding, merchandise, paid placement — email **ask@openline.com** before you ship.
 
 ---
 
 ## Press contact
 
-- **Press / partnerships**: [hello@openline.com](mailto:hello@openline.com)
+- **Press / partnerships**: [ask@openline.com](mailto:ask@openline.com)
 - **Web**: [openline.com](https://openline.com)
-- **Built in**: Lisbon, Portugal
 
 ---
 
