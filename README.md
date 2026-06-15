@@ -374,6 +374,6 @@ Tag a release on GitHub when bumping the version, so consumers can pin `@v1.1` i
 
 <div align="center">
 
-<sub>Made in Lisbon · © Openline · <a href="https://openline.com">openline.com</a></sub>
+<sub>© Openline · <a href="https://openline.com">openline.com</a></sub>
 
 </div>
