@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Standup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.header-date{font-size:16px;color:rgba(255,255,255,.45);margin-top:2px}
+.team-badge{background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.25);color:#a5b4fc;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:600}
+.close-btn{margin-left:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:24px 32px;display:grid;grid-template-columns:1fr 380px;gap:24px}
+
+.left-col{display:flex;flex-direction:column;gap:20px}
+.right-col{display:flex;flex-direction:column;gap:16px}
+
+/* PROGRESS BAR */
+.progress-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px 24px}
+.progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.progress-label{font-size:17px;font-weight:600}
+.progress-fraction{font-family:'Play',sans-serif;font-size:20px;font-weight:700}
+.progress-bar{height:10px;background:rgba(255,255,255,.07);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#3B3BFF,#7c3aed);transition:width .6s ease}
+
+/* FORM */
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:16px}
+.standup-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.standup-card-title{display:flex;align-items:center;gap:10px}
+.sc-emoji{font-size:28px}
+.sc-title{font-family:'Play',sans-serif;font-size:20px;font-weight:700}
+.sc-subtitle{font-size:15px;color:rgba(255,255,255,.4)}
+.standup-textarea{width:100%;background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:18px 22px;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;outline:none;resize:none;line-height:1.6;transition:border-color .2s;min-height:100px}
+.standup-textarea:focus{border-color:#3B3BFF}
+.standup-textarea::placeholder{color:rgba(255,255,255,.25)}
+.char-count{font-size:14px;color:rgba(255,255,255,.3);text-align:right}
+.no-blockers-btn{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#22c55e;padding:10px 18px;border-radius:8px;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;align-self:flex-start}
+.no-blockers-btn:hover{background:rgba(34,197,94,.15)}
+
+/* SUBMIT */
+.submit-btn{background:#3B3BFF;border:none;color:#fff;padding:16px 32px;border-radius:12px;font-size:20px;cursor:pointer;font-family:'Play',sans-serif;font-weight:700;width:100%;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.submit-btn:hover:not(.success){background:#2d2dff;transform:translateY(-1px)}
+.submit-btn.success{background:#22c55e;cursor:default}
+
+/* SUCCESS */
+.success-state{background:#0c1120;border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:32px;text-align:center;display:none}
+.success-state.show{display:flex;flex-direction:column;align-items:center;gap:12px}
+.success-icon{font-size:56px;animation:popIn .4s ease}
+@keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.success-title{font-family:'Play',sans-serif;font-size:24px;font-weight:700;color:#22c55e}
+.success-sub{font-size:17px;color:rgba(255,255,255,.45)}
+
+/* PAST STANDUPS */
+.standup-feed{display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+.feed-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.feed-header{padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.feed-header:hover{background:rgba(255,255,255,.03)}
+.feed-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.feed-name{font-size:18px;font-weight:600}
+.feed-time{font-size:14px;color:rgba(255,255,255,.35)}
+.feed-chevron{margin-left:auto;font-size:18px;color:rgba(255,255,255,.3);transition:transform .2s}
+.feed-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.feed-body.open{max-height:400px}
+.feed-body-inner{padding:0 20px 16px}
+.feed-section{margin-bottom:12px}
+.feed-section-label{font-size:13px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.feed-section-text{font-size:16px;color:rgba(255,255,255,.7);line-height:1.5}
+.blocker-none{color:#22c55e}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🤖</div>
+  <div>
+    <div class="header-title">Standup</div>
+    <div class="header-date" id="headerDate">Loading...</div>
+  </div>
+  <div class="team-badge" id="teamBadge">3 / 7 submitted</div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'standup-close'},'*')">✕</button>
+</div>
+
+<div class="content">
+  <div class="left-col">
+    <!-- Progress -->
+    <div class="progress-card">
+      <div class="progress-header">
+        <span class="progress-label">Team completion</span>
+        <span class="progress-fraction" id="progressFrac">3/7</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:42%"></div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div id="standupForm">
+      <div class="section-label">YOUR STANDUP</div>
+      <div class="standup-card">
+        <div class="standup-card-title"><span class="sc-emoji">📦</span><div><div class="sc-title">Yesterday</div><div class="sc-subtitle">What did you ship yesterday?</div></div></div>
+        <textarea class="standup-textarea" id="yesterdayTA" placeholder="e.g. Completed the contact import feature, fixed login bug..." maxlength="280"></textarea>
+        <div class="char-count" id="yCount">0 / 280</div>
+      </div>
+
+      <div class="standup-card" style="margin-top:16px">
+        <div class="standup-card-title"><span class="sc-emoji">🔨</span><div><div class="sc-title">Today</div><div class="sc-subtitle">What are you working on today?</div></div></div>
+        <textarea class="standup-textarea" id="todayTA" placeholder="e.g. Starting the notification redesign, reviewing PR #241..." maxlength="280"></textarea>
+        <div class="char-count" id="tCount">0 / 280</div>
+      </div>
+
+      <div class="standup-card" style="margin-top:16px">
+        <div class="standup-card-title"><span class="sc-emoji">🚧</span><div><div class="sc-title">Blockers</div><div class="sc-subtitle">Any blockers today?</div></div></div>
+        <textarea class="standup-textarea" id="blockersTA" placeholder="e.g. Waiting on design review for the inbox spec..." maxlength="280"></textarea>
+        <div class="char-count" id="bCount">0 / 280</div>
+        <button class="no-blockers-btn" id="noBlockersBtn">✓ No blockers today</button>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" style="margin-top:20px">
+        <span>Post Standup</span>
+      </button>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-state" id="successState">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Standup Posted!</div>
+      <div class="success-sub">Your team has been updated. Have a great day!</div>
+      <button class="submit-btn" style="margin-top:8px;max-width:280px" onclick="resetForm()">Post Another</button>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="section-label">TODAY'S STANDUPS</div>
+    <div class="standup-feed" id="standupFeed"></div>
+  </div>
+</div>
+
+<script>
+const STANDUP_KEY = 'openline_standups_v2';
+const now = new Date();
+document.getElementById('headerDate').textContent = now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+const predefined = [
+  {id:1, name:'Marie Dupont', color:'#3B3BFF', initials:'MD', time:'9:14 AM',
+    yesterday:'Shipped the CSV export feature for contacts. Fixed 3 critical bugs from the backlog.',
+    today:'Working on the email thread grouping algorithm. Will review Thomas\'s PR for the API layer.',
+    blockers:null},
+  {id:2, name:'Thomas Bernard', color:'#7c3aed', initials:'TB', time:'9:22 AM',
+    yesterday:'Completed the REST API v2 endpoints. Added rate limiting and error handling.',
+    today:'Writing unit tests for the new endpoints. Setting up the staging deployment pipeline.',
+    blockers:'Waiting on DevOps access to the staging Kubernetes cluster.'},
+  {id:3, name:'Léa Moreau', color:'#059669', initials:'LM', time:'9:31 AM',
+    yesterday:'Finished Figma mockups for the mobile inbox. Did UX review with Hugo.',
+    today:'Handing off designs to Paul. Starting the onboarding flow redesign.',
+    blockers:null},
+];
+
+let submitted = JSON.parse(localStorage.getItem(STANDUP_KEY) || '[]');
+let allStandups = [...predefined, ...submitted];
+
+function updateProgress() {
+  const count = allStandups.length;
+  const total = 7;
+  const pct = Math.min(100, Math.round(count/total*100));
+  document.getElementById('progressFrac').textContent = `${count}/${total}`;
+  document.getElementById('progressFill').style.width = `${pct}%`;
+  document.getElementById('teamBadge').textContent = `${count} / ${total} submitted`;
+}
+
+function renderFeed() {
+  const feed = document.getElementById('standupFeed');
+  feed.innerHTML = '';
+  allStandups.forEach((s,idx) => {
+    const card = document.createElement('div');
+    card.className = 'feed-card';
+    card.innerHTML = `
+      <div class="feed-header" onclick="toggleFeed(${idx},this)">
+        <div class="feed-avatar" style="background:${s.color}">${s.initials||s.name.slice(0,2)}</div>
+        <div><div class="feed-name">${s.name}</div><div class="feed-time">${s.time}</div></div>
+        <span class="feed-chevron" id="fc${idx}">▾</span>
+      </div>
+      <div class="feed-body" id="fb${idx}">
+        <div class="feed-body-inner">
+          <div class="feed-section">
+            <div class="feed-section-label">Yesterday</div>
+            <div class="feed-section-text">${s.yesterday}</div>
+          </div>
+          <div class="feed-section">
+            <div class="feed-section-label">Today</div>
+            <div class="feed-section-text">${s.today}</div>
+          </div>
+          <div class="feed-section">
+            <div class="feed-section-label">Blockers</div>
+            <div class="feed-section-text ${s.blockers?'':'blocker-none'}">${s.blockers||'No blockers 🎉'}</div>
+          </div>
+        </div>
+      </div>`;
+    feed.appendChild(card);
+    // Open first one by default
+    if (idx === 0) { document.getElementById(`fb${idx}`).classList.add('open'); }
+  });
+}
+
+function toggleFeed(idx, header) {
+  const body = document.getElementById(`fb${idx}`);
+  const chev = document.getElementById(`fc${idx}`);
+  const open = body.classList.toggle('open');
+  chev.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+// Char counters
+['yesterday','today','blockers'].forEach((field, i) => {
+  const ta = document.getElementById(`${field}TA`);
+  const counter = document.getElementById(['yCount','tCount','bCount'][i]);
+  ta.addEventListener('input', () => counter.textContent = `${ta.value.length} / 280`);
+});
+
+document.getElementById('noBlockersBtn').addEventListener('click', () => {
+  const ta = document.getElementById('blockersTA');
+  ta.value = 'No blockers today! 🎉';
+  document.getElementById('bCount').textContent = `${ta.value.length} / 280`;
+});
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const y = document.getElementById('yesterdayTA').value.trim();
+  const t = document.getElementById('todayTA').value.trim();
+  const b = document.getElementById('blockersTA').value.trim();
+  if (!y || !t) { 
+    document.getElementById('yesterdayTA').style.borderColor = y ? '' : '#ef4444';
+    document.getElementById('todayTA').style.borderColor = t ? '' : '#ef4444';
+    return;
+  }
+  const entry = {
+    id: Date.now(), name:'Paul Martin', color:'#ff6616', initials:'PM',
+    time: now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}),
+    yesterday: y, today: t, blockers: b || null
+  };
+  submitted.push(entry);
+  localStorage.setItem(STANDUP_KEY, JSON.stringify(submitted));
+  allStandups = [...predefined, ...submitted];
+  updateProgress();
+  renderFeed();
+  document.getElementById('standupForm').style.display = 'none';
+  document.getElementById('successState').classList.add('show');
+});
+
+function resetForm() {
+  document.getElementById('yesterdayTA').value = '';
+  document.getElementById('todayTA').value = '';
+  document.getElementById('blockersTA').value = '';
+  document.getElementById('standupForm').style.display = 'block';
+  document.getElementById('successState').classList.remove('show');
+}
+
+updateProgress();
+renderFeed();
+</script>
+</body>
+</html>

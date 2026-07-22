@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.header-meta{font-size:16px;color:rgba(255,255,255,.4);margin-top:2px}
+.collab-badge{background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.25);color:#a5b4fc;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:600}
+.close-btn{margin-left:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:20px 32px;display:flex;flex-direction:column;gap:20px}
+
+/* CONTROLS */
+.controls-row{display:flex;align-items:center;gap:12px}
+.add-track-row{flex:1;display:flex;gap:10px}
+.track-input{flex:1;background:#0c1120;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 22px;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.track-input:focus{border-color:#3B3BFF}
+.track-input::placeholder{color:rgba(255,255,255,.3)}
+.add-btn{background:#3B3BFF;border:none;color:#fff;padding:14px 24px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;white-space:nowrap;transition:all .2s}
+.add-btn:hover{background:#2d2dff}
+
+/* FILTERS */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sort-label{font-size:15px;color:rgba(255,255,255,.4)}
+.sort-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:none;color:rgba(255,255,255,.5);font-size:15px;cursor:pointer;transition:all .2s}
+.sort-btn.active,.genre-btn.active{background:rgba(59,59,255,.15);border-color:rgba(59,59,255,.3);color:#a5b4fc}
+.genre-btn{padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:none;font-size:14px;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.5)}
+.genre-sep{width:1px;height:24px;background:rgba(255,255,255,.1)}
+
+/* TRACK LIST */
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:12px}
+.track-list{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden}
+.track-header{display:grid;grid-template-columns:48px 24px 1fr 100px 1fr 80px 60px;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;align-items:center}
+.track-row{display:grid;grid-template-columns:48px 24px 1fr 100px 1fr 80px 60px;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);align-items:center;transition:background .2s;cursor:pointer}
+.track-row:hover{background:rgba(255,255,255,.03)}
+.track-row.playing{background:rgba(59,59,255,.07);border-left:3px solid #3B3BFF}
+.track-row:last-child{border-bottom:none}
+.drag-handle{color:rgba(255,255,255,.2);font-size:16px;cursor:grab;user-select:none}
+.track-num{font-size:16px;color:rgba(255,255,255,.35);text-align:center}
+.track-row.playing .track-num{display:none}
+.track-row.playing .track-playing-icon{display:block}
+.track-playing-icon{display:none;color:#3B3BFF;font-size:18px;text-align:center;animation:playPulse 1.2s ease infinite}
+@keyframes playPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.track-info{display:flex;flex-direction:column;gap:3px}
+.track-title{font-size:17px;font-weight:600}
+.track-row.playing .track-title{color:#a5b4fc}
+.track-artist{font-size:14px;color:rgba(255,255,255,.45)}
+.track-duration{font-size:16px;color:rgba(255,255,255,.4);font-variant-numeric:tabular-nums}
+.added-by{display:flex;align-items:center;gap:8px}
+.ab-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.ab-name{font-size:14px;color:rgba(255,255,255,.45)}
+.likes-col{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.4);font-size:16px}
+.like-btn{background:none;border:none;cursor:pointer;font-size:18px;transition:transform .2s;color:rgba(255,255,255,.3)}
+.like-btn:hover{transform:scale(1.25)}
+.like-btn.liked{color:#ef4444}
+.like-count{font-size:15px;color:rgba(255,255,255,.5)}
+.remove-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.3);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.remove-btn:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#ef4444}
+.play-btn{background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.2);color:#a5b4fc;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.play-btn:hover{background:rgba(59,59,255,.25)}
+
+/* STATS */
+.stats-bar{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px 24px;display:flex;align-items:center;gap:32px}
+.stat-item{display:flex;flex-direction:column;gap:2px}
+.stat-value{font-family:'Play',sans-serif;font-size:20px;font-weight:700}
+.stat-label{font-size:14px;color:rgba(255,255,255,.4)}
+.stat-sep{width:1px;height:32px;background:rgba(255,255,255,.07)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🎵</div>
+  <div>
+    <div class="header-title">Team Playlist</div>
+    <div class="header-meta" id="headerMeta">8 tracks · 32 min</div>
+  </div>
+  <div class="collab-badge" id="collabBadge">5 contributors</div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'playlist-close'},'*')">✕</button>
+</div>
+
+<div class="content">
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-value" id="statTracks">8</div><div class="stat-label">Tracks</div></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><div class="stat-value" id="statDuration">32 min</div><div class="stat-label">Duration</div></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><div class="stat-value">5</div><div class="stat-label">Contributors</div></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><div class="stat-value" id="statLikes">47</div><div class="stat-label">Total Likes</div></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-row">
+    <div class="add-track-row">
+      <input class="track-input" id="trackInput" placeholder="Paste Spotify/YouTube URL or track name..." />
+      <button class="add-btn" id="addTrackBtn">+ Add Track</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-row">
+    <span class="sort-label">Sort:</span>
+    <button class="sort-btn active" data-sort="recent">Recent</button>
+    <button class="sort-btn" data-sort="liked">Most Liked</button>
+    <button class="sort-btn" data-sort="artist">Artist A–Z</button>
+    <div class="genre-sep"></div>
+    <button class="genre-btn active" data-genre="All">All</button>
+    <button class="genre-btn" data-genre="Lofi">Lofi</button>
+    <button class="genre-btn" data-genre="Electronic">Electronic</button>
+    <button class="genre-btn" data-genre="French">French</button>
+    <button class="genre-btn" data-genre="Hiphop">Hiphop</button>
+    <button class="genre-btn" data-genre="Rock">Rock</button>
+  </div>
+
+  <!-- Track list -->
+  <div>
+    <div class="section-label">NOW PLAYING QUEUE</div>
+    <div class="track-list">
+      <div class="track-header">
+        <div></div><div>#</div><div>Title</div><div>Duration</div><div>Added by</div><div>Likes</div><div></div>
+      </div>
+      <div id="trackBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PL_KEY = 'openline_playlist_v2';
+const TEAM = [
+  {name:'Thomas B.', color:'#7c3aed', init:'TB'},
+  {name:'Marie D.', color:'#3B3BFF', init:'MD'},
+  {name:'Léa M.', color:'#059669', init:'LM'},
+  {name:'Hugo L.', color:'#0891b2', init:'HL'},
+  {name:'Paul M.', color:'#ff6616', init:'PM'},
+];
+
+let defaultTracks = [
+  {id:1,title:'La Vie Est Belle',artist:'PNL',duration:'3:42',genre:'French',addedBy:'Thomas B.',addedColor:'#7c3aed',addedInit:'TB',likes:12,liked:false},
+  {id:2,title:'Get Lucky',artist:'Daft Punk',duration:'6:09',genre:'Electronic',addedBy:'Marie D.',addedColor:'#3B3BFF',addedInit:'MD',likes:18,liked:false},
+  {id:3,title:'Nightcall',artist:'Kavinsky',duration:'4:17',genre:'Electronic',addedBy:'Hugo L.',addedColor:'#0891b2',addedInit:'HL',likes:9,liked:false},
+  {id:4,title:'Feeling Good',artist:'Nina Simone',duration:'2:55',genre:'Lofi',addedBy:'Léa M.',addedColor:'#059669',addedInit:'LM',likes:14,liked:false},
+  {id:5,title:'Kiara',artist:'Bonobo',duration:'5:28',genre:'Lofi',addedBy:'Paul M.',addedColor:'#ff6616',addedInit:'PM',likes:7,liked:false},
+  {id:6,title:"Don't Stop Me Now",artist:'Queen',duration:'3:29',genre:'Rock',addedBy:'Thomas B.',addedColor:'#7c3aed',addedInit:'TB',likes:11,liked:false},
+  {id:7,title:'Midnight City',artist:'M83',duration:'4:04',genre:'Electronic',addedBy:'Marie D.',addedColor:'#3B3BFF',addedInit:'MD',likes:8,liked:false},
+  {id:8,title:'HUMBLE.',artist:'Kendrick Lamar',duration:'2:57',genre:'Hiphop',addedBy:'Hugo L.',addedColor:'#0891b2',addedInit:'HL',likes:13,liked:false},
+];
+
+let tracks = JSON.parse(localStorage.getItem(PL_KEY) || 'null') || defaultTracks;
+let playingId = null;
+let activeSort = 'recent';
+let activeGenre = 'All';
+
+function save() { localStorage.setItem(PL_KEY, JSON.stringify(tracks)); }
+
+function totalLikes() { return tracks.reduce((a,t)=>a+t.likes,0); }
+function totalDuration() {
+  let secs = tracks.reduce((a,t)=>{const p=t.duration.split(':');return a+parseInt(p[0])*60+parseInt(p[1]);},0);
+  const m = Math.floor(secs/60);
+  return m < 60 ? `${m} min` : `${Math.floor(m/60)}h ${m%60}m`;
+}
+
+function updateStats() {
+  document.getElementById('statTracks').textContent = tracks.length;
+  document.getElementById('statDuration').textContent = totalDuration();
+  document.getElementById('statLikes').textContent = totalLikes();
+  document.getElementById('headerMeta').textContent = `${tracks.length} tracks · ${totalDuration()}`;
+}
+
+function getFiltered() {
+  let list = [...tracks];
+  if (activeGenre !== 'All') list = list.filter(t=>t.genre===activeGenre);
+  if (activeSort === 'liked') list.sort((a,b)=>b.likes-a.likes);
+  else if (activeSort === 'artist') list.sort((a,b)=>a.artist.localeCompare(b.artist));
+  return list;
+}
+
+function render() {
+  const body = document.getElementById('trackBody');
+  body.innerHTML = '';
+  const filtered = getFiltered();
+  filtered.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'track-row' + (t.id === playingId ? ' playing' : '');
+    row.innerHTML = `
+      <button class="play-btn" data-id="${t.id}">${t.id === playingId ? '⏸' : '▶'}</button>
+      <div class="track-num">${i+1}</div>
+      <div class="track-playing-icon">♪</div>
+      <div class="track-info">
+        <div class="track-title">${t.title}</div>
+        <div class="track-artist">${t.artist} · <span style="font-size:12px;background:rgba(255,255,255,.06);padding:2px 8px;border-radius:10px">${t.genre}</span></div>
+      </div>
+      <div class="track-duration">${t.duration}</div>
+      <div class="added-by">
+        <div class="ab-avatar" style="background:${t.addedColor}">${t.addedInit}</div>
+        <div class="ab-name">${t.addedBy}</div>
+      </div>
+      <div class="likes-col">
+        <button class="like-btn${t.liked?' liked':''}" data-id="${t.id}">♥</button>
+        <span class="like-count">${t.likes}</span>
+      </div>
+      <button class="remove-btn" data-id="${t.id}">✕</button>`;
+    body.appendChild(row);
+  });
+
+  body.querySelectorAll('.play-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      playingId = playingId === id ? null : id;
+      render();
+    });
+  });
+  body.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      const t = tracks.find(x=>x.id===id);
+      if (!t) return;
+      t.liked = !t.liked;
+      t.likes += t.liked ? 1 : -1;
+      save(); updateStats(); render();
+    });
+  });
+  body.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      tracks = tracks.filter(t=>t.id!==id);
+      if (playingId===id) playingId=null;
+      save(); updateStats(); render();
+    });
+  });
+  updateStats();
+}
+
+// Add track
+document.getElementById('addTrackBtn').addEventListener('click', () => {
+  const val = document.getElementById('trackInput').value.trim();
+  if (!val) return;
+  const artists = ['Daft Punk','Kavinsky','PNL','Justice','Stromae','Air','Phoenix'];
+  const genres = ['Electronic','French','Lofi','Hiphop','Rock'];
+  const rnd = (arr) => arr[Math.floor(Math.random()*arr.length)];
+  const mins = 2+Math.floor(Math.random()*4);
+  const secs = String(Math.floor(Math.random()*60)).padStart(2,'0');
+  const team = TEAM[Math.floor(Math.random()*TEAM.length)];
+  tracks.unshift({
+    id: Date.now(), title: val, artist: rnd(artists),
+    duration: `${mins}:${secs}`, genre: rnd(genres),
+    addedBy: 'Paul M.', addedColor: '#ff6616', addedInit: 'PM',
+    likes: 0, liked: false
+  });
+  document.getElementById('trackInput').value = '';
+  save(); render();
+});
+
+// Sort & genre buttons
+document.querySelectorAll('.sort-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    activeSort = this.dataset.sort;
+    render();
+  });
+});
+document.querySelectorAll('.genre-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    activeGenre = this.dataset.genre;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

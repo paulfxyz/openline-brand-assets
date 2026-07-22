@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoundCloud — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070c18;
+    --card: #0c1120;
+    --header: #090e1c;
+    --text: #dde6ff;
+    --muted: rgba(255,255,255,.45);
+    --blue: #3B3BFF;
+    --orange: #ff6616;
+    --green: #22c55e;
+    --border: rgba(255,255,255,.07);
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--header);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .logo-svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .header-eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+  }
+
+  .header-title {
+    font-family: 'Play', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .header-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .close-btn {
+    background: rgba(255,255,255,.07);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .close-btn:hover { background: rgba(255,102,22,.15); color: var(--orange); border-color: var(--orange); }
+
+  /* MAIN */
+  .main {
+    padding: 24px 32px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* PLAYER CARD */
+  .player-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .player-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), #ff8c42);
+    z-index: 2;
+  }
+
+  #sc-widget {
+    width: 100%;
+    height: 450px;
+    border: none;
+    display: block;
+  }
+
+  /* PLAYER CONTROLS (visual layer) */
+  .player-controls {
+    background: rgba(9,14,28,.95);
+    border-top: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ctrl-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    font-size: 18px;
+  }
+  .ctrl-btn:hover { color: var(--text); background: rgba(255,255,255,.07); }
+  .ctrl-btn.play-main {
+    background: var(--orange);
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 20px;
+  }
+  .ctrl-btn.play-main:hover { background: #ff7a2e; transform: scale(1.05); }
+
+  .track-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .track-name {
+    font-family: 'Play', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-artist {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .progress-bar-wrap {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,.1);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 4px;
+    width: 0%;
+    transition: width .3s;
+  }
+  .progress-times {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .vol-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .vol-slider {
+    -webkit-appearance: none;
+    width: 80px;
+    height: 4px;
+    background: rgba(255,255,255,.15);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--orange);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Play', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .section-eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .track-count {
+    font-size: 14px;
+    color: var(--muted);
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* QUEUE */
+  .queue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .queue-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .queue-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background .2s;
+  }
+  .queue-item:hover {
+    border-color: rgba(255,102,22,.3);
+    background: rgba(255,102,22,.05);
+    transform: translateX(4px);
+  }
+  .queue-item.active {
+    border-color: rgba(255,102,22,.5);
+    background: rgba(255,102,22,.08);
+  }
+  .queue-item.active::before { background: var(--orange); }
+
+  .queue-num {
+    font-size: 14px;
+    color: var(--muted);
+    width: 24px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .queue-item.active .queue-num {
+    color: var(--orange);
+  }
+
+  .queue-art {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: rgba(255,255,255,.6);
+  }
+
+  .queue-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .queue-title {
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .queue-artist {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .queue-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .queue-duration {
+    font-size: 14px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .queue-play-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    font-size: 14px;
+  }
+  .queue-item:hover .queue-play-btn,
+  .queue-item.active .queue-play-btn {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(255,102,22,.1);
+  }
+
+  /* WAVEFORM ANIMATION */
+  .waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+  }
+  .waveform span {
+    display: block;
+    width: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    animation: wave 1s ease-in-out infinite;
+    opacity: 0;
+  }
+  .queue-item.active .waveform span { opacity: 1; }
+  .waveform span:nth-child(1) { height: 8px; animation-delay: 0s; }
+  .waveform span:nth-child(2) { height: 14px; animation-delay: .15s; }
+  .waveform span:nth-child(3) { height: 10px; animation-delay: .3s; }
+  .waveform span:nth-child(4) { height: 18px; animation-delay: .45s; }
+  .waveform span:nth-child(5) { height: 12px; animation-delay: .6s; }
+
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.6); }
+  }
+
+  /* STATUS BADGE */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .status-badge.live {
+    background: rgba(255,102,22,.15);
+    color: var(--orange);
+    border: 1px solid rgba(255,102,22,.3);
+  }
+  .status-badge .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(.8); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .main { padding: 16px; }
+    .header { padding: 16px 20px; }
+    .progress-bar-wrap { display: none; }
+    #sc-widget { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">
+    <!-- SoundCloud Cloud Logo -->
+    <svg class="logo-svg" viewBox="0 0 44 44" fill="none" aria-label="SoundCloud logo">
+      <path d="M4 28c0 3.3 2.7 6 6 6h22c3.9 0 7-3.1 7-7s-3.1-7-7-7c-.3 0-.6 0-.9.1C30.6 17.3 27.6 15 24 15c-2.4 0-4.5.9-6.1 2.4-.6-1.8-2.3-3.1-4.3-3.1C10.9 14.3 8.6 16.6 8.6 19.4c0 .4.1.8.2 1.2C6 21.4 4 24.5 4 28z" fill="#ff6616"/>
+      <rect x="8" y="25" width="2" height="8" rx="1" fill="rgba(255,255,255,.5)"/>
+      <rect x="12" y="22" width="2" height="11" rx="1" fill="rgba(255,255,255,.5)"/>
+      <rect x="16" y="24" width="2" height="9" rx="1" fill="rgba(255,255,255,.5)"/>
+    </svg>
+    <div class="header-titles">
+      <div class="header-eyebrow">OPENLINE</div>
+      <div class="header-title">SoundCloud</div>
+    </div>
+    <div class="status-badge live">
+      <span class="dot"></span>
+      Live Audio
+    </div>
+  </div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'soundcloud-close'},'*'); try{history.back()}catch(e){}" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- PLAYER CARD -->
+  <div class="player-card">
+    <iframe
+      id="sc-widget"
+      scrolling="no"
+      allow="autoplay"
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nocopyrightsounds/sets/ncs-releases-2023&color=%23ff6616&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+    ></iframe>
+
+    <div class="player-controls">
+      <button class="ctrl-btn" id="btn-prev" title="Previous">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="3" height="12" rx="1.5" fill="currentColor"/><path d="M16 3L7 9l9 6V3z" fill="currentColor"/></svg>
+      </button>
+      <button class="ctrl-btn play-main" id="btn-play" title="Play/Pause">
+        <svg id="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 3l12 7-12 7V3z" fill="white"/></svg>
+        <svg id="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none"><rect x="4" y="3" width="4" height="14" rx="2" fill="white"/><rect x="12" y="3" width="4" height="14" rx="2" fill="white"/></svg>
+      </button>
+      <button class="ctrl-btn" id="btn-next" title="Next">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="13" y="3" width="3" height="12" rx="1.5" fill="currentColor"/><path d="M2 3l9 6-9 6V3z" fill="currentColor"/></svg>
+      </button>
+      <div class="track-info">
+        <div class="track-name" id="ctrl-title">NCS &mdash; Best of 2023</div>
+        <div class="track-artist" id="ctrl-artist">NoCopyrightSounds</div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-times">
+          <span id="time-cur">0:00</span>
+          <span id="time-total">—</span>
+        </div>
+      </div>
+      <div class="vol-control">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6v6h3l5 4V2L6 6H3z" fill="currentColor"/><path d="M14 3.5c2 1.5 2 9.5 0 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input type="range" class="vol-slider" id="vol-slider" min="0" max="100" value="80">
+      </div>
+    </div>
+  </div>
+
+  <!-- QUEUE -->
+  <div class="section-eyebrow">▶ QUEUE</div>
+  <div class="section-header">
+    <h2 class="section-title">Featured Tracks</h2>
+    <span class="track-count" id="track-count">8 tracks</span>
+  </div>
+
+  <div class="queue-list" id="queue-list">
+    <!-- Populated by JS -->
+  </div>
+
+</main>
+
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script>
+const tracks = [
+  {
+    title: 'NCS — Best of 2023',
+    artist: 'NoCopyrightSounds',
+    url: 'https://soundcloud.com/nocopyrightsounds/sets/ncs-releases-2023',
+    color: '#ff6616',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #ff6616 0%, #ff9a5c 100%)',
+    icon: '🎵'
+  },
+  {
+    title: 'Lofi Hip Hop Mix',
+    artist: 'Chillhop Music',
+    url: 'https://soundcloud.com/chillhopmusic/chillhop-essentials-fall-2023',
+    color: '#3B3BFF',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #3B3BFF 0%, #7B7BFF 100%)',
+    icon: '⚡'
+  },
+  {
+    title: 'NCS Electronic',
+    artist: 'NoCopyrightSounds',
+    url: 'https://soundcloud.com/nocopyrightsounds/sets/electronic',
+    color: '#22c55e',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #22c55e 0%, #4ade80 100%)',
+    icon: '🔁'
+  },
+  {
+    title: 'NCS Deep House',
+    artist: 'NoCopyrightSounds',
+    url: 'https://soundcloud.com/nocopyrightsounds/sets/deep-house',
+    color: '#a855f7',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
+    icon: '🌙'
+  },
+  {
+    title: 'Chillhop Essentials',
+    artist: 'Chillhop Music',
+    url: 'https://soundcloud.com/chillhopmusic/sets/chillhop-essentials-winter-2023',
+    color: '#ec4899',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
+    icon: '💜'
+  },
+  {
+    title: 'NCS Chill',
+    artist: 'NoCopyrightSounds',
+    url: 'https://soundcloud.com/nocopyrightsounds/sets/chill',
+    color: '#06b6d4',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)',
+    icon: '🚀'
+  },
+  {
+    title: 'Lofi Study Beats',
+    artist: 'Lofi Hip Hop',
+    url: 'https://soundcloud.com/lo-fi-hip-hop-music/sets/lofi-hip-hop-study-music',
+    color: '#f59e0b',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+    icon: '🎤'
+  },
+  {
+    title: 'Chillhop Spring 2024',
+    artist: 'Chillhop Music',
+    url: 'https://soundcloud.com/chillhopmusic/sets/chillhop-essentials-spring-2024',
+    color: '#ef4444',
+    duration: '—',
+    gradient: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)',
+    icon: '🎧'
+  }
+];
+
+let currentIndex = 0;
+let isPlaying = false;
+let widget = null;
+let widgetReady = false;
+
+// Render queue
+function renderQueue() {
+  const list = document.getElementById('queue-list');
+  list.innerHTML = tracks.map((t, i) => `
+    <div class="queue-item ${i === currentIndex ? 'active' : ''}" onclick="loadTrack(${i})" data-index="${i}">
+      <div class="queue-num">
+        ${i === currentIndex ? `
+          <div class="waveform">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        ` : (i + 1)}
+      </div>
+      <div class="queue-art" style="background: ${t.gradient};">
+        ${t.icon}
+      </div>
+      <div class="queue-meta">
+        <div class="queue-title">${t.title}</div>
+        <div class="queue-artist">${t.artist}</div>
+      </div>
+      <div class="queue-right">
+        <span class="queue-duration">${t.duration}</span>
+        <button class="queue-play-btn" onclick="event.stopPropagation(); loadTrack(${i})" title="Play">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 1l9 5-9 5V1z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function loadTrack(index) {
+  currentIndex = index;
+  const t = tracks[index];
+  const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(t.url)}&color=${encodeURIComponent(t.color)}&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true`;
+
+  document.getElementById('sc-widget').src = embedUrl;
+  document.getElementById('ctrl-title').textContent = t.title;
+  document.getElementById('ctrl-artist').textContent = t.artist;
+  document.getElementById('time-total').textContent = t.duration;
+  document.getElementById('progress-fill').style.width = '0%';
+  isPlaying = true;
+  updatePlayIcon();
+  renderQueue();
+
+  // Re-init widget API after src change
+  setTimeout(initWidget, 500);
+}
+
+function initWidget() {
+  try {
+    const iframe = document.getElementById('sc-widget');
+    widget = SC.Widget(iframe);
+    widgetReady = false;
+    widget.bind(SC.Widget.Events.READY, function() {
+      widgetReady = true;
+    });
+    widget.bind(SC.Widget.Events.PLAY, function() {
+      isPlaying = true;
+      updatePlayIcon();
+    });
+    widget.bind(SC.Widget.Events.PAUSE, function() {
+      isPlaying = false;
+      updatePlayIcon();
+    });
+    widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(e) {
+      if (e.loadedProgress > 0) {
+        const pct = (e.currentPosition / (e.loadedProgress > 0 ? e.loadedProgress * 100 * 100 : 1)) * 100;
+        // Use relativePosition instead
+        const relPct = e.relativePosition ? e.relativePosition * 100 : 0;
+        document.getElementById('progress-fill').style.width = relPct + '%';
+        const secs = Math.floor(e.currentPosition / 1000);
+        const mins = Math.floor(secs / 60);
+        const s = secs % 60;
+        document.getElementById('time-cur').textContent = `${mins}:${String(s).padStart(2,'0')}`;
+      }
+    });
+    widget.bind(SC.Widget.Events.FINISH, function() {
+      // Auto advance
+      if (currentIndex < tracks.length - 1) {
+        loadTrack(currentIndex + 1);
+      } else {
+        loadTrack(0);
+      }
+    });
+  } catch(e) {
+    console.log('Widget API init:', e);
+  }
+}
+
+function updatePlayIcon() {
+  document.getElementById('icon-play').style.display = isPlaying ? 'none' : 'block';
+  document.getElementById('icon-pause').style.display = isPlaying ? 'block' : 'none';
+}
+
+// Controls
+document.getElementById('btn-play').onclick = function() {
+  if (!widgetReady || !widget) return;
+  if (isPlaying) {
+    widget.pause();
+  } else {
+    widget.play();
+  }
+};
+
+document.getElementById('btn-prev').onclick = function() {
+  loadTrack(currentIndex > 0 ? currentIndex - 1 : tracks.length - 1);
+};
+
+document.getElementById('btn-next').onclick = function() {
+  loadTrack(currentIndex < tracks.length - 1 ? currentIndex + 1 : 0);
+};
+
+document.getElementById('vol-slider').oninput = function() {
+  if (widget && widgetReady) {
+    widget.setVolume(parseInt(this.value));
+  }
+};
+
+document.getElementById('progress-bar').onclick = function(e) {
+  if (!widget || !widgetReady) return;
+  const rect = this.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  widget.getDuration(function(dur) {
+    widget.seekTo(pct * dur);
+  });
+};
+
+// Init
+renderQueue();
+window.addEventListener('load', function() {
+  setTimeout(initWidget, 800);
+});
+</script>
+</body>
+</html>

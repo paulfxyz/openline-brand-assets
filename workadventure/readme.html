@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline Apps — README v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#070c18;--surface:#0c1120;--header:#090e1c;
+    --text:#dde6ff;--muted:rgba(255,255,255,.45);
+    --blue:#3B3BFF;--orange:#ff6616;--green:#22c55e;--purple:#a855f7;
+    --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  }
+  html,body{min-height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+
+  /* Layout */
+  .layout{display:flex;min-height:100vh}
+  .toc{width:240px;background:var(--header);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0;padding:24px 0}
+  .toc-title{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--orange);padding:0 20px;margin-bottom:16px;letter-spacing:.06em}
+  .toc-item{padding:8px 20px;font-size:14px;color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;border-left:2px solid transparent;text-decoration:none}
+  .toc-item:hover{color:var(--text);background:rgba(255,255,255,.03)}
+  .toc-item.active{color:var(--blue);border-left-color:var(--blue);background:rgba(59,59,255,.08)}
+  .toc-sep{height:1px;background:var(--border);margin:12px 20px}
+
+  .main{flex:1;padding:48px;max-width:860px}
+
+  /* Typography */
+  h1{font-family:'Play',sans-serif;font-size:40px;font-weight:700;line-height:1.1;margin-bottom:16px}
+  h1 span{color:var(--orange)}
+  h2{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-top:48px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+  h3{font-size:19px;font-weight:600;margin-top:28px;margin-bottom:10px;color:var(--text)}
+  p{font-size:16px;color:rgba(221,230,255,.8);margin-bottom:14px}
+  code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px;color:var(--orange)}
+  pre{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin:16px 0;overflow-x:auto}
+  pre code{background:none;padding:0;font-size:13px;color:#a5b4fc;line-height:1.65}
+  a{color:#7a7aff;text-decoration:none}
+  a:hover{text-decoration:underline}
+  ul,ol{margin:0 0 14px 20px;color:rgba(221,230,255,.8);font-size:16px}
+  li{margin-bottom:6px;line-height:1.6}
+
+  /* Hero banner */
+  .hero-banner{background:linear-gradient(135deg,rgba(59,59,255,.15),rgba(168,85,247,.1));border:1px solid rgba(59,59,255,.25);border-radius:14px;padding:28px 32px;margin-bottom:36px}
+  .hero-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+  .hero-chip{background:rgba(255,255,255,.06);border:1px solid var(--border2);padding:5px 12px;border-radius:20px;font-size:13px;font-weight:500}
+
+  /* App table */
+  .app-table{width:100%;border-collapse:collapse;margin:16px 0}
+  .app-table th{text-align:left;padding:10px 14px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:rgba(255,255,255,.03)}
+  .app-table td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+  .app-table tr:last-child td{border-bottom:none}
+  .app-table tr:hover td{background:rgba(255,255,255,.02)}
+  .tag{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+  .tag-new{background:rgba(59,59,255,.2);color:#7a7aff}
+  .tag-media{background:rgba(255,102,22,.15);color:var(--orange)}
+  .tag-tool{background:rgba(245,158,11,.15);color:#f59e0b}
+  .tag-collab{background:rgba(34,197,94,.12);color:var(--green)}
+  .tag-analytics{background:rgba(168,85,247,.15);color:var(--purple)}
+
+  /* Code block label */
+  .code-block{position:relative}
+  .code-label{position:absolute;top:10px;right:12px;font-size:10px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.3);font-weight:500}
+
+  /* Callout */
+  .callout{border-left:3px solid var(--blue);background:rgba(59,59,255,.08);border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0}
+  .callout-warn{border-left-color:var(--amber);background:rgba(245,158,11,.08)}
+  .callout-success{border-left-color:var(--green);background:rgba(34,197,94,.08)}
+  .callout p{margin:0;font-size:15px}
+
+  /* Version history */
+  .version-row{display:flex;gap:16px;padding:16px;border-bottom:1px solid var(--border);align-items:flex-start}
+  .version-tag{background:rgba(59,59,255,.2);color:#7a7aff;padding:4px 10px;border-radius:8px;font-size:13px;font-weight:700;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+  .version-info{flex:1}
+  .version-title{font-size:15px;font-weight:600;margin-bottom:4px}
+  .version-date{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">CONTENTS</div>
+    <a class="toc-item" href="#overview">📋 Overview</a>
+    <a class="toc-item" href="#new-in-v3">✨ New in v3</a>
+    <a class="toc-item" href="#all-apps">📦 All Apps (39)</a>
+    <a class="toc-item" href="#embed">🔗 Embedding</a>
+    <a class="toc-item" href="#design">🎨 Design System</a>
+    <a class="toc-item" href="#sdk">⚙ WA SDK</a>
+    <a class="toc-item" href="#structure">📁 File Structure</a>
+    <a class="toc-item" href="#history">🕐 Changelog</a>
+    <div class="toc-sep"></div>
+    <a class="toc-item" href="index.html">← App Launcher</a>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="hero-banner">
+      <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--orange);margin-bottom:12px">OPENLINE × WORKADVENTURE</div>
+      <h1 style="margin:0 0 10px">App Suite <span>v3</span></h1>
+      <p style="margin:0;font-size:17px;color:var(--muted)">39 self-contained HTML mini-apps for embedding in WorkAdventure virtual offices.</p>
+      <div class="hero-meta">
+        <span class="hero-chip">📦 39 Apps</span>
+        <span class="hero-chip">✨ 10 New in v3</span>
+        <span class="hero-chip">🎵 Working Audio</span>
+        <span class="hero-chip">📊 Chart.js Charts</span>
+        <span class="hero-chip">🗃 4-View Database</span>
+        <span class="hero-chip">🤖 AI Studio</span>
+      </div>
+    </div>
+
+    <h2 id="overview">Overview</h2>
+    <p>This project is a collection of embeddable HTML5 mini-apps built for <strong>Openline</strong>, a next-gen eSIM distribution platform, to use inside their <strong>WorkAdventure</strong> virtual office environment.</p>
+    <p>Every app is a <strong>single self-contained HTML file</strong> — all CSS and JavaScript inline, no build step, no backend required. Apps communicate with WorkAdventure via the <code>postMessage</code> API.</p>
+
+    <div class="callout callout-success">
+      <p>🚀 <strong>Quick start:</strong> Open <code>index.html</code> to browse all apps. Click any app to launch it. Embed via WorkAdventure's iFrame configuration.</p>
+    </div>
+
+    <h2 id="new-in-v3">✨ New in v3</h2>
+    <p>Version 3 adds 10 new apps focused on richer analytics, working audio/video, and power-user tools:</p>
+    <table class="app-table">
+      <thead><tr><th>App</th><th>Highlight</th></tr></thead>
+      <tbody>
+        <tr><td><strong>📊 Dashboard v2</strong> <span class="tag tag-analytics">Analytics</span></td><td>Chart.js bar/doughnut/line charts, live KPIs, team presence, deploy history</td></tr>
+        <tr><td><strong>📈 Stats</strong> <span class="tag tag-new">New</span></td><td>Deep eSIM analytics — revenue area chart, cohort heatmap, country bars, partner table</td></tr>
+        <tr><td><strong>🗃 Database</strong> <span class="tag tag-new">New</span></td><td>Notion-style DB — Table / Kanban / Gallery / List views, full CRUD, filters</td></tr>
+        <tr><td><strong>🎧 SoundCloud</strong> <span class="tag tag-media">Audio</span></td><td>SC Widget API — plays actual SoundCloud tracks via embedded iFrame</td></tr>
+        <tr><td><strong>🎵 Spotify</strong> <span class="tag tag-media">Audio</span></td><td>Spotify embed — real 30-second previews, liked songs, genre filters</td></tr>
+        <tr><td><strong>▶ YouTube Library</strong> <span class="tag tag-media">Video</span></td><td>Curated video library, embedded YT player, playlist categories, add custom videos</td></tr>
+        <tr><td><strong>✏️ Whiteboard</strong> <span class="tag tag-new">New</span></td><td>HTML5 Canvas — pen, shapes, text, eraser, zoom, export PNG, touch support</td></tr>
+        <tr><td><strong>&lt;/&gt; Snippets</strong> <span class="tag tag-tool">Dev</span></td><td>Code snippet manager with highlight.js — TypeScript, Rust, JS, Shell, SQL</td></tr>
+        <tr><td><strong>🔗 Quick Links</strong> <span class="tag tag-new">New</span></td><td>Team bookmarks — categorized, pin favorites, search, add custom URLs</td></tr>
+        <tr><td><strong>🤖 AI Studio</strong> <span class="tag tag-new">New</span></td><td>AI image gen UI — style presets, CFG/steps sliders, canvas rendering, export</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="all-apps">📦 All 39 Apps</h2>
+
+    <h3>Analytics & Backoffice</h3>
+    <table class="app-table">
+      <thead><tr><th>File</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>dashboard.html</code></td><td>Main ops dashboard — Chart.js charts, KPIs, team presence, activity feed</td></tr>
+        <tr><td><code>stats.html</code></td><td>eSIM analytics deep-dive — revenue, cohorts, countries, partner table</td></tr>
+        <tr><td><code>backoffice.html</code></td><td>Admin panel — user management, billing, roles</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Media & Audio</h3>
+    <table class="app-table">
+      <thead><tr><th>File</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>soundcloud.html</code></td><td>SoundCloud Widget API player — actual audio streaming</td></tr>
+        <tr><td><code>spotify.html</code></td><td>Spotify embedded player — 30s previews, liked songs, genre filters</td></tr>
+        <tr><td><code>youtube.html</code></td><td>YouTube video library with embedded player and custom playlists</td></tr>
+        <tr><td><code>playlist.html</code></td><td>Team music playlist — vote on tracks, sync vibes</td></tr>
+        <tr><td><code>jam.html</code></td><td>Collaborative music jam session</td></tr>
+        <tr><td><code>chillout.html</code></td><td>Lo-fi chill zone with ambient sounds</td></tr>
+        <tr><td><code>poolside.html</code></td><td>Virtual poolside ambience</td></tr>
+        <tr><td><code>sleepy.html</code></td><td>White noise and ambient sounds for focus</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Developer Tools</h3>
+    <table class="app-table">
+      <thead><tr><th>File</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>database.html</code></td><td>Notion-style DB — Table, Kanban, Gallery, List views, full CRUD</td></tr>
+        <tr><td><code>snippets.html</code></td><td>Code snippet manager with highlight.js syntax highlighting</td></tr>
+        <tr><td><code>whiteboard.html</code></td><td>HTML5 canvas drawing app — shapes, text, export PNG</td></tr>
+        <tr><td><code>ai.html</code></td><td>AI image generation studio UI with canvas rendering</td></tr>
+        <tr><td><code>links.html</code></td><td>Team bookmarks — pinned, categorized, searchable</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Collaboration & Comms</h3>
+    <table class="app-table">
+      <thead><tr><th>File</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>chat.html</code></td><td>Team messaging with channels and reactions</td></tr>
+        <tr><td><code>announce.html</code></td><td>Company-wide announcements broadcast</td></tr>
+        <tr><td><code>poll.html</code></td><td>Quick team polls with live results</td></tr>
+        <tr><td><code>standup.html</code></td><td>Async daily standup — did / doing / blocked</td></tr>
+        <tr><td><code>reactions.html</code></td><td>Quick emoji reactions for virtual moments</td></tr>
+        <tr><td><code>status.html</code></td><td>Personal availability status with emoji</td></tr>
+        <tr><td><code>directory.html</code></td><td>Team directory with profiles and zones</td></tr>
+        <tr><td><code>leaderboard.html</code></td><td>Gamified leaderboard with badges and streaks</td></tr>
+        <tr><td><code>map.html</code></td><td>Interactive virtual office map</td></tr>
+        <tr><td><code>onboarding.html</code></td><td>New team member welcome and checklist</td></tr>
+        <tr><td><code>voice.html</code></td><td>Spatial voice chat controls</td></tr>
+        <tr><td><code>mercury.html</code></td><td>Priority internal messaging</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Productivity</h3>
+    <table class="app-table">
+      <thead><tr><th>File</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>todo.html</code></td><td>Personal task manager with priorities</td></tr>
+        <tr><td><code>pomodoro.html</code></td><td>Focus timer — Pomodoro technique</td></tr>
+        <tr><td><code>notes.html</code></td><td>Quick markdown notes with search</td></tr>
+        <tr><td><code>projects.html</code></td><td>Project tracker with milestones</td></tr>
+        <tr><td><code>files.html</code></td><td>Team file browser and uploader</td></tr>
+        <tr><td><code>calendar.html</code></td><td>Shared team calendar</td></tr>
+        <tr><td><code>integrations.html</code></td><td>Third-party tool connectors</td></tr>
+        <tr><td><code>weather.html</code></td><td>Live weather widget</td></tr>
+        <tr><td><code>upload.html</code></td><td>File upload with drag & drop</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="embed">🔗 Embedding in WorkAdventure</h2>
+    <p>All apps are designed to be embedded as iFrames in WorkAdventure zones. Configure the iFrame URL in your WorkAdventure map editor.</p>
+
+    <div class="code-block">
+      <pre><code>&lt;!-- WorkAdventure map.json iFrame configuration --&gt;
+{
+  "type": "object",
+  "name": "Dashboard",
+  "properties": {
+    "openWebsite": "https://your-host/openline-apps/dashboard.html",
+    "openWebsiteAllowApi": true,
+    "openWebsitePolicy": "allow-popups",
+    "openWebsiteWidth": 900,
+    "openWebsiteHeight": 600
+  }
+}</code></pre>
+      <span class="code-label">map.json</span>
+    </div>
+
+    <h3>Close Button Pattern</h3>
+    <p>Every app uses the WorkAdventure <code>postMessage</code> API to close the iFrame:</p>
+    <div class="code-block">
+      <pre><code>// Sends close signal to WorkAdventure parent
+window.parent.postMessage({ type: 'dashboard-close' }, '*');
+// Fallback for standalone testing
+|| history.back()</code></pre>
+    </div>
+
+    <div class="callout">
+      <p>💡 Each app uses <code>{type: '&lt;appname&gt;-close'}</code> — e.g. <code>chat-close</code>, <code>pomodoro-close</code>, <code>soundcloud-close</code>.</p>
+    </div>
+
+    <h2 id="design">🎨 Design System</h2>
+    <p>All apps share the <strong>Openline Design System</strong> — consistent colors, fonts, spacing and component patterns.</p>
+
+    <h3>Color Tokens</h3>
+    <div class="code-block">
+      <pre><code>--bg:      #070c18   /* Deepest background */
+--surface: #0c1120   /* Cards, panels */
+--header:  #090e1c   /* Headers, sidebar */
+--text:    #dde6ff   /* Primary text */
+--muted:   rgba(255,255,255,.45)  /* Secondary text */
+--blue:    #3B3BFF   /* Primary CTA, active states */
+--orange:  #ff6616   /* Openline brand, highlights */
+--green:   #22c55e   /* Success, online status */
+--amber:   #f59e0b   /* Warning, review */
+--red:     #ef4444   /* Error, danger */
+--purple:  #a855f7   /* AI, special features */
+--border:  rgba(255,255,255,.07)   /* Subtle dividers */</code></pre>
+    </div>
+
+    <h3>Typography</h3>
+    <ul>
+      <li><strong>Inter</strong> — body text, UI labels (20px base)</li>
+      <li><strong>Play</strong> — headings and titles (28–42px)</li>
+      <li><strong>Press Start 2P</strong> — section eyebrows and badges (9–11px)</li>
+      <li><strong>JetBrains Mono</strong> — code and data (snippets, database)</li>
+    </ul>
+
+    <h2 id="sdk">⚙ WorkAdventure SDK</h2>
+    <p>Apps can interact with WorkAdventure beyond just close events. The full WA Scripting API is available when <code>openWebsiteAllowApi: true</code>:</p>
+    <div class="code-block">
+      <pre><code>// Listen for WA room events
+WA.room.onEnterLayer('meeting-zone').subscribe(() => {
+  // Auto-open standup when player enters meeting zone
+});
+
+// Send player data to app
+WA.player.onPlayerMove.subscribe(({ x, y }) => {
+  document.dispatchEvent(new CustomEvent('player-moved', { detail: {x,y} }));
+});</code></pre>
+    </div>
+
+    <h2 id="structure">📁 File Structure</h2>
+    <div class="code-block">
+      <pre><code>openline-wa-apps/
+├── index.html          # App launcher — browse all 39 apps
+├── readme.html         # This document
+│
+├── ── NEW IN V3 ──
+├── dashboard.html      # Enhanced dashboard + Chart.js
+├── stats.html          # Deep analytics
+├── database.html       # Notion-style 4-view database
+├── soundcloud.html     # SoundCloud Widget API player
+├── spotify.html        # Spotify embedded player
+├── youtube.html        # YouTube library + player
+├── whiteboard.html     # HTML5 canvas drawing
+├── snippets.html       # Code snippet manager
+├── links.html          # Team bookmarks
+├── ai.html             # AI image studio
+│
+├── ── FROM V2 ──
+├── chat.html           # Team messaging
+├── announce.html       # Announcements
+├── poll.html           # Team polls
+├── standup.html        # Daily standup
+├── notes.html          # Markdown notes
+├── calendar.html       # Shared calendar
+├── [+19 more apps]
+│
+└── ── FROM V1 ──
+    └── [original 18 apps]</code></pre>
+    </div>
+
+    <h2 id="history">🕐 Changelog</h2>
+    <div>
+      <div class="version-row">
+        <span class="version-tag">v3.0</span>
+        <div class="version-info">
+          <div class="version-title">10 new apps — Audio, Video, Analytics, Tools</div>
+          <div class="version-date">May 2025</div>
+          <ul style="margin-top:8px">
+            <li>Working SoundCloud & Spotify audio players</li>
+            <li>YouTube video library with embedded player</li>
+            <li>Enhanced Dashboard + new Stats app with Chart.js</li>
+            <li>Notion-style Database (4 views)</li>
+            <li>Whiteboard, Snippets, Links, AI Studio</li>
+            <li>39 total apps, GitHub repo published</li>
+          </ul>
+        </div>
+      </div>
+      <div class="version-row">
+        <span class="version-tag">v2.0</span>
+        <div class="version-info">
+          <div class="version-title">2× scaling + 10 new apps</div>
+          <div class="version-date">April 2025</div>
+          <ul style="margin-top:8px">
+            <li>All v1 apps scaled 2× (fonts, elements, spacing)</li>
+            <li>New: Calendar, Poll, Notes, Status, Reactions, Weather, Standup, Leaderboard, Playlist, Map</li>
+            <li>30 total apps</li>
+          </ul>
+        </div>
+      </div>
+      <div class="version-row">
+        <span class="version-tag">v1.0</span>
+        <div class="version-info">
+          <div class="version-title">Initial release — 18 apps</div>
+          <div class="version-date">March 2025</div>
+          <ul style="margin-top:8px">
+            <li>Original 13 app prototypes redesigned with Openline SDK</li>
+            <li>5 bonus apps: Files, Projects, Integrations, Directory, Voice</li>
+            <li>Unified design system established</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:14px">
+      Built with ❤️ for <strong style="color:var(--text)">Openline</strong> × <strong style="color:var(--text)">WorkAdventure</strong> · <a href="index.html">← Back to App Launcher</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline Snippets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#070c18;--surface:#0c1120;--header:#090e1c;
+    --text:#dde6ff;--muted:rgba(255,255,255,.45);
+    --blue:#3B3BFF;--orange:#ff6616;--green:#22c55e;
+    --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  }
+  html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
+  body{display:flex;flex-direction:column;overflow:hidden}
+
+  .app-header{background:var(--header);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+  .eyebrow{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--orange)}
+  .app-title{font-family:'Play',sans-serif;font-size:24px;font-weight:700}
+  .btn-close{background:rgba(255,255,255,.06);border:1px solid var(--border2);color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-family:'Inter',sans-serif;margin-left:auto;transition:all .2s}
+  .btn-close:hover{background:rgba(255,255,255,.12);color:var(--text)}
+
+  .layout{flex:1;display:flex;overflow:hidden}
+
+  /* Sidebar */
+  .sidebar{width:240px;background:var(--header);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+  .sidebar-search{padding:12px;border-bottom:1px solid var(--border)}
+  .s-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none}
+  .s-input::placeholder{color:var(--muted)}
+  .sidebar-nav{padding:12px;overflow-y:auto;flex:1}
+  .sidebar-label{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin:12px 4px 8px;letter-spacing:.08em}
+  .lang-item{padding:9px 10px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:9px;margin-bottom:2px}
+  .lang-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+  .lang-item.active{background:rgba(59,59,255,.15);color:#7a7aff}
+  .lang-count{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:12px;font-size:11px;margin-left:auto}
+  .btn-new{margin:12px;background:var(--blue);border:none;color:#fff;padding:10px;border-radius:8px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;font-weight:600;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .btn-new:hover{background:#2929ff}
+
+  /* Snippet list */
+  .snippet-list-panel{width:260px;border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0}
+  .snippet-item{padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s}
+  .snippet-item:hover{background:rgba(255,255,255,.03)}
+  .snippet-item.active{background:rgba(59,59,255,.1);border-left:2px solid var(--blue)}
+  .snippet-name{font-size:14px;font-weight:500;margin-bottom:4px}
+  .snippet-preview{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+  .snippet-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+  .stag{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:500}
+
+  /* Editor pane */
+  .editor-pane{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .editor-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .editor-title{font-size:18px;font-weight:600;flex:1}
+  .lang-badge{background:rgba(59,59,255,.2);color:#7a7aff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace}
+  .btn-copy{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px}
+  .btn-copy:hover{background:rgba(34,197,94,.25)}
+  .btn-copy.copied{background:var(--green);color:#000;border-color:var(--green)}
+  .code-area{flex:1;overflow:auto;background:var(--surface);position:relative}
+  .code-area pre{margin:0;height:100%;min-height:100%}
+  .code-area pre code{font-family:'JetBrains Mono',monospace!important;font-size:14px!important;padding:24px!important;background:transparent!important;line-height:1.65!important}
+  .hljs{background:transparent!important;color:var(--text)}
+  .meta-panel{padding:20px;border-top:1px solid var(--border);background:rgba(255,255,255,.02);flex-shrink:0}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .meta-item label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;display:block}
+  .meta-item span{font-size:14px;font-weight:500}
+
+  /* Placeholder */
+  .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);padding:40px}
+  .empty-state svg{opacity:.3}
+  .empty-state p{font-size:15px;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <div class="eyebrow">OPENLINE</div>
+    <div class="app-title">&lt;/&gt; Snippets</div>
+  </div>
+  <button class="btn-close" onclick="window.parent.postMessage({type:'snippets-close'},'*') || history.back()">✕ Close</button>
+</header>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <input class="s-input" type="text" placeholder="Search snippets…" oninput="filterSnippets(this.value)">
+    </div>
+    <div class="sidebar-nav">
+      <div class="sidebar-label">LANGUAGES</div>
+      <div class="lang-item active" onclick="filterLang('all',this)">📁 All<span class="lang-count" id="cnt-all">12</span></div>
+      <div class="lang-item" onclick="filterLang('typescript',this)">🔷 TypeScript<span class="lang-count">4</span></div>
+      <div class="lang-item" onclick="filterLang('rust',this)">🦀 Rust<span class="lang-count">2</span></div>
+      <div class="lang-item" onclick="filterLang('javascript',this)">🟨 JavaScript<span class="lang-count">3</span></div>
+      <div class="lang-item" onclick="filterLang('shell',this)">💻 Shell<span class="lang-count">2</span></div>
+      <div class="lang-item" onclick="filterLang('sql',this)">🗃 SQL<span class="lang-count">1</span></div>
+    </div>
+    <button class="btn-new" onclick="newSnippet()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Snippet
+    </button>
+  </div>
+
+  <!-- Snippet list -->
+  <div class="snippet-list-panel" id="snippet-list"></div>
+
+  <!-- Editor pane -->
+  <div class="editor-pane" id="editor-pane">
+    <div class="empty-state">
+      <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <p>Select a snippet to view it</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SNIPPETS = [
+  {id:1,name:'eSIM Activation API',lang:'typescript',tags:['api','esim'],code:`async function activateESIM(iccid: string, userId: string): Promise<ActivationResult> {
+  const endpoint = \`\${process.env.OPENLINE_API}/v1/esims/\${iccid}/activate\`;
+  
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${getToken()}\`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userId, activatedAt: new Date().toISOString() }),
+  });
+
+  if (!response.ok) {
+    throw new OpenlineError(\`Activation failed: \${response.statusText}\`);
+  }
+
+  const result = await response.json();
+  return result as ActivationResult;
+}`,created:'2 days ago',uses:42},
+  {id:2,name:'JWT Auth Middleware',lang:'typescript',tags:['auth','middleware'],code:`import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(403).json({ error: 'Invalid token' });
+  }
+}`,created:'1 week ago',uses:28},
+  {id:3,name:'Rust HTTP Client',lang:'rust',tags:['http','reqwest'],code:`use reqwest::Client;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct ESIMResponse {
+    iccid: String,
+    status: String,
+    activated_at: Option<String>,
+}
+
+pub async fn fetch_esim_status(iccid: &str) -> Result<ESIMResponse, reqwest::Error> {
+    let client = Client::new();
+    let url = format!("https://api.openline.io/v1/esims/{}", iccid);
+    
+    let resp = client
+        .get(&url)
+        .bearer_auth(std::env::var("OPENLINE_TOKEN").unwrap())
+        .send()
+        .await?
+        .json::<ESIMResponse>()
+        .await?;
+    
+    Ok(resp)
+}`,created:'3 days ago',uses:14},
+  {id:4,name:'Deploy to DigitalOcean',lang:'shell',tags:['deploy','do'],code:`#!/bin/bash
+set -e
+
+APP_NAME="openline-api"
+REGISTRY="registry.digitalocean.com/openline"
+TAG=$(git rev-parse --short HEAD)
+
+echo "🔨 Building $APP_NAME:$TAG..."
+docker build -t $REGISTRY/$APP_NAME:$TAG .
+docker tag $REGISTRY/$APP_NAME:$TAG $REGISTRY/$APP_NAME:latest
+
+echo "📦 Pushing to registry..."
+docker push $REGISTRY/$APP_NAME:$TAG
+docker push $REGISTRY/$APP_NAME:latest
+
+echo "🚀 Deploying..."
+doctl apps create-deployment $DO_APP_ID --wait
+
+echo "✅ Deployed $APP_NAME:$TAG successfully!"`,created:'5 days ago',uses:19},
+  {id:5,name:'React Query Hook',lang:'typescript',tags:['react','query'],code:`import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+interface ESIM {
+  id: string;
+  iccid: string;
+  status: 'active' | 'inactive' | 'suspended';
+}
+
+export function useESIMs() {
+  return useQuery<ESIM[]>({
+    queryKey: ['/api/esims'],
+    staleTime: 30_000,
+  });
+}
+
+export function useActivateESIM() {
+  const qc = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (iccid: string) =>
+      fetch(\`/api/esims/\${iccid}/activate\`, { method: 'POST' }).then(r => r.json()),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['/api/esims'] }),
+  });
+}`,created:'1 day ago',uses:67},
+  {id:6,name:'Rust Axum Route',lang:'rust',tags:['axum','web'],code:`use axum::{extract::Path, Json, Router};
+use serde_json::{json, Value};
+
+pub fn esim_routes() -> Router {
+    Router::new()
+        .route("/esims", get(list_esims))
+        .route("/esims/:iccid", get(get_esim))
+        .route("/esims/:iccid/activate", post(activate_esim))
+}
+
+async fn activate_esim(Path(iccid): Path<String>) -> Json<Value> {
+    // TODO: validate ICCID format
+    // TODO: call carrier API
+    Json(json!({
+        "iccid": iccid,
+        "status": "activating",
+        "message": "Activation initiated"
+    }))
+}`,created:'4 days ago',uses:8},
+  {id:7,name:'SQL — eSIM Analytics',lang:'sql',tags:['analytics','postgres'],code:`-- Daily eSIM activations with running total
+WITH daily_activations AS (
+  SELECT 
+    DATE(activated_at) as date,
+    COUNT(*) as activations,
+    COUNT(DISTINCT user_id) as unique_users,
+    SUM(revenue_usd) as revenue
+  FROM esim_events
+  WHERE event_type = 'activation'
+    AND activated_at >= NOW() - INTERVAL '30 days'
+  GROUP BY DATE(activated_at)
+)
+SELECT
+  date,
+  activations,
+  unique_users,
+  ROUND(revenue::numeric, 2) as revenue,
+  SUM(activations) OVER (ORDER BY date) as running_total
+FROM daily_activations
+ORDER BY date DESC;`,created:'6 days ago',uses:33},
+  {id:8,name:'Env Config Loader',lang:'typescript',tags:['config','env'],code:`import { z } from 'zod';
+
+const envSchema = z.object({
+  NODE_ENV: z.enum(['development', 'staging', 'production']).default('development'),
+  PORT: z.string().default('3000').transform(Number),
+  DATABASE_URL: z.string().url(),
+  JWT_SECRET: z.string().min(32),
+  OPENLINE_API_KEY: z.string().startsWith('ol_'),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_').optional(),
+});
+
+export const env = envSchema.parse(process.env);
+
+// Usage: import { env } from './config';
+// env.DATABASE_URL, env.PORT, etc.`,created:'2 weeks ago',uses:91},
+  {id:9,name:'Git Workflow Aliases',lang:'shell',tags:['git','productivity'],code:`# Add to ~/.gitconfig or ~/.zshrc
+alias gs="git status"
+alias ga="git add -A"
+alias gc="git commit -m"
+alias gp="git push"
+alias gpl="git pull --rebase"
+alias glog="git log --oneline --graph --decorate --all"
+alias gbr="git branch -a"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gstash="git stash"
+alias gpop="git stash pop"
+
+# Create & push branch
+gcpush() { git checkout -b "$1" && git push -u origin "$1"; }
+# Clean merged branches
+gclean() { git branch --merged | grep -v main | xargs git branch -d; }`,created:'1 month ago',uses:156},
+  {id:10,name:'useLocalStorage Hook',lang:'javascript',tags:['react','hook'],code:`import { useState, useEffect } from 'react';
+
+function useLocalStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.warn('useLocalStorage read error:', error);
+      return initialValue;
+    }
+  });
+
+  const setValue = (value) => {
+    try {
+      setStoredValue(value);
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.warn('useLocalStorage write error:', error);
+    }
+  };
+
+  return [storedValue, setValue];
+}`,created:'3 weeks ago',uses:74},
+];
+
+const langColors = {typescript:'#3B3BFF',rust:'#ff6616',javascript:'#f59e0b',shell:'#22c55e',sql:'#a855f7'};
+const langEmoji = {typescript:'🔷',rust:'🦀',javascript:'🟨',shell:'💻',sql:'🗃'};
+
+let currentLang = 'all';
+let currentSearch = '';
+let selectedId = null;
+
+function getFiltered() {
+  return SNIPPETS.filter(s =>
+    (currentLang==='all' || s.lang===currentLang) &&
+    (!currentSearch || s.name.toLowerCase().includes(currentSearch) || s.tags.some(t=>t.includes(currentSearch)))
+  );
+}
+
+function renderList() {
+  const panel = document.getElementById('snippet-list');
+  const items = getFiltered();
+  panel.innerHTML = items.map(s => {
+    const lc = langColors[s.lang] || '#3B3BFF';
+    const preview = s.code.split('\n')[0].trim();
+    return `<div class="snippet-item${selectedId===s.id?' active':''}" onclick="selectSnippet(${s.id})">
+      <div class="snippet-name">${s.name}</div>
+      <div class="snippet-preview">${preview}</div>
+      <div class="snippet-tags">
+        <span class="stag" style="background:${lc}22;color:${lc}">${langEmoji[s.lang]||'📄'} ${s.lang}</span>
+        ${s.tags.map(t=>`<span class="stag" style="background:rgba(255,255,255,.06);color:var(--muted)">${t}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectSnippet(id) {
+  selectedId = id;
+  const s = SNIPPETS.find(x=>x.id===id);
+  const lc = langColors[s.lang] || '#3B3BFF';
+  const pane = document.getElementById('editor-pane');
+  pane.innerHTML = `
+    <div class="editor-header">
+      <div class="editor-title">${s.name}</div>
+      <span class="lang-badge">${s.lang}</span>
+      <button class="btn-copy" id="copy-btn" onclick="copyCode(${s.id})">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="code-area">
+      <pre><code class="language-${s.lang}">${escapeHtml(s.code)}</code></pre>
+    </div>
+    <div class="meta-panel">
+      <div class="meta-grid">
+        <div class="meta-item"><label>Created</label><span>${s.created}</span></div>
+        <div class="meta-item"><label>Used</label><span>${s.uses} times</span></div>
+        <div class="meta-item"><label>Language</label><span style="color:${lc}">${langEmoji[s.lang]} ${s.lang}</span></div>
+        <div class="meta-item"><label>Tags</label><span>${s.tags.join(', ')}</span></div>
+      </div>
+    </div>`;
+  hljs.highlightAll();
+  renderList();
+}
+
+function copyCode(id) {
+  const s = SNIPPETS.find(x=>x.id===id);
+  navigator.clipboard?.writeText(s.code).catch(()=>{});
+  const btn = document.getElementById('copy-btn');
+  btn.classList.add('copied');
+  btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+  setTimeout(()=>{ btn.classList.remove('copied'); btn.innerHTML='<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy'; }, 2000);
+}
+
+function filterLang(lang, el) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  renderList();
+}
+
+function filterSnippets(q) { currentSearch = q.toLowerCase(); renderList(); }
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function newSnippet() {
+  const name = prompt('Snippet name:');
+  if (!name) return;
+  const lang = prompt('Language (typescript/javascript/rust/shell/sql):', 'typescript') || 'typescript';
+  const code = prompt('Paste your code:', '// Your code here') || '// Your code here';
+  SNIPPETS.unshift({id:Date.now(),name,lang,tags:[lang],code,created:'just now',uses:0});
+  renderList();
+}
+
+renderList();
+</script>
+</body>
+</html>

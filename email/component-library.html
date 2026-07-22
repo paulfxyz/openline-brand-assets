@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Openline Email Constructor</title>
+<link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#ff6616;--orange-dark:#e55a0e;--orange-light:#ff8c42;--orange-bg:#fff7ed;
+  --dark:#0f172a;--dark2:#1e293b;--dark3:#334155;
+  --slate:#64748b;--slate-light:#94a3b8;--slate-lighter:#cbd5e1;
+  --border:#e2e8f0;--bg:#f8fafc;
+  --green:#22c55e;--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--purple:#8b5cf6;
+}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:#fff;display:flex;min-height:100vh;font-size:14px}
+
+/* ── SIDEBAR ── */
+aside{
+  width:220px;min-width:220px;background:#0a1020;border-right:1px solid #1e293b;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:#1e293b transparent;z-index:300;
+}
+.sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:10px}
+.sidebar-logo svg{flex-shrink:0}
+.sidebar-logo span{font-family:'Play',sans-serif;font-size:16px;font-weight:700;color:#fff}
+.sidebar-logo em{font-style:normal;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);font-weight:700;display:block;margin-top:1px}
+nav{padding:12px 0}
+nav a{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;font-weight:500;color:#94a3b8;text-decoration:none;transition:all .15s;border-left:2px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,102,22,.06);border-left-color:rgba(255,102,22,.3)}
+nav a.active{color:var(--orange);border-left-color:var(--orange);background:rgba(255,102,22,.08)}
+nav .nav-group{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#334155;font-weight:700;padding:14px 20px 4px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+main{flex:1;overflow-y:auto;background:#111827}
+.main-header{background:linear-gradient(135deg,#0f172a,#1a2540);border-bottom:1px solid #1e293b;padding:28px 40px}
+.main-header h1{font-family:'Play',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.3px}
+.main-header p{color:#64748b;font-size:13px;margin-top:4px}
+.content{padding:32px 40px;max-width:1100px}
+
+/* ── SECTION ── */
+.section{margin-bottom:56px;scroll-margin-top:20px}
+.section-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#1e293b,transparent)}
+.section-title{font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-.2px}
+.section-desc{font-size:13px;color:#64748b;margin-bottom:24px}
+
+/* ── COMPONENT CARD ── */
+.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:16px}
+.component-grid.wide{grid-template-columns:1fr}
+.card{background:#1a2035;border:1px solid #1e293b;border-radius:12px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:#334155}
+.card-label{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #1e293b;background:#151d30}
+.card-label span{font-size:11px;font-weight:600;color:#64748b;letter-spacing:.3px;text-transform:uppercase}
+.card-actions{display:flex;gap:6px}
+.btn-copy{background:rgba(255,102,22,.12);border:1px solid rgba(255,102,22,.2);color:var(--orange);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:5px;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-copy:hover{background:rgba(255,102,22,.2);border-color:var(--orange)}
+.btn-copy.copied{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.3);color:#22c55e}
+.card-preview{padding:20px;background:#f8fafc}
+.card-preview.dark{background:#253347}
+.card-preview.transparent{background:repeating-conic-gradient(#e2e8f0 0% 25%,#f8fafc 0% 50%) 0 0/20px 20px}
+
+/* ── EMAIL WIDTH WRAPPER ── */
+.email-wrap{max-width:480px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.12)}
+
+/* ── COLORS ── */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.swatch{border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.06);transition:transform .15s}
+.swatch:hover{transform:translateY(-2px)}
+.swatch-color{height:52px}
+.swatch-info{padding:8px;background:#151d30}
+.swatch-name{font-size:11px;font-weight:600;color:#e2e8f0}
+.swatch-hex{font-size:10px;color:#64748b;font-family:monospace;margin-top:2px}
+
+/* ── SIGNATURE CARDS ── */
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sig-card{background:#1a2035;border:1px solid #1e293b;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.sig-preview{flex:1}
+.sig-card-header{padding:12px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between}
+.sig-card-title{font-size:12px;font-weight:700;color:#e2e8f0;text-transform:uppercase;letter-spacing:.5px}
+.btn-open{background:#1e293b;border:1px solid #334155;color:#94a3b8;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .15s}
+.btn-open:hover{color:#fff;border-color:#64748b}
+.sig-preview{padding:20px;background:#f8fafc}
+
+/* ── SPEC TABLE ── */
+.spec-table{width:100%;border-collapse:collapse;font-size:12px}
+.spec-table td{padding:7px 12px;border-bottom:1px solid #1e293b}
+.spec-table td:first-child{color:#94a3b8;font-weight:600;width:120px}
+.spec-table td:last-child code{background:#0f172a;border:1px solid #1e293b;border-radius:4px;padding:1px 6px;font-family:monospace;color:var(--orange);font-size:11px}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#1e293b;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#334155}
+
+/* ── TOOLBAR ── */
+.toolbar{background:#0a1020;border-bottom:1px solid #1e293b;padding:9px 32px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;flex-shrink:0}
+.toolbar-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#334155;font-weight:700;white-space:nowrap}
+.toolbar-sep{width:1px;height:20px;background:#1e293b;margin:0 6px;flex-shrink:0}
+.tool-btn{background:#1a2035;border:1px solid #1e293b;color:#94a3b8;font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;white-space:nowrap}
+.tool-btn:hover{color:#fff;border-color:#334155}
+.tool-btn.active{background:rgba(255,102,22,.12);border-color:rgba(255,102,22,.3);color:var(--orange)}
+.asm-badge{background:var(--orange);color:#fff;font-size:9px;font-weight:700;border-radius:8px;padding:1px 6px;display:none;line-height:1.4}
+
+/* ── ASSEMBLER PANEL ── */
+.assembler-panel{position:fixed;right:0;top:0;height:100vh;width:280px;background:#0a1020;border-left:1px solid #1e293b;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:200;box-shadow:-4px 0 24px rgba(0,0,0,.5)}
+.assembler-panel.open{transform:translateX(0)}
+.panel-head{padding:14px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.panel-head-title{font-size:12px;font-weight:700;color:#e2e8f0;letter-spacing:.3px}
+.panel-close{background:none;border:none;color:#64748b;cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1;font-size:18px;font-family:monospace}
+.panel-close:hover{color:#fff;background:#1e293b}
+.assembler-list{flex:1;overflow-y:auto;padding:10px}
+.assembler-empty{padding:32px 16px;text-align:center;color:#334155;font-size:12px;line-height:1.7}
+.assembler-item{background:#1a2035;border:1px solid #1e293b;border-radius:7px;padding:8px 10px;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.assembler-item:hover{border-color:#334155}
+.asm-num{font-size:10px;color:#334155;font-weight:700;width:14px;text-align:center;flex-shrink:0}
+.asm-name{flex:1;font-size:11px;color:#cbd5e1;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.asm-btn{background:none;border:none;color:#475569;cursor:pointer;padding:2px 5px;border-radius:3px;font-size:13px;line-height:1;transition:all .1s}
+.asm-btn:hover{color:#fff;background:#253347}
+.panel-footer{padding:12px;border-top:1px solid #1e293b;flex-shrink:0;display:flex;flex-direction:column;gap:7px}
+.btn-asm{width:100%;border:none;border-radius:7px;padding:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;letter-spacing:.3px}
+.btn-copy-asm{background:var(--orange);color:#fff}
+.btn-copy-asm:hover{background:var(--orange-dark)}
+.btn-copy-asm.copied{background:#22c55e}
+.btn-clear-asm{background:#1a2035;color:#64748b;border:1px solid #1e293b}
+.btn-clear-asm:hover{color:#e2e8f0;border-color:#334155}
+
+/* ── VAR TAB WIDGET (inside panel, rides with transform) ── */
+.var-tab{position:absolute;right:-29px;top:50%;transform:translateY(-50%);background:#131c2e;border:1px solid #1e293b;border-left:none;border-radius:0 8px 8px 0;padding:16px 7px;cursor:pointer;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--orange);font-family:'Inter',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;transition:color .2s,background .2s,border-color .2s;box-shadow:3px 0 12px rgba(0,0,0,.35);line-height:1}
+.var-tab:hover{background:#1a2035;border-color:rgba(255,102,22,.4)}
+/* ── SIDEBAR VARS TRIGGER (shown when panel is closed) ── */
+.var-sidebar-trigger{position:fixed;left:215px;top:50%;transform:translateY(-50%);background:#0a1020;border:1px solid #1e293b;border-left:none;border-radius:0 6px 6px 0;padding:12px 6px;cursor:pointer;z-index:350;display:flex;flex-direction:column;align-items:center;gap:6px;color:#475569;font-family:'Inter',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;transition:color .2s,background .2s,opacity .2s;line-height:1;opacity:1}
+.var-sidebar-trigger:hover{color:var(--orange);background:#131c2e;border-color:rgba(255,102,22,.3)}
+.var-sidebar-trigger.hidden{opacity:0;pointer-events:none}
+body.vars-open .var-sidebar-trigger{display:none!important}
+
+/* ── VARIABLE PANEL ── */
+.var-panel{position:fixed;left:220px;top:0;height:100vh;width:240px;background:#0a1020;border-right:1px solid #1e293b;display:flex;flex-direction:column;transform:translateX(calc(-100% - 220px));transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:200;box-shadow:4px 0 24px rgba(0,0,0,.5);overflow:visible}
+.var-panel.open{transform:translateX(0)}
+.var-list{flex:1;overflow-y:auto;padding:14px}
+.var-item{margin-bottom:12px}
+.var-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#64748b;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.var-lbl code{font-size:9px;background:#1a2035;color:var(--orange);border:1px solid #1e293b;border-radius:3px;padding:1px 5px}
+.var-input{width:100%;background:#1a2035;border:1px solid #1e293b;color:#e2e8f0;border-radius:6px;padding:6px 10px;font-size:12px;font-family:'Inter',sans-serif;box-sizing:border-box;transition:border-color .15s}
+.var-input:focus{outline:none;border-color:var(--orange)}
+.var-input::placeholder{color:#334155}
+.var-note{font-size:10px;color:#334155;padding:10px 14px;border-top:1px solid #1e293b;line-height:1.5;flex-shrink:0}
+
+/* ── ADD BUTTON ── */
+.btn-add{background:rgba(255,102,22,.08);border:1px solid rgba(255,102,22,.15);color:var(--orange);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 9px;border-radius:5px;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-add:hover{background:rgba(255,102,22,.18);border-color:rgba(255,102,22,.4)}
+.btn-add.added{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#22c55e}
+
+/* ── DARK PREVIEW SIM ── */
+body.darkmode .card-preview:not(.dark){background:#1e2535}
+body.darkmode .email-wrap{filter:invert(0.9) hue-rotate(185deg) brightness(0.95) contrast(0.9)}
+body.darkmode .card-preview.dark .email-wrap{filter:none}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside>
+  <div class="sidebar-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="28" height="28">
+      <path fill="#ffffff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/>
+      <path fill="#ff6616" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/>
+    </svg>
+    <div><span>Openline</span><em>Email Constructor</em></div>
+  </div>
+  <nav>
+    <div class="nav-group">Templates</div>
+    <a href="#existing"><span class="dot" style="background:#ff6616"></span>Existing Templates</a>
+<div class="nav-group">Blocks</div>
+    <a href="#headers"><span class="dot" style="background:#ff6616"></span>Headers</a>
+    <a href="#heroes"><span class="dot" style="background:#ff8c42"></span>Heroes & Banners</a>
+    <a href="#codes"><span class="dot" style="background:#f59e0b"></span>Code & OTP Boxes</a>
+    <a href="#buttons"><span class="dot" style="background:#22c55e"></span>Buttons</a>
+    <a href="#alerts"><span class="dot" style="background:#ef4444"></span>Alert Blocks</a>
+    <a href="#tables"><span class="dot" style="background:#3b82f6"></span>Data Tables</a>
+    <a href="#steps"><span class="dot" style="background:#8b5cf6"></span>Steps & Lists</a>
+    <a href="#referral"><span class="dot" style="background:#22c55e"></span>Referral Block</a>
+    <a href="#usage"><span class="dot" style="background:#ff8c42"></span>Data Usage Bar</a>
+    <a href="#renewal"><span class="dot" style="background:#ef4444"></span>Renewal Reminder</a>
+    <a href="#media"><span class="dot" style="background:#94a3b8"></span>Image & Video</a>
+    <a href="#preheader"><span class="dot" style="background:#e2e8f0"></span>Preheader</a>
+    <a href="#footers"><span class="dot" style="background:#64748b"></span>Footers</a>
+    <a href="#dividers"><span class="dot" style="background:#475569"></span>Dividers & Spacers</a>
+    <a href="#social"><span class="dot" style="background:#3b82f6"></span>Social Row</a>
+    <div class="nav-group">Design</div>
+    <a href="#typography"><span class="dot" style="background:#e2e8f0"></span>Typography</a>
+    <a href="#colors"><span class="dot" style="background:#ff6616"></span>Color System</a>
+    <div class="nav-group">Signatures</div>
+    <a href="#signatures"><span class="dot" style="background:#ff6616"></span>Email Signatures</a>
+  </nav>
+</aside>
+<button class="var-sidebar-trigger" id="var-sidebar-trigger" onclick="toggleVarPanel()" title="Fill Variables">
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+  <span style="writing-mode:vertical-rl;transform:rotate(180deg)">VARS</span>
+</button>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+<div class="main-header">
+  <h1>Email Constructor</h1>
+  <p>All blocks follow the Openline email design system · 480px column · inline styles for maximum client compatibility</p>
+</div>
+
+<!-- ═══ TOOLBAR ═══ -->
+<div class="toolbar">
+  <span class="toolbar-label">Preview</span>
+  <button class="tool-btn" id="btn-mobile" onclick="toggleMobile()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+    Mobile 320px
+  </button>
+  <button class="tool-btn" id="btn-dark" onclick="toggleDarkMode()" style="display:none">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    Dark Mode
+  </button>
+  <div class="toolbar-sep"></div>
+  <span class="toolbar-label">Variables</span>
+  <button class="tool-btn" id="btn-vars" onclick="toggleVarPanel()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+    Fill Variables
+  </button>
+  <div class="toolbar-sep"></div>
+  <span class="toolbar-label">Assembler</span>
+  <button class="tool-btn" id="btn-assembler" onclick="toggleAssembler()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    Email Assembler
+    <span class="asm-badge" id="asm-badge">0</span>
+  </button>
+</div>
+
+<div class="content">
+
+<!-- ═══ EXISTING TEMPLATES ═══ -->
+<div class="section" id="existing">
+  <div class="section-label">Live Templates</div>
+  <div class="section-title">Existing Email Templates</div>
+  <div class="section-desc">Production-ready templates — open to preview or copy the full HTML.</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Code Delivery</span>
+        <div class="card-actions">
+          <a href="openline-email-code-delivery.html" target="_blank" class="btn-open">Open ↗</a>
+          <button class="btn-copy" onclick="copyFile('openline-email-code-delivery.html',this)">Copy HTML</button>
+        </div>
+      </div>
+      <div class="card-preview">
+        <div class="email-wrap" style="font-family:system-ui,sans-serif">
+          <div style="background:#ff6616;padding:16px 28px;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="22" height="22"><path fill="#fff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#fff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+              <span style="font-family:'Play',sans-serif;font-weight:700;color:#fff;font-size:16px">Openline</span>
+            </div>
+            <span style="background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.3)">Purchase</span>
+          </div>
+          <div style="padding:24px 28px">
+            <p style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:8px">Your eSIM is ready 🎉</p>
+            <div style="background:linear-gradient(135deg,#fff7ed,#fffbf7);border:2px solid #ff6616;border-radius:10px;padding:20px;text-align:center;margin-bottom:16px">
+              <p style="font-size:10px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Activation Code</p>
+              <p style="font-size:18px;font-weight:800;letter-spacing:3px;color:#0f172a;font-family:monospace">FLOWER31-HAPPY72-TOTAL49</p>
+            </div>
+          </div>
+          <div style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:4px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>eSIM Activation</span>
+        <div class="card-actions">
+          <a href="openline-email-esim-activation.html" target="_blank" class="btn-open">Open ↗</a>
+          <button class="btn-copy" onclick="copyFile('openline-email-esim-activation.html',this)">Copy HTML</button>
+        </div>
+      </div>
+      <div class="card-preview">
+        <div class="email-wrap">
+          <div style="background:#ff6616;padding:16px 28px;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="22" height="22"><path fill="#fff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#fff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+              <span style="font-family:'Play',sans-serif;font-weight:700;color:#fff;font-size:16px">Openline</span>
+            </div>
+            <span style="background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.3)">Activation</span>
+          </div>
+          <div style="padding:24px 28px">
+            <p style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:8px">eSIM activated <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><polyline points="20 6 9 17 4 12"/></svg></p>
+            <p style="font-size:13px;color:#64748b;margin-bottom:14px">Your eSIM is now active. Scan the QR code below to install.</p>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid #ff6616;border-radius:8px;padding:14px 16px;font-size:12px;color:#0f172a">
+              <strong>Turkey 10GB · 30 Days</strong><br/>
+              <span style="color:#64748b">Activated · Expires Dec 2026</span>
+            </div>
+          </div>
+          <div style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:4px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>OTP Verification</span>
+        <div class="card-actions">
+          <a href="openline-email-otp.html" target="_blank" class="btn-open">Open ↗</a>
+          <button class="btn-copy" onclick="copyFile('openline-email-otp.html',this)">Copy HTML</button>
+        </div>
+      </div>
+      <div class="card-preview">
+        <div class="email-wrap">
+          <div style="background:#ff6616;padding:16px 28px;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="22" height="22"><path fill="#fff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#fff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+              <span style="font-family:'Play',sans-serif;font-weight:700;color:#fff;font-size:16px">Openline</span>
+            </div>
+            <span style="background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.3)">Auth</span>
+          </div>
+          <div style="padding:24px 28px;text-align:center">
+            <p style="font-size:18px;font-weight:800;color:#0f172a;margin-bottom:14px">Verify your email <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></p>
+            <div style="background:linear-gradient(135deg,#fff7ed,#fffbf7);border:2px solid #ff6616;border-radius:10px;padding:20px;margin-bottom:12px">
+              <p style="font-size:10px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">One-Time Code</p>
+              <p style="font-size:38px;font-weight:800;letter-spacing:10px;color:#0f172a;font-family:monospace">482931</p>
+            </div>
+          </div>
+          <div style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:4px"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ HEADERS ═══ -->
+<div class="section" id="headers">
+  <div class="section-label">Block · Header</div>
+  <div class="section-title">Headers</div>
+  <div class="section-desc">Always the first element. Logo + badge pill. Choose theme by email type.</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Orange — Standard</span><button class="btn-copy" onclick="copyBlock('hdr-orange',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap">
+          <div id="hdr-orange">
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#ff6616;padding:22px 40px 20px;border-bottom:2px solid #e55a0e">
+              <tbody><tr><td>
+                <table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tbody><tr>
+                  <td style="vertical-align:middle">
+                    <table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
+                      <td style="padding-right:10px;vertical-align:middle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="30" height="30" style="display:block"><path fill="#ffffff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#ffffff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+                      </td>
+                      <td style="vertical-align:middle"><span style="font-family:'Play',Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;line-height:1">Openline</span></td>
+                    </tr></tbody></table>
+                  </td>
+                  <td style="text-align:right;vertical-align:middle">
+                    <span style="display:inline-block;background-color:rgba(255,255,255,0.2);color:#ffffff;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;line-height:1.4;border:1px solid rgba(255,255,255,0.4)">Purchase</span>
+                  </td>
+                </tr></tbody></table>
+              </td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Dark — Premium</span><button class="btn-copy" onclick="copyBlock('hdr-dark',this)">Copy HTML</button></div>
+      <div class="card-preview dark">
+        <div class="email-wrap" style="background:#0f172a">
+          <div id="hdr-dark">
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#0f172a;padding:22px 40px 20px;border-bottom:2px solid #1e293b">
+              <tbody><tr><td>
+                <table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tbody><tr>
+                  <td style="vertical-align:middle">
+                    <table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
+                      <td style="padding-right:10px;vertical-align:middle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="30" height="30" style="display:block"><path fill="#ffffff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#ff6616" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+                      </td>
+                      <td style="vertical-align:middle"><span style="font-family:'Play',Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;line-height:1">Openline</span></td>
+                    </tr></tbody></table>
+                  </td>
+                  <td style="text-align:right;vertical-align:middle">
+                    <span style="display:inline-block;background-color:rgba(255,102,22,0.15);color:#ff6616;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;line-height:1.4;border:1px solid rgba(255,102,22,0.3)">Premium</span>
+                  </td>
+                </tr></tbody></table>
+              </td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Badges — All Types</span><button class="btn-copy" onclick="copyBlock('hdr-badges',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div id="hdr-badges" style="display:flex;flex-wrap:wrap;gap:8px;padding:4px">
+          <span style="display:inline-block;background:rgba(255,255,255,0.2);color:#ffffff;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:#ff6616">Purchase</span>
+          <span style="display:inline-block;background:#fff7ed;color:#ff6616;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid #fed7aa">Activation</span>
+          <span style="display:inline-block;background:#f0fdf4;color:#15803d;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid #bbf7d0">Auth</span>
+          <span style="display:inline-block;background:#fef2f2;color:#b91c1c;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid #fecaca">Alert</span>
+          <span style="display:inline-block;background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid #bfdbfe">Info</span>
+          <span style="display:inline-block;background:#f5f3ff;color:#6d28d9;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid #ddd6fe">Premium</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ CODE & OTP ═══ -->
+<div class="section" id="codes">
+  <div class="section-label">Block · Code & OTP</div>
+  <div class="section-title">Activation Codes & OTP Boxes</div>
+  <div class="section-desc">Core interactive blocks — used in purchase confirmation and auth emails.</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Activation Code — 3-Part</span><button class="btn-copy" onclick="copyBlock('code-3part',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:28px 32px" id="code-3part">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:linear-gradient(135deg,#fff7ed,#fffbf7);border:2px solid #ff6616;border-radius:12px;padding:28px 24px;text-align:center;margin:0 0 0">
+            <tbody><tr><td>
+              <p style="font-size:11px;line-height:16px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px">Activation Code</p>
+              <p style="font-size:26px;line-height:32px;color:#0f172a;font-weight:800;letter-spacing:4px;margin:0 0 20px;font-family:'Courier New',Courier,monospace">FLOWER31-HAPPY72-TOTAL49</p>
+              <a href="#" style="display:inline-block;background-color:#ff6616;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:6px;line-height:1">Open Openline App <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>OTP — 6 Digit</span><button class="btn-copy" onclick="copyBlock('otp-6',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:28px 32px" id="otp-6">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:linear-gradient(135deg,#fff7ed,#fffbf7);border:2px solid #ff6616;border-radius:12px;padding:32px 24px;text-align:center">
+            <tbody><tr><td>
+              <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 14px"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:5px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>One-Time Code</p>
+              <p style="font-size:42px;line-height:48px;color:#0f172a;font-weight:800;letter-spacing:10px;margin:0 0 20px;font-variant-numeric:tabular-nums;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,monospace">482931</p>
+              <span style="display:inline-block;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:20px;padding:5px 14px;font-size:12px;color:#ea580c;font-weight:600"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Expires in 5 minutes</span>
+            </td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>QR Code Block</span><button class="btn-copy" onclick="copyBlock('qr-block',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="qr-block">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+            <tbody><tr><td style="padding:24px;text-align:center;background:#f8fafc">
+              <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 14px">Scan to Install</p>
+              <div style="display:inline-block;border:3px solid #ff6616;border-radius:10px;padding:10px;background:#ffffff">
+                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="10" y="10" width="35" height="35" rx="3" fill="#0f172a"/><rect x="15" y="15" width="25" height="25" rx="1" fill="white"/><rect x="18" y="18" width="19" height="19" rx="1" fill="#0f172a"/>
+                  <rect x="55" y="10" width="35" height="35" rx="3" fill="#0f172a"/><rect x="60" y="15" width="25" height="25" rx="1" fill="white"/><rect x="63" y="18" width="19" height="19" rx="1" fill="#0f172a"/>
+                  <rect x="10" y="55" width="35" height="35" rx="3" fill="#0f172a"/><rect x="15" y="60" width="25" height="25" rx="1" fill="white"/><rect x="18" y="63" width="19" height="19" rx="1" fill="#0f172a"/>
+                  <rect x="55" y="55" width="8" height="8" fill="#0f172a"/><rect x="67" y="55" width="8" height="8" fill="#0f172a"/><rect x="79" y="55" width="8" height="8" fill="#0f172a"/>
+                  <rect x="55" y="67" width="8" height="8" fill="#0f172a"/><rect x="79" y="67" width="8" height="8" fill="#0f172a"/>
+                  <rect x="55" y="79" width="8" height="8" fill="#0f172a"/><rect x="67" y="79" width="8" height="8" fill="#0f172a"/><rect x="79" y="79" width="8" height="8" fill="#0f172a"/>
+                </svg>
+              </div>
+              <p style="font-size:12px;color:#64748b;margin:12px 0 0">Or enter manually: <strong style="color:#0f172a;font-family:monospace">LPA-123456-ABCD</strong></p>
+            </td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ BUTTONS ═══ -->
+<div class="section" id="buttons">
+  <div class="section-label">Block · Buttons</div>
+  <div class="section-title">Buttons & CTAs</div>
+  <div class="section-desc">Table-wrapped for email safety. Every size, every intent color.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>All Button Variants</span><button class="btn-copy" onclick="copyBlock('btn-all',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:28px 32px" id="btn-all">
+          <p style="font-size:11px;color:#94a3b8;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 14px">Primary</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px"><tr><td><a href="#" style="display:inline-block;background:#ff6616;color:#fff;font-size:16px;font-weight:700;text-decoration:none;padding:16px 32px;border-radius:8px;line-height:1">Primary Large <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px"><tr><td><a href="#" style="display:inline-block;background:#ff6616;color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:6px;line-height:1">Primary Medium <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px"><tr><td><a href="#" style="display:inline-block;background:#ff6616;color:#fff;font-size:12px;font-weight:700;text-decoration:none;padding:8px 16px;border-radius:5px;line-height:1">Small <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:3px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr></table>
+
+          <p style="font-size:11px;color:#94a3b8;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 14px">Secondary</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px"><tr><td><a href="#" style="display:inline-block;background:#0f172a;color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:6px;line-height:1">Dark <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px"><tr><td><a href="#" style="display:inline-block;background:#fff;color:#ff6616;font-size:14px;font-weight:700;text-decoration:none;padding:11px 24px;border-radius:6px;line-height:1;border:2px solid #ff6616">Outline</a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px"><tr><td><a href="#" style="color:#ff6616;font-size:14px;font-weight:600;text-decoration:underline">Text link <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:3px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr></table>
+
+          <p style="font-size:11px;color:#94a3b8;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 14px">Status</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px"><tr><td><a href="#" style="display:inline-block;background:#22c55e;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:11px 22px;border-radius:6px;line-height:1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><polyline points="20 6 9 17 4 12"/></svg>Confirm Action</a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px"><tr><td><a href="#" style="display:inline-block;background:#ef4444;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:11px 22px;border-radius:6px;line-height:1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Contact Support</a></td></tr></table>
+          <table cellpadding="0" cellspacing="0" border="0"><tr><td><a href="#" style="display:inline-block;background:#8b5cf6;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:11px 22px;border-radius:6px;line-height:1"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Upgrade Plan</a></td></tr></table>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ALERTS ═══ -->
+<div class="section" id="alerts">
+  <div class="section-label">Block · Alerts</div>
+  <div class="section-title">Alert & Status Blocks</div>
+  <div class="section-desc">Left-bordered callouts. Choose by gravity of the concern.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>All Alert Types</span><button class="btn-copy" onclick="copyBlock('alerts-all',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="alerts-all">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#f0fdf4;border:1px solid #bbf7d0;border-left:3px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px"><tbody><tr><td>
+            <p style="font-size:13px;color:#15803d;font-weight:700;margin:0 0 3px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>Success</p>
+            <p style="font-size:13px;color:#166534;line-height:1.5;margin:0">Your eSIM has been activated. You're now connected.</p>
+          </td></tr></tbody></table>
+
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #ef4444;border-radius:8px;padding:14px 16px;margin-bottom:10px"><tbody><tr><td>
+            <p style="font-size:13px;color:#b91c1c;font-weight:700;margin:0 0 3px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Action Required</p>
+            <p style="font-size:13px;color:#991b1b;line-height:1.5;margin:0">Your payment was declined. Please update your payment method.</p>
+          </td></tr></tbody></table>
+
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #f59e0b;border-radius:8px;padding:14px 16px;margin-bottom:10px"><tbody><tr><td>
+            <p style="font-size:13px;color:#b45309;font-weight:700;margin:0 0 3px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Reminder</p>
+            <p style="font-size:13px;color:#92400e;line-height:1.5;margin:0">Your data plan expires in 3 days. Renew to stay connected.</p>
+          </td></tr></tbody></table>
+
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid #3b82f6;border-radius:8px;padding:14px 16px;margin-bottom:10px"><tbody><tr><td>
+            <p style="font-size:13px;color:#1d4ed8;font-weight:700;margin:0 0 3px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Info</p>
+            <p style="font-size:13px;color:#1e40af;line-height:1.5;margin:0">Usage resets every 30 days from your activation date.</p>
+          </td></tr></tbody></table>
+
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #ff6616;border-radius:8px;padding:14px 16px"><tbody><tr><td>
+            <p style="font-size:13px;color:#c2410c;font-weight:700;margin:0 0 3px"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Security Notice</p>
+            <p style="font-size:13px;color:#9a3412;line-height:1.5;margin:0">Openline will never ask for your OTP or password by email.</p>
+          </td></tr></tbody></table>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DATA TABLES ═══ -->
+<div class="section" id="tables">
+  <div class="section-label">Block · Data</div>
+  <div class="section-title">Data Tables & Plan Summaries</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Plan Summary</span><button class="btn-copy" onclick="copyBlock('plan-summary',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="plan-summary">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid #ff6616;border-radius:10px;padding:18px 20px">
+            <tbody><tr><td>
+              <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 12px">Plan Summary</p>
+              <table cellpadding="0" cellspacing="0" style="width:100%"><tbody>
+                <tr><td style="color:#94a3b8;font-size:12px;font-weight:600;padding:4px 16px 4px 0;text-transform:uppercase;letter-spacing:.5px;width:90px">Plan</td><td style="color:#0f172a;font-size:14px;font-weight:600;padding:4px 0">Turkey 10GB · 30 Days</td></tr>
+                <tr><td style="color:#94a3b8;font-size:12px;font-weight:600;padding:4px 16px 4px 0;text-transform:uppercase;letter-spacing:.5px">Data</td><td style="color:#0f172a;font-size:14px;font-weight:600;padding:4px 0">10 GB</td></tr>
+                <tr><td style="color:#94a3b8;font-size:12px;font-weight:600;padding:4px 16px 4px 0;text-transform:uppercase;letter-spacing:.5px">Valid</td><td style="color:#0f172a;font-size:14px;font-weight:600;padding:4px 0">30 days from activation</td></tr>
+                <tr><td style="color:#94a3b8;font-size:12px;font-weight:600;padding:4px 16px 4px 0;text-transform:uppercase;letter-spacing:.5px">Network</td><td style="color:#0f172a;font-size:14px;font-weight:600;padding:4px 0">Turkcell, Vodafone TR</td></tr>
+                <tr><td style="color:#94a3b8;font-size:12px;font-weight:600;padding:4px 16px 4px 0;text-transform:uppercase;letter-spacing:.5px">Price</td><td style="color:#ff6616;font-size:16px;font-weight:800;padding:4px 0">$12.99</td></tr>
+              </tbody></table>
+            </td></tr></tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Order Receipt</span><button class="btn-copy" onclick="copyBlock('order-receipt',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="order-receipt">
+          <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 12px">Order Receipt</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tbody>
+            <tr style="border-bottom:1px solid #f1f5f9">
+              <td style="padding:10px 0;font-size:13px;color:#0f172a;font-weight:600">Turkey 10GB · 30 Days</td>
+              <td style="padding:10px 0;font-size:13px;color:#0f172a;font-weight:600;text-align:right">$12.99</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f1f5f9">
+              <td style="padding:10px 0;font-size:13px;color:#64748b">Openline+ discount (−10%)</td>
+              <td style="padding:10px 0;font-size:13px;color:#22c55e;text-align:right">−$1.30</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 0 0;font-size:15px;color:#0f172a;font-weight:800">Total</td>
+              <td style="padding:12px 0 0;font-size:15px;color:#ff6616;font-weight:800;text-align:right">$11.69</td>
+            </tr>
+          </tbody></table>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ═══ STEPS ═══ -->
+<div class="section" id="steps">
+  <div class="section-label">Block · Steps</div>
+  <div class="section-title">Steps & Feature Lists</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Numbered Steps</span><button class="btn-copy" onclick="copyBlock('numbered-steps',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="numbered-steps">
+          <p style="font-size:15px;font-weight:700;color:#0f172a;margin:0 0 16px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>How to install your eSIM</p>
+          <table cellpadding="0" cellspacing="0" style="width:100%"><tbody>
+            <tr><td style="vertical-align:top;padding-right:12px;padding-bottom:12px;width:32px"><span style="display:inline-block;width:26px;height:26px;background:#fff7ed;border:1.5px solid #ff6616;border-radius:50%;text-align:center;line-height:23px;font-size:12px;font-weight:700;color:#ff6616">1</span></td>
+              <td style="font-size:14px;color:#64748b;line-height:1.6;padding-bottom:12px">Go to <strong style="color:#0f172a">Settings → Cellular</strong> (iOS) or <strong style="color:#0f172a">Settings → Connections</strong> (Android)</td></tr>
+            <tr><td style="vertical-align:top;padding-right:12px;padding-bottom:12px"><span style="display:inline-block;width:26px;height:26px;background:#fff7ed;border:1.5px solid #ff6616;border-radius:50%;text-align:center;line-height:23px;font-size:12px;font-weight:700;color:#ff6616">2</span></td>
+              <td style="font-size:14px;color:#64748b;line-height:1.6;padding-bottom:12px">Tap <strong style="color:#0f172a">Add eSIM</strong> or <strong style="color:#0f172a">Add Cellular Plan</strong></td></tr>
+            <tr><td style="vertical-align:top;padding-right:12px"><span style="display:inline-block;width:26px;height:26px;background:#fff7ed;border:1.5px solid #ff6616;border-radius:50%;text-align:center;line-height:23px;font-size:12px;font-weight:700;color:#ff6616">3</span></td>
+              <td style="font-size:14px;color:#64748b;line-height:1.6">Scan the QR code above or enter the activation code manually</td></tr>
+          </tbody></table>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Feature Rows</span><button class="btn-copy" onclick="copyBlock('feature-rows',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:24px 32px" id="feature-rows">
+          <table cellpadding="0" cellspacing="0" style="width:100%"><tbody>
+            <tr>
+              <td style="width:36px;vertical-align:top;padding-top:2px"><div style="width:30px;height:30px;background:#fff7ed;border-radius:7px;display:flex;align-items:center;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div></td>
+              <td style="padding-left:12px;padding-bottom:14px;vertical-align:top">
+                <p style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 2px">190+ Countries</p>
+                <p style="font-size:13px;color:#64748b;margin:0;line-height:1.5">One eSIM, global coverage. Activate before you land.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width:36px;vertical-align:top;padding-top:2px"><div style="width:30px;height:30px;background:#f0fdf4;border-radius:7px;display:flex;align-items:center;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></td>
+              <td style="padding-left:12px;padding-bottom:14px;vertical-align:top">
+                <p style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 2px">Private by Default</p>
+                <p style="font-size:13px;color:#64748b;margin:0;line-height:1.5">No personal data required. Buy with crypto.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width:36px;vertical-align:top;padding-top:2px"><div style="width:30px;height:30px;background:#eff6ff;border-radius:7px;display:flex;align-items:center;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></td>
+              <td style="padding-left:12px;vertical-align:top">
+                <p style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 2px">Instant Activation</p>
+                <p style="font-size:13px;color:#64748b;margin:0;line-height:1.5">30-second setup. Ready when you land.</p>
+              </td>
+            </tr>
+          </tbody></table>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ REFERRAL ═══ -->
+<div class="section" id="referral">
+  <div class="section-label">Block · Referral</div>
+  <div class="section-title">Referral Block</div>
+  <div class="section-desc">Share with a friend pattern — referral code box + CTA.</div>
+  <div class="component-grid wide">
+    <div class="card">
+      <div class="card-label"><span>Referral — Standard</span><button class="btn-copy" onclick="copyBlock('referral-std',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:28px 32px" id="referral-std">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:linear-gradient(135deg,#fff7ed,#fffbf7);border:2px solid #ff6616;border-radius:12px;padding:24px">
+          <tbody><tr><td style="text-align:center">
+            <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:5px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Refer a Friend</p>
+            <p style="font-size:18px;font-weight:800;color:#0f172a;margin:0 0 6px">Give 10% off. Get 10% back.</p>
+            <p style="font-size:13px;color:#64748b;margin:0 0 20px;line-height:1.5">Share your referral code. Your friend gets 10% off their first eSIM. You get 10% credit.</p>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto"><tbody><tr>
+              <td style="background:#fff;border:2px dashed #ff6616;border-radius:8px;padding:10px 28px;font-family:'Courier New',monospace;font-size:22px;font-weight:800;letter-spacing:4px;color:#0f172a">PAUL50</td>
+            </tr></tbody></table>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:20px auto 0"><tbody><tr>
+              <td><a href="#" style="display:inline-block;background:#ff6616;color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 28px;border-radius:7px;line-height:1">Share Your Code <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td>
+            </tr></tbody></table>
+          </td></tr></tbody>
+        </table>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DATA USAGE ═══ -->
+<div class="section" id="usage">
+  <div class="section-label">Block · eSIM Specific</div>
+  <div class="section-title">Data Usage Bar</div>
+  <div class="section-desc">Visual progress bar showing GB used vs remaining. Ideal for status emails.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>Usage Bar — Standard</span><button class="btn-copy" onclick="copyBlock('usage-bar',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:24px 32px" id="usage-bar">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid #ff6616;border-radius:10px;padding:18px 20px">
+          <tbody><tr><td>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:14px"><tbody><tr>
+              <td style="font-size:13px;font-weight:700;color:#0f172a">🇹🇷 Turkey 10GB · 30 Days</td>
+              <td style="text-align:right;font-size:12px;color:#64748b;font-weight:600">6.2 GB used</td>
+            </tr></tbody></table>
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#e2e8f0;border-radius:6px;overflow:hidden;height:10px"><tbody><tr>
+              <td style="width:62%;background:linear-gradient(90deg,#ff6616,#ff8c42);height:10px;border-radius:6px;font-size:0;line-height:0">&nbsp;</td>
+              <td style="width:38%;height:10px;font-size:0;line-height:0">&nbsp;</td>
+            </tr></tbody></table>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-top:8px"><tbody><tr>
+              <td style="font-size:11px;color:#64748b">6.2 GB used · 3.8 GB remaining</td>
+              <td style="text-align:right;font-size:11px;color:#ff6616;font-weight:600">62%</td>
+            </tr></tbody></table>
+          </td></tr></tbody>
+        </table>
+      </div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Usage Bar — Critical</span><button class="btn-copy" onclick="copyBlock('usage-critical',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:24px 32px" id="usage-critical">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #ef4444;border-radius:10px;padding:18px 20px">
+          <tbody><tr><td>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:14px"><tbody><tr>
+              <td style="font-size:13px;font-weight:700;color:#0f172a">🇹🇷 Turkey 10GB · 30 Days</td>
+              <td style="text-align:right;font-size:12px;color:#ef4444;font-weight:700">Only 0.8 GB left!</td>
+            </tr></tbody></table>
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fecaca;border-radius:6px;overflow:hidden;height:10px"><tbody><tr>
+              <td style="width:92%;background:linear-gradient(90deg,#ef4444,#f87171);height:10px;border-radius:6px;font-size:0;line-height:0">&nbsp;</td>
+              <td style="width:8%;height:10px;font-size:0;line-height:0">&nbsp;</td>
+            </tr></tbody></table>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-top:8px"><tbody><tr>
+              <td style="font-size:11px;color:#64748b">9.2 GB used · 0.8 GB remaining</td>
+              <td style="text-align:right;font-size:11px;color:#ef4444;font-weight:700">92%</td>
+            </tr></tbody></table>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin-top:16px"><tbody><tr>
+              <td><a href="#" style="display:inline-block;background:#ef4444;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:10px 22px;border-radius:6px;line-height:1">Top Up Data <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td>
+            </tr></tbody></table>
+          </td></tr></tbody>
+        </table>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RENEWAL ═══ -->
+<div class="section" id="renewal">
+  <div class="section-label">Block · eSIM Specific</div>
+  <div class="section-title">Renewal Reminder</div>
+  <div class="section-desc">Expiry warning blocks. Use 7-day, 3-day, and same-day variants.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>Renewal — 3 Days Warning</span><button class="btn-copy" onclick="copyBlock('renewal-warning',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:24px 32px" id="renewal-warning">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#fff7ed;border:2px solid #ff6616;border-radius:12px;padding:24px;text-align:center">
+          <tbody><tr><td style="text-align:center">
+            <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ff6616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:5px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Plan Expiring Soon</p>
+            <p style="font-size:52px;font-weight:800;color:#ff6616;line-height:1;margin:0 0 4px;font-family:-apple-system,sans-serif">3</p>
+            <p style="font-size:13px;color:#9a3412;font-weight:600;margin:0 0 16px">days remaining</p>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto 12px"><tbody><tr>
+              <td style="background:#f8fafc;border:1px solid #fed7aa;border-radius:8px;padding:10px 20px;font-size:12px;color:#0f172a;font-weight:600">🇹🇷 Turkey 10GB · Expires Dec 28, 2026</td>
+            </tr></tbody></table>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto"><tbody><tr>
+              <td><a href="#" style="display:inline-block;background:#ff6616;color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:13px 30px;border-radius:7px;line-height:1">Renew Plan <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td>
+            </tr></tbody></table>
+          </td></tr></tbody>
+        </table>
+      </div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Renewal — Last Day Urgent</span><button class="btn-copy" onclick="copyBlock('renewal-urgent',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:24px 32px" id="renewal-urgent">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#fef2f2;border:2px solid #ef4444;border-radius:12px;padding:24px;text-align:center">
+          <tbody><tr><td style="text-align:center">
+            <p style="font-size:11px;color:#ef4444;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:5px"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Expires Today</p>
+            <p style="font-size:20px;font-weight:800;color:#0f172a;margin:0 0 8px">Your eSIM goes offline at midnight</p>
+            <p style="font-size:13px;color:#64748b;margin:0 0 20px;line-height:1.5">Renew now to avoid any interruption to your connectivity.</p>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;width:100%;max-width:260px"><tbody>
+              <tr><td style="padding-bottom:8px"><a href="#" style="display:block;background:#ef4444;color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:13px 28px;border-radius:7px;line-height:1;text-align:center">Renew Now <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></td></tr>
+              <tr><td><a href="#" style="display:block;background:#fff;color:#64748b;font-size:13px;font-weight:600;text-decoration:none;padding:12px 20px;border-radius:7px;line-height:1;border:1px solid #e2e8f0;text-align:center">View Plans</a></td></tr>
+            </tbody></table>
+          </td></tr></tbody>
+        </table>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IMAGE & VIDEO ═══ -->
+<div class="section" id="media">
+  <div class="section-label">Block · Media</div>
+  <div class="section-title">Image & Video Blocks</div>
+  <div class="section-desc">Replace gradient placeholders with hosted image URLs. Video uses a static thumbnail + play button — no autoplay in email.</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Hero Image Block</span><button class="btn-copy" onclick="copyBlock('hero-img',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap" id="hero-img">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody><tr><td>
+              <div style="background:linear-gradient(135deg,#ff6616,#ff8c42,#ffb347);min-height:140px;text-align:center;padding:24px 20px;display:flex;align-items:center;justify-content:center">
+                <div>
+                  <p style="font-family:'Play',Arial,sans-serif;font-size:22px;font-weight:700;color:#fff;margin:0 0 4px;letter-spacing:-.3px">Stay Connected Anywhere</p>
+                  <p style="font-size:12px;color:rgba(255,255,255,.85);margin:0">Global eSIM · Top Tier-1 Networks · 190+ Countries</p>
+                </div>
+              </div>
+            </td></tr></tbody>
+          </table>
+          <div style="height:4px;background:linear-gradient(90deg,#ff6616,#ff8c42)"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Video Thumbnail Block</span><button class="btn-copy" onclick="copyBlock('video-block',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap" id="video-block">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody><tr><td>
+              <a href="https://openline.io" style="display:block;text-decoration:none">
+                <div style="background:linear-gradient(135deg,#0f172a,#1e293b);height:160px;position:relative;display:flex;align-items:center;justify-content:center">
+                  <div style="width:60px;height:60px;background:#ff6616;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(255,102,22,.2)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,4 20,12 6,20"/></svg>
+                  </div>
+                </div>
+                <div style="background:#0f172a;padding:12px 20px;text-align:center">
+                  <p style="font-size:13px;color:#94a3b8;margin:0">▶&nbsp; How to activate your eSIM · 2 min</p>
+                </div>
+              </a>
+            </td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PREHEADER ═══ -->
+<div class="section" id="preheader">
+  <div class="section-label">Block · Preheader</div>
+  <div class="section-title">Preheader Text</div>
+  <div class="section-desc">Hidden text shown as inbox preview line. Always place right after &lt;body&gt;. Max ~90 characters visible.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>Preheader — Purchase</span><button class="btn-copy" onclick="copyBlock('pre-purchase',this)">Copy HTML</button></div>
+      <div class="card-preview"><div id="pre-purchase" style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;color:#f8fafc;line-height:1px;max-width:0;opacity:0">Your eSIM is ready — activate now for instant connectivity in 190+ countries &#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;</div>
+        <div style="padding:16px 20px">
+          <p style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin:0 0 8px">Inbox Preview Simulation</p>
+          <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;overflow:hidden">
+            <div style="width:30px;height:30px;background:#ff6616;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="17" height="17"><path fill="#fff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#fff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg></div>
+            <div style="min-width:0">
+              <div style="font-size:11px;font-weight:700;color:#0f172a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your eSIM is ready 🎉 — Openline</div>
+              <div style="font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your eSIM is ready — activate now for instant connectivity in 190+ countries</div>
+            </div>
+          </div>
+          <p style="font-size:10px;color:#94a3b8;margin:10px 0 0;line-height:1.5">The hidden HTML is already in this block — copy it and place it immediately after <code style="background:#0f172a;color:var(--orange);border:1px solid #1e293b;border-radius:3px;padding:1px 5px;font-size:9px">&lt;body&gt;</code></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Preheader — Expiry Alert</span><button class="btn-copy" onclick="copyBlock('pre-expiry',this)">Copy HTML</button></div>
+      <div class="card-preview"><div id="pre-expiry" style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;color:#f8fafc;line-height:1px;max-width:0;opacity:0">Your data plan expires in 3 days — renew now to stay connected &#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;</div>
+        <div style="padding:16px 20px">
+          <p style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin:0 0 8px">Inbox Preview Simulation</p>
+          <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;overflow:hidden">
+            <div style="width:30px;height:30px;background:#ef4444;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="#fff" stroke-width="2"/><line x1="12" y1="9" x2="12" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div style="min-width:0">
+              <div style="font-size:11px;font-weight:700;color:#0f172a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Plan expiring soon — Openline</div>
+              <div style="font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your data plan expires in 3 days — renew now to stay connected</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTERS ═══ -->
+<div class="section" id="footers">
+  <div class="section-label">Block · Footer</div>
+  <div class="section-title">Footers</div>
+  <div class="component-grid">
+
+    <div class="card">
+      <div class="card-label"><span>Standard + Gradient Bar</span><button class="btn-copy" onclick="copyBlock('footer-std',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap" id="footer-std">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="padding:20px 20px 16px"><tbody><tr><td style="text-align:center">
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto 10px"><tbody><tr>
+              <td style="padding-right:6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Unsubscribe</a></td>
+              <td style="color:#64748b;font-size:12px">&nbsp;·&nbsp;</td>
+              <td style="padding:0 6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Privacy</a></td>
+              <td style="color:#64748b;font-size:12px">&nbsp;·&nbsp;</td>
+              <td style="padding-left:6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Support</a></td>
+            </tr></tbody></table>
+            <p style="font-size:12px;color:#cbd5e1;margin:0">© 2026 Openline. All rights reserved.</p>
+          </td></tr></tbody></table>
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:4px"><tbody><tr><td style="height:4px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span>Dark Footer</span><button class="btn-copy" onclick="copyBlock('footer-dark',this)">Copy HTML</button></div>
+      <div class="card-preview dark">
+        <div class="email-wrap" style="background:#0f172a" id="footer-dark">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#0f172a;padding:20px 20px 24px"><tbody><tr><td style="text-align:center">
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto 10px"><tbody><tr>
+              <td style="padding-right:6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Unsubscribe</a></td>
+              <td style="color:#64748b;font-size:12px">&nbsp;·&nbsp;</td>
+              <td style="padding:0 6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Privacy</a></td>
+              <td style="color:#64748b;font-size:12px">&nbsp;·&nbsp;</td>
+              <td style="padding-left:6px"><a href="#" style="color:#94a3b8;font-size:12px;text-decoration:underline">Support</a></td>
+            </tr></tbody></table>
+            <p style="font-size:12px;color:#cbd5e1;margin:0">© 2026 Openline. All rights reserved.</p>
+          </td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DIVIDERS & SPACERS ═══ -->
+<div class="section" id="dividers">
+  <div class="section-label">Block · Layout</div>
+  <div class="section-title">Dividers & Spacers</div>
+  <div class="section-desc">Structural utilities — use between content blocks for breathing room.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>Divider — Light</span><button class="btn-copy" onclick="copyBlock('div-light',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:20px 32px" id="div-light">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="border-top:1px solid #e2e8f0;height:1px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+      </div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Divider — Orange Accent</span><button class="btn-copy" onclick="copyBlock('div-orange',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:20px 32px" id="div-orange">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:3px;border-radius:2px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+      </div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Spacer — 16px</span><button class="btn-copy" onclick="copyBlock('spacer-16',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div id="spacer-16">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="height:16px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+      </div><div style="padding:8px 32px;background:#f1f5f9;font-size:11px;color:#94a3b8;text-align:center">↕ 16px space</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Spacer — 32px</span><button class="btn-copy" onclick="copyBlock('spacer-32',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div id="spacer-32">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="height:32px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+      </div><div style="padding:8px 32px;background:#f1f5f9;font-size:11px;color:#94a3b8;text-align:center">↕ 32px space</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Spacer — 48px</span><button class="btn-copy" onclick="copyBlock('spacer-48',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div id="spacer-48">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="height:48px;font-size:0;line-height:0">&nbsp;</td></tr></tbody></table>
+      </div><div style="padding:8px 32px;background:#f1f5f9;font-size:11px;color:#94a3b8;text-align:center">↕ 48px space</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SOCIAL ROW ═══ -->
+<div class="section" id="social">
+  <div class="section-label">Block · Footer</div>
+  <div class="section-title">Social Links Row</div>
+  <div class="section-desc">SVG icon row for email footers. Orange and dark variants.</div>
+  <div class="component-grid">
+    <div class="card">
+      <div class="card-label"><span>Social Row — Orange</span><button class="btn-copy" onclick="copyBlock('social-orange',this)">Copy HTML</button></div>
+      <div class="card-preview"><div class="email-wrap"><div style="padding:20px 32px;text-align:center" id="social-orange">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr>
+          <td style="padding:0 8px"><a href="mailto:hello@openline.io" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#ff6616" stroke-width="2"/><path d="m2 7 9.1 6.1a1.6 1.6 0 0 0 1.8 0L22 7" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://openline.io" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#ff6616" stroke-width="2"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke="#ff6616" stroke-width="2"/><path d="M3 12h18" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://linkedin.com/company/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="#ff6616" stroke-width="2"/><path d="M7 10v7M7 7v.5" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/><path d="M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://instagram.com/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#ff6616" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#ff6616" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#ff6616"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://t.me/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#ff6616" stroke-width="2"/><path d="m7 12 3 3 7-6" stroke="#ff6616" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://twitter.com/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M4 20 20 4" stroke="#ff6616" stroke-width="2.2" stroke-linecap="round"/></svg></a></td>
+        </tr></tbody></table>
+      </div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><span>Social Row — Dark</span><button class="btn-copy" onclick="copyBlock('social-dark',this)">Copy HTML</button></div>
+      <div class="card-preview dark"><div class="email-wrap" style="background:#0f172a"><div style="padding:20px 32px;text-align:center" id="social-dark">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr>
+          <td style="padding:0 8px"><a href="mailto:hello@openline.io" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#94a3b8" stroke-width="2"/><path d="m2 7 9.1 6.1a1.6 1.6 0 0 0 1.8 0L22 7" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://openline.io" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#94a3b8" stroke-width="2"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke="#94a3b8" stroke-width="2"/><path d="M3 12h18" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://linkedin.com/company/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="#94a3b8" stroke-width="2"/><path d="M7 10v7M7 7v.5" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/><path d="M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://instagram.com/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#94a3b8" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#94a3b8" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#94a3b8"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://t.me/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#94a3b8" stroke-width="2"/><path d="m7 12 3 3 7-6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></td>
+          <td style="padding:0 8px"><a href="https://twitter.com/openline" style="display:inline-block;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M4 20 20 4" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/></svg></a></td>
+        </tr></tbody></table>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TYPOGRAPHY ═══ -->
+<div class="section" id="typography">
+  <div class="section-label">Design · Typography</div>
+  <div class="section-title">Type Scale</div>
+  <div class="component-grid wide">
+    <div class="card">
+      <div class="card-label"><span>Font Scale — Email Safe</span><button class="btn-copy" onclick="copyBlock('type-scale',this)">Copy HTML</button></div>
+      <div class="card-preview">
+        <div class="email-wrap"><div style="padding:28px 32px" id="type-scale">
+          <p style="font-size:32px;line-height:1.1;color:#0f172a;font-weight:800;letter-spacing:-.8px;margin:0 0 8px;font-family:Arial,sans-serif">Display — 32px / 800</p>
+          <p style="font-size:26px;line-height:1.2;color:#0f172a;font-weight:800;letter-spacing:-.5px;margin:0 0 8px">Heading Large — 26px / 800</p>
+          <p style="font-size:20px;line-height:1.3;color:#0f172a;font-weight:700;margin:0 0 8px">Heading Medium — 20px / 700</p>
+          <p style="font-size:16px;line-height:1.4;color:#0f172a;font-weight:600;margin:0 0 8px">Heading Small — 16px / 600</p>
+          <p style="font-size:15px;line-height:1.65;color:#475569;margin:0 0 8px">Body — 15px / 400 · Regular paragraph copy. Line-height 1.65 for comfortable reading in email clients across all platforms.</p>
+          <p style="font-size:13px;line-height:1.6;color:#64748b;margin:0 0 8px">Small — 13px / 400 · Helper text, secondary descriptions.</p>
+          <p style="font-size:12px;line-height:1.5;color:#94a3b8;margin:0 0 8px">Micro — 12px / 400 · Footer notes, legal, timestamps.</p>
+          <p style="font-size:11px;color:#ff6616;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px">LABEL — 11px / 700 / UPPERCASE / 2px spacing</p>
+          <p style="font-size:16px;color:#0f172a;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;margin:0">MONO-CODE-FORMAT</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COLORS ═══ -->
+<div class="section" id="colors">
+  <div class="section-label">Design · Color System</div>
+  <div class="section-title">Color Tokens</div>
+  <div class="section-desc">Click any swatch to copy the hex value.</div>
+  <div class="color-grid">
+    <div class="swatch" onclick="copyText('#ff6616',this)"><div class="swatch-color" style="background:#ff6616"></div><div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-hex">#ff6616</div></div></div>
+    <div class="swatch" onclick="copyText('#e55a0e',this)"><div class="swatch-color" style="background:#e55a0e"></div><div class="swatch-info"><div class="swatch-name">Primary Dark</div><div class="swatch-hex">#e55a0e</div></div></div>
+    <div class="swatch" onclick="copyText('#ff8c42',this)"><div class="swatch-color" style="background:#ff8c42"></div><div class="swatch-info"><div class="swatch-name">Primary Light</div><div class="swatch-hex">#ff8c42</div></div></div>
+    <div class="swatch" onclick="copyText('#fff7ed',this)"><div class="swatch-color" style="background:#fff7ed;border:1px solid #fed7aa"></div><div class="swatch-info"><div class="swatch-name">Primary BG</div><div class="swatch-hex">#fff7ed</div></div></div>
+    <div class="swatch" onclick="copyText('#0f172a',this)"><div class="swatch-color" style="background:#0f172a"></div><div class="swatch-info"><div class="swatch-name">Slate 900</div><div class="swatch-hex">#0f172a</div></div></div>
+    <div class="swatch" onclick="copyText('#1e293b',this)"><div class="swatch-color" style="background:#1e293b"></div><div class="swatch-info"><div class="swatch-name">Slate 800</div><div class="swatch-hex">#1e293b</div></div></div>
+    <div class="swatch" onclick="copyText('#64748b',this)"><div class="swatch-color" style="background:#64748b"></div><div class="swatch-info"><div class="swatch-name">Slate 500</div><div class="swatch-hex">#64748b</div></div></div>
+    <div class="swatch" onclick="copyText('#94a3b8',this)"><div class="swatch-color" style="background:#94a3b8"></div><div class="swatch-info"><div class="swatch-name">Slate 400</div><div class="swatch-hex">#94a3b8</div></div></div>
+    <div class="swatch" onclick="copyText('#e2e8f0',this)"><div class="swatch-color" style="background:#e2e8f0"></div><div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex">#e2e8f0</div></div></div>
+    <div class="swatch" onclick="copyText('#f8fafc',this)"><div class="swatch-color" style="background:#f8fafc;border:1px solid #e2e8f0"></div><div class="swatch-info"><div class="swatch-name">BG Subtle</div><div class="swatch-hex">#f8fafc</div></div></div>
+    <div class="swatch" onclick="copyText('#22c55e',this)"><div class="swatch-color" style="background:#22c55e"></div><div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#22c55e</div></div></div>
+    <div class="swatch" onclick="copyText('#ef4444',this)"><div class="swatch-color" style="background:#ef4444"></div><div class="swatch-info"><div class="swatch-name">Danger</div><div class="swatch-hex">#ef4444</div></div></div>
+    <div class="swatch" onclick="copyText('#f59e0b',this)"><div class="swatch-color" style="background:#f59e0b"></div><div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#f59e0b</div></div></div>
+    <div class="swatch" onclick="copyText('#3b82f6',this)"><div class="swatch-color" style="background:#3b82f6"></div><div class="swatch-info"><div class="swatch-name">Info</div><div class="swatch-hex">#3b82f6</div></div></div>
+    <div class="swatch" onclick="copyText('#8b5cf6',this)"><div class="swatch-color" style="background:#8b5cf6"></div><div class="swatch-info"><div class="swatch-name">Premium</div><div class="swatch-hex">#8b5cf6</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ SIGNATURES ═══ -->
+<div class="section" id="signatures">
+  <div class="section-label">Signatures</div>
+  <div class="section-title">Email Signatures</div>
+  <div class="section-desc">SVG-first, maximum email client compatibility. Click "Open" to copy the signature HTML.</div>
+  <div class="sig-grid">
+
+    <div class="sig-card">
+      <div class="sig-card-header">
+        <span class="sig-card-title">Paul Fleury · Personal</span>
+        <a href="signature-paul-fleury.html" target="_blank" class="btn-open">Open & Copy ↗</a>
+      </div>
+      <div class="sig-preview">
+        <table cellpadding="0" cellspacing="0" border="0" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;width:100%">
+          <tr>
+            <td style="width:52px;vertical-align:top;padding-right:16px">
+              <div style="width:48px;height:48px;background:#0f172a;border-radius:10px;display:flex;align-items:center;justify-content:center">
+                <span style="color:#fff;font-size:18px;font-weight:800;letter-spacing:-1px;line-height:1;font-family:Georgia,serif">PF</span>
+              </div>
+            </td>
+            <td style="vertical-align:top">
+              <div style="font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-0.3px;line-height:1.2">Paul Fleury</div>
+              <div style="font-size:12px;color:#64748b;margin-top:2px;margin-bottom:8px">Founder &amp; Designer&nbsp;·&nbsp;<a href="https://paulfleury.com" style="color:#64748b;text-decoration:none">paulfleury.com</a></div>
+              <table cellpadding="0" cellspacing="0" border="0"><tr>
+                <td style="padding-right:10px"><a href="mailto:hello@paulfleury.com" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#0f172a" stroke-width="2"/><path d="m2 7 9.1 6.1a1.6 1.6 0 0 0 1.8 0L22 7" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://paulfleury.com" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0f172a" stroke-width="2"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke="#0f172a" stroke-width="2"/><path d="M3 12h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://cal.com/paulfxyz" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#0f172a" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/><rect x="7" y="14" width="3" height="3" rx="0.5" fill="#0f172a"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://linkedin.com/in/paulfleury" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="#0f172a" stroke-width="2"/><path d="M7 10v7M7 7v.5" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/><path d="M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://instagram.com/paulfleury" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#0f172a" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#0f172a" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#0f172a"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://t.me/paulfleury" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0f172a" stroke-width="2"/><path d="m7 12 3 3 7-6" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></td>
+                <td><a href="https://paulf.xyz/pgp.key" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="15" r="4" stroke="#0f172a" stroke-width="2"/><path d="m12 11 8-8M18 2l2 2-1 1-2-2M16 6l2-2" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+              </tr></table>
+            </td>
+          </tr>
+        </table>
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-top:12px"><tr><td style="border-top:1px solid #e2e8f0;height:1px;font-size:0;line-height:0"></td></tr></table>
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-top:8px"><tr><td style="font-size:11px;color:#94a3b8">
+          <a href="mailto:hello@paulfleury.com" style="color:#94a3b8;text-decoration:none">hello@paulfleury.com</a>&nbsp;·&nbsp;<a href="https://cal.com/paulfxyz" style="color:#94a3b8;text-decoration:none">Book a call</a>&nbsp;·&nbsp;<a href="https://paulf.xyz/pgp.key" style="color:#94a3b8;text-decoration:none">PGP</a>
+        </td></tr></table>
+      </div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-card-header">
+        <span class="sig-card-title">Openline · Brand</span>
+        <a href="signature-openline.html" target="_blank" class="btn-open">Open & Copy ↗</a>
+      </div>
+      <div class="sig-preview">
+        <table cellpadding="0" cellspacing="0" border="0" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;width:100%">
+          <tr>
+            <td style="width:52px;vertical-align:top;padding-right:16px">
+              <div style="width:48px;height:48px;background:#ff6616;border-radius:10px;display:flex;align-items:center;justify-content:center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="28" height="28"><path fill="#fff" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/><path fill="#fff" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/></svg>
+              </div>
+            </td>
+            <td style="vertical-align:top">
+              <div style="font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-0.3px;line-height:1.2;font-family:'Play',Arial,sans-serif">Openline</div>
+              <div style="font-size:12px;color:#64748b;margin-top:2px;margin-bottom:8px">Global eSIM Network&nbsp;·&nbsp;<a href="https://openline.io" style="color:#ff6616;text-decoration:none;font-weight:600">openline.io</a></div>
+              <table cellpadding="0" cellspacing="0" border="0"><tr>
+                <td style="padding-right:10px"><a href="mailto:hello@openline.io" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#ff6616" stroke-width="2"/><path d="m2 7 9.1 6.1a1.6 1.6 0 0 0 1.8 0L22 7" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://openline.io" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#ff6616" stroke-width="2"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke="#ff6616" stroke-width="2"/><path d="M3 12h18" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://cal.com/paulfxyz" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#ff6616" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/><rect x="7" y="14" width="3" height="3" rx="0.5" fill="#ff6616"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://linkedin.com/company/openline" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="#ff6616" stroke-width="2"/><path d="M7 10v7M7 7v.5" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/><path d="M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke="#ff6616" stroke-width="2" stroke-linecap="round"/></svg></a></td>
+                <td style="padding-right:10px"><a href="https://instagram.com/openline" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#ff6616" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#ff6616" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#ff6616"/></svg></a></td>
+                <td><a href="https://t.me/openline" style="display:inline-block;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#ff6616" stroke-width="2"/><path d="m7 12 3 3 7-6" stroke="#ff6616" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></td>
+              </tr></table>
+            </td>
+          </tr>
+        </table>
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-top:12px"><tr><td style="background:linear-gradient(90deg,#ff6616,#ff8c42);height:2px;border-radius:2px;font-size:0;line-height:0"></td></tr></table>
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-top:8px"><tr><td style="font-size:11px;color:#94a3b8">
+          <a href="mailto:hello@openline.io" style="color:#94a3b8;text-decoration:none">hello@openline.io</a>&nbsp;·&nbsp;<a href="https://cal.com/paulfxyz" style="color:#94a3b8;text-decoration:none">Book a call</a>
+        </td></tr></table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /content -->
+</main>
+
+<!-- ═══ ASSEMBLER PANEL ═══ -->
+<div class="assembler-panel" id="assembler-panel">
+  <div class="panel-head">
+    <span class="panel-head-title">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:5px"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      Email Assembler
+    </span>
+    <button class="panel-close" onclick="toggleAssembler()">×</button>
+  </div>
+  <div class="assembler-list" id="assembler-list">
+    <div class="assembler-empty">Click <strong style="color:#ff6616">+ Add</strong> on any block to start building your email.</div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn-asm btn-copy-asm" id="btn-copy-asm" onclick="copyAssembledEmail(this)">Copy Assembled Email</button>
+    <button class="btn-asm btn-clear-asm" onclick="clearAssembler()">Clear All</button>
+  </div>
+</div>
+
+<!-- ═══ VARIABLE PANEL ═══ -->
+<div class="var-panel" id="var-panel">
+  <div class="panel-head">
+    <span class="panel-head-title">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px;margin-right:5px"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      Fill Variables
+    </span>
+    <button class="panel-close" onclick="toggleVarPanel()">×</button>
+  </div>
+  <div class="var-list" id="var-list"></div>
+  <div class="var-note">Values are substituted when you <strong style="color:#e2e8f0">Copy HTML</strong> or <strong style="color:#e2e8f0">Copy Assembled Email</strong>.</div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// NAV HIGHLIGHTING
+// ─────────────────────────────────────────────
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+},{threshold:0.2});
+sections.forEach(s=>observer.observe(s));
+
+// ─────────────────────────────────────────────
+// COPY UTILITIES
+// ─────────────────────────────────────────────
+function getVars() {
+  const vars = {};
+  document.querySelectorAll('.var-input').forEach(i => { if(i.value) vars[i.dataset.var] = i.value; });
+  return vars;
+}
+function applyVars(html) {
+  const vars = getVars();
+  Object.entries(vars).forEach(([k,v]) => { html = html.replaceAll('{{'+k+'}}', v); });
+  return html;
+}
+
+function copyBlock(id, btn) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(applyVars(el.outerHTML)).then(()=>{
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied'; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent=orig; btn.classList.remove('copied'); },2000);
+  });
+}
+function copyText(text, swatch) {
+  navigator.clipboard.writeText(text).then(()=>{
+    const n = swatch.querySelector('.swatch-name');
+    const orig = n.textContent;
+    n.textContent = '✓ Copied';
+    setTimeout(()=>n.textContent=orig, 1500);
+  });
+}
+async function copyFile(filename, btn) {
+  try {
+    const r = await fetch(filename);
+    const html = await r.text();
+    await navigator.clipboard.writeText(applyVars(html));
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied'; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent=orig; btn.classList.remove('copied'); },2000);
+  } catch(e) { btn.textContent='Error'; setTimeout(()=>btn.textContent='Copy HTML',2000); }
+}
+
+// ─────────────────────────────────────────────
+// MOBILE PREVIEW TOGGLE
+// ─────────────────────────────────────────────
+let mobileActive = false;
+function toggleMobile() {
+  mobileActive = !mobileActive;
+  document.getElementById('btn-mobile').classList.toggle('active', mobileActive);
+  document.querySelectorAll('.email-wrap').forEach(w => {
+    w.style.maxWidth = mobileActive ? '320px' : '480px';
+  });
+}
+
+// ─────────────────────────────────────────────
+// DARK MODE PREVIEW
+// ─────────────────────────────────────────────
+let darkActive = false;
+function toggleDarkMode() {
+  darkActive = !darkActive;
+  document.getElementById('btn-dark').classList.toggle('active', darkActive);
+  document.body.classList.toggle('darkmode', darkActive);
+}
+
+// ─────────────────────────────────────────────
+// ASSEMBLER
+// ─────────────────────────────────────────────
+const asmItems = [];
+let asmOpen = false;
+
+function toggleAssembler() {
+  asmOpen = !asmOpen;
+  document.getElementById('assembler-panel').classList.toggle('open', asmOpen);
+  document.getElementById('btn-assembler').classList.toggle('active', asmOpen);
+  document.querySelector('main').style.paddingRight = asmOpen ? '280px' : '0';
+}
+
+function addToAssembler(blockId, blockName, btn) {
+  const idx = asmItems.findIndex(i => i.id === blockId);
+  if(idx >= 0) {
+    asmItems.splice(idx, 1);
+    btn.textContent = '+ Add'; btn.classList.remove('added');
+    updateAsmBadge(); renderAsmList(); return;
+  }
+  const el = document.getElementById(blockId);
+  if(!el) return;
+  asmItems.push({ id: blockId, name: blockName });
+  btn.textContent = '✓ Added'; btn.classList.add('added');
+  updateAsmBadge(); renderAsmList();
+  if(!asmOpen) toggleAssembler();
+}
+
+function removeFromAsm(idx) {
+  const item = asmItems[idx];
+  const btn = document.querySelector(`.btn-add[data-id="${item.id}"]`);
+  if(btn) { btn.textContent = '+ Add'; btn.classList.remove('added'); }
+  asmItems.splice(idx, 1);
+  updateAsmBadge(); renderAsmList();
+}
+
+function moveAsm(idx, dir) {
+  const ni = idx + dir;
+  if(ni < 0 || ni >= asmItems.length) return;
+  [asmItems[idx], asmItems[ni]] = [asmItems[ni], asmItems[idx]];
+  renderAsmList();
+}
+
+function updateAsmBadge() {
+  const b = document.getElementById('asm-badge');
+  b.textContent = asmItems.length;
+  b.style.display = asmItems.length ? 'inline-block' : 'none';
+}
+
+function renderAsmList() {
+  const list = document.getElementById('assembler-list');
+  if(!asmItems.length) {
+    list.innerHTML = '<div class="assembler-empty">Click <strong style="color:#ff6616">+ Add</strong> on any block to start building your email.</div>';
+    return;
+  }
+  list.innerHTML = asmItems.map((item, i) => `
+    <div class="assembler-item">
+      <span class="asm-num">${i+1}</span>
+      <span class="asm-name" title="${item.name}">${item.name}</span>
+      <div style="display:flex;gap:2px">
+        <button class="asm-btn" onclick="moveAsm(${i},-1)" title="Up">↑</button>
+        <button class="asm-btn" onclick="moveAsm(${i},1)" title="Down">↓</button>
+        <button class="asm-btn" onclick="removeFromAsm(${i})" title="Remove">×</button>
+      </div>
+    </div>`).join('');
+}
+
+function copyAssembledEmail(btn) {
+  if(!asmItems.length) { btn.textContent = 'Add blocks first!'; setTimeout(()=>btn.textContent='Copy Assembled Email',2000); return; }
+  const bodyHtml = asmItems.map(item => {
+    const el = document.getElementById(item.id);
+    return el ? el.outerHTML : '';
+  }).join('\n');
+  const full = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Openline Email</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif">
+<table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:32px 0">
+<tr><td>
+<table align="center" width="480" border="0" cellpadding="0" cellspacing="0" style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08)">
+<tr><td>
+${bodyHtml}
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+  navigator.clipboard.writeText(applyVars(full)).then(()=>{
+    btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent='Copy Assembled Email'; btn.classList.remove('copied'); },2500);
+  });
+}
+
+function clearAssembler() {
+  asmItems.forEach(item => {
+    const btn = document.querySelector(`.btn-add[data-id="${item.id}"]`);
+    if(btn) { btn.textContent = '+ Add'; btn.classList.remove('added'); }
+  });
+  asmItems.length = 0;
+  updateAsmBadge(); renderAsmList();
+}
+
+// ─────────────────────────────────────────────
+// VARIABLE PANEL
+// ─────────────────────────────────────────────
+let varOpen = false;
+const defaultVars = [
+  { key:'first_name', label:'First Name', placeholder:'Alex' },
+  { key:'activation_code', label:'Activation Code', placeholder:'FLOWER31-HAPPY72-TOTAL49' },
+  { key:'plan_name', label:'Plan Name', placeholder:'Turkey 10GB · 30 Days' },
+  { key:'data_used', label:'Data Used', placeholder:'6.2 GB' },
+  { key:'data_remaining', label:'Data Remaining', placeholder:'3.8 GB' },
+  { key:'expiry_date', label:'Expiry Date', placeholder:'Dec 28, 2026' },
+  { key:'days_remaining', label:'Days Remaining', placeholder:'3' },
+  { key:'price', label:'Price', placeholder:'$12.99' },
+  { key:'order_id', label:'Order ID', placeholder:'#OL-28451' },
+  { key:'referral_code', label:'Referral Code', placeholder:'PAUL50' },
+];
+
+function toggleVarPanel() {
+  varOpen = !varOpen;
+  document.getElementById('var-panel').classList.toggle('open', varOpen);
+  document.getElementById('btn-vars').classList.toggle('active', varOpen);
+  document.body.classList.toggle('vars-open', varOpen);
+  var t = document.getElementById('var-sidebar-trigger');
+  t.style.display = varOpen ? 'none' : 'flex';
+}
+
+function buildVarPanel() {
+  document.getElementById('var-list').innerHTML = defaultVars.map(v => `
+    <div class="var-item">
+      <div class="var-lbl"><code>{{${v.key}}}</code>${v.label}</div>
+      <input class="var-input" data-var="${v.key}" placeholder="${v.placeholder}"/>
+    </div>`).join('');
+}
+
+// ─────────────────────────────────────────────
+// INIT — add "+ Add" buttons to all block cards
+// ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildVarPanel();
+  document.querySelectorAll('.btn-copy[onclick^="copyBlock"]').forEach(copyBtn => {
+    const match = copyBtn.getAttribute('onclick').match(/copyBlock\('([^']+)'/);
+    if(!match) return;
+    const blockId = match[1];
+    const cardLabel = copyBtn.closest('.card-label');
+    if(!cardLabel) return;
+    const blockName = cardLabel.querySelector('span')?.textContent?.trim() || blockId;
+    const addBtn = document.createElement('button');
+    addBtn.className = 'btn-add';
+    addBtn.textContent = '+ Add';
+    addBtn.dataset.id = blockId;
+    addBtn.onclick = () => addToAssembler(blockId, blockName, addBtn);
+    copyBtn.parentNode.insertBefore(addBtn, copyBtn);
+  });
+});
+</script>
+</body>
+</html>

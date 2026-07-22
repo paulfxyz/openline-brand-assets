@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrations — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070c18;--bg-card:#0c1120;--bg-header:#090e1c;
+  --text:#dde6ff;--muted:rgba(255,255,255,.45);
+  --blue:#3B3BFF;--orange:#ff6616;
+  --success:#22c55e;--warn:#f59e0b;--error:#ef4444;
+  --border:rgba(255,255,255,.07);
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;font-size:20px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sync-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes slide-in{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.header{background:var(--bg-header);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{color:var(--blue)}
+.header-title{font-family:'Play',sans-serif;font-weight:700;font-size:28px}
+.badge{padding:6px 16px;border-radius:100px;font-weight:600;font-family:'Press Start 2P',monospace;font-size:11px}
+.badge-green{background:rgba(34,197,94,.15);color:var(--success)}
+.badge-blue{background:rgba(59,59,255,.15);color:#7c7cff}
+.badge-error{background:rgba(239,68,68,.15);color:var(--error)}
+
+.app-body{display:flex;flex:1;overflow:hidden}
+.main-scroll{flex:1;overflow-y:auto;padding:28px 36px;display:flex;flex-direction:column;gap:36px}
+.main-scroll::-webkit-scrollbar{width:6px}
+.main-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px}
+
+/* Connected apps */
+.connected-grid{display:flex;flex-direction:column;gap:16px}
+.int-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;display:flex;align-items:center;gap:24px;transition:border-color .15s;animation:fade-up .2s ease both;cursor:pointer}
+.int-card:hover{border-color:rgba(255,255,255,.15)}
+.int-card.selected{border-color:var(--blue);background:rgba(59,59,255,.04)}
+.int-card.error{border-color:rgba(239,68,68,.2)}
+.int-logo{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+.int-info{flex:1;min-width:0}
+.int-name{font-weight:600;font-size:20px;margin-bottom:4px}
+.int-sub{font-size:18px;color:var(--muted)}
+.status-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.status-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.status-connected{background:var(--success)}
+.status-syncing{background:var(--blue);animation:sync-pulse 1.5s ease infinite}
+.status-error{background:var(--error)}
+.status-text{font-size:16px;color:var(--muted)}
+.int-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.toggle-wrap{position:relative;width:54px;height:30px}
+.toggle-wrap input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;border-radius:15px;background:rgba(255,255,255,.1);transition:.2s}
+.toggle-slider::before{content:'';position:absolute;width:24px;height:24px;left:3px;top:3px;border-radius:50%;background:#888;transition:.2s}
+.toggle-wrap input:checked+.toggle-slider{background:var(--blue)}
+.toggle-wrap input:checked+.toggle-slider::before{transform:translateX(24px);background:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:8px;font-size:18px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-ghost{background:transparent;color:var(--blue);border:1px solid rgba(59,59,255,.4)}
+.btn-ghost:hover{background:rgba(59,59,255,.1)}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-orange:hover{background:#ff7b33}
+.btn-icon{padding:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.btn-icon:hover{color:var(--text)}
+
+/* Available */
+.avail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.avail-tile{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;cursor:pointer;transition:all .15s;animation:fade-up .2s ease both}
+.avail-tile:hover{border-color:rgba(59,59,255,.35);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.avail-logo{font-size:44px}
+.avail-name{font-size:18px;font-weight:600}
+.btn-connect{background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.3);color:var(--blue);border-radius:7px;padding:10px 20px;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:all .15s}
+.btn-connect:hover{background:rgba(59,59,255,.25)}
+
+/* Log panel */
+.log-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.log-header{padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.log-title{font-family:'Play',sans-serif;font-size:22px;font-weight:700}
+.log-list{max-height:280px;overflow-y:auto}
+.log-list::-webkit-scrollbar{width:6px}
+.log-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.log-item{padding:18px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;animation:fade-up .15s ease}
+.log-item:last-child{border:none}
+.log-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.log-text{font-size:18px;flex:1}
+.log-time{font-size:16px;color:var(--muted);flex-shrink:0}
+
+/* Settings panel */
+.settings-panel{width:480px;background:var(--bg-card);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;animation:slide-in .2s ease}
+.settings-panel::-webkit-scrollbar{width:6px}
+.settings-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.settings-inner{padding:28px}
+.settings-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.settings-sub{font-size:18px;color:var(--muted);margin-bottom:28px}
+.field{margin-bottom:24px}
+.field-label{font-size:16px;color:var(--muted);margin-bottom:8px}
+.field input,.field select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:12px 18px;color:var(--text);font-size:18px;outline:none;font-family:'Inter',sans-serif}
+.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,59,255,.1)}
+.checkbox-row{display:flex;align-items:center;gap:14px;padding:12px 0;font-size:18px;cursor:pointer;border-bottom:1px solid var(--border)}
+.checkbox-row input{accent-color:var(--blue)}
+.webhook-url{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px 18px;font-size:16px;color:var(--muted);word-break:break-all;font-family:monospace}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+  </div>
+  <span class="header-title">Integrations</span>
+  <span class="badge badge-green" id="connBadge">4 connected</span>
+  <div style="margin-left:auto">
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'integrations-close'},'*') || history.back()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="app-body">
+  <div class="main-scroll">
+
+    <!-- Connected -->
+    <div>
+      <div class="section-label">Connected Apps</div>
+      <div class="connected-grid" id="connectedGrid"></div>
+    </div>
+
+    <!-- Available -->
+    <div>
+      <div class="section-label">Available Integrations</div>
+      <div class="avail-grid" id="availGrid"></div>
+    </div>
+
+    <!-- Sync log -->
+    <div class="log-panel">
+      <div class="log-header">
+        <span class="log-title">Sync Log</span>
+        <span style="font-size:16px;color:var(--muted)">Last updated just now</span>
+      </div>
+      <div class="log-list" id="logList"></div>
+    </div>
+  </div>
+
+  <div class="settings-panel" id="settingsPanel" style="display:none"></div>
+</div>
+
+<script>
+const CONNECTED = [
+  {id:'notion',name:'Notion',logo:'📓',color:'rgba(255,255,255,.08)',status:'syncing',statusText:'Syncing… 8 pages',lastSync:'now',enabled:true,
+   desc:'Workspace & docs sync',webhookUrl:'https://hooks.openline.io/notion/wh_abc123',freq:'5 minutes',
+   scopes:['Pages','Databases','Comments','Users']},
+  {id:'github',name:'GitHub',logo:'🐙',color:'rgba(255,255,255,.08)',status:'connected',statusText:'Connected',lastSync:'3 min ago',enabled:true,
+   desc:'Repos, PRs & issues',webhookUrl:'https://hooks.openline.io/github/wh_def456',freq:'Real-time',
+   scopes:['Repositories','Pull Requests','Issues','Commits']},
+  {id:'gcal',name:'Google Calendar',logo:'📅',color:'rgba(66,133,244,.1)',status:'connected',statusText:'Connected',lastSync:'12 min ago',enabled:true,
+   desc:'Events & meeting sync',webhookUrl:'https://hooks.openline.io/gcal/wh_ghi789',freq:'15 minutes',
+   scopes:['Events','Calendars','Attendees']},
+  {id:'slack',name:'Slack',logo:'💬',color:'rgba(74,21,75,.15)',status:'connected',statusText:'Connected',lastSync:'1 min ago',enabled:true,
+   desc:'Channels & notifications',webhookUrl:'https://hooks.openline.io/slack/wh_jkl012',freq:'Real-time',
+   scopes:['Messages','Channels','Users','Files']},
+  {id:'airtable',name:'Airtable',logo:'🗂️',color:'rgba(239,68,68,.08)',status:'error',statusText:'Auth error — token expired',lastSync:'2 hours ago',enabled:false,
+   desc:'Bases & records sync',webhookUrl:'https://hooks.openline.io/airtable/wh_mno345',freq:'30 minutes',
+   scopes:['Bases','Tables','Records']},
+];
+const AVAILABLE = [
+  {id:'jira',name:'Jira',logo:'🔵'},
+  {id:'figma',name:'Figma',logo:'🎨'},
+  {id:'linear',name:'Linear',logo:'🟣'},
+  {id:'zapier',name:'Zapier',logo:'⚡'},
+  {id:'hubspot',name:'HubSpot',logo:'🧡'},
+  {id:'discord',name:'Discord',logo:'🎮'},
+  {id:'stripe',name:'Stripe',logo:'💳'},
+];
+const LOGS = [
+  {app:'📓',text:'Notion synced 12 pages from Engineering workspace',time:'just now',color:'rgba(255,255,255,.08)'},
+  {app:'🐙',text:'GitHub: 3 new commits pushed to esim-platform/main',time:'2 min ago',color:'rgba(255,255,255,.08)'},
+  {app:'📅',text:'Google Calendar: 2 events updated for tomorrow',time:'8 min ago',color:'rgba(66,133,244,.1)'},
+  {app:'💬',text:'Slack: 1 new mention in #esim-dev',time:'12 min ago',color:'rgba(74,21,75,.15)'},
+  {app:'🐙',text:'GitHub: PR #47 "feat: retry logic" opened by Marco',time:'25 min ago',color:'rgba(255,255,255,.08)'},
+  {app:'📓',text:'Notion: Database "Sprint Board" synced (42 records)',time:'35 min ago',color:'rgba(255,255,255,.08)'},
+  {app:'📅',text:'Google Calendar: Stand-up meeting created for Mon 9am',time:'1 hour ago',color:'rgba(66,133,244,.1)'},
+];
+
+let selectedIntId = null;
+
+function renderConnected() {
+  const grid = document.getElementById('connectedGrid');
+  grid.innerHTML = '';
+  CONNECTED.forEach((int,i) => {
+    const card = document.createElement('div');
+    card.className = `int-card${int.status==='error'?' error':''}${selectedIntId===int.id?' selected':''}`;
+    card.style.animationDelay = (i*0.04)+'s';
+    card.onclick = () => selectInt(int.id);
+    card.innerHTML = `
+      <div class="int-logo" style="background:${int.color}">${int.logo}</div>
+      <div class="int-info">
+        <div class="int-name">${int.name}</div>
+        <div class="int-sub">${int.desc}</div>
+        <div class="status-row">
+          <div class="status-dot status-${int.status}"></div>
+          <span class="status-text">${int.statusText} · ${int.lastSync}</span>
+        </div>
+      </div>
+      <div class="int-actions" onclick="event.stopPropagation()">
+        ${int.status==='error'
+          ? `<button class="btn btn-orange" onclick="reconnect('${int.id}')">Reconnect</button>`
+          : `<label class="toggle-wrap"><input type="checkbox" ${int.enabled?'checked':''} onchange="toggleInt('${int.id}',this.checked)"><span class="toggle-slider"></span></label>
+             <button class="btn btn-ghost" onclick="selectInt('${int.id}')">Configure</button>`
+        }
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderAvailable() {
+  const grid = document.getElementById('availGrid');
+  grid.innerHTML = AVAILABLE.map((a,i) => `
+    <div class="avail-tile" style="animation-delay:${i*0.05}s">
+      <div class="avail-logo">${a.logo}</div>
+      <div class="avail-name">${a.name}</div>
+      <button class="btn-connect" onclick="connectNew('${a.id}','${a.name}')">Connect</button>
+    </div>
+  `).join('');
+}
+
+function renderLogs() {
+  document.getElementById('logList').innerHTML = LOGS.map(l => `
+    <div class="log-item">
+      <div class="log-icon" style="background:${l.color}">${l.app}</div>
+      <div class="log-text">${l.text}</div>
+      <div class="log-time">${l.time}</div>
+    </div>
+  `).join('');
+}
+
+function selectInt(id) {
+  selectedIntId = id;
+  const int = CONNECTED.find(i=>i.id===id);
+  const panel = document.getElementById('settingsPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = `<div class="settings-inner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-size:36px">${int.logo}</span>
+        <div>
+          <div class="settings-title">${int.name}</div>
+          <div class="settings-sub" style="margin:0">${int.desc}</div>
+        </div>
+      </div>
+      <button class="btn-icon" onclick="closeSettings()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="field">
+      <div class="field-label">Webhook URL</div>
+      <div class="webhook-url">${int.webhookUrl}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Sync Frequency</div>
+      <select><option>${int.freq}</option><option>1 minute</option><option>5 minutes</option><option>15 minutes</option><option>30 minutes</option><option>Real-time</option></select>
+    </div>
+    <div class="field">
+      <div class="field-label">Data Scope</div>
+      ${int.scopes.map(s=>`<label class="checkbox-row"><input type="checkbox" checked> ${s}</label>`).join('')}
+    </div>
+    <div style="display:flex;gap:14px;margin-top:28px">
+      <button class="btn" style="flex:1;background:var(--blue);color:#fff;justify-content:center">Save</button>
+      <button class="btn btn-ghost" onclick="disconnectInt('${int.id}')">Disconnect</button>
+    </div>
+  </div>`;
+  renderConnected();
+}
+
+function closeSettings() {
+  selectedIntId = null;
+  document.getElementById('settingsPanel').style.display = 'none';
+  renderConnected();
+}
+
+function toggleInt(id, enabled) {
+  const int = CONNECTED.find(i=>i.id===id);
+  if(int) int.enabled = enabled;
+}
+
+function reconnect(id) {
+  const int = CONNECTED.find(i=>i.id===id);
+  if(int) {
+    int.status = 'syncing';
+    int.statusText = 'Reconnecting…';
+    int.enabled = true;
+    renderConnected();
+    setTimeout(()=>{int.status='connected';int.statusText='Connected';int.lastSync='just now';renderConnected();document.getElementById('connBadge').textContent='5 connected';},2000);
+  }
+}
+
+function connectNew(id, name) {
+  alert(`OAuth flow for ${name} would open here.`);
+}
+
+function disconnectInt(id) {
+  const idx = CONNECTED.findIndex(i=>i.id===id);
+  if(idx>-1) {
+    CONNECTED.splice(idx,1);
+    closeSettings();
+    document.getElementById('connBadge').textContent = CONNECTED.filter(i=>i.status!=='error').length+' connected';
+    renderConnected();
+  }
+}
+
+renderConnected();
+renderAvailable();
+renderLogs();
+</script>
+</body>
+</html>

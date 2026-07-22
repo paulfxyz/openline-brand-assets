@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(255,102,22,.12);border:1px solid rgba(255,102,22,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.live-badge{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:lp 1.4s infinite}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.35}}
+.close-btn{margin-left:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:20px}
+
+/* TOP REACTIONS */
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:12px}
+.top-bar{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:24px}
+.top-item{display:flex;align-items:center;gap:10px}
+.top-rank{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.3)}
+.top-emoji{font-size:28px}
+.top-count{font-size:18px;font-weight:700;color:#dde6ff}
+.top-sep{width:1px;height:32px;background:rgba(255,255,255,.08)}
+
+/* EMOJI GRID */
+.emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.emoji-btn{background:#0c1120;border:2px solid rgba(255,255,255,.07);border-radius:16px;padding:20px 12px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;overflow:hidden}
+.emoji-btn:hover{transform:scale(1.04);border-color:rgba(255,255,255,.15);background:#111827}
+.emoji-btn:active{transform:scale(.96)}
+.eb-emoji{font-size:44px;line-height:1;transition:transform .15s}
+.eb-count{font-size:18px;font-weight:700;color:rgba(255,255,255,.6);transition:all .3s}
+.emoji-btn.pop .eb-emoji{animation:emojiPop .3s ease}
+@keyframes emojiPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+
+/* FLOATING ANIMATION */
+.float-emoji{position:fixed;pointer-events:none;font-size:48px;z-index:999;animation:floatUp 1.2s ease-out forwards}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-180px) scale(1.4)}}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;z-index:998;animation:confettiFall 1.5s ease-in forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotateZ(0)}100%{opacity:0;transform:translateY(400px) rotateZ(720deg)}}
+
+/* HISTORY FEED */
+.feed-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto}
+.feed-item{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.feed-item:last-child{border-bottom:none}
+.feed-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#3B3BFF,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.feed-text{flex:1;font-size:16px}
+.feed-text b{color:#dde6ff}
+.feed-time{font-size:13px;color:rgba(255,255,255,.3)}
+.feed-big-emoji{font-size:24px;flex-shrink:0}
+
+/* LIVE TICKER */
+.ticker{background:#090e1c;border-top:1px solid rgba(255,255,255,.07);padding:12px 24px;font-size:16px;color:rgba(255,255,255,.45);overflow:hidden;white-space:nowrap;flex-shrink:0}
+.ticker-inner{display:inline-block;animation:tickScroll 20s linear infinite}
+@keyframes tickScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">✨</div>
+  <div class="header-title">Reactions</div>
+  <div class="live-badge"><div class="live-dot"></div> Live</div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'reactions-close'},'*')">✕</button>
+</div>
+
+<div class="content">
+  <!-- Top reactions -->
+  <div>
+    <div class="section-label">TOP REACTIONS THIS SESSION</div>
+    <div class="top-bar" id="topBar">
+      <div class="top-item"><span class="top-rank">#1</span><span class="top-emoji">👍</span><span class="top-count" id="top1c">0</span></div>
+      <div class="top-sep"></div>
+      <div class="top-item"><span class="top-rank">#2</span><span class="top-emoji" id="top2e">🔥</span><span class="top-count" id="top2c">0</span></div>
+      <div class="top-sep"></div>
+      <div class="top-item"><span class="top-rank">#3</span><span class="top-emoji" id="top3e">🎉</span><span class="top-count" id="top3c">0</span></div>
+    </div>
+  </div>
+
+  <!-- Emoji grid -->
+  <div>
+    <div class="section-label">SEND A REACTION</div>
+    <div class="emoji-grid" id="emojiGrid"></div>
+  </div>
+
+  <!-- History -->
+  <div>
+    <div class="section-label">RECENT REACTIONS</div>
+    <div class="feed-card" id="feedCard">
+      <div style="text-align:center;color:rgba(255,255,255,.25);font-size:16px;padding:20px">Tap a reaction to get started!</div>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" id="ticker">
+  <div class="ticker-inner" id="tickerInner">Loading live reactions...</div>
+</div>
+
+<script>
+const EMOJIS = ['👍','❤️','😂','🎉','🔥','💯','🚀','🎯','😎','💪','🤝','🙌'];
+const NAMES = ['Marie','Thomas','Léa','Hugo','Camille','Julien','Sophie','Alex'];
+const AVATARS = {'Marie':'M','Thomas':'T','Léa':'L','Hugo':'H','Camille':'C','Julien':'J','Sophie':'S','Alex':'A'};
+const COLORS = ['#3B3BFF','#7c3aed','#059669','#dc2626','#d97706','#0891b2'];
+
+let counts = {};
+EMOJIS.forEach(e => counts[e] = Math.floor(Math.random()*12));
+
+let feedItems = [];
+let tickerMessages = [];
+
+function renderGrid() {
+  const grid = document.getElementById('emojiGrid');
+  grid.innerHTML = '';
+  EMOJIS.forEach(em => {
+    const btn = document.createElement('button');
+    btn.className = 'emoji-btn';
+    btn.id = `eb-${em}`;
+    btn.innerHTML = `<div class="eb-emoji">${em}</div><div class="eb-count">${counts[em]}</div>`;
+    btn.addEventListener('click', () => react(em, btn));
+    grid.appendChild(btn);
+  });
+}
+
+function react(emoji, btnEl) {
+  counts[emoji]++;
+  btnEl.querySelector('.eb-count').textContent = counts[emoji];
+  btnEl.classList.add('pop');
+  setTimeout(() => btnEl.classList.remove('pop'), 350);
+
+  // Float animation
+  const rect = btnEl.getBoundingClientRect();
+  const floater = document.createElement('div');
+  floater.className = 'float-emoji';
+  floater.textContent = emoji;
+  floater.style.left = `${rect.left + rect.width/2 - 24}px`;
+  floater.style.top = `${rect.top}px`;
+  document.body.appendChild(floater);
+  setTimeout(() => floater.remove(), 1300);
+
+  // Confetti for 🎉
+  if (emoji === '🎉') launchConfetti(rect);
+
+  addFeedItem('You', emoji, 'just now');
+  updateTopBar();
+  updateTicker();
+}
+
+function launchConfetti(rect) {
+  const colors = ['#3B3BFF','#ff6616','#22c55e','#f59e0b','#ef4444','#8b5cf6','#ec4899'];
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.left = `${rect.left + Math.random()*rect.width}px`;
+      c.style.top = `${rect.top}px`;
+      c.style.width = `${6+Math.random()*8}px`;
+      c.style.height = `${6+Math.random()*8}px`;
+      c.style.animationDuration = `${0.8+Math.random()*0.8}s`;
+      c.style.animationDelay = `${Math.random()*0.3}s`;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2000);
+    }, i * 30);
+  }
+}
+
+function addFeedItem(name, emoji, time) {
+  feedItems.unshift({ name, emoji, time });
+  if (feedItems.length > 10) feedItems.pop();
+  renderFeed();
+}
+
+function renderFeed() {
+  const feed = document.getElementById('feedCard');
+  if (!feedItems.length) return;
+  const colorIdx = (name) => COLORS[NAMES.indexOf(name) % COLORS.length] || '#3B3BFF';
+  feed.innerHTML = feedItems.map(f => `
+    <div class="feed-item">
+      <div class="feed-avatar" style="background:${colorIdx(f.name)}">${(AVATARS[f.name]||f.name[0])}</div>
+      <div class="feed-text"><b>${f.name}</b> sent a reaction</div>
+      <div class="feed-big-emoji">${f.emoji}</div>
+      <div class="feed-time">${f.time}</div>
+    </div>`).join('');
+}
+
+function updateTopBar() {
+  const sorted = [...EMOJIS].sort((a,b) => counts[b]-counts[a]);
+  const topEmojis = [document.querySelector('.top-item:nth-child(1) .top-emoji'),
+    document.getElementById('top2e'), document.getElementById('top3e')];
+  const topCounts = [document.getElementById('top1c'), document.getElementById('top2c'), document.getElementById('top3c')];
+  [0,1,2].forEach(i => {
+    if (topEmojis[i]) topEmojis[i].textContent = sorted[i];
+    if (topCounts[i]) topCounts[i].textContent = counts[sorted[i]];
+  });
+}
+
+function updateTicker() {
+  const msgs = NAMES.map(n => `${n} reacted ${EMOJIS[Math.floor(Math.random()*EMOJIS.length)]}`).join('   •   ');
+  const inner = document.getElementById('tickerInner');
+  inner.textContent = msgs + '   •   ' + msgs;
+}
+
+// Simulate other reactions
+const times = ['just now','2s ago','5s ago','12s ago','30s ago','1m ago','2m ago'];
+function simReaction() {
+  const name = NAMES[Math.floor(Math.random()*NAMES.length)];
+  const emoji = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+  counts[emoji]++;
+  const btn = document.getElementById(`eb-${emoji}`);
+  if (btn) {
+    btn.querySelector('.eb-count').textContent = counts[emoji];
+    btn.classList.add('pop');
+    setTimeout(() => btn.classList.remove('pop'), 350);
+  }
+  addFeedItem(name, emoji, 'just now');
+  updateTopBar();
+}
+
+setInterval(simReaction, 4000 + Math.random()*3000);
+
+updateTicker();
+setInterval(updateTicker, 8000);
+
+renderGrid();
+updateTopBar();
+
+// Pre-populate feed with some initial items
+[['Thomas','🔥','3s ago'],['Léa','🎉','10s ago'],['Hugo','💪','25s ago'],['Marie','🚀','1m ago']].forEach(([n,e,t]) => addFeedItem(n,e,t));
+</script>
+</body>
+</html>

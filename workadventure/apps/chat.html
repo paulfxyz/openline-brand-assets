@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline AI — Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    color: #dde6ff;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Top-right glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30px;
+    right: -50px;
+    width: 380px;
+    height: 280px;
+    background: radial-gradient(ellipse, rgba(59,59,255,.2) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grid texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(59,59,255,.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .ai-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff6616 0%, #ff8848 50%, #3B3BFF 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .ai-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #090e1c;
+    animation: pulse-green 2s infinite;
+  }
+
+  .header-info { flex: 1; min-width: 0; }
+
+  .header-name {
+    font-family: 'Play', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #dde6ff;
+    line-height: 1;
+  }
+
+  .header-eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.25);
+    letter-spacing: .07em;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .header-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,.3);
+    margin-top: 4px;
+  }
+
+  .model-chip {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: rgba(59,59,255,.12);
+    border: 1px solid rgba(59,59,255,.25);
+    color: #7070FF;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+
+  .model-chip:hover { background: rgba(59,59,255,.2); }
+
+  .btn-close {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    cursor: pointer;
+    color: rgba(255,255,255,.4);
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .btn-close:hover { background: rgba(255,255,255,.08); color: #dde6ff; }
+
+  /* ── MODE CHIPS ── */
+  .mode-bar {
+    display: flex;
+    gap: 8px;
+    padding: 14px 28px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: #090e1c;
+  }
+
+  .mode-chip {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all .15s;
+    color: rgba(255,255,255,.4);
+    background: transparent;
+  }
+
+  .mode-chip:hover { color: #dde6ff; }
+
+  .mode-chip.active {
+    background: rgba(59,59,255,.18);
+    border-color: rgba(59,59,255,.35);
+    color: #7070FF;
+  }
+
+  /* ── MESSAGE THREAD ── */
+  .message-thread {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .message-thread::-webkit-scrollbar { width: 6px; }
+  .message-thread::-webkit-scrollbar-track { background: transparent; }
+  .message-thread::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 2px; }
+
+  /* Day divider */
+  .day-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0;
+    animation: fade-up .3s ease both;
+  }
+
+  .day-divider::before, .day-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,.07);
+  }
+
+  .day-divider span {
+    font-size: 14px;
+    color: rgba(255,255,255,.25);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    white-space: nowrap;
+  }
+
+  /* Message row */
+  .msg-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    animation: fade-up .25s ease both;
+  }
+
+  .msg-row.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .msg-avatar.bot {
+    background: linear-gradient(135deg, #ff6616, #3B3BFF);
+    color: #fff;
+  }
+
+  .msg-avatar.user-av {
+    background: rgba(59,59,255,.3);
+    border: 1px solid rgba(59,59,255,.4);
+    color: #7070FF;
+  }
+
+  .msg-content { max-width: 78%; }
+
+  .msg-bubble {
+    padding: 18px 22px;
+    border-radius: 18px;
+    font-size: 18px;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .msg-bubble.bot {
+    background: #131f35;
+    border: 1px solid rgba(255,255,255,.07);
+    border-bottom-left-radius: 4px;
+    color: #c8d4f0;
+  }
+
+  .msg-bubble.user {
+    background: #3B3BFF;
+    border-bottom-right-radius: 4px;
+    color: #fff;
+  }
+
+  .msg-time {
+    font-size: 14px;
+    color: rgba(255,255,255,.2);
+    margin-top: 6px;
+    padding: 0 6px;
+  }
+
+  .msg-row.user .msg-time { text-align: right; }
+
+  /* Quick replies */
+  .quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+    padding-left: 54px;
+  }
+
+  .quick-reply {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    background: rgba(59,59,255,.1);
+    border: 1px solid rgba(59,59,255,.25);
+    color: #7070FF;
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .quick-reply:hover {
+    background: rgba(59,59,255,.2);
+    box-shadow: 0 0 10px rgba(59,59,255,.25);
+  }
+
+  /* Typing indicator */
+  .typing-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    animation: fade-up .25s ease both;
+  }
+
+  .typing-bubble {
+    background: #131f35;
+    border: 1px solid rgba(255,255,255,.07);
+    border-bottom-left-radius: 4px;
+    border-radius: 18px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .typing-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.35);
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: .18s; }
+  .typing-dot:nth-child(3) { animation-delay: .36s; }
+
+  /* ── INPUT BAR ── */
+  .input-bar {
+    flex-shrink: 0;
+    background: #090e1c;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 18px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 16px;
+    padding: 14px 16px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+  .input-row:focus-within {
+    border-color: rgba(59,59,255,.45);
+    box-shadow: 0 0 0 3px rgba(59,59,255,.1);
+  }
+
+  .input-textarea {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #dde6ff;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    resize: none;
+    min-height: 28px;
+    max-height: 140px;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .input-textarea::placeholder { color: rgba(255,255,255,.2); }
+
+  .input-textarea::-webkit-scrollbar { width: 2px; }
+  .input-textarea::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); }
+
+  .input-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    color: rgba(255,255,255,.3);
+    transition: all .15s;
+    background: none;
+    border: none;
+  }
+
+  .icon-btn:hover { color: rgba(255,255,255,.65); background: rgba(255,255,255,.06); }
+
+  .send-btn {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3B3BFF;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+
+  .send-btn:hover {
+    background: #4A4AFF;
+    box-shadow: 0 0 18px rgba(59,59,255,.5);
+  }
+
+  .send-btn:disabled {
+    opacity: .4;
+    cursor: default;
+    box-shadow: none;
+  }
+
+  .input-hint {
+    font-size: 14px;
+    color: rgba(255,255,255,.18);
+    text-align: center;
+  }
+
+  /* Keyframes */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-green {
+    0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+    50%     { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  @keyframes bounce {
+    0%,60%,100% { transform: translateY(0); }
+    30%          { transform: translateY(-5px); }
+  }
+
+  /* Code snippet in messages */
+  .msg-code {
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    color: #7dd3fc;
+    margin-top: 14px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="ai-avatar">
+    <svg width="28" height="28" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="5" stroke="#fff" stroke-width="1.5"/>
+      <path d="M9 4V2M9 16v-2M4 9H2M16 9h-2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="header-info">
+    <div class="header-eyebrow">OPENLINE WORKSPACE</div>
+    <div class="header-name">Openline AI</div>
+    <div class="header-sub">Context-aware · Powered by OL-Pro</div>
+  </div>
+  <div class="model-chip" title="Switch model">OL-Pro ▾</div>
+  <button class="btn-close" onclick="closeApp()" aria-label="Close">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+</header>
+
+<!-- MODE BAR -->
+<div class="mode-bar">
+  <button class="mode-chip active" onclick="setMode(this)">Assistant</button>
+  <button class="mode-chip" onclick="setMode(this)">Search</button>
+  <button class="mode-chip" onclick="setMode(this)">Team</button>
+  <button class="mode-chip" onclick="setMode(this)">Docs</button>
+</div>
+
+<!-- MESSAGE THREAD -->
+<div class="message-thread" id="thread">
+
+  <div class="day-divider"><span>Today · Jul 14 2025</span></div>
+
+  <!-- Bot welcome -->
+  <div class="msg-row">
+    <div class="msg-avatar bot">AI</div>
+    <div class="msg-content">
+      <div class="msg-bubble bot">
+        Hey! I'm your Openline AI assistant. I have context about your team, projects, carrier integrations, and internal docs.<br><br>
+        What can I help you with today?
+      </div>
+      <div class="msg-time">09:02</div>
+      <div class="quick-replies">
+        <button class="quick-reply" onclick="useQuick(this)">eSIM provisioning status</button>
+        <button class="quick-reply" onclick="useQuick(this)">Latest release notes</button>
+        <button class="quick-reply" onclick="useQuick(this)">Who's on-call?</button>
+        <button class="quick-reply" onclick="useQuick(this)">Q3 roadmap highlights</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- User message -->
+  <div class="msg-row user">
+    <div class="msg-avatar user-av">YO</div>
+    <div class="msg-content">
+      <div class="msg-bubble user">What's the status of the v2.4 provisioning API rollout? Any issues reported?</div>
+      <div class="msg-time">09:05</div>
+    </div>
+  </div>
+
+  <!-- Bot response -->
+  <div class="msg-row">
+    <div class="msg-avatar bot">AI</div>
+    <div class="msg-content">
+      <div class="msg-bubble bot">
+        The v2.4 Provisioning API is live and performing well. Here's the current snapshot from the registry:
+        <div class="msg-code">Status:     ✅ Online
+Uptime:     99.97% (last 30d)
+Endpoint:   provision.openline.io/v2
+p50 / p99:  34ms / 118ms
+Last check: 30s ago</div>
+        One note: a transient 502 cluster occurred at <strong>07:41 UTC</strong> for ~3 minutes due to a Redis memory spike (78% utilization). The Provisioning API recovered automatically. The Redis team is investigating a potential memory leak in the session cache. No user-facing impact was recorded.
+      </div>
+      <div class="msg-time">09:05</div>
+      <div class="quick-replies">
+        <button class="quick-reply" onclick="useQuick(this)">Redis incident details</button>
+        <button class="quick-reply" onclick="useQuick(this)">Provisioning API changelog</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- User message -->
+  <div class="msg-row user">
+    <div class="msg-avatar user-av">YO</div>
+    <div class="msg-content">
+      <div class="msg-bubble user">Who's the on-call engineer for infrastructure today?</div>
+      <div class="msg-time">09:08</div>
+    </div>
+  </div>
+
+  <!-- Bot response -->
+  <div class="msg-row">
+    <div class="msg-avatar bot">AI</div>
+    <div class="msg-content">
+      <div class="msg-bubble bot">
+        Today's on-call rotation (Jul 14):<br><br>
+        <strong>Primary:</strong> Mihail Popescu (Infrastructure) — @mihail in Slack<br>
+        <strong>Secondary:</strong> Rae Tanaka (Platform) — @rae<br>
+        <strong>Escalation:</strong> Aria Nakamura (CTO) — available for P0 only<br><br>
+        Mihail's current timezone is EET (UTC+3). You can page via PagerDuty or ping directly in <strong>#ops-alerts</strong>.
+      </div>
+      <div class="msg-time">09:08</div>
+    </div>
+  </div>
+
+  <!-- Typing indicator (visible at start, hidden after messages load) -->
+  <div class="typing-row" id="typing-indicator" style="display:none;">
+    <div class="msg-avatar bot">AI</div>
+    <div class="typing-bubble">
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- INPUT BAR -->
+<div class="input-bar">
+  <div class="input-row">
+    <textarea
+      class="input-textarea"
+      id="chat-input"
+      placeholder="Ask about eSIM, infrastructure, team, or docs…"
+      rows="1"
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <div class="input-actions">
+      <button class="icon-btn" title="Attach file" aria-label="Attach">
+        <svg width="18" height="18" viewBox="0 0 15 15" fill="none">
+          <path d="M13 7.5L7.5 13A4.5 4.5 0 012 7.5L8 1.5a3 3 0 014.5 3.9L6.9 10.5A1.5 1.5 0 014.8 8.4l5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="icon-btn" title="Emoji" aria-label="Emoji">
+        <svg width="18" height="18" viewBox="0 0 15 15" fill="none">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5 9s.8 1.5 2.5 1.5S10 9 10 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="5.5" cy="6.5" r=".7" fill="currentColor"/>
+          <circle cx="9.5" cy="6.5" r=".7" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
+          <path d="M12.5 1.5L6.5 7.5M12.5 1.5L8.5 12.5L6.5 7.5L1.5 5.5L12.5 1.5Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="input-hint">OL-Pro · Context: Workspace · Messages are not stored externally</div>
+</div>
+
+<script>
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const thread = document.getElementById('thread');
+  const typing = document.getElementById('typing-indicator');
+
+  // Auto-resize textarea
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    sendBtn.disabled = el.value.trim() === '';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendMessage();
+    }
+  }
+
+  function setMode(el) {
+    document.querySelectorAll('.mode-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function useQuick(btn) {
+    input.value = btn.textContent;
+    autoResize(input);
+    sendMessage();
+  }
+
+  const botReplies = {
+    'Redis incident details': 'The Redis incident at 07:41 UTC was caused by a session cache growth spike — approximately 2.1 million short-lived eSIM provisioning tokens were not being evicted correctly due to a TTL misconfiguration introduced in v2.4.1. Mihail rolled back the TTL value from 86400s to 3600s at 07:44 UTC, bringing memory utilization back to 62%. A permanent fix (lazy eviction + memory policy update) is scheduled for tonight\'s maintenance window.',
+    'Provisioning API changelog': 'v2.4 Changelog (Jul 14 2025):\n• Sub-3s provisioning SLA (down from 6.2s avg)\n• Multi-IMSI profile stacking support\n• OpenAPI 3.1 compliance\n• Carrier API batch endpoint (/v2/batch)\n• JWT token rotation on 401s (auto-retry)\n• Rate limit raised to 1200 rps per tenant',
+    'eSIM provisioning status': 'Current provisioning metrics (live):\n\nActivations today: 48,291\nSuccess rate: 99.97%\np50 latency: 34ms | p99: 118ms\nActive profiles: 10,042,771\nCarrier partners online: 117/120',
+    'Latest release notes': 'Latest releases this week:\n\n• Provisioning API v2.4 (Jul 14) — multi-IMSI, OpenAPI 3.1\n• Auth Service v3.2.1 (Jul 12) — JWT key rotation fix\n• WorkAdventure Apps Batch 1 (Jul 14) — new embedded tooling UIs\n• Config API v1.8 (Jul 10) — environment-level overrides',
+    "Who's on-call?": 'On-call today (Jul 14):\n\nPrimary: Mihail Popescu (Infra) — @mihail\nSecondary: Rae Tanaka (Platform) — @rae\nEscalation: Aria Nakamura (CTO)',
+    'Q3 roadmap highlights': 'Q3 2025 Roadmap Highlights:\n\n1. Five 9s SLA target across all regions\n2. AI-assisted network orchestration (beta)\n3. Fortune 500 multi-tenancy rollout (3 clients)\n4. Japan & South Korea carrier expansion (8 new MVNOs)\n5. Openline Partner Portal v2 launch\n6. Global Team Summit — Berlin, Sep 8-10',
+  };
+
+  const defaultReplies = [
+    "I'm checking the workspace docs for that — give me a moment.",
+    "Based on your workspace context, here's what I found: that feature is currently on the Q3 backlog, owned by the Platform team. Want me to pull the spec doc?",
+    "I don't have a definitive answer on that yet. I'd recommend checking the #platform channel or the internal Notion page for the latest update.",
+    "Great question. The relevant owner is likely Rae Tanaka — she's been leading that initiative. Should I draft a message to her?",
+  ];
+
+  let replyIndex = 0;
+
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Add user bubble
+    appendMessage('user', text, getCurrentTime());
+    input.value = '';
+    input.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    // Show typing
+    typing.style.display = 'flex';
+    scrollToBottom();
+
+    const delay = 900 + Math.random() * 600;
+    setTimeout(() => {
+      typing.style.display = 'none';
+      const replyText = botReplies[text] || defaultReplies[replyIndex % defaultReplies.length];
+      replyIndex++;
+      appendMessage('bot', replyText, getCurrentTime());
+      scrollToBottom();
+    }, delay);
+  }
+
+  function appendMessage(role, text, time) {
+    const isUser = role === 'user';
+    const div = document.createElement('div');
+    div.className = 'msg-row' + (isUser ? ' user' : '');
+    div.style.animationDelay = '0s';
+
+    // Format text (convert \n to <br>, handle code blocks)
+    let formatted = text.replace(/\n/g, '<br>');
+
+    div.innerHTML = `
+      <div class="msg-avatar ${isUser ? 'user-av' : 'bot'}">${isUser ? 'YO' : 'AI'}</div>
+      <div class="msg-content">
+        <div class="msg-bubble ${isUser ? 'user' : 'bot'}">${formatted}</div>
+        <div class="msg-time">${time}</div>
+      </div>
+    `;
+
+    // Insert before typing indicator
+    thread.insertBefore(div, typing);
+  }
+
+  function getCurrentTime() {
+    const now = new Date();
+    return now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  }
+
+  function scrollToBottom() {
+    requestAnimationFrame(() => {
+      thread.scrollTop = thread.scrollHeight;
+    });
+  }
+
+  function closeApp() {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'chat-close' }, '*');
+    } else {
+      history.back();
+    }
+  }
+
+  // Scroll to bottom on load
+  scrollToBottom();
+</script>
+</body>
+</html>

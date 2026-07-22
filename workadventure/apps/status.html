@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.current-badge{padding:8px 16px;border-radius:20px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
+.status-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.dot-green{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.5);animation:pulse2 2s infinite}
+.dot-amber{background:#f59e0b;box-shadow:0 0 8px rgba(245,158,11,.5);animation:pulse2 2s infinite}
+.dot-blue{background:#3B3BFF;box-shadow:0 0 8px rgba(59,59,255,.5);animation:pulse2 2s infinite}
+.dot-red{background:#ef4444;box-shadow:0 0 8px rgba(239,68,68,.5);animation:pulse2 2s infinite}
+@keyframes pulse2{0%,100%{opacity:1}50%{opacity:.6}}
+.close-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:28px 32px;display:grid;grid-template-columns:1fr 340px;gap:24px}
+
+.left-col{display:flex;flex-direction:column;gap:24px}
+.right-col{display:flex;flex-direction:column;gap:20px}
+
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:16px}
+
+/* STATUS CARDS */
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.status-card{background:#0c1120;border:2px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;gap:10px}
+.status-card:hover{transform:translateY(-2px)}
+.status-card.active-available{border-color:#22c55e;background:rgba(34,197,94,.06);box-shadow:0 0 30px rgba(34,197,94,.08)}
+.status-card.active-busy{border-color:#f59e0b;background:rgba(245,158,11,.06);box-shadow:0 0 30px rgba(245,158,11,.08)}
+.status-card.active-meeting{border-color:#3B3BFF;background:rgba(59,59,255,.08);box-shadow:0 0 30px rgba(59,59,255,.1)}
+.status-card.active-dnd{border-color:#ef4444;background:rgba(239,68,68,.06);box-shadow:0 0 30px rgba(239,68,68,.08)}
+.sc-icon{font-size:36px}
+.sc-label{font-family:'Play',sans-serif;font-size:22px;font-weight:700}
+.sc-desc{font-size:15px;color:rgba(255,255,255,.45);line-height:1.4}
+
+/* Custom message */
+.custom-msg-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px}
+.emoji-row{display:flex;gap:8px;margin-bottom:12px}
+.emoji-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;width:44px;height:44px;font-size:22px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.emoji-btn:hover{background:rgba(255,255,255,.12);transform:scale(1.1)}
+.emoji-btn.picked{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.4)}
+.msg-row{display:flex;gap:12px}
+.msg-prefix{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px;font-size:22px;display:flex;align-items:center;min-width:56px;justify-content:center}
+.msg-input{flex:1;background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 22px;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.msg-input:focus{border-color:#3B3BFF}
+
+/* Clear timer + working hours */
+.options-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.opt-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.opt-label{font-size:18px;font-weight:500}
+.opt-desc{font-size:14px;color:rgba(255,255,255,.4);margin-top:2px}
+select.opt-sel{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 18px;color:#dde6ff;font-size:16px;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
+.toggle-wrap{position:relative;width:52px;height:28px;flex-shrink:0}
+.toggle-input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,.12);border-radius:14px;cursor:pointer;transition:all .3s}
+.toggle-slider::before{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:all .3s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.toggle-input:checked+.toggle-slider{background:#3B3BFF}
+.toggle-input:checked+.toggle-slider::before{transform:translateX(24px)}
+
+/* SAVE BUTTON */
+.save-btn{background:#3B3BFF;border:none;color:#fff;padding:16px 32px;border-radius:12px;font-size:18px;cursor:pointer;font-family:'Play',sans-serif;font-weight:700;width:100%;transition:all .2s}
+.save-btn:hover{background:#2d2dff;transform:translateY(-1px)}
+.save-btn.saved{background:#22c55e}
+
+/* PREVIEW */
+.preview-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px}
+.preview-title{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:16px}
+.preview-widget{background:#070c18;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px;display:flex;align-items:center;gap:16px}
+.preview-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3B3BFF,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0;position:relative}
+.preview-dot{position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;border:2px solid #070c18}
+.preview-name{font-family:'Play',sans-serif;font-size:18px;font-weight:700}
+.preview-msg{font-size:15px;color:rgba(255,255,255,.5);margin-top:4px}
+.preview-status-text{font-size:14px;font-weight:600;margin-top:6px}
+
+/* Location */
+.location-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px}
+.zone-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.zone-opt{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.03);border:1px solid transparent;transition:all .2s}
+.zone-opt:hover{background:rgba(255,255,255,.06)}
+.zone-opt.selected{border-color:rgba(59,59,255,.3);background:rgba(59,59,255,.07)}
+.zone-dot{width:12px;height:12px;border-radius:50%}
+.zone-label{font-size:17px;font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">👤</div>
+  <div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em">STATUS</div>
+    <div class="header-title">My Status</div>
+  </div>
+  <div class="header-right">
+    <div class="current-badge" id="currentBadge" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)">
+      <div class="status-dot dot-green" id="headerDot"></div>
+      <span id="headerStatusText">Available</span>
+    </div>
+    <button class="close-btn" onclick="window.parent.postMessage({type:'status-close'},'*')">✕</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="left-col">
+    <!-- Status Selector -->
+    <div>
+      <div class="section-label">SET STATUS</div>
+      <div class="status-grid">
+        <div class="status-card active-available" data-status="available" id="card-available">
+          <div class="sc-icon">🟢</div>
+          <div class="sc-label">Available</div>
+          <div class="sc-desc">Ready to collaborate and respond quickly</div>
+        </div>
+        <div class="status-card" data-status="busy" id="card-busy">
+          <div class="sc-icon">🟡</div>
+          <div class="sc-label">Busy</div>
+          <div class="sc-desc">Working heads-down, slower responses</div>
+        </div>
+        <div class="status-card" data-status="meeting" id="card-meeting">
+          <div class="sc-icon">🔵</div>
+          <div class="sc-label">In a Meeting</div>
+          <div class="sc-desc">On a call — will reply when I'm free</div>
+        </div>
+        <div class="status-card" data-status="dnd" id="card-dnd">
+          <div class="sc-icon">🔴</div>
+          <div class="sc-label">Do Not Disturb</div>
+          <div class="sc-desc">Deep focus — notifications paused</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom message -->
+    <div>
+      <div class="section-label">CUSTOM MESSAGE</div>
+      <div class="custom-msg-card">
+        <div class="emoji-row" id="emojiRow">
+          <button class="emoji-btn picked" data-emoji="💻">💻</button>
+          <button class="emoji-btn" data-emoji="🎯">🎯</button>
+          <button class="emoji-btn" data-emoji="☕">☕</button>
+          <button class="emoji-btn" data-emoji="🚀">🚀</button>
+          <button class="emoji-btn" data-emoji="📞">📞</button>
+          <button class="emoji-btn" data-emoji="🏃">🏃</button>
+        </div>
+        <div class="msg-row">
+          <div class="msg-prefix" id="emojiPrefix">💻</div>
+          <input class="msg-input" id="msgInput" placeholder="What are you working on?" value="Building the new inbox feature" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div>
+      <div class="section-label">OPTIONS</div>
+      <div class="options-card">
+        <div class="opt-row">
+          <div>
+            <div class="opt-label">Auto-clear status</div>
+            <div class="opt-desc">Status resets after this time</div>
+          </div>
+          <select class="opt-sel" id="clearAfter">
+            <option>30 min</option>
+            <option selected>1 hour</option>
+            <option>4 hours</option>
+            <option>End of day</option>
+            <option>Don't clear</option>
+          </select>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,.06)"></div>
+        <div class="opt-row">
+          <div>
+            <div class="opt-label">Working hours</div>
+            <div class="opt-desc">Show 9:00 – 18:00 banner to team</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" class="toggle-input" id="workToggle" checked>
+            <div class="toggle-slider"></div>
+          </label>
+        </div>
+        <div class="opt-row">
+          <div>
+            <div class="opt-label">Share location</div>
+            <div class="opt-desc">Let team see your zone</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" class="toggle-input" id="locationToggle" checked>
+            <div class="toggle-slider"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" id="saveBtn">Save Status</button>
+  </div>
+
+  <div class="right-col">
+    <!-- Preview -->
+    <div class="preview-card">
+      <div class="preview-title">PREVIEW — HOW OTHERS SEE YOU</div>
+      <div class="preview-widget">
+        <div class="preview-avatar">
+          P
+          <div class="preview-dot" id="previewDot" style="background:#22c55e"></div>
+        </div>
+        <div>
+          <div class="preview-name">Paul Martin</div>
+          <div class="preview-msg" id="previewMsg">💻 Building the new inbox feature</div>
+          <div class="preview-status-text" id="previewStatusText" style="color:#22c55e">● Available</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="location-card">
+      <div class="section-label">CURRENT ZONE</div>
+      <div class="zone-list" id="zoneList">
+        <div class="zone-opt selected" data-zone="Focus Zone"><div class="zone-dot" style="background:#3B3BFF"></div><span class="zone-label">Focus Zone</span></div>
+        <div class="zone-opt" data-zone="Chill Zone"><div class="zone-dot" style="background:#8b5cf6"></div><span class="zone-label">Chill Zone</span></div>
+        <div class="zone-opt" data-zone="Meeting Room"><div class="zone-dot" style="background:#ff6616"></div><span class="zone-label">Meeting Room</span></div>
+        <div class="zone-opt" data-zone="War Room"><div class="zone-dot" style="background:#ef4444"></div><span class="zone-label">War Room</span></div>
+        <div class="zone-opt" data-zone="Central Plaza"><div class="zone-dot" style="background:#22c55e"></div><span class="zone-label">Central Plaza</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATUS_KEY = 'openline_status_v2';
+const STATUS_CONFIG = {
+  available: { label:'Available', dotClass:'dot-green', color:'#22c55e', bgColor:'rgba(34,197,94,.1)', borderColor:'rgba(34,197,94,.2)', cardClass:'active-available' },
+  busy: { label:'Busy', dotClass:'dot-amber', color:'#f59e0b', bgColor:'rgba(245,158,11,.1)', borderColor:'rgba(245,158,11,.2)', cardClass:'active-busy' },
+  meeting: { label:'In a Meeting', dotClass:'dot-blue', color:'#3B3BFF', bgColor:'rgba(59,59,255,.1)', borderColor:'rgba(59,59,255,.2)', cardClass:'active-meeting' },
+  dnd: { label:'Do Not Disturb', dotClass:'dot-red', color:'#ef4444', bgColor:'rgba(239,68,68,.1)', borderColor:'rgba(239,68,68,.2)', cardClass:'active-dnd' },
+};
+
+let currentStatus = 'available';
+let currentEmoji = '💻';
+
+function applyStatus(s) {
+  currentStatus = s;
+  const cfg = STATUS_CONFIG[s];
+  // Cards
+  document.querySelectorAll('.status-card').forEach(c => {
+    c.className = 'status-card';
+    if (c.dataset.status === s) c.classList.add(cfg.cardClass);
+  });
+  // Header badge
+  const badge = document.getElementById('currentBadge');
+  badge.style.background = cfg.bgColor;
+  badge.style.borderColor = cfg.borderColor;
+  document.getElementById('headerDot').className = `status-dot ${cfg.dotClass}`;
+  document.getElementById('headerStatusText').textContent = cfg.label;
+  // Preview
+  document.getElementById('previewDot').style.background = cfg.color;
+  document.getElementById('previewStatusText').style.color = cfg.color;
+  document.getElementById('previewStatusText').textContent = `● ${cfg.label}`;
+}
+
+document.querySelectorAll('.status-card').forEach(card => {
+  card.addEventListener('click', () => applyStatus(card.dataset.status));
+});
+
+document.querySelectorAll('.emoji-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('picked'));
+    this.classList.add('picked');
+    currentEmoji = this.dataset.emoji;
+    document.getElementById('emojiPrefix').textContent = currentEmoji;
+    updatePreviewMsg();
+  });
+});
+
+document.getElementById('msgInput').addEventListener('input', updatePreviewMsg);
+
+function updatePreviewMsg() {
+  const msg = document.getElementById('msgInput').value;
+  document.getElementById('previewMsg').textContent = `${currentEmoji} ${msg || 'No message set'}`;
+}
+
+document.querySelectorAll('.zone-opt').forEach(opt => {
+  opt.addEventListener('click', function() {
+    document.querySelectorAll('.zone-opt').forEach(o=>o.classList.remove('selected'));
+    this.classList.add('selected');
+  });
+});
+
+document.getElementById('saveBtn').addEventListener('click', function() {
+  const data = { status: currentStatus, emoji: currentEmoji, msg: document.getElementById('msgInput').value };
+  localStorage.setItem(STATUS_KEY, JSON.stringify(data));
+  this.textContent = '✓ Status Saved!';
+  this.classList.add('saved');
+  setTimeout(() => { this.textContent = 'Save Status'; this.classList.remove('saved'); }, 2000);
+});
+
+// Load saved
+const saved = JSON.parse(localStorage.getItem(STATUS_KEY) || 'null');
+if (saved) {
+  applyStatus(saved.status || 'available');
+  document.getElementById('msgInput').value = saved.msg || '';
+  if (saved.emoji) {
+    currentEmoji = saved.emoji;
+    document.getElementById('emojiPrefix').textContent = saved.emoji;
+    document.querySelectorAll('.emoji-btn').forEach(b => {
+      b.classList.toggle('picked', b.dataset.emoji === saved.emoji);
+    });
+  }
+  updatePreviewMsg();
+}
+</script>
+</body>
+</html>

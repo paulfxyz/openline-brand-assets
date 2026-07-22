@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jam Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #dde6ff;
+    overflow: hidden;
+  }
+
+  body { display: flex; flex-direction: column; }
+
+  :root { --spotify: #1db954; --spotify-dim: rgba(29,185,84,.15); }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .3; }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes vinyl-groove {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes equalizer {
+    0%, 100% { height: 6px; }
+    50%       { height: 18px; }
+  }
+
+  /* Header */
+  .app-header {
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .header-icon {
+    width: 52px; height: 52px;
+    background: var(--spotify-dim);
+    border: 1px solid rgba(29,185,84,.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+
+  .header-title { font-family: 'Play', sans-serif; font-weight: 700; font-size: 28px; color: #dde6ff; }
+  .header-sub { font-size: 16px; color: rgba(255,255,255,.4); }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(239,68,68,.12);
+    border: 1px solid rgba(239,68,68,.25);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #ef4444;
+  }
+  .live-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: pulse-live 1.2s ease-in-out infinite;
+  }
+
+  .listener-badge {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    color: rgba(255,255,255,.5);
+  }
+
+  .close-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.45);
+    transition: all .15s;
+    font-size: 20px;
+  }
+  .close-btn:hover { background: rgba(239,68,68,.12); color: #ef4444; border-color: rgba(239,68,68,.3); }
+
+  /* Content */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .content::-webkit-scrollbar { width: 6px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 6px; }
+
+  /* Now Playing */
+  .now-playing {
+    background: #0c1120;
+    border: 1px solid rgba(29,185,84,.15);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    animation: fade-up .4s ease both;
+  }
+
+  .vinyl-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    width: 140px; height: 140px;
+  }
+
+  .vinyl-outer {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #111 0deg,
+      #1a1a1a 10deg,
+      #111 20deg,
+      #1a1a1a 30deg,
+      #111 40deg,
+      #1a1a1a 50deg,
+      #111 60deg,
+      #1a1a1a 70deg,
+      #111 80deg
+    );
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 20px rgba(29,185,84,.2);
+    animation: spin 4s linear infinite;
+  }
+  .vinyl-outer.paused { animation-play-state: paused; }
+
+  .vinyl-label {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1db954, #17a349);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .vinyl-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px; height: 14px;
+    background: #070c18;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  .track-info { flex: 1; min-width: 0; }
+  .track-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--spotify);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .track-name {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #dde6ff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-artist { font-size: 18px; color: rgba(255,255,255,.5); margin-bottom: 18px; }
+
+  .progress-area {}
+  .progress-times {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: rgba(255,255,255,.35);
+    margin-bottom: 8px;
+  }
+  .progress-track {
+    height: 5px;
+    background: rgba(255,255,255,.1);
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--spotify);
+    border-radius: 5px;
+    position: relative;
+    transition: width .5s linear;
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    width: 16px; height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(29,185,84,.4);
+    opacity: 0;
+    transition: opacity .15s;
+  }
+  .progress-track:hover .progress-fill::after { opacity: 1; }
+
+  .track-actions { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
+
+  .like-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.4);
+    transition: all .15s;
+    font-size: 22px;
+  }
+  .like-btn.liked { color: #ef4444; background: rgba(239,68,68,.1); border-color: rgba(239,68,68,.2); }
+  .like-btn:hover { transform: scale(1.1); }
+
+  /* Equalizer bars */
+  .eq-bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 32px;
+  }
+  .eq-bar {
+    width: 5px;
+    background: var(--spotify);
+    border-radius: 3px;
+    animation: equalizer .6s ease-in-out infinite;
+  }
+  .eq-bar:nth-child(1) { animation-delay: 0s; }
+  .eq-bar:nth-child(2) { animation-delay: .15s; }
+  .eq-bar:nth-child(3) { animation-delay: .3s; }
+  .eq-bar:nth-child(4) { animation-delay: .1s; }
+  .eq-bar.paused { animation-play-state: paused; }
+
+  /* Listeners */
+  .listeners-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 28px;
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    animation: fade-up .4s ease .05s both;
+  }
+  .listener-label {
+    font-size: 16px;
+    color: rgba(255,255,255,.4);
+    margin-right: 8px;
+  }
+  .listener-avatars { display: flex; gap: -4px; }
+  .av {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 2px solid #0c1120;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: -10px;
+  }
+  .av:first-child { margin-left: 0; }
+
+  /* Controls */
+  .controls {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fade-up .4s ease .1s both;
+  }
+
+  .ctrl-group { display: flex; align-items: center; gap: 16px; }
+
+  .ctrl-btn {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.55);
+    transition: all .15s;
+    font-size: 24px;
+  }
+  .ctrl-btn:hover { background: rgba(255,255,255,.1); color: #dde6ff; }
+
+  .play-btn {
+    width: 72px; height: 72px;
+    background: var(--spotify);
+    border-radius: 50%;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: #000;
+    font-size: 30px;
+    transition: all .15s;
+    box-shadow: 0 0 0 0 rgba(29,185,84,.3);
+  }
+  .play-btn:hover { transform: scale(1.08); box-shadow: 0 0 16px rgba(29,185,84,.4); }
+  .play-btn.playing { box-shadow: 0 0 0 4px rgba(29,185,84,.2); }
+
+  .volume-area { display: flex; align-items: center; gap: 16px; }
+  .volume-icon { font-size: 22px; color: rgba(255,255,255,.4); }
+  .vol-slider {
+    -webkit-appearance: none;
+    width: 140px; height: 5px;
+    background: rgba(255,255,255,.15);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  /* Queue */
+  .queue-panel {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fade-up .4s ease .15s both;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .queue-header {
+    padding: 18px 28px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .queue-title { font-family: 'Play', sans-serif; font-weight: 700; font-size: 20px; color: #dde6ff; }
+
+  .queue-list { flex: 1; overflow-y: auto; padding: 12px 0; }
+  .queue-list::-webkit-scrollbar { width: 5px; }
+  .queue-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 5px; }
+
+  .queue-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 28px;
+    transition: background .12s;
+    cursor: pointer;
+  }
+  .queue-item:hover { background: rgba(255,255,255,.03); }
+
+  .q-num { font-size: 16px; color: rgba(255,255,255,.25); width: 26px; text-align: center; flex-shrink: 0; }
+  .q-art {
+    width: 52px; height: 52px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--c1, #1a1a2e), var(--c2, #16213e));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .q-info { flex: 1; min-width: 0; }
+  .q-title { font-size: 18px; font-weight: 600; color: #dde6ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .q-artist { font-size: 16px; color: rgba(255,255,255,.4); }
+  .q-dur { font-size: 16px; color: rgba(255,255,255,.3); flex-shrink: 0; }
+
+  .vote-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgba(255,255,255,.5);
+    transition: all .12s;
+    flex-shrink: 0;
+  }
+  .vote-btn:hover { background: rgba(29,185,84,.12); border-color: rgba(29,185,84,.25); color: var(--spotify); }
+  .vote-btn.voted { background: rgba(29,185,84,.12); border-color: rgba(29,185,84,.3); color: var(--spotify); }
+
+  /* Add to queue */
+  .add-queue {
+    padding: 18px 28px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .queue-input {
+    flex: 1;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    padding: 14px 20px;
+    color: #dde6ff;
+    font: 18px 'Inter', sans-serif;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .queue-input::placeholder { color: rgba(255,255,255,.3); }
+  .queue-input:focus { border-color: rgba(29,185,84,.4); }
+
+  .add-btn {
+    background: var(--spotify);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 24px;
+    font: 600 18px 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .add-btn:hover { background: #1ed760; box-shadow: 0 0 14px rgba(29,185,84,.4); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="header-icon">🎵</div>
+  <div>
+    <div class="header-title">Jam Session</div>
+    <div class="header-sub">Office Playlist · Paul's room</div>
+  </div>
+  <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+  <div class="listener-badge">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    <span id="listener-count">6</span> listening
+  </div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'jam-close'},'*')" title="Close">✕</button>
+</header>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Now Playing -->
+  <div class="now-playing">
+    <div class="vinyl-wrapper">
+      <div class="vinyl-outer" id="vinyl">
+        <div class="vinyl-label">🎵</div>
+      </div>
+      <div class="vinyl-center"></div>
+    </div>
+    <div class="track-info">
+      <div class="track-label">Now Playing</div>
+      <div class="track-name" id="track-name">Deux Frères</div>
+      <div class="track-artist" id="track-artist">PNL · Dans la légende</div>
+      <div class="progress-area">
+        <div class="progress-times">
+          <span id="current-time">1:24</span>
+          <span id="total-time">4:12</span>
+        </div>
+        <div class="progress-track" id="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width: 33%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="track-actions">
+      <div class="eq-bars" id="eq-bars">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+      <button class="like-btn" id="like-btn" onclick="toggleLike(this)" title="Like">♡</button>
+    </div>
+  </div>
+
+  <!-- Listeners -->
+  <div class="listeners-row">
+    <span class="listener-label">Listening:</span>
+    <div class="listener-avatars">
+      <div class="av" style="background:linear-gradient(135deg,#3B3BFF,#6060FF)">M</div>
+      <div class="av" style="background:linear-gradient(135deg,#ff6616,#ff9a6c)">T</div>
+      <div class="av" style="background:linear-gradient(135deg,#22c55e,#4ade80)">L</div>
+      <div class="av" style="background:linear-gradient(135deg,#a855f7,#c084fc)">A</div>
+      <div class="av" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">S</div>
+      <div class="av" style="background:linear-gradient(135deg,#ec4899,#f472b6)">C</div>
+    </div>
+    <span style="font-size:16px;color:rgba(255,255,255,.3);margin-left:auto;">Marie added next song</span>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="ctrl-group">
+      <button class="ctrl-btn" onclick="shuffle()" title="Shuffle">🔀</button>
+      <button class="ctrl-btn" onclick="prevTrack()" title="Previous">⏮</button>
+      <button class="play-btn playing" id="play-btn" onclick="togglePlay()" title="Play/Pause">⏸</button>
+      <button class="ctrl-btn" onclick="nextTrack()" title="Skip">⏭</button>
+      <button class="ctrl-btn" onclick="this.style.color=this.style.color?'':'var(--spotify)'" title="Repeat">🔁</button>
+    </div>
+    <div class="volume-area">
+      <span class="volume-icon">🔈</span>
+      <input type="range" class="vol-slider" min="0" max="100" value="72" id="volume" title="Volume">
+      <span class="volume-icon">🔊</span>
+    </div>
+  </div>
+
+  <!-- Queue -->
+  <div class="queue-panel">
+    <div class="queue-header">
+      <span class="queue-title">Up Next</span>
+      <span style="font-size:16px;color:rgba(255,255,255,.35);">5 tracks</span>
+    </div>
+    <div class="queue-list" id="queue-list">
+      <!-- populated by JS -->
+    </div>
+    <div class="add-queue">
+      <input type="text" class="queue-input" id="queue-input" placeholder="Add a song to the queue...">
+      <button class="add-btn" onclick="addToQueue()">+ Add</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const queue = [
+  { num: 1, emoji: '🌊', c1: '#1a1a2e', c2: '#16213e', title: 'Void', artist: 'PNL', dur: '4:08', votes: 4, voted: false },
+  { num: 2, emoji: '🎸', c1: '#1b0040', c2: '#300060', title: 'Running Up That Hill', artist: 'Kate Bush', dur: '5:02', votes: 7, voted: false },
+  { num: 3, emoji: '🤖', c1: '#003020', c2: '#005030', title: 'Get Lucky', artist: 'Daft Punk', dur: '4:08', votes: 3, voted: false },
+  { num: 4, emoji: '🌸', c1: '#2a0020', c2: '#400030', title: 'Suzanne', artist: 'Serge Gainsbourg', dur: '3:27', votes: 2, voted: false },
+  { num: 5, emoji: '🌙', c1: '#0a0020', c2: '#1a0040', title: 'Night Call', artist: 'Kavinsky', dur: '3:49', votes: 5, voted: false },
+];
+
+function renderQueue() {
+  const list = document.getElementById('queue-list');
+  list.innerHTML = queue.map((t, i) => `
+    <div class="queue-item">
+      <span class="q-num">${t.num}</span>
+      <div class="q-art" style="--c1:${t.c1};--c2:${t.c2}">${t.emoji}</div>
+      <div class="q-info">
+        <div class="q-title">${t.title}</div>
+        <div class="q-artist">${t.artist}</div>
+      </div>
+      <span class="q-dur">${t.dur}</span>
+      <button class="vote-btn ${t.voted ? 'voted' : ''}" onclick="vote(${i})">
+        ▲ <span>${t.votes}</span>
+      </button>
+    </div>
+  `).join('');
+}
+
+function vote(idx) {
+  if (queue[idx].voted) {
+    queue[idx].votes--;
+    queue[idx].voted = false;
+  } else {
+    queue[idx].votes++;
+    queue[idx].voted = true;
+  }
+  // Sort by votes desc
+  queue.sort((a, b) => b.votes - a.votes);
+  queue.forEach((t, i) => t.num = i + 1);
+  renderQueue();
+}
+
+function addToQueue() {
+  const input = document.getElementById('queue-input');
+  const val = input.value.trim();
+  if (!val) return;
+  queue.push({
+    num: queue.length + 1,
+    emoji: '🎵',
+    c1: '#0c1120', c2: '#182040',
+    title: val,
+    artist: 'Unknown Artist',
+    dur: '3:30',
+    votes: 0,
+    voted: false
+  });
+  input.value = '';
+  renderQueue();
+}
+
+document.getElementById('queue-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addToQueue();
+});
+
+// Play / Pause
+let isPlaying = true;
+function togglePlay() {
+  isPlaying = !isPlaying;
+  const btn = document.getElementById('play-btn');
+  const vinyl = document.getElementById('vinyl');
+  const eq = document.querySelectorAll('.eq-bar');
+  btn.textContent = isPlaying ? '⏸' : '▶';
+  btn.classList.toggle('playing', isPlaying);
+  vinyl.classList.toggle('paused', !isPlaying);
+  eq.forEach(b => b.classList.toggle('paused', !isPlaying));
+}
+
+function toggleLike(btn) {
+  btn.classList.toggle('liked');
+  btn.textContent = btn.classList.contains('liked') ? '♥' : '♡';
+}
+
+// Tracks
+const tracks = [
+  { name: 'Deux Frères', artist: 'PNL · Dans la légende', dur: '4:12' },
+  { name: 'Running Up That Hill', artist: 'Kate Bush · Hounds of Love', dur: '5:02' },
+  { name: 'Get Lucky', artist: 'Daft Punk · Random Access Memories', dur: '4:08' },
+  { name: 'Night Call', artist: 'Kavinsky · OutRun', dur: '3:49' },
+  { name: 'Suzanne', artist: 'Serge Gainsbourg · Histoire de Melody Nelson', dur: '3:27' },
+];
+let trackIdx = 0;
+
+function loadTrack(t) {
+  document.getElementById('track-name').textContent = t.name;
+  document.getElementById('track-artist').textContent = t.artist;
+  document.getElementById('total-time').textContent = t.dur;
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('current-time').textContent = '0:00';
+}
+
+function nextTrack() {
+  trackIdx = (trackIdx + 1) % tracks.length;
+  loadTrack(tracks[trackIdx]);
+  if (!isPlaying) togglePlay();
+}
+
+function prevTrack() {
+  trackIdx = (trackIdx - 1 + tracks.length) % tracks.length;
+  loadTrack(tracks[trackIdx]);
+}
+
+function shuffle() {
+  trackIdx = Math.floor(Math.random() * tracks.length);
+  loadTrack(tracks[trackIdx]);
+}
+
+// Progress bar simulation
+let progress = 33;
+let secs = 84;
+setInterval(() => {
+  if (!isPlaying) return;
+  secs++;
+  progress = Math.min(100, progress + (100 / 252));
+  const m = Math.floor(secs / 60);
+  const s = (secs % 60).toString().padStart(2, '0');
+  document.getElementById('current-time').textContent = `${m}:${s}`;
+  document.getElementById('progress-fill').style.width = progress + '%';
+  if (progress >= 100) { nextTrack(); progress = 0; secs = 0; }
+}, 1000);
+
+renderQueue();
+</script>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mercury.sh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #dde6ff;
+    overflow: hidden;
+  }
+  body { display: flex; flex-direction: column; }
+
+  :root {
+    --green: #22c55e;
+    --green-bright: #00FF41;
+    --green-dim: rgba(34,197,94,.12);
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  @keyframes type-in {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { text-shadow: 0 0 8px rgba(34,197,94,.6); }
+    50%       { text-shadow: 0 0 20px rgba(34,197,94,.9), 0 0 40px rgba(34,197,94,.3); }
+  }
+
+  @keyframes scan-line {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  @keyframes thinking-dot {
+    0%, 80%, 100% { transform: scale(0); opacity: 0; }
+    40%           { transform: scale(1); opacity: 1; }
+  }
+
+  /* Scan line effect */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(transparent, rgba(34,197,94,.05), transparent);
+    animation: scan-line 8s linear infinite;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* Header */
+  .app-header {
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .mercury-logo {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: var(--green);
+    text-shadow: 0 0 12px rgba(34,197,94,.5);
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  .header-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255,255,255,.1);
+  }
+
+  .header-tagline {
+    font-family: 'Play', sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,.5);
+  }
+  .header-tagline span { color: var(--green); }
+
+  .version-chip {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.3);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+
+  .header-right { margin-left: auto; display: flex; gap: 16px; align-items: center; }
+
+  .model-chip {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    color: rgba(255,255,255,.45);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .model-chip.active {
+    background: var(--green-dim);
+    border-color: rgba(34,197,94,.3);
+    color: var(--green);
+  }
+  .model-chip:hover { background: var(--green-dim); border-color: rgba(34,197,94,.25); color: var(--green); }
+
+  .close-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.45);
+    transition: all .15s;
+    font-size: 20px;
+  }
+  .close-btn:hover { background: rgba(239,68,68,.12); color: #ef4444; border-color: rgba(239,68,68,.3); }
+
+  /* Content */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .content::-webkit-scrollbar { width: 6px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: rgba(34,197,94,.15); border-radius: 6px; }
+
+  /* Hero terminal panel */
+  .terminal-panel {
+    background: #0a0f1e;
+    border: 1px solid rgba(34,197,94,.2);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fade-up .4s ease both;
+    box-shadow: 0 0 30px rgba(34,197,94,.05), inset 0 0 40px rgba(0,0,0,.3);
+  }
+
+  .terminal-titlebar {
+    background: #0c1020;
+    border-bottom: 1px solid rgba(34,197,94,.12);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .term-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+  }
+  .term-red    { background: #ff5f57; }
+  .term-yellow { background: #ffbd2e; }
+  .term-green  { background: #28c840; }
+
+  .term-title {
+    margin-left: 14px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.25);
+  }
+
+  /* Input area */
+  .nl-input-area {
+    padding: 22px 28px;
+    border-bottom: 1px solid rgba(34,197,94,.08);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .nl-prompt {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--green);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nl-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font: 20px 'Inter', sans-serif;
+    color: #dde6ff;
+    caret-color: var(--green);
+  }
+  .nl-input::placeholder { color: rgba(255,255,255,.2); }
+
+  .run-btn {
+    background: var(--green);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font: 600 18px 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .run-btn:hover { background: #16a34a; box-shadow: 0 0 14px rgba(34,197,94,.4); }
+
+  /* Terminal output */
+  .terminal-output {
+    padding: 22px 28px;
+    min-height: 120px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    position: relative;
+  }
+
+  .output-line { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 8px; }
+  .output-prompt { color: var(--green); flex-shrink: 0; }
+  .output-cmd { color: var(--green); word-break: break-all; }
+  .output-comment { color: rgba(34,197,94,.5); font-size: 16px; margin-top: 4px; padding-left: 28px; }
+
+  .thinking {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,.35);
+    font-size: 18px;
+  }
+  .thinking-dots { display: flex; gap: 8px; }
+  .th-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: thinking-dot 1.2s ease-in-out infinite;
+  }
+  .th-dot:nth-child(2) { animation-delay: .2s; }
+  .th-dot:nth-child(3) { animation-delay: .4s; }
+
+  .copy-btn {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font: 16px 'Inter', sans-serif;
+    color: rgba(255,255,255,.4);
+    cursor: pointer;
+    transition: all .12s;
+  }
+  .copy-btn:hover { background: var(--green-dim); color: var(--green); border-color: rgba(34,197,94,.3); }
+
+  /* Examples */
+  .examples-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    animation: fade-up .4s ease .08s both;
+  }
+
+  .example-chip {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all .15s;
+    font-size: 16px;
+    color: rgba(255,255,255,.5);
+    text-align: left;
+    line-height: 1.4;
+  }
+  .example-chip:hover {
+    background: var(--green-dim);
+    border-color: rgba(34,197,94,.3);
+    color: var(--green);
+  }
+  .example-chip strong { display: block; color: rgba(255,255,255,.7); margin-bottom: 4px; font-weight: 600; font-size: 16px; }
+
+  /* Feature cards */
+  .features-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    animation: fade-up .4s ease .12s both;
+  }
+
+  .feature-card {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .feature-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+
+  .feature-title {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #dde6ff;
+    margin-bottom: 8px;
+  }
+
+  .feature-desc { font-size: 16px; color: rgba(255,255,255,.45); line-height: 1.5; }
+
+  /* Install section */
+  .install-section {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    animation: fade-up .4s ease .16s both;
+  }
+
+  .install-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.3);
+    white-space: nowrap;
+  }
+
+  .install-code {
+    flex: 1;
+    background: rgba(0,0,0,.4);
+    border: 1px solid rgba(34,197,94,.15);
+    border-radius: 8px;
+    padding: 14px 20px;
+    font: 16px 'Courier New', monospace;
+    color: var(--green);
+  }
+  .install-code .cmd { color: rgba(255,255,255,.6); }
+  .install-code .pkg { color: var(--green); }
+
+  .install-copy {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font: 18px 'Inter', sans-serif;
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+    transition: all .12s;
+    white-space: nowrap;
+  }
+  .install-copy:hover { background: var(--green-dim); color: var(--green); border-color: rgba(34,197,94,.3); }
+
+  /* Cursor blink */
+  .cursor {
+    display: inline-block;
+    width: 12px; height: 20px;
+    background: var(--green);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blink .9s step-end infinite;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="mercury-logo">mercury.sh</div>
+  <div class="header-divider"></div>
+  <div class="header-tagline">Natural Language → <span>Terminal</span></div>
+  <span class="version-chip">v0.4.2</span>
+  <div class="header-right">
+    <button class="model-chip active" onclick="setModel(this,'openrouter')">OpenRouter</button>
+    <button class="model-chip" onclick="setModel(this,'ollama')">Ollama</button>
+    <button class="model-chip" onclick="setModel(this,'claude')">Claude</button>
+    <button class="close-btn" onclick="window.parent.postMessage({type:'mercury-close'},'*')" title="Close">✕</button>
+  </div>
+</header>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Terminal Panel -->
+  <div class="terminal-panel">
+    <div class="terminal-titlebar">
+      <div class="term-dot term-red"></div>
+      <div class="term-dot term-yellow"></div>
+      <div class="term-dot term-green"></div>
+      <span class="term-title">mercury — bash — 80×24</span>
+    </div>
+    <div class="nl-input-area">
+      <span class="nl-prompt">yo&nbsp;&gt;</span>
+      <input type="text" class="nl-input" id="nl-input" placeholder="tell me what you want to do..." autocomplete="off" spellcheck="false">
+      <button class="run-btn" onclick="runCommand()">Run</button>
+    </div>
+    <div class="terminal-output" id="terminal-output">
+      <div class="output-line">
+        <span class="output-prompt">$</span>
+        <span class="output-cmd" id="output-cmd">docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</span>
+      </div>
+      <div class="output-comment" id="output-comment"># list all running docker containers</div>
+      <button class="copy-btn" id="copy-btn" onclick="copyCmd()">Copy</button>
+    </div>
+  </div>
+
+  <!-- Examples row -->
+  <div class="examples-row">
+    <button class="example-chip" onclick="tryExample(0)">
+      <strong>🐳 Docker</strong>
+      list all running docker containers
+    </button>
+    <button class="example-chip" onclick="tryExample(1)">
+      <strong>🔍 Find files</strong>
+      files larger than 100mb modified this week
+    </button>
+    <button class="example-chip" onclick="tryExample(2)">
+      <strong>⚡ Kill port</strong>
+      kill process on port 3000
+    </button>
+    <button class="example-chip" onclick="tryExample(3)">
+      <strong>🌿 Git log</strong>
+      show git log as pretty graph
+    </button>
+  </div>
+
+  <!-- Feature Cards -->
+  <div class="features-row">
+    <div class="feature-card">
+      <div class="feature-icon">⚙️</div>
+      <div class="feature-title">Zero Dependencies</div>
+      <div class="feature-desc">Built in Rust. Single binary. No runtime. Runs anywhere on Linux, macOS, and Windows.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <div class="feature-title">Multi-Model AI</div>
+      <div class="feature-desc">OpenRouter, Ollama, Claude, GPT-4. Switch models with <code style="font-size:16px;color:var(--green)">MERCURY_MODEL</code> env var.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <div class="feature-title">Cross-Platform</div>
+      <div class="feature-desc">Bash, Zsh, Fish, PowerShell. Shell-aware output adapts to your environment automatically.</div>
+    </div>
+  </div>
+
+  <!-- Install -->
+  <div class="install-section">
+    <div class="install-label">Install</div>
+    <div class="install-code">
+      <span class="cmd">cargo install </span><span class="pkg">mercury-cli</span>
+    </div>
+    <button class="install-copy" onclick="copyInstall(this)">📋 Copy</button>
+    <div style="font-size:16px;color:rgba(255,255,255,.3);">or <a href="https://mercury.sh" target="_blank" style="color:var(--green);text-decoration:none;">mercury.sh</a></div>
+  </div>
+
+</div>
+
+<script>
+const examples = [
+  {
+    nl: 'list all running docker containers',
+    cmd: 'docker ps --format "table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"',
+    comment: '# list all running docker containers with formatted output'
+  },
+  {
+    nl: 'find files larger than 100mb modified this week',
+    cmd: 'find . -size +100M -mtime -7 -type f',
+    comment: '# search recursively for large files modified in the last 7 days'
+  },
+  {
+    nl: 'kill process on port 3000',
+    cmd: 'lsof -ti:3000 | xargs kill -9',
+    comment: '# find and force-kill any process listening on port 3000'
+  },
+  {
+    nl: 'show git log as pretty graph',
+    cmd: 'git log --oneline --graph --decorate --all',
+    comment: '# display full branch history as an ASCII tree'
+  }
+];
+
+let currentCmd = examples[0].cmd;
+
+function setModel(el, name) {
+  document.querySelectorAll('.model-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function tryExample(idx) {
+  const ex = examples[idx];
+  document.getElementById('nl-input').value = ex.nl;
+  simulate(ex.cmd, ex.comment);
+}
+
+function runCommand() {
+  const val = document.getElementById('nl-input').value.trim();
+  if (!val) return;
+
+  // Check if it matches an example
+  const match = examples.find(e => e.nl.toLowerCase().includes(val.toLowerCase().slice(0, 10)));
+
+  if (match) {
+    simulate(match.cmd, match.comment);
+  } else {
+    // Generic simulate
+    simulate(`# no command found for: "${val}"`, '# try one of the example prompts below');
+  }
+}
+
+function simulate(cmd, comment) {
+  const output = document.getElementById('terminal-output');
+  const cmdEl = document.getElementById('output-cmd');
+  const commentEl = document.getElementById('output-comment');
+
+  // Show thinking
+  cmdEl.innerHTML = `<span class="thinking"><span>Thinking</span><span class="thinking-dots"><span class="th-dot"></span><span class="th-dot"></span><span class="th-dot"></span></span></span>`;
+  commentEl.textContent = '';
+
+  setTimeout(() => {
+    currentCmd = cmd;
+    cmdEl.textContent = cmd;
+    commentEl.textContent = comment;
+    // Animate in
+    cmdEl.style.opacity = '0';
+    cmdEl.style.transition = 'opacity .3s';
+    setTimeout(() => { cmdEl.style.opacity = '1'; }, 50);
+  }, 900);
+}
+
+function copyCmd() {
+  if (!currentCmd || currentCmd.startsWith('#')) return;
+  navigator.clipboard.writeText(currentCmd).catch(() => {});
+  const btn = document.getElementById('copy-btn');
+  btn.textContent = '✓ Copied!';
+  btn.style.color = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
+}
+
+function copyInstall(btn) {
+  navigator.clipboard.writeText('cargo install mercury-cli').catch(() => {});
+  btn.textContent = '✓ Copied!';
+  setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+}
+
+// Keyboard shortcut
+document.getElementById('nl-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runCommand();
+});
+
+// Auto-cycle demo
+let demoIdx = 0;
+setInterval(() => {
+  if (document.getElementById('nl-input').value) return;
+  demoIdx = (demoIdx + 1) % examples.length;
+  const ex = examples[demoIdx];
+  simulate(ex.cmd, ex.comment);
+}, 6000);
+</script>
+</body>
+</html>

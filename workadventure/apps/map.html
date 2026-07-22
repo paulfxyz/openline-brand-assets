@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.online-badge{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.online-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:onlinePulse 2s infinite}
+@keyframes onlinePulse{0%,100%{opacity:1}50%{opacity:.4}}
+.close-btn{margin-left:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.main{flex:1;display:flex;overflow:hidden}
+.map-area{flex:1;display:flex;flex-direction:column;overflow:hidden;padding:20px 24px;gap:16px}
+
+/* MAP */
+.map-container{flex:1;position:relative;background:#080d1a;border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;min-height:320px}
+.map-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px}
+
+/* ZONES */
+.zone{position:absolute;border-radius:16px;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:14px 16px;border:2px solid transparent}
+.zone:hover{transform:scale(1.01)}
+.zone.selected{animation:selectedPulse 2s infinite}
+@keyframes selectedPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.15)}50%{box-shadow:0 0 0 6px rgba(255,255,255,.05)}}
+.zone-focus{background:rgba(59,59,255,.12);border-color:rgba(59,59,255,.3);top:4%;left:4%;width:38%;height:44%}
+.zone-focus.selected{border-color:#3B3BFF;box-shadow:0 0 24px rgba(59,59,255,.2)}
+.zone-chill{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.25);top:52%;left:4%;width:38%;height:44%}
+.zone-chill.selected{border-color:#8b5cf6;box-shadow:0 0 24px rgba(139,92,246,.2)}
+.zone-meeting{background:rgba(255,102,22,.1);border-color:rgba(255,102,22,.25);top:4%;right:4%;width:36%;height:42%}
+.zone-meeting.selected{border-color:#ff6616;box-shadow:0 0 24px rgba(255,102,22,.2)}
+.zone-war{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);top:50%;right:4%;width:36%;height:46%}
+.zone-war.selected{border-color:#ef4444;box-shadow:0 0 24px rgba(239,68,68,.15)}
+.zone-plaza{background:rgba(99,102,241,.08);border:2px dashed rgba(255,255,255,.1);top:28%;left:44%;width:16%;height:38%;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.zone-plaza.selected{border-color:rgba(255,255,255,.3)}
+.zone-label{font-family:'Play',sans-serif;font-size:15px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.zone-count{font-size:13px;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* CORRIDORS */
+.corridor{position:absolute;background:rgba(255,255,255,.05);border-radius:4px}
+.corr-h{height:6px}
+.corr-v{width:6px}
+
+/* MEMBER DOTS */
+.member-dot{position:absolute;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid rgba(0,0,0,.5);cursor:pointer;transition:all .3s;z-index:10;animation:memberFloat 3s ease-in-out infinite}
+.member-dot:hover{transform:scale(1.2);z-index:20}
+@keyframes memberFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.member-dot-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0c1120;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 12px;font-size:13px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:30}
+.member-dot:hover .member-dot-tooltip{opacity:1}
+.status-ring-green{box-shadow:0 0 0 2px #22c55e}
+.status-ring-amber{box-shadow:0 0 0 2px #f59e0b}
+.status-ring-blue{box-shadow:0 0 0 2px #3B3BFF}
+.status-ring-red{box-shadow:0 0 0 2px #ef4444}
+
+/* ZONE BARS */
+.zone-bars{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.zone-bar-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px}
+.zb-name{font-size:14px;font-weight:600;margin-bottom:6px}
+.zb-bar-wrap{height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.zb-bar{height:100%;border-radius:3px;transition:width .8s}
+.zb-count{font-size:13px;color:rgba(255,255,255,.4)}
+
+/* LEGEND */
+.legend{display:flex;gap:20px;flex-wrap:wrap;align-items:center;padding:8px 16px;background:#090e1c;border-radius:10px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:14px;color:rgba(255,255,255,.5)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.legend-box{width:16px;height:12px;border-radius:4px}
+
+/* SIDE PANEL */
+.side-panel{width:300px;background:#0c1120;border-left:1px solid rgba(255,255,255,.07);overflow-y:auto;flex-shrink:0;transition:all .3s;display:flex;flex-direction:column}
+.side-panel.hidden{width:0;overflow:hidden}
+.sp-header{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sp-title{font-family:'Play',sans-serif;font-size:22px;font-weight:700}
+.sp-desc{font-size:15px;color:rgba(255,255,255,.4);margin-top:6px;line-height:1.4}
+.sp-count{font-size:16px;color:rgba(255,255,255,.5);margin-top:6px}
+.sp-members{padding:16px 20px;flex:1}
+.sp-member-label{font-family:'Press Start 2P',monospace;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.08em;margin-bottom:12px}
+.sp-member-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sp-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.sp-name{font-size:17px;font-weight:600}
+.sp-status{font-size:13px;margin-top:2px}
+.sp-nav-btn{margin:12px 20px 20px;background:#3B3BFF;border:none;color:#fff;padding:14px 20px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Play',sans-serif;font-weight:700;transition:all .2s}
+.sp-nav-btn:hover{background:#2d2dff}
+.sp-close{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;float:right;font-size:20px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">📍</div>
+  <div class="header-title">Space Map</div>
+  <div class="online-badge"><div class="online-dot"></div> 7 online</div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'map-close'},'*')">✕</button>
+</div>
+
+<div class="main">
+  <div class="map-area">
+    <!-- Map -->
+    <div class="map-container" id="mapContainer">
+      <div class="map-grid"></div>
+
+      <!-- Corridors -->
+      <div class="corridor corr-h" style="top:49%;left:42%;width:16%;"></div>
+      <div class="corridor corr-h" style="top:49%;left:60%;width:16%;"></div>
+      <div class="corridor corr-v" style="top:26%;left:42.5%;height:24%;"></div>
+      <div class="corridor corr-v" style="top:26%;left:57%;height:24%;"></div>
+
+      <!-- Zones -->
+      <div class="zone zone-focus selected" id="zone-focus" data-zone="focus" onclick="selectZone('focus')">
+        <div class="zone-label" style="color:#a5b4fc">🎯 Focus Zone</div>
+        <div class="zone-count" id="zc-focus">0 members</div>
+      </div>
+      <div class="zone zone-chill" id="zone-chill" data-zone="chill" onclick="selectZone('chill')">
+        <div class="zone-label" style="color:#c4b5fd">☕ Chill Zone</div>
+        <div class="zone-count" id="zc-chill">0 members</div>
+      </div>
+      <div class="zone zone-meeting" id="zone-meeting" data-zone="meeting" onclick="selectZone('meeting')">
+        <div class="zone-label" style="color:#fdba74">📞 Meeting Room</div>
+        <div class="zone-count" id="zc-meeting">0 members</div>
+      </div>
+      <div class="zone zone-war" id="zone-war" data-zone="war" onclick="selectZone('war')">
+        <div class="zone-label" style="color:#fca5a5">⚔️ War Room</div>
+        <div class="zone-count" id="zc-war">0 members</div>
+      </div>
+      <div class="zone zone-plaza" id="zone-plaza" data-zone="plaza" onclick="selectZone('plaza')" style="cursor:pointer">
+        <div style="text-align:center">
+          <div style="font-size:18px;color:rgba(255,255,255,.6);font-family:'Play',sans-serif;font-weight:700;font-size:13px">🌟<br>Plaza</div>
+          <div class="zone-count" id="zc-plaza" style="text-align:center">0</div>
+        </div>
+      </div>
+
+      <!-- Member dots rendered by JS -->
+      <div id="memberDots"></div>
+    </div>
+
+    <!-- Zone occupancy bars -->
+    <div class="zone-bars" id="zoneBars"></div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <span style="font-size:13px;color:rgba(255,255,255,.3);font-weight:600">ZONES:</span>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(59,59,255,.25)"></div>Focus</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(139,92,246,.2)"></div>Chill</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(255,102,22,.2)"></div>Meeting</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(239,68,68,.15)"></div>War Room</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(99,102,241,.12)"></div>Plaza</div>
+      <span style="font-size:13px;color:rgba(255,255,255,.3);font-weight:600;margin-left:8px">STATUS:</span>
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Available</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Busy</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3B3BFF"></div>Meeting</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>DND</div>
+    </div>
+  </div>
+
+  <div class="side-panel" id="sidePanel">
+    <div class="sp-header">
+      <button class="sp-close" id="spClose">✕</button>
+      <div class="sp-title" id="spTitle">Focus Zone</div>
+      <div class="sp-desc" id="spDesc">Deep work area — quiet, focused.</div>
+      <div class="sp-count" id="spCount">0 members</div>
+    </div>
+    <div class="sp-members">
+      <div class="sp-member-label">MEMBERS HERE</div>
+      <div id="spMemberList"></div>
+    </div>
+    <button class="sp-nav-btn" id="spNavBtn">🗺️ Navigate Here</button>
+  </div>
+</div>
+
+<script>
+const ZONES = {
+  focus: { label:'Focus Zone', desc:'Deep work area — quiet, focused. No interruptions.', color:'#3B3BFF', cssTop:'4%', cssLeft:'4%', w:'38%', h:'44%' },
+  chill: { label:'Chill Zone', desc:'Casual hangout space — take a break, have a coffee.', color:'#8b5cf6', cssTop:'52%', cssLeft:'4%', w:'38%', h:'44%' },
+  meeting: { label:'Meeting Room', desc:'Video calls, pair programming, and live sessions.', color:'#ff6616', cssTop:'4%', cssLeft:'60%', w:'36%', h:'42%' },
+  war: { label:'War Room', desc:'Incident response and high-priority launches.', color:'#ef4444', cssTop:'50%', cssLeft:'60%', w:'36%', h:'46%' },
+  plaza: { label:'Central Plaza', desc:'The social hub — announcements, general chat.', color:'#6366f1', cssTop:'28%', cssLeft:'44%', w:'16%', h:'38%' },
+};
+
+const MEMBERS = [
+  {id:1,name:'Paul Martin',initials:'PM',color:'#ff6616',status:'available',statusColor:'#22c55e',statusLabel:'Available',zone:'focus',dotTop:'18%',dotLeft:'24%',animDelay:0},
+  {id:2,name:'Marie Dupont',initials:'MD',color:'#3B3BFF',status:'meeting',statusColor:'#3B3BFF',statusLabel:'In a Meeting',zone:'meeting',dotTop:'14%',dotLeft:'68%',animDelay:.4},
+  {id:3,name:'Thomas Bernard',initials:'TB',color:'#7c3aed',status:'busy',statusColor:'#f59e0b',statusLabel:'Busy',zone:'focus',dotTop:'30%',dotLeft:'18%',animDelay:.8},
+  {id:4,name:'Léa Moreau',initials:'LM',color:'#059669',status:'available',statusColor:'#22c55e',statusLabel:'Available',zone:'chill',dotTop:'68%',dotLeft:'20%',animDelay:1.2},
+  {id:5,name:'Hugo Laurent',initials:'HL',color:'#0891b2',status:'available',statusColor:'#22c55e',statusLabel:'Available',zone:'meeting',dotTop:'24%',dotLeft:'76%',animDelay:.2},
+  {id:6,name:'Camille Petit',initials:'CP',color:'#dc2626',status:'dnd',statusColor:'#ef4444',statusLabel:'Do Not Disturb',zone:'war',dotTop:'65%',dotLeft:'70%',animDelay:.6},
+  {id:7,name:'Sophie Roux',initials:'SR',color:'#d97706',status:'available',statusColor:'#22c55e',statusLabel:'Available',zone:'plaza',dotTop:'44%',dotLeft:'49%',animDelay:1},
+];
+
+let selectedZone = 'focus';
+
+function statusRingClass(color) {
+  if (color==='#22c55e') return 'status-ring-green';
+  if (color==='#f59e0b') return 'status-ring-amber';
+  if (color==='#3B3BFF') return 'status-ring-blue';
+  if (color==='#ef4444') return 'status-ring-red';
+  return '';
+}
+
+function renderDots() {
+  const container = document.getElementById('memberDots');
+  container.innerHTML = '';
+  MEMBERS.forEach(m => {
+    const dot = document.createElement('div');
+    dot.className = `member-dot ${statusRingClass(m.statusColor)}`;
+    dot.style.cssText = `background:${m.color};top:${m.dotTop};left:${m.dotLeft};animation-delay:${m.animDelay}s`;
+    dot.innerHTML = `${m.initials}<div class="member-dot-tooltip">${m.name} · ${m.statusLabel}</div>`;
+    container.appendChild(dot);
+  });
+}
+
+function updateZoneCounts() {
+  Object.keys(ZONES).forEach(zk => {
+    const count = MEMBERS.filter(m=>m.zone===zk).length;
+    const el = document.getElementById(`zc-${zk}`);
+    if (el) el.textContent = count === 1 ? '1 member' : `${count} members`;
+  });
+}
+
+function renderBars() {
+  const barsDiv = document.getElementById('zoneBars');
+  barsDiv.innerHTML = '';
+  const total = MEMBERS.length;
+  Object.entries(ZONES).forEach(([zk, zv]) => {
+    const count = MEMBERS.filter(m=>m.zone===zk).length;
+    const pct = total > 0 ? Math.round(count/total*100) : 0;
+    const card = document.createElement('div');
+    card.className = 'zone-bar-card';
+    card.innerHTML = `
+      <div class="zb-name" style="color:${zv.color}">${zv.label.split(' ')[0]}</div>
+      <div class="zb-bar-wrap"><div class="zb-bar" style="width:0%;background:${zv.color}" data-w="${pct}%"></div></div>
+      <div class="zb-count">${count} / ${total}</div>`;
+    barsDiv.appendChild(card);
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.zb-bar').forEach(b => b.style.width = b.dataset.w);
+  }, 200);
+}
+
+function selectZone(zoneKey) {
+  selectedZone = zoneKey;
+  document.querySelectorAll('.zone').forEach(z => z.classList.remove('selected'));
+  const zoneEl = document.getElementById(`zone-${zoneKey}`);
+  if (zoneEl) zoneEl.classList.add('selected');
+  showPanel(zoneKey);
+}
+
+function showPanel(zoneKey) {
+  const panel = document.getElementById('sidePanel');
+  panel.classList.remove('hidden');
+  const zv = ZONES[zoneKey];
+  document.getElementById('spTitle').textContent = zv.label;
+  document.getElementById('spDesc').textContent = zv.desc;
+  const members = MEMBERS.filter(m=>m.zone===zoneKey);
+  document.getElementById('spCount').textContent = `${members.length} member${members.length!==1?'s':''} here`;
+  const list = document.getElementById('spMemberList');
+  list.innerHTML = '';
+  if (members.length === 0) {
+    list.innerHTML = '<div style="color:rgba(255,255,255,.3);font-size:16px">Nobody here yet</div>';
+  } else {
+    members.forEach(m => {
+      const row = document.createElement('div');
+      row.className = 'sp-member-row';
+      row.innerHTML = `
+        <div class="sp-av" style="background:${m.color}">${m.initials}</div>
+        <div>
+          <div class="sp-name">${m.name}</div>
+          <div class="sp-status" style="color:${m.statusColor}">● ${m.statusLabel}</div>
+        </div>`;
+      list.appendChild(row);
+    });
+  }
+  document.getElementById('spNavBtn').style.background = zv.color;
+}
+
+document.getElementById('spClose').addEventListener('click', () => {
+  document.getElementById('sidePanel').classList.add('hidden');
+  selectedZone = null;
+  document.querySelectorAll('.zone').forEach(z => z.classList.remove('selected'));
+});
+
+document.getElementById('spNavBtn').addEventListener('click', () => {
+  const btn = document.getElementById('spNavBtn');
+  btn.textContent = '✓ Navigating...';
+  setTimeout(() => { btn.textContent = '🗺️ Navigate Here'; }, 2000);
+});
+
+renderDots();
+updateZoneCounts();
+renderBars();
+selectZone('focus');
+</script>
+</body>
+</html>

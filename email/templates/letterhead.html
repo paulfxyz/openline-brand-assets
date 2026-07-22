@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Openline — Official Letterhead</title>
+<link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;color:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 20px 60px}
+
+/* ── TOOLBAR ────────────────────────────────────── */
+.toolbar{
+  width:100%;max-width:794px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.toolbar-left{display:flex;align-items:center;gap:12px}
+.toolbar-title{font-size:13px;font-weight:600;color:#475569}
+.toolbar-badge{background:#fff7ed;border:1px solid #fed7aa;color:#ff6616;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:20px}
+.toolbar-right{display:flex;gap:8px}
+.btn{border:none;border-radius:7px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;padding:8px 16px;transition:all .15s;letter-spacing:.2px}
+.btn-print{background:#ff6616;color:#fff}
+.btn-print:hover{background:#e55a0e}
+.btn-copy-html{background:#fff;border:1px solid #e2e8f0;color:#475569}
+.btn-copy-html:hover{border-color:#cbd5e1;color:#0f172a}
+.btn-copy-html.copied{background:#f0fdf4;border-color:#86efac;color:#22c55e}
+
+/* ── A4 PAPER ────────────────────────────────────── */
+.paper{
+  width:794px;          /* 210mm at 96dpi */
+  min-height:1123px;    /* 297mm at 96dpi */
+  background:#fff;
+  box-shadow:0 4px 40px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.06);
+  border-radius:4px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ── HEADER ──────────────────────────────────────── */
+.lh-header{
+  padding:48px 64px 32px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  border-bottom:2px solid #ff6616;
+  position:relative;
+}
+.lh-brand{display:flex;align-items:center;gap:14px}
+.lh-logo-mark{width:48px;height:48px;flex-shrink:0}
+.lh-brand-text{}
+.lh-name{font-family:'Play',sans-serif;font-size:26px;font-weight:700;color:#0f172a;letter-spacing:-.3px;line-height:1}
+.lh-tagline{font-size:11px;color:#94a3b8;font-weight:500;letter-spacing:.5px;margin-top:3px}
+.lh-meta{text-align:right;font-size:11px;color:#94a3b8;line-height:1.9}
+.lh-meta strong{color:#0f172a;font-weight:600;display:block;font-size:12px}
+
+/* Orange top-left corner accent */
+.lh-corner{
+  position:absolute;top:0;left:0;
+  width:6px;height:100%;
+  background:linear-gradient(180deg,#ff6616,#ff8c42);
+}
+
+/* ── BODY ────────────────────────────────────────── */
+.lh-body{
+  flex:1;
+  padding:44px 64px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* Date / Reference row */
+.lh-dateline{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  font-size:12px;
+  color:#64748b;
+  padding-bottom:20px;
+  border-bottom:1px solid #f1f5f9;
+}
+.lh-dateline .field-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#cbd5e1;margin-bottom:4px}
+.lh-dateline .field-val{font-size:13px;color:#475569;font-weight:500}
+
+/* Recipient block */
+.lh-recipient{margin-bottom:8px}
+.lh-recipient .field-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#cbd5e1;margin-bottom:6px}
+.lh-recipient-name{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px}
+.lh-recipient-detail{font-size:12px;color:#64748b;line-height:1.7}
+
+/* Salutation + body copy */
+.lh-salutation{font-size:14px;color:#0f172a;font-weight:600;margin-top:8px}
+.lh-content{
+  flex:1;
+  font-size:13.5px;
+  line-height:1.85;
+  color:#334155;
+  min-height:320px;
+}
+.lh-content p{margin-bottom:16px}
+.lh-content p:last-child{margin-bottom:0}
+
+/* Signature block */
+.lh-signature{margin-top:32px;padding-top:24px;border-top:1px solid #f1f5f9}
+.lh-sig-close{font-size:13.5px;color:#334155;margin-bottom:32px}
+.lh-sig-name{font-family:'Play',sans-serif;font-size:15px;font-weight:700;color:#0f172a;margin-bottom:2px}
+.lh-sig-title{font-size:12px;color:#64748b;margin-bottom:2px}
+.lh-sig-email{font-size:12px;color:#ff6616;font-weight:500}
+
+/* Signature image placeholder */
+.lh-sig-img{
+  width:140px;height:44px;margin-bottom:12px;
+  background:linear-gradient(135deg,#fff7ed,#fff);
+  border-bottom:1px solid #e2e8f0;
+  display:flex;align-items:center;
+  font-size:11px;color:#cbd5e1;font-style:italic;
+  padding:0 8px;
+}
+
+/* ── FOOTER ──────────────────────────────────────── */
+.lh-footer{
+  padding:18px 64px;
+  border-top:1px solid #f1f5f9;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fafbfc;
+}
+.lh-footer-left{display:flex;align-items:center;gap:6px}
+.lh-footer-logo{width:18px;height:18px;opacity:.5}
+.lh-footer-text{font-size:10px;color:#94a3b8;font-weight:500}
+.lh-footer-sep{width:3px;height:3px;border-radius:50%;background:#cbd5e1;margin:0 6px}
+.lh-footer-right{font-size:10px;color:#cbd5e1}
+
+/* ── PRINT STYLES ─────────────────────────────────── */
+@media print{
+  body{background:#fff;padding:0}
+  .toolbar{display:none}
+  .paper{
+    width:100%;min-height:100vh;
+    box-shadow:none;border-radius:0;
+  }
+}
+
+/* ── EDITABLE FIELDS HIGHLIGHT ─────────────────────── */
+[contenteditable="true"]{outline:none;transition:background .15s}
+[contenteditable="true"]:focus{background:rgba(255,102,22,.04);border-radius:4px}
+[contenteditable="true"]:empty:before{content:attr(data-placeholder);color:#cbd5e1;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-left">
+    <span class="toolbar-title">Openline — Official Letterhead</span>
+    <span class="toolbar-badge">Editable</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-copy-html" id="btnCopy" onclick="copyHtml()">Copy HTML</button>
+    <button class="btn btn-print" onclick="window.print()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-1px;margin-right:5px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Export PDF
+    </button>
+  </div>
+</div>
+
+<!-- A4 PAPER -->
+<div class="paper" id="letter">
+
+  <!-- Orange left edge -->
+  <div class="lh-corner"></div>
+
+  <!-- HEADER -->
+  <div class="lh-header">
+    <div class="lh-brand">
+      <!-- Openline logomark -->
+      <svg class="lh-logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+        <path fill="#0f172a" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/>
+        <path fill="#ff6616" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/>
+      </svg>
+      <div class="lh-brand-text">
+        <div class="lh-name">Openline</div>
+        <div class="lh-tagline">Global eSIM &amp; Connectivity</div>
+      </div>
+    </div>
+    <div class="lh-meta">
+      <strong>Openline, Inc.</strong>
+      123 West 27th Street, Suite 5B<br/>
+      New York, NY 10001, United States<br/>
+      hello@openline.com
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="lh-body">
+
+    <!-- Date / Reference -->
+    <div class="lh-dateline">
+      <div>
+        <div class="field-label">Date</div>
+        <div class="field-val" contenteditable="true" data-placeholder="e.g. 5 May 2026">5 May 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div class="field-label">Reference</div>
+        <div class="field-val" contenteditable="true" data-placeholder="e.g. OL-2026-001" style="text-align:right">OL-2026-001</div>
+      </div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="lh-recipient">
+      <div class="field-label">To</div>
+      <div class="lh-recipient-name" contenteditable="true" data-placeholder="Full Name">James Carter</div>
+      <div class="lh-recipient-detail" contenteditable="true" data-placeholder="Company · Address · City">
+        Chief Revenue Officer<br/>
+        Openline, Inc.
+      </div>
+    </div>
+
+    <!-- Subject line -->
+    <div style="background:#fff7ed;border-left:3px solid #ff6616;border-radius:0 6px 6px 0;padding:10px 16px;font-size:13px;font-weight:700;color:#0f172a">
+      Re: <span contenteditable="true" data-placeholder="Subject of letter">Official Acceptance — Partner Letterhead Request</span>
+    </div>
+
+    <!-- Salutation -->
+    <div class="lh-salutation" contenteditable="true" data-placeholder="Dear ...">Dear James,</div>
+
+    <!-- Body text -->
+    <div class="lh-content" contenteditable="true">
+      <p>We are pleased to confirm your request and formally acknowledge receipt of the submitted documentation on behalf of Openline, Inc.</p>
+      <p>Please find the relevant details outlined in this letter. Should you require any amendments or additional information, do not hesitate to contact our team directly at hello@openline.com.</p>
+      <p>We look forward to continuing our collaboration and remain available at your convenience.</p>
+    </div>
+
+    <!-- Signature -->
+    <div class="lh-signature">
+      <div class="lh-sig-close" contenteditable="true">Yours sincerely,</div>
+      <div class="lh-sig-img">[ signature ]</div>
+      <div class="lh-sig-name" contenteditable="true">Paul Fleury</div>
+      <div class="lh-sig-title" contenteditable="true">Chief Executive Officer</div>
+      <div class="lh-sig-email">paul@openline.com</div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="lh-footer">
+    <div class="lh-footer-left">
+      <svg class="lh-footer-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+        <path fill="#94a3b8" d="M605.3,71.1c21.98-3.42,74.26,13.16,96.4,21.11,335.27,120.38,421.03,551.24,158.99,794.43-261.37,242.56-684.82,121.56-778.57-219.93-10.02-36.49-25.96-85.94,27.19-94.08,58.99,3.03,122.76-4.46,181.19-.16,37.17,2.74,38.5,27.84,50.45,55.05,54.74,124.59,211.73,168.82,323.79,90.03,138.68-97.51,118.11-308.74-36.49-377.32-29.2-12.96-53.77-13.02-56.32-53.03-3.77-59.25,2.03-123.54,1.12-183.12,2.3-15.12,17.09-30.62,32.24-32.98Z"/>
+        <path fill="#94a3b8" d="M100.82,66.34l181-.26c20.57,3.15,35.08,19.15,36.92,39.81-3.12,55.88,4.21,116.37.05,171.71-1.71,22.78-17.93,39.52-40.77,41.72-55.91-3.21-116.39,4.16-171.76,0-21.2-1.59-37.8-16.79-40.76-37.89l.14-180.25c3.19-17.64,17.25-32.13,35.17-34.84Z"/>
+      </svg>
+      <span class="lh-footer-text">Openline, Inc.</span>
+      
+      <span class="lh-footer-sep"></span>
+      <span class="lh-footer-text">hello@openline.com</span>
+      <span class="lh-footer-sep"></span>
+      <span class="lh-footer-text">openline.com</span>
+    </div>
+    <div class="lh-footer-right">Confidential</div>
+  </div>
+
+</div><!-- /paper -->
+
+<script>
+function copyHtml(){
+  const paper = document.getElementById('letter');
+  const btn = document.getElementById('btnCopy');
+  navigator.clipboard.writeText(paper.outerHTML).then(()=>{
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = 'Copy HTML'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

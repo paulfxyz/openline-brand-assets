@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Directory — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070c18;--bg-card:#0c1120;--bg-header:#090e1c;
+  --text:#dde6ff;--muted:rgba(255,255,255,.45);
+  --blue:#3B3BFF;--orange:#ff6616;
+  --success:#22c55e;--warn:#f59e0b;--error:#ef4444;
+  --border:rgba(255,255,255,.07);
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;font-size:20px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse-status{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{box-shadow:0 0 0 4px rgba(34,197,94,0)}}
+@keyframes slide-right{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Header */
+.header{background:var(--bg-header);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{color:var(--blue)}
+.header-title{font-family:'Play',sans-serif;font-weight:700;font-size:28px}
+.online-badge{background:rgba(34,197,94,.12);color:var(--success);padding:6px 16px;border-radius:100px;font-size:16px;font-weight:600;border:1px solid rgba(34,197,94,.2)}
+.header-search{flex:1;max-width:460px;margin-left:8px;position:relative}
+.header-search input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 22px 10px 52px;color:var(--text);font-size:18px;outline:none;font-family:'Inter',sans-serif}
+.header-search input:focus{border-color:var(--blue)}
+.header-search input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.btn-icon{padding:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.btn-icon:hover{color:var(--text)}
+
+/* Filter row */
+.filter-bar{padding:18px 28px;border-bottom:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;overflow-x:auto}
+.filter-btn{padding:10px 22px;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);white-space:nowrap;transition:all .15s;font-family:'Inter',sans-serif}
+.filter-btn:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+.filter-btn.active{background:rgba(59,59,255,.12);border-color:rgba(59,59,255,.4);color:var(--blue)}
+
+/* App body */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* Grid */
+.grid-area{flex:1;overflow-y:auto;padding:28px;display:flex;flex-direction:column;gap:0}
+.grid-area::-webkit-scrollbar{width:6px}
+.grid-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+
+/* Member card */
+.member-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;cursor:pointer;transition:all .15s;animation:fade-up .25s ease both;position:relative}
+.member-card:hover{border-color:rgba(59,59,255,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.member-card.selected{border-color:var(--blue);background:rgba(59,59,255,.05)}
+.member-card.offline{opacity:.65}
+.avatar-wrap{position:relative;width:52px;height:52px;margin:0 auto 20px}
+.avatar-circle{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Play',sans-serif;font-weight:700;font-size:20px;color:#fff}
+.status-indicator{position:absolute;bottom:1px;right:1px;width:14px;height:14px;border-radius:50%;border:2px solid var(--bg-card)}
+.status-online{background:var(--success);animation:pulse-status 2s ease infinite}
+.status-away{background:var(--warn)}
+.status-offline{background:rgba(255,255,255,.2)}
+.member-name{font-family:'Play',sans-serif;font-weight:700;font-size:20px;text-align:center;margin-bottom:4px}
+.member-role{font-size:16px;color:var(--muted);text-align:center;margin-bottom:14px}
+.zone-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 14px;border-radius:100px;font-size:14px;font-weight:500;margin:0 auto 14px;display:block;width:fit-content}
+.zone-focus{background:rgba(59,59,255,.15);color:#7c7cff}
+.zone-chill{background:rgba(34,197,94,.1);color:var(--success)}
+.zone-social{background:rgba(245,158,11,.12);color:var(--warn)}
+.zone-dnd{background:rgba(239,68,68,.12);color:var(--error)}
+.skills-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:20px}
+.skill-pill{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:100px;padding:4px 12px;font-size:14px;color:var(--muted)}
+.quick-actions{display:flex;gap:10px;justify-content:center}
+.qa-btn{flex:1;padding:10px;border-radius:8px;font-size:16px;font-weight:500;cursor:pointer;border:none;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Inter',sans-serif}
+.qa-msg{background:rgba(59,59,255,.12);color:var(--blue);border:1px solid rgba(59,59,255,.3)}
+.qa-msg:hover{background:rgba(59,59,255,.25)}
+.qa-schedule{background:rgba(255,102,22,.1);color:var(--orange);border:1px solid rgba(255,102,22,.3)}
+.qa-schedule:hover{background:rgba(255,102,22,.2)}
+.qa-profile{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
+.qa-profile:hover{color:var(--text)}
+
+/* Detail panel */
+.detail-panel{width:480px;background:var(--bg-card);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;animation:slide-right .2s ease}
+.detail-panel::-webkit-scrollbar{width:6px}
+.detail-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.detail-inner{padding:32px}
+.detail-avatar{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Play',sans-serif;font-weight:700;font-size:32px;color:#fff;margin:0 auto 20px}
+.detail-name{font-family:'Play',sans-serif;font-size:28px;font-weight:700;text-align:center;margin-bottom:4px}
+.detail-role{font-size:18px;color:var(--muted);text-align:center;margin-bottom:20px}
+.detail-bio{font-size:18px;color:var(--muted);line-height:1.7;text-align:center;margin-bottom:28px}
+.detail-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:18px}
+.detail-row-lbl{color:var(--muted)}
+.detail-row-val{font-weight:500}
+.detail-sec-lbl{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:28px 0 14px}
+.avail-mini{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.avail-day{height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--muted)}
+.avail-day.free{background:rgba(34,197,94,.15);color:var(--success)}
+.avail-day.busy{background:rgba(239,68,68,.1);color:var(--error)}
+.avail-day.today{border:1px solid var(--blue)}
+.cta-row{display:flex;gap:14px;margin-top:28px}
+.cta-btn{flex:1;padding:16px;border-radius:9px;font-size:18px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif;text-align:center}
+.cta-dm{background:var(--blue);color:#fff}
+.cta-dm:hover{background:#4f4fff}
+.cta-sched{background:rgba(255,102,22,.15);color:var(--orange);border:1px solid rgba(255,102,22,.3)}
+.cta-sched:hover{background:rgba(255,102,22,.25)}
+.link-row{display:flex;gap:14px;margin-top:18px;justify-content:center}
+.link-btn{width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:all .15s}
+.link-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-icon">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+  </div>
+  <span class="header-title">Team Directory</span>
+  <span class="online-badge" id="onlineBadge">6 online</span>
+  <div class="header-search">
+    <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+    <input type="text" placeholder="Search people…" id="searchInput" oninput="applyFilters()">
+  </div>
+  <div style="margin-left:auto">
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'directory-close'},'*') || history.back()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All Members</button>
+  <button class="filter-btn" data-filter="online" onclick="setFilter('online',this)">Online</button>
+  <button class="filter-btn" data-filter="focus" onclick="setFilter('focus',this)">Focus Zone</button>
+  <button class="filter-btn" data-filter="social" onclick="setFilter('social',this)">Social</button>
+  <button class="filter-btn" data-filter="chill" onclick="setFilter('chill',this)">Chill</button>
+  <button class="filter-btn" data-filter="dnd" onclick="setFilter('dnd',this)">DND</button>
+</div>
+
+<div class="app-body">
+  <div class="grid-area">
+    <div class="member-grid" id="memberGrid"></div>
+  </div>
+  <div id="detailPanel" style="display:none"></div>
+</div>
+
+<script>
+const TEAM = [
+  {id:1,name:'Paul Lambert',role:'CEO & Co-founder',status:'online',zone:'social',color:'#3B3BFF',initials:'PL',
+   bio:'Building the future of eSIM connectivity. Previously at Orange and GSMA. Based in Paris.',
+   tz:'Paris (GMT+1)',lang:'French, English',tasks:8,
+   skills:['Product','Strategy','BD'],avail:[1,1,1,1,1,0,0],gh:'paul-lambert',li:'paul-lambert'},
+  {id:2,name:'Marie Curet',role:'Head of People',status:'online',zone:'focus',color:'#22c55e',initials:'MC',
+   bio:'Culture builder and talent strategist. 10+ years in high-growth startups.',
+   tz:'Paris (GMT+1)',lang:'French, English',tasks:4,
+   skills:['HR','Culture','Ops'],avail:[1,1,1,1,1,1,0],gh:'',li:'marie-curet'},
+  {id:3,name:'Thomas Delacroix',role:'CTO & Co-founder',status:'online',zone:'focus',color:'#f59e0b',initials:'TD',
+   bio:'Telecom engineer turned software architect. Expert in RSP and GSMA standards.',
+   tz:'Bordeaux (GMT+1)',lang:'French, English',tasks:12,
+   skills:['TypeScript','GSMA','Architecture'],avail:[1,1,1,1,1,0,0],gh:'tdelacroix',li:'thomas-delacroix'},
+  {id:4,name:'Léa Fontaine',role:'Head of Design',status:'online',zone:'focus',color:'#a855f7',initials:'LF',
+   bio:'Crafting interfaces that make complex telecom tech feel simple and beautiful.',
+   tz:'Lyon (GMT+1)',lang:'French, English',tasks:6,
+   skills:['Figma','UX','Brand'],avail:[1,1,1,1,1,0,0],gh:'',li:'lea-fontaine'},
+  {id:5,name:'Carlos Mendez',role:'Head of Finance',status:'online',zone:'chill',color:'#ef4444',initials:'CM',
+   bio:'CFO background from fintech. Building Openline\'s financial ops from the ground up.',
+   tz:'Madrid (GMT+1)',lang:'Spanish, English, French',tasks:5,
+   skills:['Finance','Excel','FP&A'],avail:[1,1,1,1,1,0,0],gh:'',li:'carlos-mendez'},
+  {id:6,name:'Yuki Tanaka',role:'Senior Engineer',status:'online',zone:'dnd',color:'#06b6d4',initials:'YT',
+   bio:'Backend specialist obsessed with low-latency telecom APIs and distributed systems.',
+   tz:'Tokyo (GMT+9)',lang:'Japanese, English',tasks:9,
+   skills:['Go','Rust','APIs'],avail:[1,1,1,1,1,0,0],gh:'yuki-tanaka',li:'yuki-tanaka'},
+  {id:7,name:'Adrien Moreau',role:'eSIM Engineer',status:'away',zone:'focus',color:'#ff6616',initials:'AM',
+   bio:'Deep expertise in SM-DP+ servers and eSIM lifecycle management.',
+   tz:'Paris (GMT+1)',lang:'French, English',tasks:7,
+   skills:['Java','GSMA','SGP.22'],avail:[1,1,1,1,0,0,0],gh:'adrien-moreau',li:'adrien-moreau'},
+  {id:8,name:'Sofia Ribeiro',role:'Marketing Manager',status:'away',zone:'chill',color:'#ec4899',initials:'SR',
+   bio:'Growth and brand storytelling for B2B SaaS and telecom companies.',
+   tz:'Lisbon (GMT+0)',lang:'Portuguese, English, French',tasks:5,
+   skills:['Content','SEO','HubSpot'],avail:[1,1,1,1,1,0,0],gh:'',li:'sofia-ribeiro'},
+  {id:9,name:'Marco Silva',role:'Backend Engineer',status:'offline',zone:'focus',color:'#14b8a6',initials:'MS',
+   bio:'APIs, microservices, and distributed systems. Loves clean code and good documentation.',
+   tz:'Lisbon (GMT+0)',lang:'Portuguese, English',tasks:8,
+   skills:['Node.js','Docker','PostgreSQL'],avail:[1,1,1,1,1,0,0],gh:'marco-silva',li:'marco-silva'},
+  {id:10,name:'Rania Aziz',role:'Legal & Compliance',status:'offline',zone:'focus',color:'#eab308',initials:'RA',
+   bio:'Expert in telecom regulations, GDPR compliance, and international partner agreements.',
+   tz:'Dubai (GMT+4)',lang:'Arabic, French, English',tasks:3,
+   skills:['Legal','GDPR','Contracts'],avail:[1,1,1,1,1,0,0],gh:'',li:'rania-aziz'},
+];
+
+let activeFilter = 'all';
+let selectedId = null;
+const DAYS = ['M','T','W','T','F','S','S'];
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let members = TEAM.filter(m => {
+    const matchQ = !q || m.name.toLowerCase().includes(q) || m.role.toLowerCase().includes(q) || m.skills.some(s=>s.toLowerCase().includes(q));
+    const matchF = activeFilter==='all' || activeFilter===m.status || activeFilter===m.zone;
+    return matchQ && matchF;
+  });
+  renderGrid(members);
+}
+
+function renderGrid(members) {
+  const grid = document.getElementById('memberGrid');
+  grid.innerHTML = '';
+  members.forEach((m,i) => {
+    const card = document.createElement('div');
+    card.className = `member-card${m.status==='offline'?' offline':''}${selectedId===m.id?' selected':''}`;
+    card.style.animationDelay = (i*0.04)+'s';
+    card.onclick = () => selectMember(m.id);
+    card.innerHTML = `
+      <div class="avatar-wrap">
+        <div class="avatar-circle" style="background:${m.color}22;color:${m.color}">${m.initials}</div>
+        <div class="status-indicator status-${m.status}"></div>
+      </div>
+      <div class="member-name">${m.name}</div>
+      <div class="member-role">${m.role}</div>
+      <div class="zone-badge zone-${m.zone}">${m.zone.charAt(0).toUpperCase()+m.zone.slice(1)}</div>
+      <div class="skills-row">${m.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div>
+      <div class="quick-actions" onclick="event.stopPropagation()">
+        <button class="qa-btn qa-msg" title="Message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </button>
+        <button class="qa-btn qa-schedule" title="Schedule">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </button>
+        <button class="qa-btn qa-profile" onclick="selectMember(${m.id})">Profile</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function selectMember(id) {
+  selectedId = id;
+  const m = TEAM.find(t=>t.id===id);
+  const panel = document.getElementById('detailPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = `<div style="width:480px;background:var(--bg-card);border-left:1px solid var(--border);overflow-y:auto;height:100%;animation:slide-right .2s ease">
+    <div style="padding:28px;border-bottom:1px solid var(--border);display:flex;justify-content:flex-end">
+      <button class="btn-icon" onclick="closeDetail()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="detail-inner">
+      <div class="detail-avatar" style="background:${m.color}22;color:${m.color}">${m.initials}</div>
+      <div class="detail-name">${m.name}</div>
+      <div class="detail-role">${m.role}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px">
+        <div class="status-indicator status-${m.status}" style="position:static;width:14px;height:14px;border:none"></div>
+        <span style="font-size:18px;color:var(--muted);text-transform:capitalize">${m.status==='online'?'Online · '+m.zone:m.status.charAt(0).toUpperCase()+m.status.slice(1)}</span>
+      </div>
+      <div class="detail-bio">${m.bio}</div>
+      <div class="detail-row"><span class="detail-row-lbl">Timezone</span><span class="detail-row-val">${m.tz}</span></div>
+      <div class="detail-row"><span class="detail-row-lbl">Languages</span><span class="detail-row-val" style="text-align:right;max-width:60%">${m.lang}</span></div>
+      <div class="detail-row"><span class="detail-row-lbl">Open tasks</span><span class="detail-row-val">${m.tasks}</span></div>
+      <div class="detail-sec-lbl">Skills</div>
+      <div class="skills-row" style="justify-content:flex-start">${m.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div>
+      <div class="detail-sec-lbl">This Week</div>
+      <div class="avail-mini">
+        ${DAYS.map((d,i)=>`<div class="avail-day ${m.avail[i]?'free':'busy'}${i===0?' today':''}">${d}</div>`).join('')}
+      </div>
+      ${(m.gh||m.li)?`<div class="link-row">
+        ${m.gh?`<div class="link-btn" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></div>`:``}
+        ${m.li?`<div class="link-btn" title="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>`:``}
+      </div>`:``}
+      <div class="cta-row">
+        <button class="cta-btn cta-dm">Start DM</button>
+        <button class="cta-btn cta-sched">Schedule</button>
+      </div>
+    </div>
+  </div>`;
+  applyFilters();
+}
+
+function closeDetail() {
+  selectedId = null;
+  document.getElementById('detailPanel').style.display = 'none';
+  applyFilters();
+}
+
+applyFilters();
+</script>
+</body>
+</html>

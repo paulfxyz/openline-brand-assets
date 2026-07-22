@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #dde6ff;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Animated orbs */
+  .orb-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: orb-float linear infinite;
+  }
+  .orb-1 { width: 400px; height: 400px; background: #3B3BFF; top: -100px; left: -100px; animation-duration: 25s; }
+  .orb-2 { width: 300px; height: 300px; background: #ff6616; top: 60%; right: -80px; animation-duration: 32s; animation-delay: -10s; }
+  .orb-3 { width: 250px; height: 250px; background: #3B3BFF; bottom: -50px; left: 40%; animation-duration: 20s; animation-delay: -5s; }
+
+  @keyframes orb-float {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(30px, -20px) scale(1.05); }
+    66%  { transform: translate(-20px, 30px) scale(0.97); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+    50%       { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  @keyframes bell-shake {
+    0%, 100% { transform: rotate(0); }
+    20%       { transform: rotate(12deg); }
+    40%       { transform: rotate(-10deg); }
+    60%       { transform: rotate(6deg); }
+    80%       { transform: rotate(-4deg); }
+  }
+
+  /* Header */
+  .app-header {
+    position: relative;
+    z-index: 10;
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #3B3BFF, #6060FF);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 28px; height: 28px; }
+
+  .header-brand { font-family: 'Play', sans-serif; font-weight: 700; font-size: 28px; color: #dde6ff; }
+  .header-greeting {
+    flex: 1;
+    text-align: center;
+  }
+  .greeting-text { font-family: 'Play', sans-serif; font-size: 24px; color: #dde6ff; }
+  .greeting-date { font-size: 18px; color: rgba(255,255,255,.45); }
+
+  .header-actions { display: flex; align-items: center; gap: 16px; }
+
+  .header-time {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.45);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 12px 20px;
+  }
+
+  .icon-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.55);
+    transition: all .15s;
+    position: relative;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,.08); color: #dde6ff; }
+  .icon-btn.bell:hover svg { animation: bell-shake .4s ease; }
+
+  .notif-dot {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 12px; height: 12px;
+    background: #ff6616;
+    border-radius: 50%;
+    border: 1.5px solid #090e1c;
+  }
+
+  .close-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.45);
+    transition: all .15s;
+    font-size: 20px;
+  }
+  .close-btn:hover { background: rgba(239,68,68,.12); color: #ef4444; border-color: rgba(239,68,68,.3); }
+
+  /* Content */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .content::-webkit-scrollbar { width: 6px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 6px; }
+
+  /* KPI row */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    animation: fade-up .4s ease both;
+  }
+
+  .kpi-card {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    filter: blur(25px);
+    opacity: 0.5;
+  }
+  .kpi-card.green::before  { background: #22c55e; }
+  .kpi-card.blue::before   { background: #3B3BFF; }
+  .kpi-card.orange::before { background: #ff6616; }
+  .kpi-card.amber::before  { background: #f59e0b; }
+
+  .kpi-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.4);
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin-bottom: 16px;
+  }
+  .kpi-value {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    color: #dde6ff;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .kpi-footer { display: flex; align-items: center; justify-content: space-between; }
+  .kpi-delta {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+  .kpi-delta.up   { background: rgba(34,197,94,.15); color: #22c55e; }
+  .kpi-delta.down { background: rgba(239,68,68,.15); color: #ef4444; }
+  .kpi-delta.neu  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.55); }
+
+  .sparkline { flex-shrink: 0; }
+  .sparkline path { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .kpi-card.green .sparkline path  { stroke: #22c55e; }
+  .kpi-card.blue .sparkline path   { stroke: #3B3BFF; }
+  .kpi-card.orange .sparkline path { stroke: #ff6616; }
+  .kpi-card.amber .sparkline path  { stroke: #f59e0b; }
+
+  /* Two-column layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; animation: fade-up .4s ease .1s both; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; animation: fade-up .4s ease .15s both; }
+
+  .panel {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-title {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #dde6ff;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .panel-title-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+  }
+  .dot-green  { background: #22c55e; animation: pulse-green 2s infinite; }
+  .dot-blue   { background: #3B3BFF; }
+  .dot-orange { background: #ff6616; }
+
+  .panel-badge {
+    font-size: 16px;
+    color: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.06);
+    padding: 4px 16px;
+    border-radius: 20px;
+  }
+
+  /* Team presence */
+  .team-grid { padding: 20px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+  .member-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .member-row:last-child { border-bottom: none; }
+
+  .avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--av1, #3B3BFF), var(--av2, #6060FF));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .status-dot {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #0c1120;
+  }
+  .status-online  { background: #22c55e; }
+  .status-away    { background: #f59e0b; }
+  .status-dnd     { background: #ef4444; }
+  .status-offline { background: rgba(255,255,255,.2); }
+
+  .member-info { flex: 1; min-width: 0; }
+  .member-name { font-size: 18px; font-weight: 600; color: #dde6ff; }
+  .member-meta { font-size: 16px; color: rgba(255,255,255,.4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .zone-badge {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 14px;
+    background: rgba(59,59,255,.18);
+    color: #8888ff;
+    white-space: nowrap;
+  }
+  .zone-badge.orange { background: rgba(255,102,22,.14); color: #ff9a6c; }
+  .zone-badge.green  { background: rgba(34,197,94,.12); color: #4ade80; }
+
+  /* Activity feed */
+  .activity-list { padding: 20px 28px; display: flex; flex-direction: column; gap: 20px; }
+
+  .activity-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .activity-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .activity-body { flex: 1; min-width: 0; }
+  .activity-text { font-size: 18px; color: rgba(255,255,255,.7); line-height: 1.4; }
+  .activity-text strong { color: #dde6ff; font-weight: 600; }
+  .activity-time { font-size: 16px; color: rgba(255,255,255,.3); margin-top: 4px; }
+
+  .activity-line {
+    position: relative;
+  }
+  .activity-line::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 19px;
+    bottom: -20px;
+    width: 1px;
+    background: rgba(255,255,255,.06);
+  }
+  .activity-line:last-child::before { display: none; }
+
+  /* Quick actions */
+  .quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 24px 28px;
+  }
+
+  .qa-btn {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .qa-btn:hover {
+    background: rgba(59,59,255,.1);
+    border-color: rgba(59,59,255,.3);
+    transform: translateY(-1px);
+  }
+  .qa-icon {
+    width: 60px; height: 60px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .qa-label { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.6); }
+
+  /* Zone overview */
+  .zones-list { padding: 20px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+  .zone-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .zone-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .zone-info { flex: 1; min-width: 0; }
+  .zone-name { font-size: 18px; font-weight: 600; color: #dde6ff; }
+  .zone-occupancy {
+    font-size: 16px;
+    color: rgba(255,255,255,.4);
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+  .progress-track {
+    height: 6px;
+    background: rgba(255,255,255,.08);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3B3BFF, #6060FF);
+    border-radius: 6px;
+    transition: width .4s ease;
+  }
+  .progress-fill.orange { background: linear-gradient(90deg, #ff6616, #ff9a6c); }
+  .progress-fill.green  { background: linear-gradient(90deg, #22c55e, #4ade80); }
+  .zone-count { font-size: 16px; font-weight: 600; color: rgba(255,255,255,.5); white-space: nowrap; }
+
+  /* Full-width panel */
+  .full-width { animation: fade-up .4s ease .2s both; }
+</style>
+</head>
+<body>
+
+<div class="orb-container">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="logo-mark">
+    <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.5"/>
+      <path d="M6 9h6M9 6v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <div class="header-brand">Openline</div>
+  </div>
+  <div class="header-greeting">
+    <div class="greeting-text" id="greeting">Good morning, Paul ☀️</div>
+    <div class="greeting-date" id="date-display"></div>
+  </div>
+  <div class="header-actions">
+    <div class="header-time" id="clock">09:41</div>
+    <div class="icon-btn bell" title="Notifications">
+      <div class="notif-dot"></div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+    </div>
+    <button class="close-btn" onclick="window.parent.postMessage({type:'dashboard-close'},'*')" title="Close">✕</button>
+  </div>
+</header>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card green">
+      <div class="kpi-label">Online Now</div>
+      <div class="kpi-value">9</div>
+      <div class="kpi-footer">
+        <span class="kpi-delta up">▲ +2</span>
+        <svg class="sparkline" width="60" height="24" viewBox="0 0 60 24">
+          <path d="M0,18 L10,16 L20,14 L30,10 L40,8 L50,6 L60,4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">Active Zones</div>
+      <div class="kpi-value">5</div>
+      <div class="kpi-footer">
+        <span class="kpi-delta neu">→ same</span>
+        <svg class="sparkline" width="60" height="24" viewBox="0 0 60 24">
+          <path d="M0,12 L10,10 L20,14 L30,8 L40,12 L50,10 L60,12"/>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Tasks Done</div>
+      <div class="kpi-value">24</div>
+      <div class="kpi-footer">
+        <span class="kpi-delta up">▲ +5</span>
+        <svg class="sparkline" width="60" height="24" viewBox="0 0 60 24">
+          <path d="M0,20 L10,17 L20,15 L30,12 L40,10 L50,7 L60,4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">Messages</div>
+      <div class="kpi-value">87</div>
+      <div class="kpi-footer">
+        <span class="kpi-delta up">▲ +18</span>
+        <svg class="sparkline" width="60" height="24" viewBox="0 0 60 24">
+          <path d="M0,18 L10,15 L20,18 L30,10 L40,13 L50,7 L60,5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two col: Team + Activity -->
+  <div class="two-col">
+    <!-- Team Presence -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="panel-title-dot dot-green"></span>
+          Team Presence
+        </div>
+        <span class="panel-badge">9 online</span>
+      </div>
+      <div class="team-grid">
+        <div class="member-row">
+          <div class="avatar" style="--av1:#3B3BFF;--av2:#6060FF">M
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Marie Dupont</div>
+            <div class="member-meta">Last active 2 min ago</div>
+          </div>
+          <span class="zone-badge">Dev Lab</span>
+        </div>
+        <div class="member-row">
+          <div class="avatar" style="--av1:#ff6616;--av2:#ff9a6c">T
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Thomas Bernard</div>
+            <div class="member-meta">In a meeting</div>
+          </div>
+          <span class="zone-badge orange">Board Room</span>
+        </div>
+        <div class="member-row">
+          <div class="avatar" style="--av1:#22c55e;--av2:#4ade80">L
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Léa Martin</div>
+            <div class="member-meta">Focusing — DND</div>
+          </div>
+          <span class="zone-badge green">Focus Room</span>
+        </div>
+        <div class="member-row">
+          <div class="avatar" style="--av1:#a855f7;--av2:#c084fc">A
+            <span class="status-dot status-away"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Antoine Moreau</div>
+            <div class="member-meta">Away 15 min</div>
+          </div>
+          <span class="zone-badge">Lounge</span>
+        </div>
+        <div class="member-row">
+          <div class="avatar" style="--av1:#0ea5e9;--av2:#38bdf8">S
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Sophie Laurent</div>
+            <div class="member-meta">Last active 1 min ago</div>
+          </div>
+          <span class="zone-badge">Design Hub</span>
+        </div>
+        <div class="member-row">
+          <div class="avatar" style="--av1:#ec4899;--av2:#f472b6">C
+            <span class="status-dot status-dnd"></span>
+          </div>
+          <div class="member-info">
+            <div class="member-name">Camille Petit</div>
+            <div class="member-meta">Deep work mode</div>
+          </div>
+          <span class="zone-badge green">Focus Room</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="panel-title-dot dot-blue"></span>
+          Activity Feed
+        </div>
+        <span class="panel-badge">live</span>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#22c55e;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Marie</strong> joined Dev Lab</div>
+            <div class="activity-time">Just now</div>
+          </div>
+        </div>
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#f59e0b;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Thomas</strong> completed task "Q3 API Spec Review"</div>
+            <div class="activity-time">3 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#3B3BFF;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Léa</strong> sent a message in #design-review</div>
+            <div class="activity-time">7 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#ff6616;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Antoine</strong> started a Pomodoro session (25 min)</div>
+            <div class="activity-time">12 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#a855f7;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Sophie</strong> uploaded "v2-wireframes.fig" to Files</div>
+            <div class="activity-time">18 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item activity-line">
+          <div class="activity-dot" style="background:#22c55e;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Camille</strong> marked 3 tasks done in Sprint 12</div>
+            <div class="activity-time">24 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#0ea5e9;"></div>
+          <div class="activity-body">
+            <div class="activity-text"><strong>Paul</strong> entered the workspace</div>
+            <div class="activity-time">31 min ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three col: Quick Actions + Zones -->
+  <div class="three-col">
+    <!-- Quick Actions -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Quick Actions</div>
+      </div>
+      <div class="quick-actions-grid">
+        <a class="qa-btn" href="#" title="Chat">
+          <div class="qa-icon" style="background:rgba(59,59,255,.15);">💬</div>
+          <span class="qa-label">Chat</span>
+        </a>
+        <a class="qa-btn" href="#" title="Tasks">
+          <div class="qa-icon" style="background:rgba(34,197,94,.12);">✅</div>
+          <span class="qa-label">Tasks</span>
+        </a>
+        <a class="qa-btn" href="#" title="Jam">
+          <div class="qa-icon" style="background:rgba(29,185,84,.12);">🎵</div>
+          <span class="qa-label">Jam</span>
+        </a>
+        <a class="qa-btn" href="#" title="Pomodoro">
+          <div class="qa-icon" style="background:rgba(255,102,22,.12);">🍅</div>
+          <span class="qa-label">Pomodoro</span>
+        </a>
+        <a class="qa-btn" href="#" title="Files">
+          <div class="qa-icon" style="background:rgba(245,158,11,.12);">📁</div>
+          <span class="qa-label">Files</span>
+        </a>
+        <a class="qa-btn" href="#" title="Mercury">
+          <div class="qa-icon" style="background:rgba(34,197,94,.1);">⚡</div>
+          <span class="qa-label">Mercury</span>
+        </a>
+        <a class="qa-btn" href="#" title="Calendar">
+          <div class="qa-icon" style="background:rgba(168,85,247,.12);">📅</div>
+          <span class="qa-label">Calendar</span>
+        </a>
+        <a class="qa-btn" href="#" title="Settings">
+          <div class="qa-icon" style="background:rgba(255,255,255,.05);">⚙️</div>
+          <span class="qa-label">Settings</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Zone Overview (spans 2 cols) -->
+    <div class="panel" style="grid-column: span 2;">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="panel-title-dot dot-orange"></span>
+          Zone Overview
+        </div>
+        <span class="panel-badge">5 active</span>
+      </div>
+      <div class="zones-list">
+        <div class="zone-row">
+          <div class="zone-icon" style="background:rgba(59,59,255,.15);">💻</div>
+          <div class="zone-info">
+            <div class="zone-name">Dev Lab</div>
+            <div class="zone-occupancy">3 / 8 seats</div>
+            <div class="progress-track"><div class="progress-fill" style="width:37.5%"></div></div>
+          </div>
+          <div class="zone-count">3</div>
+        </div>
+        <div class="zone-row">
+          <div class="zone-icon" style="background:rgba(255,102,22,.12);">🏛️</div>
+          <div class="zone-info">
+            <div class="zone-name">Board Room</div>
+            <div class="zone-occupancy">5 / 10 seats</div>
+            <div class="progress-track"><div class="progress-fill orange" style="width:50%"></div></div>
+          </div>
+          <div class="zone-count">5</div>
+        </div>
+        <div class="zone-row">
+          <div class="zone-icon" style="background:rgba(34,197,94,.1);">🎯</div>
+          <div class="zone-info">
+            <div class="zone-name">Focus Room</div>
+            <div class="zone-occupancy">2 / 4 seats</div>
+            <div class="progress-track"><div class="progress-fill green" style="width:50%"></div></div>
+          </div>
+          <div class="zone-count">2</div>
+        </div>
+        <div class="zone-row">
+          <div class="zone-icon" style="background:rgba(168,85,247,.1);">🎨</div>
+          <div class="zone-info">
+            <div class="zone-name">Design Hub</div>
+            <div class="zone-occupancy">1 / 6 seats</div>
+            <div class="progress-track"><div class="progress-fill" style="width:16.6%"></div></div>
+          </div>
+          <div class="zone-count">1</div>
+        </div>
+        <div class="zone-row">
+          <div class="zone-icon" style="background:rgba(245,158,11,.1);">☕</div>
+          <div class="zone-info">
+            <div class="zone-name">Lounge</div>
+            <div class="zone-occupancy">1 / 12 seats</div>
+            <div class="progress-track"><div class="progress-fill orange" style="width:8.3%"></div></div>
+          </div>
+          <div class="zone-count">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Clock and greeting
+  function updateTime() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2,'0');
+    document.getElementById('clock').textContent = `${h}:${m}`;
+
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('date-display').textContent =
+      `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+
+    const greetEl = document.getElementById('greeting');
+    if (h < 12) greetEl.textContent = 'Good morning, Paul ☀️';
+    else if (h < 18) greetEl.textContent = 'Good afternoon, Paul 👋';
+    else greetEl.textContent = 'Good evening, Paul 🌙';
+  }
+  updateTime();
+  setInterval(updateTime, 30000);
+
+  // Live KPI counters with random drift
+  const kpiValues = [9, 5, 24, 87];
+  const kpiEls = document.querySelectorAll('.kpi-value');
+
+  setInterval(() => {
+    const idx = Math.floor(Math.random() * 4);
+    if (idx === 1) return; // keep zones stable
+    const drift = Math.random() > 0.5 ? 1 : -1;
+    kpiValues[idx] = Math.max(0, kpiValues[idx] + drift);
+    kpiEls[idx].textContent = kpiValues[idx];
+  }, 8000);
+</script>
+</body>
+</html>

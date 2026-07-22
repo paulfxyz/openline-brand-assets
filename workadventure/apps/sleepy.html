@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',system-ui,sans-serif;font-size:20px;line-height:1.5;overflow:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:6px}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse-online{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+  @keyframes pulse-away{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.4)}70%{box-shadow:0 0 0 6px rgba(245,158,11,0)}}
+
+  .app{display:flex;flex-direction:column;height:100%;animation:fade-up .35s ease}
+
+  /* HEADER */
+  .header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.06);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+  .header-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.3)}
+  .btn-icon{width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:22px;transition:all .2s}
+  .btn-icon:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+
+  /* CONTENT */
+  .content{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:24px}
+
+  /* CONTACT CARD HEADER */
+  .contact-header{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:32px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;position:relative}
+  .avatar-wrap{position:relative;width:120px;height:120px}
+  .avatar-circle{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#3B3BFF,#ff6616);display:flex;align-items:center;justify-content:center;font-family:'Play',sans-serif;font-size:40px;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.1)}
+  .status-dot{position:absolute;bottom:5px;right:5px;width:22px;height:22px;border-radius:50%;border:2.5px solid #0c1120}
+  .status-dot.online{background:#22c55e;animation:pulse-online 2s ease infinite}
+  .status-dot.away{background:#f59e0b;animation:pulse-away 2s ease infinite}
+  .status-dot.offline{background:rgba(255,255,255,.25)}
+  .contact-name{font-family:'Play',sans-serif;font-size:32px;font-weight:700;color:#dde6ff}
+  .contact-role{font-size:20px;color:rgba(255,255,255,.45)}
+  .role-badge{display:inline-block;background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.3);border-radius:20px;padding:6px 20px;font-size:18px;font-weight:600;color:#8080FF;margin-top:4px}
+  .tz-info{font-size:18px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px}
+
+  /* CHANNELS CHIPS */
+  .chips-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:6px 16px;font-size:18px;color:rgba(255,255,255,.5)}
+
+  /* ACTION BUTTONS */
+  .actions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .action-btn{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif}
+  .action-btn:hover{transform:translateY(-1px)}
+  .action-icon{width:60px;height:60px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+  .action-label{font-size:20px;font-weight:600;color:#dde6ff}
+  .action-sub{font-size:16px;color:rgba(255,255,255,.35)}
+  .action-btn.blue{border-color:rgba(59,59,255,.25)}.action-btn.blue .action-icon{background:rgba(59,59,255,.2)}
+  .action-btn.blue:hover{border-color:rgba(59,59,255,.5);background:rgba(59,59,255,.08)}
+  .action-btn.orange{border-color:rgba(255,102,22,.25)}.action-btn.orange .action-icon{background:rgba(255,102,22,.2)}
+  .action-btn.orange:hover{border-color:rgba(255,102,22,.5);background:rgba(255,102,22,.06)}
+  .action-btn.ghost:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+  .action-btn.ghost .action-icon{background:rgba(255,255,255,.07)}
+  .action-btn.subtle:hover{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.05)}
+  .action-btn.subtle .action-icon{background:rgba(245,158,11,.15)}
+
+  /* AVAILABILITY STRIP */
+  .avail-section{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:24px}
+  .section-title{font-size:18px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .days-strip{display:flex;gap:12px}
+  .day-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .day-name{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.3)}
+  .day-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0}
+  .day-dot.free{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.4)}
+  .day-dot.busy{background:#f59e0b;box-shadow:0 0 6px rgba(245,158,11,.3)}
+  .day-dot.blocked{background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,.3)}
+  .day-dot.today{border:2px solid rgba(255,255,255,.4);background:transparent}
+  .day-today-dot{width:16px;height:16px;border-radius:50%;background:#3B3BFF;box-shadow:0 0 6px rgba(59,59,255,.5)}
+
+  /* TIMELINE */
+  .timeline{display:flex;flex-direction:column;gap:0}
+  .tl-item{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .tl-item:last-child{border-bottom:none}
+  .tl-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:5px}
+  .tl-type-msg{background:#3B3BFF}
+  .tl-type-meet{background:#ff6616}
+  .tl-type-mail{background:#22c55e}
+  .tl-type-call{background:#a855f7}
+  .tl-line{position:absolute;left:7px;top:8px;bottom:0;width:1px;background:rgba(255,255,255,.05)}
+  .tl-text{flex:1;min-width:0}
+  .tl-title{font-size:20px;font-weight:600;color:#dde6ff}
+  .tl-detail{font-size:18px;color:rgba(255,255,255,.4);margin-top:2px}
+  .tl-time{font-size:18px;color:rgba(255,255,255,.3);flex-shrink:0;white-space:nowrap}
+
+  /* QUICK MESSAGE */
+  .msg-section{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:24px}
+  .msg-area{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px 22px;color:#dde6ff;font-family:'Inter',sans-serif;font-size:18px;width:100%;resize:none;outline:none;transition:border-color .2s;min-height:90px}
+  .msg-area:focus{border-color:rgba(59,59,255,.4)}
+  .msg-area::placeholder{color:rgba(255,255,255,.22)}
+  .msg-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+  .msg-hint{font-size:18px;color:rgba(255,255,255,.3)}
+  .btn-send{background:#3B3BFF;color:#fff;border:none;border-radius:8px;padding:14px 28px;font-size:18px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+  .btn-send:hover{background:#5050ff;box-shadow:0 3px 12px rgba(59,59,255,.4)}
+
+  /* SCHEDULE SLOTS */
+  .slots-row{display:flex;gap:16px;margin-top:16px}
+  .slot-btn{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:16px 18px;cursor:pointer;text-align:center;transition:all .2s;font-family:'Inter',sans-serif}
+  .slot-btn:hover{border-color:rgba(59,59,255,.4);background:rgba(59,59,255,.08)}
+  .slot-day{font-size:18px;font-weight:700;color:#dde6ff}
+  .slot-time{font-size:18px;color:rgba(255,255,255,.4);margin-top:4px}
+  .slot-btn.selected{border-color:#3B3BFF;background:rgba(59,59,255,.15)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="header-title">Contact</div>
+      <div class="header-label">OPENLINE WORKSPACE</div>
+    </div>
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'sleepy-close'},'*')">✕</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CONTACT CARD -->
+    <div class="contact-header">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">MV</div>
+        <div class="status-dot online"></div>
+      </div>
+      <div>
+        <div class="contact-name">Marie Vautier</div>
+        <div class="contact-role">Head of Partnerships — EMEA</div>
+        <div class="role-badge">🏢 Openline</div>
+      </div>
+      <div class="tz-info">🕒 Currently 3:15 PM in Paris 🇫🇷 · <span style="color:#22c55e;font-weight:600">Online now</span></div>
+      <div class="chips-row">
+        <div class="chip">#esim-ops</div>
+        <div class="chip">#partner-deals</div>
+        <div class="chip">#emea-team</div>
+        <div class="chip">#all-hands</div>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions-grid">
+      <div class="action-btn blue" onclick="actionClick('message')">
+        <div class="action-icon">💬</div>
+        <div class="action-label">Message</div>
+        <div class="action-sub">Open DM</div>
+      </div>
+      <div class="action-btn orange" onclick="actionClick('schedule')">
+        <div class="action-icon">📅</div>
+        <div class="action-label">Schedule</div>
+        <div class="action-sub">Book a meeting</div>
+      </div>
+      <div class="action-btn ghost" onclick="actionClick('profile')">
+        <div class="action-icon">👤</div>
+        <div class="action-label">View Profile</div>
+        <div class="action-sub">Full contact card</div>
+      </div>
+      <div class="action-btn subtle" onclick="actionClick('remind')">
+        <div class="action-icon">⏰</div>
+        <div class="action-label">Set Reminder</div>
+        <div class="action-sub">Follow up later</div>
+      </div>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="avail-section">
+      <div class="section-title">📆 This Week's Availability</div>
+      <div class="days-strip">
+        <div class="day-col">
+          <div class="day-name">MON</div>
+          <div class="day-dot free"></div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">TUE</div>
+          <div class="day-dot busy"></div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">WED</div>
+          <div class="day-today-dot"></div>
+          <div class="day-name" style="color:#3B3BFF;margin-top:2px;font-size:11px">TODAY</div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">THU</div>
+          <div class="day-dot free"></div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">FRI</div>
+          <div class="day-dot blocked"></div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">SAT</div>
+          <div class="day-dot blocked"></div>
+        </div>
+        <div class="day-col">
+          <div class="day-name">SUN</div>
+          <div class="day-dot blocked"></div>
+        </div>
+      </div>
+      <!-- Quick slots -->
+      <div style="font-size:18px;color:rgba(255,255,255,.35);margin-top:20px;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Quick Book</div>
+      <div class="slots-row">
+        <div class="slot-btn selected" onclick="selectSlot(this)">
+          <div class="slot-day">Thu 15 Jan</div>
+          <div class="slot-time">10:00 AM (Paris)</div>
+        </div>
+        <div class="slot-btn" onclick="selectSlot(this)">
+          <div class="slot-day">Thu 15 Jan</div>
+          <div class="slot-time">2:30 PM (Paris)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT INTERACTIONS -->
+    <div class="avail-section">
+      <div class="section-title">🕐 Recent Interactions</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot tl-type-meet"></div>
+          <div class="tl-text">
+            <div class="tl-title">eSIM Partner Review Call</div>
+            <div class="tl-detail">Orange Spain deal scope · 45 min</div>
+          </div>
+          <div class="tl-time">2d ago</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot tl-type-msg"></div>
+          <div class="tl-text">
+            <div class="tl-title">Sent pricing proposal PDF</div>
+            <div class="tl-detail">v2.3 Tier B Enterprise deck</div>
+          </div>
+          <div class="tl-time">3d ago</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot tl-type-mail"></div>
+          <div class="tl-text">
+            <div class="tl-title">Email: API onboarding guide</div>
+            <div class="tl-detail">Sent technical integration docs</div>
+          </div>
+          <div class="tl-time">1w ago</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot tl-type-call"></div>
+          <div class="tl-text">
+            <div class="tl-title">Intro call — EMEA expansion</div>
+            <div class="tl-detail">First contact, strong interest</div>
+          </div>
+          <div class="tl-time">2w ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK MESSAGE -->
+    <div class="msg-section">
+      <div class="section-title">✍️ Quick Message</div>
+      <textarea class="msg-area" id="msgArea" placeholder="Type a quick message to Marie..."></textarea>
+      <div class="msg-footer">
+        <span class="msg-hint" id="msgHint">Press Enter to send</span>
+        <button class="btn-send" onclick="sendMsg()">Send ↗</button>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div>
+
+<script>
+function actionClick(type) {
+  const labels = { message:'Opening DM with Marie...', schedule:'Opening calendar...', profile:'Loading full profile...', remind:'Reminder set for tomorrow 9 AM' };
+  showToast(labels[type] || 'Done');
+}
+
+function selectSlot(btn) {
+  document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function sendMsg() {
+  const area = document.getElementById('msgArea');
+  if (!area.value.trim()) return;
+  showToast('Message sent to Marie ✓');
+  area.value = '';
+}
+
+document.getElementById('msgArea').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+});
+
+let toastEl;
+function showToast(msg) {
+  if (toastEl) toastEl.remove();
+  toastEl = document.createElement('div');
+  toastEl.textContent = msg;
+  toastEl.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0c1120;border:1px solid rgba(59,59,255,.3);color:#dde6ff;padding:14px 24px;border-radius:10px;font-size:18px;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.5);animation:fade-up .3s ease';
+  document.body.appendChild(toastEl);
+  setTimeout(() => { if (toastEl) { toastEl.style.opacity='0'; toastEl.style.transition='opacity .3s'; setTimeout(()=>toastEl?.remove(),300); }}, 2500);
+}
+
+// Live clock for Paris
+function updateTZ() {
+  const parisTime = new Date().toLocaleTimeString('fr-FR',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit'});
+  document.querySelector('.tz-info').innerHTML = `🕒 Currently ${parisTime} in Paris 🇫🇷 · <span style="color:#22c55e;font-weight:600">Online now</span>`;
+}
+updateTZ();
+setInterval(updateTZ, 30000);
+</script>
+</body>
+</html>

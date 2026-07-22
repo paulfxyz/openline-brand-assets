@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070c18;--bg-card:#0c1120;--bg-header:#090e1c;
+  --text:#dde6ff;--muted:rgba(255,255,255,.45);
+  --blue:#3B3BFF;--orange:#ff6616;
+  --success:#22c55e;--warn:#f59e0b;--error:#ef4444;
+  --border:rgba(255,255,255,.07);
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;font-size:20px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(59,59,255,.4)}100%{box-shadow:0 0 0 6px rgba(59,59,255,0)}}
+
+/* Header */
+.header{background:var(--bg-header);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0;position:sticky;top:0;z-index:100}
+.eyebrow{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.header-title{font-family:'Play',sans-serif;font-weight:700;font-size:28px}
+.select{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 18px;color:var(--text);font-size:18px;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+.select:focus{border-color:var(--blue)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:8px;font-size:18px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#4f4fff}
+.btn-icon{padding:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.btn-icon:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+
+/* Tabs */
+.tabs-bar{background:var(--bg-header);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:4px;flex-shrink:0}
+.tab{padding:18px 28px;font-size:18px;font-weight:500;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* Stats */
+.stats-bar{display:flex;gap:22px;padding:22px 28px;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
+.stat-chip{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px 28px;display:flex;flex-direction:column;gap:6px;min-width:180px;flex-shrink:0}
+.stat-val{font-family:'Play',sans-serif;font-size:36px;font-weight:700}
+.stat-lbl{font-size:16px;color:var(--muted)}
+.stat-val.blue{color:var(--blue)}
+.stat-val.green{color:var(--success)}
+.stat-val.red{color:var(--error)}
+
+/* Main layout */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* Board */
+.board{flex:1;display:flex;gap:22px;padding:28px;overflow-x:auto;overflow-y:hidden}
+.column{width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px}
+.col-header{display:flex;align-items:center;gap:14px;padding:14px 8px;margin-bottom:8px}
+.col-title{font-family:'Play',sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.05em}
+.col-count{background:rgba(255,255,255,.08);border-radius:100px;padding:2px 14px;font-size:14px;color:var(--muted);font-family:'Press Start 2P',monospace}
+.col-cards{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-right:6px}
+.col-cards::-webkit-scrollbar{width:6px}
+.col-cards::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.add-row{display:flex;align-items:center;gap:10px;padding:14px;border:1px dashed rgba(255,255,255,.1);border-radius:10px;cursor:pointer;color:var(--muted);font-size:18px;transition:all .15s;flex-shrink:0}
+.add-row:hover{border-color:rgba(59,59,255,.4);color:var(--blue)}
+.add-input-row{display:none;flex-direction:column;gap:10px;padding:14px;background:var(--bg-card);border:1px solid var(--blue);border-radius:10px;flex-shrink:0}
+.add-input-row.open{display:flex}
+.add-input-row input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:10px 18px;color:var(--text);font-size:18px;outline:none;font-family:'Inter',sans-serif}
+.add-input-row input:focus{border-color:var(--blue)}
+.add-actions{display:flex;gap:10px}
+.btn-sm{padding:8px 18px;font-size:16px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500}
+.btn-sm-primary{background:var(--blue);color:#fff}
+.btn-sm-ghost{background:rgba(255,255,255,.06);color:var(--muted)}
+
+/* Task card */
+.task-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;cursor:pointer;transition:all .15s;position:relative;animation:fade-up .2s ease both;flex-shrink:0}
+.task-card:hover{border-color:rgba(59,59,255,.35);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.task-card.selected{border-color:var(--blue);background:rgba(59,59,255,.06)}
+.task-card:hover .move-actions{opacity:1}
+.card-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.priority-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.p-high{background:var(--error)}
+.p-med{background:var(--warn)}
+.p-low{background:var(--success)}
+.card-title{font-size:18px;font-weight:600;line-height:1.4;flex:1}
+.card-meta{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.tag{font-size:14px;padding:4px 12px;border-radius:100px;font-weight:500}
+.tag-blue{background:rgba(59,59,255,.15);color:#7c7cff}
+.tag-orange{background:rgba(255,102,22,.15);color:var(--orange)}
+.tag-green{background:rgba(34,197,94,.15);color:var(--success)}
+.tag-violet{background:rgba(168,85,247,.15);color:#a855f7}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.due{font-size:14px;color:var(--muted);margin-left:auto}
+.due.overdue{color:var(--error)}
+.move-actions{position:absolute;bottom:14px;right:14px;opacity:0;transition:opacity .15s;display:flex;gap:6px}
+.move-btn{background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.3);color:var(--blue);border-radius:6px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.move-btn:hover{background:rgba(59,59,255,.3)}
+
+/* Detail panel */
+.detail-panel{width:460px;background:var(--bg-card);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;transition:width .2s}
+.detail-panel.hidden{width:0;border:none;overflow:hidden}
+.detail-inner{padding:28px;overflow-y:auto;flex:1;min-width:460px}
+.detail-inner::-webkit-scrollbar{width:6px}
+.detail-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.detail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.detail-title-wrap{flex:1}
+.detail-task-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.detail-desc{font-size:18px;color:var(--muted);line-height:1.6}
+.detail-section{margin-top:28px}
+.detail-sec-label{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+.subtask{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);font-size:18px}
+.subtask input[type=checkbox]{accent-color:var(--blue)}
+.comment{padding:14px 0;border-bottom:1px solid var(--border)}
+.comment-author{font-size:16px;font-weight:600;margin-bottom:4px}
+.comment-text{font-size:18px;color:var(--muted);line-height:1.5}
+.comment-time{font-size:14px;color:var(--muted)}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <span class="eyebrow">Openline</span>
+    <span class="header-title">Projects</span>
+  </div>
+  <select class="select" style="margin-left:14px" onchange="switchProject(this.value)">
+    <option value="0">eSIM Platform</option>
+    <option value="1">Marketing Site</option>
+    <option value="2">Partner API</option>
+    <option value="3">Q3 Goals</option>
+  </select>
+  <button class="btn btn-primary" style="margin-left:auto" onclick="openAddTask()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    New Task
+  </button>
+  <button class="btn-icon" onclick="window.parent.postMessage({type:'projects-close'},'*') || history.back()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+
+<div class="tabs-bar" id="projectTabs"></div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="app-body">
+  <div class="board" id="board"></div>
+  <div class="detail-panel hidden" id="detailPanel">
+    <div class="detail-inner" id="detailInner"></div>
+  </div>
+</div>
+
+<script>
+const AVATARS = {
+  'Paul':['#3B3BFF','PL'],
+  'Marie':['#22c55e','MC'],
+  'Thomas':['#f59e0b','TD'],
+  'Léa':['#a855f7','LF'],
+  'Carlos':['#ef4444','CM'],
+  'Yuki':['#06b6d4','YT'],
+  'Adrien':['#ff6616','AM'],
+  'Sofia':['#ec4899','SR'],
+  'Marco':['#14b8a6','MS'],
+  'Rania':['#eab308','RA'],
+};
+function avatar(name){const[c,i]=AVATARS[name]||['#888','?'];return`<div class="avatar" style="background:${c}22;color:${c}">${i}</div>`;}
+
+const PROJECTS = [
+  {
+    name:'eSIM Platform',
+    columns:['Backlog','In Progress','Review','Done'],
+    tasks:[
+      {id:1,col:'Backlog',title:'Implement SM-DP+ profile download retry logic',priority:'high',assignee:'Marco',due:'Nov 14',tag:'tag-blue',tagLabel:'Backend',desc:'Handle edge cases in RSP profile download flow including network timeouts and GSMA error codes.'},
+      {id:2,col:'Backlog',title:'Design eSIM activation QR code UI',priority:'med',assignee:'Léa',due:'Nov 18',tag:'tag-violet',tagLabel:'Design',desc:'Create a clean, mobile-first QR code display and activation flow with step indicators.'},
+      {id:3,col:'Backlog',title:'Write MVNO onboarding documentation',priority:'low',assignee:'Rania',due:'Nov 22',tag:'tag-green',tagLabel:'Docs',desc:''},
+      {id:4,col:'In Progress',title:'Integrate Telco A SMDP server endpoints',priority:'high',assignee:'Adrien',due:'Nov 10',tag:'tag-orange',tagLabel:'Integration',desc:'Complete the REST API integration for Telco A SMDP server. Auth tokens, profile binding, and lifecycle management.'},
+      {id:5,col:'In Progress',title:'Build profile management dashboard',priority:'med',assignee:'Thomas',due:'Nov 12',tag:'tag-blue',tagLabel:'Frontend',desc:'React dashboard for ops team to manage eSIM profiles, check binding status, and trigger remote operations.'},
+      {id:6,col:'Review',title:'eSIM KYC verification flow',priority:'high',assignee:'Paul',due:'Nov 8',tag:'tag-green',tagLabel:'Compliance',desc:''},
+      {id:7,col:'Review',title:'Load testing SMDP endpoints (10K req/s)',priority:'med',assignee:'Marco',due:'Nov 9',tag:'tag-blue',tagLabel:'QA',desc:''},
+      {id:8,col:'Done',title:'GSMA SGP.22 compliance audit',priority:'high',assignee:'Rania',due:'Oct 31',tag:'tag-green',tagLabel:'Compliance',desc:''},
+      {id:9,col:'Done',title:'eSIM provisioning API v2 release',priority:'high',assignee:'Adrien',due:'Oct 28',tag:'tag-orange',tagLabel:'Release',desc:''},
+    ]
+  },
+  {
+    name:'Marketing Site',
+    columns:['Backlog','In Progress','Review','Done'],
+    tasks:[
+      {id:10,col:'Backlog',title:'Write B2B partner landing page copy',priority:'med',assignee:'Sofia',due:'Nov 20',tag:'tag-violet',tagLabel:'Content',desc:''},
+      {id:11,col:'In Progress',title:'Redesign homepage hero section',priority:'high',assignee:'Léa',due:'Nov 12',tag:'tag-violet',tagLabel:'Design',desc:''},
+      {id:12,col:'Review',title:'SEO keyword research — MVNO market',priority:'low',assignee:'Sofia',due:'Nov 9',tag:'tag-green',tagLabel:'SEO',desc:''},
+      {id:13,col:'Done',title:'Launch product demo video',priority:'high',assignee:'Thomas',due:'Oct 30',tag:'tag-orange',tagLabel:'Video',desc:''},
+    ]
+  },
+  {
+    name:'Partner API',
+    columns:['Backlog','In Progress','Review','Done'],
+    tasks:[
+      {id:14,col:'Backlog',title:'Design partner webhook system',priority:'high',assignee:'Marco',due:'Nov 25',tag:'tag-blue',tagLabel:'API',desc:''},
+      {id:15,col:'In Progress',title:'Build API key management portal',priority:'high',assignee:'Adrien',due:'Nov 14',tag:'tag-blue',tagLabel:'Backend',desc:''},
+      {id:16,col:'In Progress',title:'Write API reference docs v2',priority:'med',assignee:'Rania',due:'Nov 16',tag:'tag-green',tagLabel:'Docs',desc:''},
+      {id:17,col:'Done',title:'OAuth 2.0 partner auth flow',priority:'high',assignee:'Marco',due:'Oct 25',tag:'tag-orange',tagLabel:'Auth',desc:''},
+    ]
+  },
+  {
+    name:'Q3 Goals',
+    columns:['Backlog','In Progress','Review','Done'],
+    tasks:[
+      {id:18,col:'In Progress',title:'Close 3 MVNO partnership deals',priority:'high',assignee:'Paul',due:'Dec 31',tag:'tag-orange',tagLabel:'BD',desc:''},
+      {id:19,col:'In Progress',title:'Reach 50K active eSIM profiles',priority:'high',assignee:'Carlos',due:'Dec 31',tag:'tag-green',tagLabel:'Growth',desc:''},
+      {id:20,col:'Review',title:'Series A fundraising deck',priority:'high',assignee:'Paul',due:'Nov 15',tag:'tag-blue',tagLabel:'Finance',desc:''},
+      {id:21,col:'Done',title:'Launch eSIM Platform beta',priority:'high',assignee:'Thomas',due:'Oct 1',tag:'tag-orange',tagLabel:'Release',desc:''},
+    ]
+  }
+];
+
+const SUBTASKS = [
+  {text:'Set up authentication headers',done:true},
+  {text:'Handle 4xx error codes',done:true},
+  {text:'Implement exponential backoff',done:false},
+  {text:'Write integration tests',done:false},
+];
+const COMMENTS = [
+  {author:'Thomas',time:'2h ago',text:'Double-check the GSMA error code mapping table before merge.'},
+  {author:'Adrien',time:'4h ago',text:'Added retry logic for codes 8.3 and 8.4. Still working on 8.11.'},
+];
+
+let activeProject = 0;
+let selectedTask = null;
+let nextId = 100;
+
+function switchProject(idx) {
+  activeProject = +idx;
+  selectedTask = null;
+  document.getElementById('detailPanel').classList.add('hidden');
+  renderTabs();
+  renderStats();
+  renderBoard();
+}
+
+function renderTabs() {
+  const bar = document.getElementById('projectTabs');
+  bar.innerHTML = PROJECTS.map((p,i) => `<div class="tab${i===activeProject?' active':''}" onclick="switchProject(${i})">${p.name}</div>`).join('');
+}
+
+function renderStats() {
+  const p = PROJECTS[activeProject];
+  const total = p.tasks.length;
+  const inProg = p.tasks.filter(t=>t.col==='In Progress').length;
+  const done = p.tasks.filter(t=>t.col==='Done').length;
+  const overdue = p.tasks.filter(t=>t.due&&t.col!=='Done'&&new Date('2024 '+t.due)<new Date()).length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-chip"><span class="stat-val">${total}</span><span class="stat-lbl">Total Tasks</span></div>
+    <div class="stat-chip"><span class="stat-val blue">${inProg}</span><span class="stat-lbl">In Progress</span></div>
+    <div class="stat-chip"><span class="stat-val green">${done}</span><span class="stat-lbl">Completed</span></div>
+    <div class="stat-chip"><span class="stat-val${overdue>0?' red':''}\">${overdue}</span><span class="stat-lbl">Overdue</span></div>
+  `;
+}
+
+function renderBoard() {
+  const p = PROJECTS[activeProject];
+  const board = document.getElementById('board');
+  const colColors = ['var(--muted)','var(--blue)','var(--warn)','var(--success)'];
+  board.innerHTML = '';
+  p.columns.forEach((col,ci) => {
+    const tasks = p.tasks.filter(t=>t.col===col);
+    const colEl = document.createElement('div');
+    colEl.className = 'column';
+    colEl.innerHTML = `<div class="col-header"><span class="col-title" style="color:${colColors[ci]}">${col}</span><span class="col-count">${tasks.length}</span></div>`;
+    const cardsEl = document.createElement('div');
+    cardsEl.className = 'col-cards';
+    cardsEl.id = `col-${ci}`;
+    tasks.forEach((task,ti) => {
+      const card = document.createElement('div');
+      card.className = 'task-card'+(selectedTask===task.id?' selected':'');
+      card.style.animationDelay = (ti*0.05)+'s';
+      const nextCol = p.columns[ci+1];
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="priority-dot p-${task.priority}"></div>
+          <div class="card-title">${task.title}</div>
+        </div>
+        <div class="card-meta">
+          <span class="tag ${task.tag}">${task.tagLabel}</span>
+          ${avatar(task.assignee)}
+          <span class="due">${task.due||''}</span>
+        </div>
+        ${nextCol?`<div class="move-actions"><button class="move-btn" onclick="moveTask(${task.id},'${nextCol}',event)">→ ${nextCol}</button></div>`:''}
+      `;
+      card.onclick = () => selectTask(task.id);
+      cardsEl.appendChild(card);
+    });
+    colEl.appendChild(cardsEl);
+    // Add row
+    const addRowEl = document.createElement('div');
+    addRowEl.className = 'add-row';
+    addRowEl.id = `add-row-${ci}`;
+    addRowEl.onclick = () => toggleAddInput(ci);
+    addRowEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add task`;
+    colEl.appendChild(addRowEl);
+    const addInput = document.createElement('div');
+    addInput.className = 'add-input-row';
+    addInput.id = `add-input-${ci}`;
+    addInput.innerHTML = `
+      <input type="text" placeholder="Task title…" id="add-text-${ci}" onkeydown="if(event.key==='Enter')submitAdd(${ci},'${col}')">
+      <div class="add-actions">
+        <button class="btn-sm btn-sm-primary" onclick="submitAdd(${ci},'${col}')">Add</button>
+        <button class="btn-sm btn-sm-ghost" onclick="toggleAddInput(${ci})">Cancel</button>
+      </div>
+    `;
+    colEl.appendChild(addInput);
+    board.appendChild(colEl);
+  });
+}
+
+function toggleAddInput(ci) {
+  const row = document.getElementById(`add-row-${ci}`);
+  const inp = document.getElementById(`add-input-${ci}`);
+  const open = inp.classList.contains('open');
+  inp.classList.toggle('open', !open);
+  row.style.display = open ? 'flex' : 'none';
+  if(!open) document.getElementById(`add-text-${ci}`).focus();
+}
+
+function submitAdd(ci, col) {
+  const input = document.getElementById(`add-text-${ci}`);
+  const title = input.value.trim();
+  if(!title) return;
+  PROJECTS[activeProject].tasks.push({
+    id:nextId++,col,title,priority:'med',assignee:'Paul',due:'TBD',tag:'tag-blue',tagLabel:'Task',desc:''
+  });
+  input.value = '';
+  renderStats();
+  renderBoard();
+}
+
+function moveTask(id, newCol, e) {
+  e.stopPropagation();
+  const p = PROJECTS[activeProject];
+  const task = p.tasks.find(t=>t.id===id);
+  if(task) task.col = newCol;
+  renderStats();
+  renderBoard();
+}
+
+function openAddTask() {
+  toggleAddInput(0);
+}
+
+function selectTask(id) {
+  selectedTask = id;
+  const p = PROJECTS[activeProject];
+  const task = p.tasks.find(t=>t.id===id);
+  if(!task) return;
+  const panel = document.getElementById('detailPanel');
+  panel.classList.remove('hidden');
+  document.getElementById('detailInner').innerHTML = `
+    <div class="detail-header">
+      <div class="detail-title-wrap">
+        <div class="detail-task-title">${task.title}</div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <span class="tag ${task.tag}">${task.tagLabel}</span>
+          <span class="tag" style="background:rgba(255,255,255,.06);color:var(--muted)">
+            ${['●','●','●'].map((_,i)=>`<span style="opacity:${task.priority==='high'&&i<3||task.priority==='med'&&i<2||task.priority==='low'&&i<1?1:.2}">●</span>`).join('')}
+          </span>
+        </div>
+      </div>
+      <button class="btn-icon" onclick="document.getElementById('detailPanel').classList.add('hidden')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="detail-desc">${task.desc||'No description yet. Click to add details about this task.'}</div>
+    <div class="detail-section">
+      <div class="detail-sec-label">Assignee</div>
+      <div style="display:flex;align-items:center;gap:14px;font-size:18px">${avatar(task.assignee)} ${task.assignee}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-sec-label">Due Date</div>
+      <div style="font-size:18px">${task.due||'Not set'}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-sec-label">Subtasks</div>
+      ${SUBTASKS.map((s,i)=>`<div class="subtask"><input type="checkbox" ${s.done?'checked':''} onchange=""> <span style="${s.done?'text-decoration:line-through;opacity:.5':''}">${s.text}</span></div>`).join('')}
+    </div>
+    <div class="detail-section">
+      <div class="detail-sec-label">Comments (${COMMENTS.length})</div>
+      ${COMMENTS.map(c=>`<div class="comment"><div style="display:flex;justify-content:space-between"><span class="comment-author">${c.author}</span><span class="comment-time">${c.time}</span></div><div class="comment-text">${c.text}</div></div>`).join('')}
+    </div>
+    <div class="detail-section">
+      <div class="detail-sec-label">Attachments</div>
+      <div style="font-size:18px;color:var(--muted)">3 files attached</div>
+    </div>
+  `;
+  renderBoard();
+}
+
+renderTabs();
+renderStats();
+renderBoard();
+</script>
+</body>
+</html>

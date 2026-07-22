@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infrastructure Registry — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    color: #dde6ff;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40px;
+    right: -60px;
+    width: 420px;
+    height: 320px;
+    background: radial-gradient(ellipse, rgba(59,59,255,.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(59,59,255,.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .header-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #3B3BFF, #5A5AFF);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-text { flex: 1; min-width: 0; }
+
+  .header-eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.3);
+    letter-spacing: .06em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .header-title {
+    font-family: 'Play', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #dde6ff;
+    line-height: 1;
+  }
+
+  .status-all-ok {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(34,197,94,.1);
+    border: 1px solid rgba(34,197,94,.22);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4ade80;
+    white-space: nowrap;
+  }
+
+  .status-all-ok .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+
+  .btn-close {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    cursor: pointer;
+    color: rgba(255,255,255,.4);
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+
+  .btn-close:hover { background: rgba(255,255,255,.08); color: #dde6ff; }
+
+  /* ── KPI ROW ── */
+  .kpi-row {
+    display: flex;
+    gap: 14px;
+    padding: 24px 32px 0;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .kpi-card {
+    flex: 1;
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+    animation: fade-up .3s ease both;
+  }
+
+  .kpi-card:nth-child(1) { animation-delay: .05s; }
+  .kpi-card:nth-child(2) { animation-delay: .1s; }
+  .kpi-card:nth-child(3) { animation-delay: .15s; }
+  .kpi-card:nth-child(4) { animation-delay: .2s; }
+
+  .kpi-glow {
+    position: absolute;
+    top: -15px; right: -15px;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .kpi-label {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: rgba(255,255,255,.3);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: 'Play', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .kpi-value.blue   { color: #6060FF; }
+  .kpi-value.green  { color: #4ade80; }
+  .kpi-value.amber  { color: #fbbf24; }
+  .kpi-value.red    { color: #f87171; }
+
+  /* ── FILTER TABS ── */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    padding: 24px 32px 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+
+  .filter-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all .15s;
+    color: rgba(255,255,255,.4);
+    background: transparent;
+  }
+
+  .filter-tab:hover { color: #dde6ff; background: rgba(255,255,255,.04); }
+
+  .filter-tab.active {
+    background: rgba(59,59,255,.18);
+    border-color: rgba(59,59,255,.35);
+    color: #7070FF;
+  }
+
+  /* ── MAIN AREA (sidebar + table) ── */
+  .main-area {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SERVICE LIST ── */
+  .service-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 32px 28px;
+  }
+
+  .service-list::-webkit-scrollbar { width: 6px; }
+  .service-list::-webkit-scrollbar-track { background: transparent; }
+  .service-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 2px; }
+
+  .service-row {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fade-up .3s ease both;
+    transition: border-color .15s;
+  }
+
+  .service-row:hover { border-color: rgba(59,59,255,.2); }
+
+  .service-row:nth-child(1) { animation-delay: .05s; }
+  .service-row:nth-child(2) { animation-delay: .09s; }
+  .service-row:nth-child(3) { animation-delay: .13s; }
+  .service-row:nth-child(4) { animation-delay: .17s; }
+  .service-row:nth-child(5) { animation-delay: .21s; }
+  .service-row:nth-child(6) { animation-delay: .25s; }
+
+  .status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-indicator.online  { background: #22c55e; animation: pulse-green 2.2s infinite; }
+  .status-indicator.warning { background: #f59e0b; animation: pulse-amber 2.2s infinite; }
+  .status-indicator.offline { background: #ef4444; }
+
+  .service-info { flex: 1; min-width: 0; }
+
+  .service-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #dde6ff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .type-badge {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .type-api     { background: rgba(59,59,255,.15); border: 1px solid rgba(59,59,255,.3); color: #7070FF; }
+  .type-db      { background: rgba(255,102,22,.12); border: 1px solid rgba(255,102,22,.28); color: #ff8848; }
+  .type-cache   { background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.28); color: #c084fc; }
+  .type-worker  { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.25); color: #4ade80; }
+  .type-gateway { background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25); color: #fbbf24; }
+  .type-cdn     { background: rgba(14,165,233,.12); border: 1px solid rgba(14,165,233,.28); color: #38bdf8; }
+
+  .service-endpoint {
+    font-size: 16px;
+    color: rgba(255,255,255,.3);
+    font-family: 'Inter', monospace;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .service-checked {
+    font-size: 16px;
+    color: rgba(255,255,255,.25);
+  }
+
+  .service-uptime {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4ade80;
+    margin-top: 2px;
+  }
+
+  .service-uptime.warning { color: #fbbf24; }
+  .service-uptime.offline { color: #f87171; }
+
+  .service-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .action-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .action-btn.restart {
+    background: rgba(59,59,255,.1);
+    border-color: rgba(59,59,255,.25);
+    color: #7070FF;
+  }
+  .action-btn.restart:hover { background: rgba(59,59,255,.2); box-shadow: 0 0 10px rgba(59,59,255,.3); }
+
+  .action-btn.logs {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.1);
+    color: rgba(255,255,255,.45);
+  }
+  .action-btn.logs:hover { background: rgba(255,255,255,.08); color: #dde6ff; }
+
+  .action-btn.ssh {
+    background: rgba(255,102,22,.1);
+    border-color: rgba(255,102,22,.25);
+    color: #ff8848;
+  }
+  .action-btn.ssh:hover { background: rgba(255,102,22,.18); box-shadow: 0 0 10px rgba(255,102,22,.25); }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    border-left: 1px solid rgba(255,255,255,.06);
+    background: #090e1c;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 2px; }
+
+  .sidebar-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.25);
+    letter-spacing: .08em;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .event-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    animation: fade-up .3s ease both;
+  }
+
+  .event-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .event-dot.ok     { background: #22c55e; }
+  .event-dot.warn   { background: #f59e0b; }
+  .event-dot.error  { background: #ef4444; }
+  .event-dot.info   { background: #3B3BFF; }
+
+  .event-text {
+    font-size: 16px;
+    color: rgba(255,255,255,.55);
+    line-height: 1.45;
+  }
+
+  .event-time {
+    font-size: 14px;
+    color: rgba(255,255,255,.22);
+    margin-top: 2px;
+  }
+
+  .event-divider {
+    width: 1px;
+    background: rgba(255,255,255,.06);
+    margin: 0 3px;
+    height: 12px;
+    align-self: center;
+  }
+
+  .sidebar-section {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px;
+    padding: 18px;
+  }
+
+  /* region map */
+  .region-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+
+  .region-row:last-child { border-bottom: none; }
+
+  .region-name {
+    font-size: 16px;
+    color: rgba(255,255,255,.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .region-ping {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4ade80;
+  }
+
+  .region-ping.warn { color: #fbbf24; }
+
+  /* Keyframes */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-green {
+    0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+    50%     { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  @keyframes pulse-amber {
+    0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,.5); }
+    50%     { box-shadow: 0 0 0 4px rgba(245,158,11,0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="header-icon">
+    <svg width="28" height="28" viewBox="0 0 16 16" fill="none">
+      <rect x="1" y="3" width="14" height="4" rx="1.5" stroke="#fff" stroke-width="1.3"/>
+      <rect x="1" y="9" width="14" height="4" rx="1.5" stroke="#fff" stroke-width="1.3"/>
+      <circle cx="12" cy="5" r="1" fill="#4ade80"/>
+      <circle cx="12" cy="11" r="1" fill="#fbbf24"/>
+    </svg>
+  </div>
+  <div class="header-text">
+    <div class="header-eyebrow">OPENLINE DEVOPS</div>
+    <div class="header-title">Infrastructure Registry</div>
+  </div>
+  <div class="status-all-ok">
+    <span class="dot"></span>
+    Operational
+  </div>
+  <button class="btn-close" onclick="closeApp()" aria-label="Close">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+</header>
+
+<!-- KPI ROW -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-glow" style="background:radial-gradient(circle,rgba(59,59,255,.3) 0%,transparent 70%)"></div>
+    <div class="kpi-label">Services</div>
+    <div class="kpi-value blue">14</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-glow" style="background:radial-gradient(circle,rgba(34,197,94,.3) 0%,transparent 70%)"></div>
+    <div class="kpi-label">Online</div>
+    <div class="kpi-value green" id="kpi-online">11</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-glow" style="background:radial-gradient(circle,rgba(245,158,11,.3) 0%,transparent 70%)"></div>
+    <div class="kpi-label">Warning</div>
+    <div class="kpi-value amber" id="kpi-warning">2</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-glow" style="background:radial-gradient(circle,rgba(239,68,68,.3) 0%,transparent 70%)"></div>
+    <div class="kpi-label">Offline</div>
+    <div class="kpi-value red" id="kpi-offline">1</div>
+  </div>
+</div>
+
+<!-- FILTER TABS -->
+<div class="filter-bar">
+  <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+  <button class="filter-tab" onclick="setFilter('online',this)">Online</button>
+  <button class="filter-tab" onclick="setFilter('warning',this)">Warning</button>
+  <button class="filter-tab" onclick="setFilter('offline',this)">Offline</button>
+</div>
+
+<!-- MAIN AREA -->
+<div class="main-area">
+
+  <!-- SERVICE LIST -->
+  <div class="service-list" id="service-list">
+    <!-- Injected by JS -->
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <span class="sidebar-title">ACTIVITY LOG</span>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="event-item">
+        <div class="event-dot ok"></div>
+        <div>
+          <div class="event-text">Provisioning API restarted cleanly</div>
+          <div class="event-time">2 min ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot warn"></div>
+        <div>
+          <div class="event-text">Redis Cluster memory at 78%</div>
+          <div class="event-time">11 min ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot error"></div>
+        <div>
+          <div class="event-text">Analytics Worker EU-W offline — failover triggered</div>
+          <div class="event-time">24 min ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot ok"></div>
+        <div>
+          <div class="event-text">CDN cache purged for /api/v2/profiles</div>
+          <div class="event-time">38 min ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot info"></div>
+        <div>
+          <div class="event-text">New config deployed: rate-limit 1200 rps</div>
+          <div class="event-time">1h ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot warn"></div>
+        <div>
+          <div class="event-text">Carrier Gateway SG latency spike: p99=420ms</div>
+          <div class="event-time">2h ago</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-dot ok"></div>
+        <div>
+          <div class="event-text">PostgreSQL Primary failover test passed</div>
+          <div class="event-time">3h ago</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:4px;">
+      <span class="sidebar-title">REGIONS</span>
+      <div class="region-row">
+        <span class="region-name">
+          <span style="font-size:16px;">🇸🇬</span> SG-1
+        </span>
+        <span class="region-ping">12ms</span>
+      </div>
+      <div class="region-row">
+        <span class="region-name">
+          <span style="font-size:16px;">🇩🇪</span> EU-W
+        </span>
+        <span class="region-ping warn">88ms</span>
+      </div>
+      <div class="region-row">
+        <span class="region-name">
+          <span style="font-size:16px;">🇺🇸</span> US-E
+        </span>
+        <span class="region-ping">21ms</span>
+      </div>
+      <div class="region-row">
+        <span class="region-name">
+          <span style="font-size:16px;">🇯🇵</span> AP-NE
+        </span>
+        <span class="region-ping">18ms</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-area -->
+
+<script>
+  const services = [
+    { name: 'Provisioning API',    type: 'api',     status: 'online',  endpoint: 'https://provision.openline.io/v2',   checked: '30s ago',  uptime: '99.97%' },
+    { name: 'Profile Store (PG)',  type: 'db',      status: 'online',  endpoint: 'pg-primary.sg1.internal:5432',      checked: '15s ago',  uptime: '99.99%' },
+    { name: 'Redis Cluster',       type: 'cache',   status: 'warning', endpoint: 'redis.sg1.internal:6379',           checked: '45s ago',  uptime: '99.80%' },
+    { name: 'Carrier Gateway SG',  type: 'gateway', status: 'warning', endpoint: 'https://carrier-gw.sg.openline.io', checked: '1m ago',   uptime: '98.91%' },
+    { name: 'Analytics Worker EU', type: 'worker',  status: 'offline', endpoint: 'worker-eu.openline.io:8080',        checked: '2m ago',   uptime: '95.12%' },
+    { name: 'Profile CDN',         type: 'cdn',     status: 'online',  endpoint: 'cdn.openline.io',                   checked: '20s ago',  uptime: '100.0%' },
+    { name: 'Auth Service',        type: 'api',     status: 'online',  endpoint: 'https://auth.openline.io/v3',       checked: '30s ago',  uptime: '99.99%' },
+    { name: 'Billing Engine',      type: 'api',     status: 'online',  endpoint: 'https://billing.openline.io/v1',    checked: '1m ago',   uptime: '99.95%' },
+    { name: 'Notification SQS',    type: 'worker',  status: 'online',  endpoint: 'sqs.ap-southeast-1.amazonaws.com',  checked: '15s ago',  uptime: '99.99%' },
+    { name: 'ES Index (Search)',    type: 'db',      status: 'online',  endpoint: 'es.openline.internal:9200',         checked: '30s ago',  uptime: '99.87%' },
+    { name: 'Carrier Gateway JP',  type: 'gateway', status: 'online',  endpoint: 'https://carrier-gw.jp.openline.io', checked: '25s ago', uptime: '99.96%' },
+    { name: 'SMSC Bridge',         type: 'worker',  status: 'online',  endpoint: 'smsc.sg1.internal:2775',            checked: '1m ago',   uptime: '99.93%' },
+    { name: 'Config API',          type: 'api',     status: 'online',  endpoint: 'https://config.openline.io/v1',     checked: '40s ago',  uptime: '99.99%' },
+    { name: 'Object Storage GW',   type: 'cdn',     status: 'online',  endpoint: 's3-gw.openline.internal',           checked: '1m ago',   uptime: '100.0%' },
+  ];
+
+  let currentFilter = 'all';
+
+  function renderServices() {
+    const list = document.getElementById('service-list');
+    const filtered = currentFilter === 'all' ? services : services.filter(s => s.status === currentFilter);
+
+    list.innerHTML = filtered.map((s, i) => `
+      <div class="service-row" style="animation-delay:${i * 0.04}s">
+        <div class="status-indicator ${s.status}"></div>
+        <div class="service-info">
+          <div class="service-name">
+            ${s.name}
+            <span class="type-badge type-${s.type}">${s.type}</span>
+          </div>
+          <div class="service-endpoint">${s.endpoint}</div>
+        </div>
+        <div class="service-meta">
+          <div class="service-checked">${s.checked}</div>
+          <div class="service-uptime ${s.status === 'warning' ? 'warning' : s.status === 'offline' ? 'offline' : ''}">${s.uptime}</div>
+        </div>
+        <div class="service-actions">
+          <button class="action-btn restart" onclick="actionClick('restart','${s.name}')">↺ Restart</button>
+          <button class="action-btn logs" onclick="actionClick('logs','${s.name}')">Logs</button>
+          ${s.type !== 'cdn' && s.type !== 'cache' ? `<button class="action-btn ssh" onclick="actionClick('ssh','${s.name}')">SSH</button>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function setFilter(f, el) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderServices();
+  }
+
+  function actionClick(action, name) {
+    // In a real app this would call the backend
+    const msgs = {
+      restart: `Restart signal sent to ${name}`,
+      logs: `Opening log stream for ${name}…`,
+      ssh: `Initiating SSH tunnel to ${name}…`
+    };
+    // Brief visual feedback
+    alert(msgs[action]);
+  }
+
+  function closeApp() {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'backoffice-close' }, '*');
+    } else {
+      history.back();
+    }
+  }
+
+  renderServices();
+</script>
+</body>
+</html>

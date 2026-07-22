@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;font-size:18px;background:#070c18;color:#dde6ff;display:flex;flex-direction:column}
+
+/* HEADER */
+.header{background:#090e1c;padding:16px 28px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;flex-wrap:wrap}
+.db-icon{font-size:28px}
+.db-title{font-family:'Play',sans-serif;font-weight:700;font-size:26px;color:#dde6ff}
+.entry-count{background:rgba(59,59,255,.15);color:#3B3BFF;font-size:14px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid rgba(59,59,255,.25)}
+.spacer{flex:1}
+
+/* VIEW TABS */
+.view-tabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px}
+.view-tab{background:transparent;border:none;color:rgba(255,255,255,.45);font-family:'Inter',sans-serif;font-size:14px;font-weight:600;padding:8px 16px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;white-space:nowrap}
+.view-tab:hover{background:rgba(255,255,255,.07);color:#dde6ff}
+.view-tab.active{background:rgba(59,59,255,.25);color:#3B3BFF;border:1px solid rgba(59,59,255,.35)}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:10px}
+.tool-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.65);font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px}
+.tool-btn:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+.tool-btn.active{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.4);color:#3B3BFF}
+.new-btn{background:#3B3BFF;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;padding:9px 18px;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;display:flex;align-items:center;gap:6px}
+.new-btn:hover{background:#2d2dcc}
+.close-btn{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:8px;color:#ef4444;font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.close-btn:hover{background:rgba(239,68,68,.25)}
+
+/* FILTER PANEL */
+.filter-panel{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:16px 28px;display:none;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.filter-panel.open{display:flex}
+.filter-group{display:flex;flex-direction:column;gap:8px}
+.filter-label{font-family:'Press Start 2P',monospace;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px}
+.filter-options{display:flex;flex-wrap:wrap;gap:6px}
+.filter-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:rgba(255,255,255,.6);font-size:13px;padding:5px 12px;cursor:pointer;transition:all .2s;user-select:none}
+.filter-chip.selected{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.5);color:#3B3BFF}
+.clear-filters-btn{background:transparent;border:1px solid rgba(239,68,68,.3);border-radius:8px;color:#ef4444;font-size:13px;padding:7px 14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;align-self:flex-end;margin-left:auto}
+
+/* SORT PANEL */
+.sort-panel{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:16px 28px;display:none;gap:16px;align-items:center;flex-wrap:wrap}
+.sort-panel.open{display:flex}
+.sort-label{font-family:'Press Start 2P',monospace;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px}
+.sort-sel{background:#070c18;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#dde6ff;font-size:15px;padding:8px 14px;cursor:pointer;font-family:'Inter',sans-serif}
+.sort-dir-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#dde6ff;font-size:15px;padding:8px 16px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.sort-dir-btn:hover{background:rgba(255,255,255,.12)}
+
+/* MAIN */
+.main{flex:1;overflow:hidden;position:relative}
+.view-content{height:100%;overflow-y:auto;padding:20px 28px}
+.view-content::-webkit-scrollbar{width:6px}
+.view-content::-webkit-scrollbar-track{background:transparent}
+.view-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+
+/* ============ TABLE VIEW ============ */
+.db-table{width:100%;border-collapse:collapse;font-size:15px}
+.db-table th{font-family:'Press Start 2P',monospace;font-size:8.5px;color:rgba(255,255,255,.35);letter-spacing:1px;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#070c18;cursor:pointer;user-select:none;white-space:nowrap;z-index:2}
+.db-table th:hover{color:rgba(255,255,255,.6)}
+.db-table th.sorted{color:#3B3BFF}
+.db-table td{padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;cursor:pointer}
+.db-table tr:hover td{background:rgba(255,255,255,.02)}
+.db-table tr.selected td{background:rgba(59,59,255,.06)}
+.cb-col{width:40px}
+.check-input{width:16px;height:16px;cursor:pointer;accent-color:#3B3BFF}
+.add-row-btn{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:14px;padding:12px 14px;cursor:pointer;transition:color .2s;border:none;background:transparent;width:100%;font-family:'Inter',sans-serif;border-top:1px solid rgba(255,255,255,.04)}
+.add-row-btn:hover{color:rgba(255,255,255,.6)}
+
+/* Inline editing */
+.cell-input{background:#070c18;border:1px solid #3B3BFF;border-radius:6px;color:#dde6ff;font-size:15px;padding:6px 10px;font-family:'Inter',sans-serif;width:100%;outline:none}
+.cell-select{background:#070c18;border:1px solid #3B3BFF;border-radius:6px;color:#dde6ff;font-size:15px;padding:6px 10px;font-family:'Inter',sans-serif;width:100%;outline:none;cursor:pointer}
+
+/* ============ KANBAN VIEW ============ */
+.kanban-board{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;height:calc(100% - 0px);padding-bottom:20px}
+.kanban-col{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+.kanban-col::-webkit-scrollbar{width:4px}
+.kanban-col::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+.kanban-col-header{display:flex;align-items:center;justify-content:space-between;padding:4px 0 8px}
+.kanban-col-title{font-family:'Play',sans-serif;font-weight:700;font-size:17px}
+.kanban-col-count{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:13px;font-weight:700;padding:3px 10px;border-radius:20px}
+.kanban-card{background:#070c18;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px}
+.kanban-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.15);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.kanban-card-name{font-family:'Play',sans-serif;font-weight:700;font-size:16px}
+.kanban-card-row{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.55)}
+.kanban-add{background:transparent;border:1px dashed rgba(255,255,255,.12);border-radius:8px;color:rgba(255,255,255,.3);font-size:14px;padding:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;width:100%;display:flex;align-items:center;justify-content:center;gap:6px}
+.kanban-add:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.6)}
+
+/* ============ GALLERY VIEW ============ */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-bottom:20px}
+.gallery-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+.gallery-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.5);border-color:rgba(255,255,255,.14)}
+.gallery-header{height:80px;display:flex;align-items:center;justify-content:center;position:relative}
+.gallery-initials{font-family:'Play',sans-serif;font-weight:700;font-size:32px;color:rgba(255,255,255,.9)}
+.gallery-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.gallery-name{font-family:'Play',sans-serif;font-weight:700;font-size:18px}
+.gallery-row{display:flex;align-items:center;justify-content:space-between;font-size:14px;color:rgba(255,255,255,.55)}
+.gallery-tags{display:flex;flex-wrap:wrap;gap:6px}
+.gallery-mrr{font-family:'Play',sans-serif;font-weight:700;font-size:20px;color:#dde6ff}
+
+/* ============ LIST VIEW ============ */
+.list-table{width:100%;border-collapse:collapse;font-size:15px}
+.list-table th{font-family:'Press Start 2P',monospace;font-size:8.5px;color:rgba(255,255,255,.3);letter-spacing:1px;padding:8px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);background:#070c18;position:sticky;top:0;z-index:2}
+.list-table td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:15px}
+.list-table tr:hover td{background:rgba(255,255,255,.02)}
+
+/* BADGES */
+.badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;display:inline-block}
+.badge-active{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
+.badge-onboarding{background:rgba(59,59,255,.15);color:#3B3BFF;border:1px solid rgba(59,59,255,.2)}
+.badge-paused{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.badge-churned{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+.priority-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px}
+.tag-chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:12px;color:rgba(255,255,255,.6);padding:3px 9px;display:inline-block}
+
+/* SIDE PANEL */
+.side-panel{position:absolute;top:0;right:0;width:400px;height:100%;background:#090e1c;border-left:1px solid rgba(255,255,255,.07);z-index:50;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto}
+.side-panel.open{transform:translateX(0)}
+.side-panel::-webkit-scrollbar{width:4px}
+.side-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+.side-panel-header{padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#090e1c;z-index:2}
+.side-panel-title{font-family:'Play',sans-serif;font-weight:700;font-size:20px;flex:1}
+.side-close{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.6);font-size:16px;padding:6px 12px;cursor:pointer;transition:all .2s}
+.side-close:hover{background:rgba(255,255,255,.12);color:#dde6ff}
+.side-body{padding:20px 22px;display:flex;flex-direction:column;gap:18px}
+.side-field{display:flex;flex-direction:column;gap:6px}
+.side-field-label{font-family:'Press Start 2P',monospace;font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px}
+.side-field-val{font-size:16px;color:#dde6ff}
+.side-input{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#dde6ff;font-size:15px;padding:10px 14px;font-family:'Inter',sans-serif;width:100%;outline:none;transition:border-color .2s}
+.side-input:focus{border-color:#3B3BFF}
+.side-select{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#dde6ff;font-size:15px;padding:10px 14px;font-family:'Inter',sans-serif;width:100%;outline:none;cursor:pointer;transition:border-color .2s}
+.side-select:focus{border-color:#3B3BFF}
+.side-textarea{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#dde6ff;font-size:15px;padding:10px 14px;font-family:'Inter',sans-serif;width:100%;outline:none;resize:vertical;min-height:80px;transition:border-color .2s}
+.side-textarea:focus{border-color:#3B3BFF}
+.side-save-btn{background:#3B3BFF;border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:700;padding:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;width:100%}
+.side-save-btn:hover{background:#2d2dcc}
+
+/* NEW ENTRY FORM */
+.new-form-panel{position:absolute;bottom:0;left:0;right:0;background:#090e1c;border-top:1px solid rgba(255,255,255,.07);z-index:40;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:80%;overflow-y:auto}
+.new-form-panel.open{transform:translateY(0)}
+.new-form-header{padding:18px 28px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#090e1c;z-index:2}
+.new-form-title{font-family:'Play',sans-serif;font-weight:700;font-size:20px}
+.new-form-body{padding:24px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-label{font-family:'Press Start 2P',monospace;font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px}
+.form-input{background:#070c18;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#dde6ff;font-size:15px;padding:12px 14px;font-family:'Inter',sans-serif;width:100%;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:#3B3BFF}
+.form-actions{padding:0 28px 24px;display:flex;gap:12px;justify-content:flex-end}
+.form-submit{background:#3B3BFF;border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:700;padding:13px 28px;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s}
+.form-submit:hover{background:#2d2dcc}
+.form-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:rgba(255,255,255,.6);font-size:16px;font-weight:600;padding:13px 28px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.form-cancel:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+
+.empty-state{text-align:center;padding:60px 20px;color:rgba(255,255,255,.3);font-size:18px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <span class="db-icon">🗄️</span>
+  <span class="db-title">Partner Database</span>
+  <span class="entry-count" id="entryCount">10 entries</span>
+  <div class="spacer"></div>
+  <div class="view-tabs">
+    <button class="view-tab active" onclick="switchView('table',this)">📋 Table</button>
+    <button class="view-tab" onclick="switchView('kanban',this)">🗃️ Kanban</button>
+    <button class="view-tab" onclick="switchView('gallery',this)">🖼️ Gallery</button>
+    <button class="view-tab" onclick="switchView('list',this)">📄 List</button>
+  </div>
+  <div class="toolbar">
+    <button class="tool-btn" id="filterBtn" onclick="toggleFilter()">⚡ Filter</button>
+    <button class="tool-btn" id="sortBtn" onclick="toggleSort()">↕ Sort</button>
+    <button class="new-btn" onclick="openNewForm()">+ New Entry</button>
+  </div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'database-close'},'*')">✕ Close</button>
+</header>
+
+<!-- FILTER PANEL -->
+<div class="filter-panel" id="filterPanel">
+  <div class="filter-group">
+    <div class="filter-label">STATUS</div>
+    <div class="filter-options" id="statusFilters">
+      <div class="filter-chip" data-type="status" data-val="Active" onclick="toggleChip(this)">● Active</div>
+      <div class="filter-chip" data-type="status" data-val="Onboarding" onclick="toggleChip(this)">◎ Onboarding</div>
+      <div class="filter-chip" data-type="status" data-val="Paused" onclick="toggleChip(this)">⏸ Paused</div>
+      <div class="filter-chip" data-type="status" data-val="Churned" onclick="toggleChip(this)">✕ Churned</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-label">COUNTRY</div>
+    <div class="filter-options">
+      <div class="filter-chip" data-type="country" data-val="FR" onclick="toggleChip(this)">🇫🇷 FR</div>
+      <div class="filter-chip" data-type="country" data-val="ES" onclick="toggleChip(this)">🇪🇸 ES</div>
+      <div class="filter-chip" data-type="country" data-val="PT" onclick="toggleChip(this)">🇵🇹 PT</div>
+      <div class="filter-chip" data-type="country" data-val="DE" onclick="toggleChip(this)">🇩🇪 DE</div>
+      <div class="filter-chip" data-type="country" data-val="IT" onclick="toggleChip(this)">🇮🇹 IT</div>
+      <div class="filter-chip" data-type="country" data-val="NL" onclick="toggleChip(this)">🇳🇱 NL</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-label">PRIORITY</div>
+    <div class="filter-options">
+      <div class="filter-chip" data-type="priority" data-val="High" onclick="toggleChip(this)">🔴 High</div>
+      <div class="filter-chip" data-type="priority" data-val="Medium" onclick="toggleChip(this)">🟡 Medium</div>
+      <div class="filter-chip" data-type="priority" data-val="Low" onclick="toggleChip(this)">🟢 Low</div>
+    </div>
+  </div>
+  <button class="clear-filters-btn" onclick="clearFilters()">Clear All</button>
+</div>
+
+<!-- SORT PANEL -->
+<div class="sort-panel" id="sortPanel">
+  <div class="sort-label">SORT BY</div>
+  <select class="sort-sel" id="sortField" onchange="applySort()">
+    <option value="">None</option>
+    <option value="name">Name</option>
+    <option value="mrr">MRR</option>
+    <option value="status">Status</option>
+    <option value="country">Country</option>
+    <option value="priority">Priority</option>
+    <option value="lastContact">Last Contact</option>
+  </select>
+  <button class="sort-dir-btn" id="sortDirBtn" onclick="toggleSortDir()">↑ ASC</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main" id="mainArea">
+  <div class="view-content" id="viewContent"></div>
+
+  <!-- SIDE PANEL -->
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel-header">
+      <div class="side-panel-title" id="sidePanelTitle">Entry Detail</div>
+      <button class="side-close" onclick="closeSidePanel()">✕</button>
+    </div>
+    <div class="side-body" id="sidePanelBody"></div>
+  </div>
+
+  <!-- NEW FORM PANEL -->
+  <div class="new-form-panel" id="newFormPanel">
+    <div class="new-form-header">
+      <div class="new-form-title">New Partner Entry</div>
+      <button class="side-close" onclick="closeNewForm()">✕</button>
+    </div>
+    <div class="new-form-body">
+      <div class="form-field"><label class="form-label">PARTNER NAME</label><input class="form-input" id="nf-name" placeholder="e.g. Orange Spain"></div>
+      <div class="form-field">
+        <label class="form-label">STATUS</label>
+        <select class="form-input" id="nf-status">
+          <option value="Active">Active</option><option value="Onboarding">Onboarding</option><option value="Paused">Paused</option><option value="Churned">Churned</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">COUNTRY</label>
+        <select class="form-input" id="nf-country">
+          <option value="FR">🇫🇷 France</option><option value="ES">🇪🇸 Spain</option><option value="PT">🇵🇹 Portugal</option><option value="DE">🇩🇪 Germany</option><option value="IT">🇮🇹 Italy</option><option value="NL">🇳🇱 Netherlands</option>
+        </select>
+      </div>
+      <div class="form-field"><label class="form-label">MRR (€)</label><input class="form-input" id="nf-mrr" type="number" placeholder="0"></div>
+      <div class="form-field"><label class="form-label">CONTACT NAME</label><input class="form-input" id="nf-contact" placeholder="e.g. John Smith"></div>
+      <div class="form-field">
+        <label class="form-label">PRIORITY</label>
+        <select class="form-input" id="nf-priority">
+          <option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="form-field"><label class="form-label">TAGS (comma separated)</label><input class="form-input" id="nf-tags" placeholder="e.g. Telecom, B2B"></div>
+      <div class="form-field"><label class="form-label">LAST CONTACT</label><input class="form-input" id="nf-lastContact" type="date"></div>
+      <div class="form-field" style="grid-column:1/-1"><label class="form-label">NOTES</label><input class="form-input" id="nf-notes" placeholder="Any notes..."></div>
+    </div>
+    <div class="form-actions">
+      <button class="form-cancel" onclick="closeNewForm()">Cancel</button>
+      <button class="form-submit" onclick="submitNewEntry()">+ Add Entry</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// DATA
+let entries=[
+  {id:1,name:'Orange Spain',status:'Active',country:'ES',mrr:28512,contact:'Carlos Ruiz',priority:'High',tags:['Telecom','B2B','MVNO'],lastContact:'2025-06-15',notes:'Key strategic partner in Iberian market. Contract renewal Q3.'},
+  {id:2,name:'Vodafone Italy',status:'Active',country:'IT',mrr:10824,contact:'Marco Bianchi',priority:'Medium',tags:['Telecom','Roaming'],lastContact:'2025-06-12',notes:'Expanding into Southern Italy regions.'},
+  {id:3,name:'SFR France',status:'Active',country:'FR',mrr:37488,contact:'Sophie Martin',priority:'High',tags:['B2B','Enterprise'],lastContact:'2025-06-10',notes:'Largest FR partner. Negotiating new volume discounts.'},
+  {id:4,name:'T-Mobile Germany',status:'Active',country:'DE',mrr:19008,contact:'Klaus Weber',priority:'High',tags:['Telecom','MVNO'],lastContact:'2025-06-08',notes:'Strong growth trajectory Q4.'},
+  {id:5,name:'MEO Portugal',status:'Onboarding',country:'PT',mrr:8900,contact:'Ana Costa',priority:'Medium',tags:['Telecom'],lastContact:'2025-06-05',notes:'Onboarding phase — API integration in progress.'},
+  {id:6,name:'KPN Netherlands',status:'Paused',country:'NL',mrr:4752,contact:'Jan de Vries',priority:'Low',tags:['Telecom','B2C'],lastContact:'2025-05-20',notes:'Paused pending contract review by legal team.'},
+  {id:7,name:'Telecom Italia',status:'Active',country:'IT',mrr:9600,contact:'Giulia Ferrari',priority:'Medium',tags:['Enterprise','IoT'],lastContact:'2025-06-14',notes:'IoT eSIM expansion opportunity being evaluated.'},
+  {id:8,name:'Bouygues FR',status:'Onboarding',country:'FR',mrr:3168,contact:'Pierre Dubois',priority:'Low',tags:['Telecom','Consumer'],lastContact:'2025-06-01',notes:'New partner — initial integration call completed.'},
+  {id:9,name:'Movistar ES',status:'Active',country:'ES',mrr:5808,contact:'Miguel Fernández',priority:'Medium',tags:['MVNO','B2B'],lastContact:'2025-06-11',notes:'Second-tier Spain partner showing strong activation growth.'},
+  {id:10,name:'NOS Portugal',status:'Churned',country:'PT',mrr:0,contact:'Rui Sousa',priority:'Low',tags:['Churned'],lastContact:'2025-04-15',notes:'Contract ended Q1. Potential re-engagement in 2026.'}
+];
+let nextId=11;
+
+const countryFlags={FR:'🇫🇷',ES:'🇪🇸',PT:'🇵🇹',DE:'🇩🇪',IT:'🇮🇹',NL:'🇳🇱'};
+const countryNames={FR:'France',ES:'Spain',PT:'Portugal',DE:'Germany',IT:'Italy',NL:'Netherlands'};
+const statusColors={Active:'#22c55e',Onboarding:'#3B3BFF',Paused:'#f59e0b',Churned:'#ef4444'};
+const statusGrad={Active:'linear-gradient(135deg,#22c55e44,#22c55e11)',Onboarding:'linear-gradient(135deg,#3B3BFF44,#3B3BFF11)',Paused:'linear-gradient(135deg,#f59e0b44,#f59e0b11)',Churned:'linear-gradient(135deg,#ef444444,#ef444411)'};
+const priorityColors={High:'#ef4444',Medium:'#f59e0b',Low:'#22c55e'};
+const statusBadgeClass={Active:'badge-active',Onboarding:'badge-onboarding',Paused:'badge-paused',Churned:'badge-churned'};
+
+// STATE
+let currentView='table';
+let activeFilters={status:[],country:[],priority:[]};
+let sortField='',sortAsc=true;
+let selectedRows=new Set();
+let editingCell=null;
+
+function getFiltered(){
+  let d=[...entries];
+  if(activeFilters.status.length) d=d.filter(e=>activeFilters.status.includes(e.status));
+  if(activeFilters.country.length) d=d.filter(e=>activeFilters.country.includes(e.country));
+  if(activeFilters.priority.length) d=d.filter(e=>activeFilters.priority.includes(e.priority));
+  if(sortField){
+    d.sort((a,b)=>{
+      let av=a[sortField],bv=b[sortField];
+      if(sortField==='mrr'){av=Number(av);bv=Number(bv);}
+      if(typeof av==='string') return sortAsc?av.localeCompare(bv):bv.localeCompare(av);
+      return sortAsc?av-bv:bv-av;
+    });
+  }
+  return d;
+}
+
+function updateCount(){
+  const f=getFiltered();
+  document.getElementById('entryCount').textContent=`${f.length} of ${entries.length} entries`;
+}
+
+// VIEW SWITCH
+function switchView(v,btn){
+  currentView=v;
+  document.querySelectorAll('.view-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  closeSidePanel();
+  render();
+}
+
+function render(){
+  updateCount();
+  if(currentView==='table') renderTable();
+  else if(currentView==='kanban') renderKanban();
+  else if(currentView==='gallery') renderGallery();
+  else renderList();
+}
+
+// TABLE VIEW
+function renderTable(){
+  const d=getFiltered();
+  let html=`<table class="db-table">
+    <thead><tr>
+      <th class="cb-col"><input type="checkbox" class="check-input" onchange="toggleAllRows(this)"></th>
+      <th onclick="setSortFromTable('name',this)">NAME <span class="sort-arrow">↕</span></th>
+      <th onclick="setSortFromTable('status',this)">STATUS <span class="sort-arrow">↕</span></th>
+      <th onclick="setSortFromTable('country',this)">COUNTRY <span class="sort-arrow">↕</span></th>
+      <th onclick="setSortFromTable('mrr',this)">MRR <span class="sort-arrow">↕</span></th>
+      <th onclick="setSortFromTable('contact',this)">CONTACT <span class="sort-arrow">↕</span></th>
+      <th onclick="setSortFromTable('priority',this)">PRIORITY <span class="sort-arrow">↕</span></th>
+      <th>TAGS</th>
+      <th onclick="setSortFromTable('lastContact',this)">LAST CONTACT <span class="sort-arrow">↕</span></th>
+    </tr></thead>
+    <tbody>`;
+  d.forEach(e=>{
+    const sel=selectedRows.has(e.id)?'selected':'';
+    const tags=e.tags.map(t=>`<span class="tag-chip">${t}</span>`).join(' ');
+    html+=`<tr class="${sel}" onclick="openSidePanel(${e.id})">
+      <td class="cb-col" onclick="event.stopPropagation()"><input type="checkbox" class="check-input" ${selectedRows.has(e.id)?'checked':''} onchange="toggleRow(${e.id},this)"></td>
+      <td ondblclick="editCell(event,${e.id},'name')" style="font-weight:600;white-space:nowrap">${e.name}</td>
+      <td><span class="badge ${statusBadgeClass[e.status]}">${e.status}</span></td>
+      <td>${countryFlags[e.country]||''} ${e.country}</td>
+      <td ondblclick="editCell(event,${e.id},'mrr')" style="font-family:'Play',sans-serif;font-weight:700;font-size:16px">€${Number(e.mrr).toLocaleString()}</td>
+      <td style="color:rgba(255,255,255,.7)">${e.contact}</td>
+      <td><span class="priority-dot" style="background:${priorityColors[e.priority]}"></span>${e.priority}</td>
+      <td>${tags}</td>
+      <td style="color:rgba(255,255,255,.45);font-size:14px">${formatDate(e.lastContact)}</td>
+    </tr>`;
+  });
+  html+=`</tbody></table>
+    <button class="add-row-btn" onclick="openNewForm()">＋ New entry</button>`;
+  document.getElementById('viewContent').innerHTML=html;
+}
+
+function formatDate(d){if(!d)return'—';const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}
+
+function setSortFromTable(field,th){
+  if(sortField===field)sortAsc=!sortAsc;else{sortField=field;sortAsc=true;}
+  document.getElementById('sortField').value=field;
+  document.getElementById('sortDirBtn').textContent=sortAsc?'↑ ASC':'↓ DESC';
+  render();
+}
+
+function toggleRow(id,cb){
+  if(cb.checked)selectedRows.add(id);else selectedRows.delete(id);
+}
+function toggleAllRows(cb){
+  getFiltered().forEach(e=>{if(cb.checked)selectedRows.add(e.id);else selectedRows.delete(e.id);});
+  render();
+}
+
+function editCell(event,id,field){
+  event.stopPropagation();
+  const td=event.currentTarget;
+  const entry=entries.find(e=>e.id===id);
+  if(!entry)return;
+  if(field==='status'){
+    td.innerHTML=`<select class="cell-select" onblur="saveCellEdit(${id},'${field}',this)" onchange="saveCellEdit(${id},'${field}',this)">
+      <option ${entry.status==='Active'?'selected':''}>Active</option>
+      <option ${entry.status==='Onboarding'?'selected':''}>Onboarding</option>
+      <option ${entry.status==='Paused'?'selected':''}>Paused</option>
+      <option ${entry.status==='Churned'?'selected':''}>Churned</option>
+    </select>`;
+    td.querySelector('select').focus();
+  } else {
+    td.innerHTML=`<input class="cell-input" value="${entry[field]}" onblur="saveCellEdit(${id},'${field}',this)" onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){render();}">`;
+    td.querySelector('input').focus();
+    td.querySelector('input').select();
+  }
+}
+function saveCellEdit(id,field,el){
+  const entry=entries.find(e=>e.id===id);
+  if(entry){
+    entry[field]=field==='mrr'?Number(el.value):el.value;
+  }
+  render();
+}
+
+// SIDE PANEL
+function openSidePanel(id){
+  const e=entries.find(x=>x.id===id);
+  if(!e)return;
+  document.getElementById('sidePanelTitle').textContent=e.name;
+  const body=document.getElementById('sidePanelBody');
+  body.innerHTML=`
+    <div class="side-field"><div class="side-field-label">NAME</div><input class="side-input" id="sp-name" value="${e.name}" oninput="liveUpdateEntry(${e.id},'name',this.value)"></div>
+    <div class="side-field"><div class="side-field-label">STATUS</div>
+      <select class="side-select" id="sp-status" onchange="liveUpdateEntry(${e.id},'status',this.value)">
+        <option ${e.status==='Active'?'selected':''}>Active</option>
+        <option ${e.status==='Onboarding'?'selected':''}>Onboarding</option>
+        <option ${e.status==='Paused'?'selected':''}>Paused</option>
+        <option ${e.status==='Churned'?'selected':''}>Churned</option>
+      </select>
+    </div>
+    <div class="side-field"><div class="side-field-label">COUNTRY</div>
+      <select class="side-select" id="sp-country" onchange="liveUpdateEntry(${e.id},'country',this.value)">
+        <option ${e.country==='FR'?'selected':''} value="FR">🇫🇷 France</option>
+        <option ${e.country==='ES'?'selected':''} value="ES">🇪🇸 Spain</option>
+        <option ${e.country==='PT'?'selected':''} value="PT">🇵🇹 Portugal</option>
+        <option ${e.country==='DE'?'selected':''} value="DE">🇩🇪 Germany</option>
+        <option ${e.country==='IT'?'selected':''} value="IT">🇮🇹 Italy</option>
+        <option ${e.country==='NL'?'selected':''} value="NL">🇳🇱 Netherlands</option>
+      </select>
+    </div>
+    <div class="side-field"><div class="side-field-label">MRR (€)</div><input class="side-input" id="sp-mrr" type="number" value="${e.mrr}" oninput="liveUpdateEntry(${e.id},'mrr',Number(this.value))"></div>
+    <div class="side-field"><div class="side-field-label">CONTACT</div><input class="side-input" id="sp-contact" value="${e.contact}" oninput="liveUpdateEntry(${e.id},'contact',this.value)"></div>
+    <div class="side-field"><div class="side-field-label">PRIORITY</div>
+      <select class="side-select" id="sp-priority" onchange="liveUpdateEntry(${e.id},'priority',this.value)">
+        <option ${e.priority==='High'?'selected':''}>High</option>
+        <option ${e.priority==='Medium'?'selected':''}>Medium</option>
+        <option ${e.priority==='Low'?'selected':''}>Low</option>
+      </select>
+    </div>
+    <div class="side-field"><div class="side-field-label">TAGS</div><input class="side-input" id="sp-tags" value="${e.tags.join(', ')}" oninput="liveUpdateTags(${e.id},this.value)"></div>
+    <div class="side-field"><div class="side-field-label">LAST CONTACT</div><input class="side-input" id="sp-lastContact" type="date" value="${e.lastContact}" oninput="liveUpdateEntry(${e.id},'lastContact',this.value)"></div>
+    <div class="side-field"><div class="side-field-label">NOTES</div><textarea class="side-textarea" id="sp-notes" oninput="liveUpdateEntry(${e.id},'notes',this.value)">${e.notes}</textarea></div>
+    <button class="side-save-btn" onclick="closeSidePanel();render()">✓ Save & Close</button>
+    <button style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:10px;color:#ef4444;font-size:15px;font-weight:600;padding:12px;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px;width:100%" onclick="deleteEntry(${e.id})">🗑 Delete Entry</button>
+  `;
+  document.getElementById('sidePanel').classList.add('open');
+}
+function liveUpdateEntry(id,field,val){entries.find(e=>e.id===id)[field]=val;}
+function liveUpdateTags(id,val){entries.find(e=>e.id===id).tags=val.split(',').map(t=>t.trim()).filter(Boolean);}
+function closeSidePanel(){document.getElementById('sidePanel').classList.remove('open');}
+function deleteEntry(id){
+  entries=entries.filter(e=>e.id!==id);
+  closeSidePanel();render();
+}
+
+// KANBAN
+function renderKanban(){
+  const cols=['Active','Onboarding','Paused','Churned'];
+  let html='<div class="kanban-board">';
+  cols.forEach(col=>{
+    const colEntries=getFiltered().filter(e=>e.status===col);
+    const c=statusColors[col];
+    html+=`<div class="kanban-col">
+      <div class="kanban-col-header">
+        <div class="kanban-col-title" style="color:${c}">${col}</div>
+        <div class="kanban-col-count">${colEntries.length}</div>
+      </div>`;
+    colEntries.forEach(e=>{
+      html+=`<div class="kanban-card" onclick="openSidePanel(${e.id})">
+        <div class="kanban-card-name">${e.name}</div>
+        <div class="kanban-card-row">${countryFlags[e.country]||''} ${e.country} · <span style="font-family:'Play',sans-serif;font-weight:700;font-size:14px;color:#dde6ff">€${Number(e.mrr).toLocaleString()}</span></div>
+        <div class="kanban-card-row"><span class="priority-dot" style="background:${priorityColors[e.priority]}"></span>${e.priority} · ${e.contact}</div>
+      </div>`;
+    });
+    html+=`<button class="kanban-add" onclick="openNewForm()">＋ Add card</button></div>`;
+  });
+  html+='</div>';
+  document.getElementById('viewContent').innerHTML=html;
+}
+
+// GALLERY
+function renderGallery(){
+  const d=getFiltered();
+  if(!d.length){document.getElementById('viewContent').innerHTML='<div class="empty-state">No entries match your filters.</div>';return;}
+  let html='<div class="gallery-grid">';
+  d.forEach(e=>{
+    const tags=e.tags.map(t=>`<span class="tag-chip">${t}</span>`).join(' ');
+    const init=e.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    html+=`<div class="gallery-card" onclick="openSidePanel(${e.id})">
+      <div class="gallery-header" style="background:${statusGrad[e.status]}">
+        <div class="gallery-initials">${init}</div>
+        <div style="position:absolute;top:12px;right:12px"><span class="badge ${statusBadgeClass[e.status]}">${e.status}</span></div>
+      </div>
+      <div class="gallery-body">
+        <div class="gallery-name">${e.name}</div>
+        <div class="gallery-row"><span>${countryFlags[e.country]||''} ${countryNames[e.country]||e.country}</span><div class="gallery-mrr">€${Number(e.mrr).toLocaleString()}</div></div>
+        <div class="gallery-tags">${tags}</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:6px;margin-top:2px">
+          <span class="priority-dot" style="background:${priorityColors[e.priority]}"></span>
+          <span>${e.priority} Priority</span>
+          <span style="flex:1"></span>
+          <span>${formatDate(e.lastContact)}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('viewContent').innerHTML=html;
+}
+
+// LIST
+function renderList(){
+  const d=getFiltered();
+  let html=`<table class="list-table"><thead><tr>
+    <th onclick="setSortFromTable('name',this)">NAME <span class="sort-arrow">↕</span></th>
+    <th>STATUS</th>
+    <th onclick="setSortFromTable('country',this)">COUNTRY <span class="sort-arrow">↕</span></th>
+    <th onclick="setSortFromTable('mrr',this)">MRR <span class="sort-arrow">↕</span></th>
+    <th onclick="setSortFromTable('lastContact',this)">LAST CONTACT <span class="sort-arrow">↕</span></th>
+  </tr></thead><tbody>`;
+  d.forEach(e=>{
+    html+=`<tr onclick="openSidePanel(${e.id})" style="cursor:pointer">
+      <td><strong>${e.name}</strong><span style="font-size:13px;color:rgba(255,255,255,.4);margin-left:8px">${e.contact}</span></td>
+      <td><span class="badge ${statusBadgeClass[e.status]}">${e.status}</span></td>
+      <td>${countryFlags[e.country]||''} ${e.country}</td>
+      <td style="font-family:'Play',sans-serif;font-weight:700;font-size:16px">€${Number(e.mrr).toLocaleString()}</td>
+      <td style="color:rgba(255,255,255,.45);font-size:14px">${formatDate(e.lastContact)}</td>
+    </tr>`;
+  });
+  html+='</tbody></table>';
+  document.getElementById('viewContent').innerHTML=html;
+}
+
+// FILTERS
+function toggleFilter(){
+  const p=document.getElementById('filterPanel');
+  const b=document.getElementById('filterBtn');
+  p.classList.toggle('open');
+  b.classList.toggle('active');
+}
+function toggleSort(){
+  const p=document.getElementById('sortPanel');
+  const b=document.getElementById('sortBtn');
+  p.classList.toggle('open');
+  b.classList.toggle('active');
+}
+function toggleChip(chip){
+  chip.classList.toggle('selected');
+  const type=chip.dataset.type,val=chip.dataset.val;
+  if(chip.classList.contains('selected')){
+    if(!activeFilters[type].includes(val))activeFilters[type].push(val);
+  } else {
+    activeFilters[type]=activeFilters[type].filter(v=>v!==val);
+  }
+  render();
+}
+function clearFilters(){
+  activeFilters={status:[],country:[],priority:[]};
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('selected'));
+  render();
+}
+
+// SORT
+function applySort(){
+  sortField=document.getElementById('sortField').value;
+  render();
+}
+function toggleSortDir(){
+  sortAsc=!sortAsc;
+  document.getElementById('sortDirBtn').textContent=sortAsc?'↑ ASC':'↓ DESC';
+  render();
+}
+
+// NEW ENTRY
+function openNewForm(){
+  document.getElementById('newFormPanel').classList.add('open');
+  // Set today's date
+  document.getElementById('nf-lastContact').value=new Date().toISOString().split('T')[0];
+}
+function closeNewForm(){document.getElementById('newFormPanel').classList.remove('open');}
+function submitNewEntry(){
+  const name=document.getElementById('nf-name').value.trim();
+  if(!name)return;
+  const entry={
+    id:nextId++,
+    name,
+    status:document.getElementById('nf-status').value,
+    country:document.getElementById('nf-country').value,
+    mrr:Number(document.getElementById('nf-mrr').value)||0,
+    contact:document.getElementById('nf-contact').value.trim()||'—',
+    priority:document.getElementById('nf-priority').value,
+    tags:document.getElementById('nf-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    lastContact:document.getElementById('nf-lastContact').value,
+    notes:document.getElementById('nf-notes').value.trim()
+  };
+  entries.unshift(entry);
+  closeNewForm();
+  // Clear form
+  ['nf-name','nf-mrr','nf-contact','nf-tags','nf-notes'].forEach(id=>document.getElementById(id).value='');
+  render();
+}
+
+// INIT
+render();
+</script>
+</body>
+</html>

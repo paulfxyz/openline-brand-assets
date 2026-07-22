@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #070c18;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #dde6ff;
+    overflow: hidden;
+  }
+  body { display: flex; flex-direction: column; }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes orb-float {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(20px,-15px) scale(1.05); }
+    100% { transform: translate(0,0) scale(1); }
+  }
+
+  @keyframes star-burst {
+    0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+    60%  { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    100% { transform: scale(1) rotate(360deg); opacity: 1; }
+  }
+
+  @keyframes confetti-fall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(120px) rotate(720deg); opacity: 0; }
+  }
+
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+  }
+
+  /* Background orbs */
+  .orbs {
+    position: fixed; inset: 0;
+    pointer-events: none; overflow: hidden; z-index: 0;
+  }
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(100px); opacity: .12;
+    animation: orb-float ease-in-out infinite;
+  }
+  .o1 { width: 350px; height: 350px; background: #3B3BFF; top: -80px; left: -80px; animation-duration: 22s; }
+  .o2 { width: 280px; height: 280px; background: #ff6616; bottom: -60px; right: -60px; animation-duration: 28s; animation-delay: -10s; }
+
+  /* Header */
+  .app-header {
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .logo-mark {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #3B3BFF, #6060FF);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-title { font-family: 'Play', sans-serif; font-weight: 700; font-size: 28px; }
+  .header-sub { font-size: 16px; color: rgba(255,255,255,.4); margin-left: auto; }
+
+  .close-btn {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.45);
+    transition: all .15s;
+    font-size: 20px;
+  }
+  .close-btn:hover { background: rgba(239,68,68,.12); color: #ef4444; border-color: rgba(239,68,68,.3); }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: #090e1c;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    padding: 18px 32px;
+    flex-shrink: 0;
+    z-index: 9;
+  }
+
+  .steps-indicator {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .step-dot {
+    flex: 1;
+    height: 5px;
+    border-radius: 5px;
+    background: rgba(255,255,255,.1);
+    transition: background .3s, box-shadow .3s;
+    cursor: pointer;
+  }
+  .step-dot.active {
+    background: #3B3BFF;
+    box-shadow: 0 0 8px rgba(59,59,255,.5);
+  }
+  .step-dot.done {
+    background: #22c55e;
+  }
+
+  .step-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+  .step-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,.2);
+    transition: color .3s;
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+  }
+  .step-label.active { color: rgba(59,59,255,.8); }
+  .step-label.done   { color: rgba(34,197,94,.6); }
+
+  /* Content */
+  .content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .step-page {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 36px 36px 140px;
+    opacity: 0;
+    transform: translateX(30px);
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .step-page.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .step-page.exit-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    pointer-events: none;
+  }
+
+  .step-page::-webkit-scrollbar { width: 6px; }
+  .step-page::-webkit-scrollbar-track { background: transparent; }
+  .step-page::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 6px; }
+
+  /* Bottom nav */
+  .bottom-nav {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: #090e1c;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+  }
+
+  .nav-btn {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 14px 32px;
+    font: 600 18px 'Inter', sans-serif;
+    color: rgba(255,255,255,.6);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,.1); color: #dde6ff; }
+  .nav-btn:disabled { opacity: .3; cursor: not-allowed; }
+
+  .nav-btn.primary {
+    background: #3B3BFF;
+    border-color: transparent;
+    color: #fff;
+  }
+  .nav-btn.primary:hover { background: #5252ff; box-shadow: 0 0 14px rgba(59,59,255,.4); }
+
+  .nav-btn.finish {
+    background: linear-gradient(135deg, #3B3BFF, #ff6616);
+    border-color: transparent;
+    color: #fff;
+    font-size: 18px;
+  }
+  .nav-btn.finish:hover { box-shadow: 0 0 20px rgba(59,59,255,.4); }
+
+  .step-counter {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,.25);
+  }
+
+  /* ==================== STEP 1: Welcome ==================== */
+  .welcome-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 18px 0;
+    gap: 24px;
+  }
+
+  .orb-hero {
+    width: 160px; height: 160px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .orb-core {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #6060FF, #3B3BFF, #1a1a80);
+    box-shadow: 0 0 40px rgba(59,59,255,.5), 0 0 80px rgba(59,59,255,.2);
+    animation: orb-float 4s ease-in-out infinite;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+  }
+
+  .welcome-title {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #dde6ff;
+    line-height: 1.2;
+  }
+  .welcome-subtitle { font-size: 18px; color: rgba(255,255,255,.5); max-width: 480px; line-height: 1.6; }
+
+  .badge-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: rgba(59,59,255,.12);
+    border: 1px solid rgba(59,59,255,.2);
+    color: rgba(59,59,255,.9);
+  }
+  .badge.orange { background: rgba(255,102,22,.1); border-color: rgba(255,102,22,.2); color: #ff9a6c; }
+  .badge.green  { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.2); color: #4ade80; }
+
+  /* ==================== STEP 2: Profile ==================== */
+  .form-group { display: flex; flex-direction: column; gap: 12px; }
+  .form-label { font-size: 18px; font-weight: 600; color: rgba(255,255,255,.6); }
+  .form-input {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 18px 22px;
+    color: #dde6ff;
+    font: 18px 'Inter', sans-serif;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .form-input:focus { border-color: rgba(59,59,255,.55); }
+  .form-input::placeholder { color: rgba(255,255,255,.2); }
+
+  select.form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    padding-right: 48px;
+  }
+  select.form-input option { background: #0c1120; }
+
+  .avatar-section { display: flex; flex-direction: column; gap: 14px; }
+  .avatar-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px; }
+
+  .av-option {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all .15s;
+    background: rgba(255,255,255,.05);
+  }
+  .av-option:hover { transform: scale(1.1); border-color: rgba(255,255,255,.2); }
+  .av-option.selected {
+    border-color: #3B3BFF;
+    box-shadow: 0 0 12px rgba(59,59,255,.4);
+  }
+
+  /* ==================== STEP 3: Team ==================== */
+  .team-grid-step { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+  .teammate-card {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .tm-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 22px;
+    color: #fff;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .tm-status {
+    position: absolute;
+    bottom: 2px; right: 2px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #0c1120;
+  }
+  .tm-info { flex: 1; min-width: 0; }
+  .tm-name { font-size: 18px; font-weight: 600; color: #dde6ff; }
+  .tm-role { font-size: 16px; color: rgba(255,255,255,.4); }
+  .tm-zone {
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: rgba(59,59,255,.1);
+    color: #8888ff;
+    white-space: nowrap;
+  }
+
+  /* ==================== STEP 4: Zones & Tools ==================== */
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .tool-card {
+    background: #0c1120;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all .15s;
+    text-align: center;
+  }
+  .tool-card:hover {
+    background: rgba(59,59,255,.08);
+    border-color: rgba(59,59,255,.25);
+    transform: translateY(-2px);
+  }
+  .tool-icon {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+  }
+  .tool-name { font-size: 18px; font-weight: 600; color: #dde6ff; }
+  .tool-desc { font-size: 14px; color: rgba(255,255,255,.35); line-height: 1.4; }
+
+  /* ==================== STEP 5: Ready ==================== */
+  .ready-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+
+  .confetti-container {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: confetti-fall 2s ease forwards;
+  }
+
+  .star-burst {
+    width: 140px; height: 140px;
+    background: radial-gradient(circle at 40% 40%, #ff6616, #3B3BFF);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255,102,22,.4), 0 0 100px rgba(59,59,255,.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+    animation: star-burst .6s ease both;
+  }
+
+  .ready-title {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    background: linear-gradient(135deg, #3B3BFF, #ff6616);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .ready-sub { font-size: 18px; color: rgba(255,255,255,.5); max-width: 440px; line-height: 1.6; }
+
+  .checklist { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 18px;
+    color: rgba(255,255,255,.6);
+  }
+  .check-icon { color: #22c55e; font-size: 22px; }
+
+  .enter-btn {
+    background: linear-gradient(135deg, #3B3BFF, #ff6616);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 22px 48px;
+    font: 700 20px 'Play', sans-serif;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 0 0 0 rgba(59,59,255,.3);
+    animation: pulse-green 2s infinite;
+  }
+  .enter-btn:hover { transform: scale(1.04); box-shadow: 0 0 24px rgba(59,59,255,.5); }
+
+  .section-title {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #dde6ff;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="orbs">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+</div>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="logo-mark">
+    <svg width="28" height="28" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.5"/>
+      <path d="M6 9h6M9 6v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="header-title">Openline Onboarding</div>
+  <div class="header-sub" id="step-name-header">Welcome</div>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'onboarding-close'},'*')" title="Close">✕</button>
+</header>
+
+<!-- Progress Bar -->
+<div class="progress-bar-wrap">
+  <div class="steps-indicator">
+    <div class="step-dot active" id="dot-0" onclick="goToStep(0)"></div>
+    <div class="step-dot" id="dot-1" onclick="goToStep(1)"></div>
+    <div class="step-dot" id="dot-2" onclick="goToStep(2)"></div>
+    <div class="step-dot" id="dot-3" onclick="goToStep(3)"></div>
+    <div class="step-dot" id="dot-4" onclick="goToStep(4)"></div>
+  </div>
+  <div class="step-labels">
+    <span class="step-label active" id="lbl-0" onclick="goToStep(0)">Welcome</span>
+    <span class="step-label" id="lbl-1" onclick="goToStep(1)">Profile</span>
+    <span class="step-label" id="lbl-2" onclick="goToStep(2)">Team</span>
+    <span class="step-label" id="lbl-3" onclick="goToStep(3)">Tools</span>
+    <span class="step-label" id="lbl-4" onclick="goToStep(4)">Ready!</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Step 1: Welcome -->
+  <div class="step-page visible" id="step-0">
+    <div class="welcome-center">
+      <div class="orb-hero">
+        <div class="orb-core">🚀</div>
+      </div>
+      <div class="welcome-title">Welcome to<br>Openline</div>
+      <div class="welcome-subtitle">
+        Your virtual office is set up and your team is waiting. Let's get you onboarded in under 2 minutes.
+      </div>
+      <div class="badge-row">
+        <span class="badge">WorkAdventure</span>
+        <span class="badge orange">Openline × eSIM</span>
+        <span class="badge green">Remote-First</span>
+      </div>
+      <div style="background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px 28px;font-size:18px;color:rgba(255,255,255,.5);line-height:1.6;max-width:500px;text-align:left;">
+        <strong style="color:#dde6ff;font-size:20px;">This quick tour will help you:</strong><br>
+        ① Set up your profile &amp; avatar<br>
+        ② Meet your team<br>
+        ③ Discover zones &amp; mini-apps<br>
+        ④ Enter the virtual office
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Profile -->
+  <div class="step-page" id="step-1">
+    <div class="section-title">Set Up Your Profile</div>
+    <div style="font-size:18px;color:rgba(255,255,255,.4);">Choose your avatar and fill in your details.</div>
+
+    <div class="avatar-section">
+      <div class="form-label">Choose your avatar</div>
+      <div class="avatar-grid">
+        <div class="av-option selected" onclick="selectAvatar(this)">🧑‍💻</div>
+        <div class="av-option" onclick="selectAvatar(this)">👩‍💻</div>
+        <div class="av-option" onclick="selectAvatar(this)">🧑‍🎨</div>
+        <div class="av-option" onclick="selectAvatar(this)">👩‍🎨</div>
+        <div class="av-option" onclick="selectAvatar(this)">🧑‍🔬</div>
+        <div class="av-option" onclick="selectAvatar(this)">🧑‍🚀</div>
+        <div class="av-option" onclick="selectAvatar(this)">🦸</div>
+        <div class="av-option" onclick="selectAvatar(this)">🧙</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Display Name</label>
+      <input type="text" class="form-input" id="display-name" placeholder="Paul Rougier" value="Paul Rougier">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Role</label>
+      <select class="form-input" id="role-select">
+        <option>Frontend Engineer</option>
+        <option>Backend Engineer</option>
+        <option>Full Stack Engineer</option>
+        <option>Product Manager</option>
+        <option>Designer</option>
+        <option>Sales</option>
+        <option>DevOps / Platform</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Timezone</label>
+      <select class="form-input" id="tz-select">
+        <option>🇫🇷 Europe/Paris (UTC+1)</option>
+        <option>🇬🇧 Europe/London (UTC+0)</option>
+        <option>🇺🇸 America/New_York (UTC-5)</option>
+        <option>🇺🇸 America/Los_Angeles (UTC-8)</option>
+        <option>🇸🇬 Asia/Singapore (UTC+8)</option>
+        <option>🇯🇵 Asia/Tokyo (UTC+9)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Step 3: Team -->
+  <div class="step-page" id="step-2">
+    <div class="section-title">Your Team</div>
+    <div style="font-size:18px;color:rgba(255,255,255,.4);">You'll be working alongside these amazing people.</div>
+
+    <div class="team-grid-step">
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#3B3BFF,#6060FF)">M
+          <span class="tm-status" style="background:#22c55e;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Marie Dupont</div>
+          <div class="tm-role">Frontend Engineer</div>
+        </div>
+        <span class="tm-zone">Dev Lab</span>
+      </div>
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#ff6616,#ff9a6c)">T
+          <span class="tm-status" style="background:#22c55e;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Thomas Bernard</div>
+          <div class="tm-role">Backend Engineer</div>
+        </div>
+        <span class="tm-zone">Board Room</span>
+      </div>
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#22c55e,#4ade80)">L
+          <span class="tm-status" style="background:#22c55e;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Léa Martin</div>
+          <div class="tm-role">Designer</div>
+        </div>
+        <span class="tm-zone">Design Hub</span>
+      </div>
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#a855f7,#c084fc)">A
+          <span class="tm-status" style="background:#f59e0b;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Antoine Moreau</div>
+          <div class="tm-role">Product Manager</div>
+        </div>
+        <span class="tm-zone">Lounge</span>
+      </div>
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">S
+          <span class="tm-status" style="background:#22c55e;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Sophie Laurent</div>
+          <div class="tm-role">Sales</div>
+        </div>
+        <span class="tm-zone">Lounge</span>
+      </div>
+      <div class="teammate-card">
+        <div class="tm-avatar" style="background:linear-gradient(135deg,#ec4899,#f472b6)">C
+          <span class="tm-status" style="background:#ef4444;"></span>
+        </div>
+        <div class="tm-info">
+          <div class="tm-name">Camille Petit</div>
+          <div class="tm-role">Full Stack Eng.</div>
+        </div>
+        <span class="tm-zone">Focus Room</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Tools -->
+  <div class="step-page" id="step-3">
+    <div class="section-title">Zones &amp; Mini-Apps</div>
+    <div style="font-size:18px;color:rgba(255,255,255,.4);">Explore these tools available in your virtual office.</div>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(59,59,255,.15);">💬</div>
+        <div class="tool-name">Chat</div>
+        <div class="tool-desc">Team messaging &amp; channels</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(34,197,94,.1);">✅</div>
+        <div class="tool-name">Tasks</div>
+        <div class="tool-desc">Sprint boards &amp; to-dos</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(255,102,22,.12);">🍅</div>
+        <div class="tool-name">Pomodoro</div>
+        <div class="tool-desc">Focus timer sessions</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(29,185,84,.12);">🎵</div>
+        <div class="tool-name">Jam</div>
+        <div class="tool-desc">Collaborative listening</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(245,158,11,.1);">📁</div>
+        <div class="tool-name">Files</div>
+        <div class="tool-desc">Shared documents</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(34,197,94,.1);">⚡</div>
+        <div class="tool-name">Mercury</div>
+        <div class="tool-desc">NL → terminal commands</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(168,85,247,.1);">📅</div>
+        <div class="tool-name">Calendar</div>
+        <div class="tool-desc">Meetings &amp; events</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(59,59,255,.12);">🗺️</div>
+        <div class="tool-name">Map</div>
+        <div class="tool-desc">Explore office zones</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:rgba(255,102,22,.1);">⚙️</div>
+        <div class="tool-name">Settings</div>
+        <div class="tool-desc">Profile &amp; preferences</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Ready -->
+  <div class="step-page" id="step-4">
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <div class="ready-center">
+      <div class="star-burst">🎉</div>
+      <div class="ready-title">You're all set,<br><span id="ready-name">Paul</span>!</div>
+      <div class="ready-sub">Welcome to the Openline virtual office. Your team is online and ready to collaborate.</div>
+
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon">✓</span> Profile configured</div>
+        <div class="check-item"><span class="check-icon">✓</span> Met your 6 teammates</div>
+        <div class="check-item"><span class="check-icon">✓</span> Discovered 9 mini-apps</div>
+        <div class="check-item"><span class="check-icon">✓</span> Ready to enter the office!</div>
+      </div>
+
+      <button class="enter-btn" onclick="enterOffice()">
+        🚀 Enter the Office
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom Nav (inside content so it overlays) -->
+  <div class="bottom-nav">
+    <button class="nav-btn" id="back-btn" onclick="prevStep()" disabled>← Back</button>
+    <span class="step-counter" id="step-counter">1 / 5</span>
+    <button class="nav-btn primary" id="next-btn" onclick="nextStep()">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const STEPS = ['Welcome', 'Profile', 'Your Team', 'Tools', 'Ready!'];
+let currentStep = 0;
+
+function updateUI() {
+  // Pages
+  document.querySelectorAll('.step-page').forEach((el, i) => {
+    el.classList.remove('visible', 'exit-left');
+    if (i === currentStep) el.classList.add('visible');
+  });
+
+  // Dots and labels
+  STEPS.forEach((name, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    const lbl = document.getElementById(`lbl-${i}`);
+    dot.classList.remove('active', 'done');
+    lbl.classList.remove('active', 'done');
+    if (i < currentStep) { dot.classList.add('done'); lbl.classList.add('done'); }
+    if (i === currentStep) { dot.classList.add('active'); lbl.classList.add('active'); }
+  });
+
+  // Header
+  document.getElementById('step-name-header').textContent = STEPS[currentStep];
+
+  // Nav buttons
+  document.getElementById('back-btn').disabled = currentStep === 0;
+  const nextBtn = document.getElementById('next-btn');
+  if (currentStep === 4) {
+    nextBtn.style.display = 'none';
+  } else {
+    nextBtn.style.display = '';
+    nextBtn.textContent = currentStep === 3 ? "Let's Go! 🚀" : 'Next →';
+    nextBtn.className = currentStep === 3 ? 'nav-btn finish' : 'nav-btn primary';
+  }
+
+  document.getElementById('step-counter').textContent = `${currentStep + 1} / 5`;
+
+  // When reaching step 5, update name and fire confetti
+  if (currentStep === 4) {
+    const name = document.getElementById('display-name')?.value.split(' ')[0] || 'Paul';
+    document.getElementById('ready-name').textContent = name;
+    fireConfetti();
+  }
+}
+
+function nextStep() {
+  if (currentStep < 4) {
+    currentStep++;
+    updateUI();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    updateUI();
+  }
+}
+
+function goToStep(i) {
+  if (i <= currentStep + 1) {
+    currentStep = i;
+    updateUI();
+  }
+}
+
+function selectAvatar(el) {
+  document.querySelectorAll('.av-option').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function fireConfetti() {
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  const colors = ['#3B3BFF', '#ff6616', '#22c55e', '#f59e0b', '#ec4899', '#dde6ff'];
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${-10 - Math.random() * 20}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      animation-delay: ${Math.random() * 1.5}s;
+      animation-duration: ${1.5 + Math.random()}s;
+      transform: rotate(${Math.random() * 360}deg);
+      width: ${4 + Math.random() * 8}px;
+      height: ${4 + Math.random() * 8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    container.appendChild(piece);
+  }
+}
+
+function enterOffice() {
+  window.parent.postMessage({ type: 'onboarding-complete' }, '*');
+  // Fallback
+  setTimeout(() => { history.back(); }, 100);
+}
+
+updateUI();
+</script>
+</body>
+</html>

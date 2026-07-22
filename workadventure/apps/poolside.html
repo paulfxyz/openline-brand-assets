@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poolside — Openline Chill Zone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',system-ui,sans-serif;font-size:20px;line-height:1.5;overflow:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:6px}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes bar-dance{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  @keyframes pulse-bg{0%,100%{opacity:.6}50%{opacity:1}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .app{display:flex;flex-direction:column;height:100%;animation:fade-up .4s ease;position:relative;overflow:hidden}
+
+  /* Ambient BG glow */
+  .ambient-bg{position:fixed;inset:0;pointer-events:none;z-index:0;transition:background 2s ease}
+
+  /* HEADER */
+  .header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.06);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;z-index:10}
+  .header-left{display:flex;align-items:center;gap:20px}
+  .header-logo{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;animation:float 3s ease-in-out infinite}
+  .header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff}
+  .header-sub{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.3)}
+  .btn-icon{width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:22px;transition:all .2s}
+  .btn-icon:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+
+  /* CONTENT */
+  .content{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:28px;position:relative;z-index:5}
+
+  /* SCENE CARDS */
+  .scene-label{font-size:16px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em;font-family:'Press Start 2P',monospace;font-size:11px}
+  .scene-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .scene-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:24px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+  .scene-card::before{content:'';position:absolute;inset:0;opacity:.08;transition:opacity .3s;border-radius:12px}
+  .scene-card.active{border-width:1.5px}
+  .scene-card.active::before{opacity:.15}
+  .scene-icon{font-size:36px;margin-bottom:12px;display:block;line-height:1}
+  .scene-name{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff}
+  .scene-bpm{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-top:6px}
+  .scene-card:hover{transform:translateY(-1px)}
+
+  /* Scene colors */
+  .s-rooftop{--sc:#ff6616}.s-rooftop::before{background:radial-gradient(circle at top left,#ff6616,transparent)}.s-rooftop.active{border-color:rgba(255,102,22,.5);box-shadow:0 0 20px rgba(255,102,22,.12)}
+  .s-focus{--sc:#3B3BFF}.s-focus::before{background:radial-gradient(circle at top left,#3B3BFF,transparent)}.s-focus.active{border-color:rgba(59,59,255,.5);box-shadow:0 0 20px rgba(59,59,255,.12)}
+  .s-after{--sc:#a855f7}.s-after::before{background:radial-gradient(circle at top left,#a855f7,transparent)}.s-after.active{border-color:rgba(168,85,247,.5);box-shadow:0 0 20px rgba(168,85,247,.12)}
+  .s-sunday{--sc:#22c55e}.s-sunday.active{border-color:rgba(34,197,94,.5);box-shadow:0 0 20px rgba(34,197,94,.12)}.s-sunday::before{background:radial-gradient(circle at top left,#22c55e,transparent)}
+
+  /* NOW PLAYING */
+  .now-playing{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:24px}
+  .np-top{display:flex;align-items:center;gap:24px}
+  .album-art{width:96px;height:96px;border-radius:10px;flex-shrink:0;position:relative;overflow:hidden}
+  .album-art-inner{width:100%;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px;transition:background 1.5s ease}
+  .np-info{flex:1;min-width:0}
+  .np-track{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .np-artist{font-size:20px;color:rgba(255,255,255,.45);margin-top:2px}
+  .vibe-badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:6px 18px;font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.5);white-space:nowrap;flex-shrink:0}
+
+  /* VISUALIZER */
+  .visualizer{display:flex;align-items:flex-end;gap:6px;height:48px;padding:0 4px}
+  .viz-bar{width:6px;border-radius:2px;min-height:6px;transform-origin:bottom;background:linear-gradient(to top,#3B3BFF,#6060FF)}
+  .viz-bar.playing{animation:bar-dance var(--spd,.5s) ease-in-out infinite;animation-delay:var(--del,0s)}
+
+  /* PROGRESS BAR */
+  .progress-row{display:flex;align-items:center;gap:16px;font-size:18px;color:rgba(255,255,255,.35)}
+  .progress-track{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;cursor:pointer;position:relative}
+  .progress-fill{height:100%;border-radius:4px;transition:width .3s linear;background:linear-gradient(90deg,#3B3BFF,#6060FF)}
+
+  /* CONTROLS */
+  .controls-row{display:flex;align-items:center;justify-content:center;gap:28px}
+  .ctrl-btn{background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,.45);font-size:28px;padding:12px;border-radius:8px;transition:all .2s;line-height:1}
+  .ctrl-btn:hover{color:#dde6ff;background:rgba(255,255,255,.06)}
+  .ctrl-play{width:72px;height:72px;border-radius:50%;background:#3B3BFF;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;transition:all .2s;box-shadow:0 4px 18px rgba(59,59,255,.4)}
+  .ctrl-play:hover{background:#5050ff;transform:scale(1.06)}
+  .ctrl-play:active{transform:scale(.96)}
+
+  /* AMBIENT LAYERS */
+  .ambient-section{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:24px}
+  .ambient-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:12px;color:#dde6ff}
+  .ambient-list{display:flex;flex-direction:column;gap:20px}
+  .ambient-row{display:flex;align-items:center;gap:20px}
+  .amb-toggle{width:60px;height:34px;background:rgba(255,255,255,.08);border-radius:17px;position:relative;cursor:pointer;border:none;transition:background .2s;flex-shrink:0}
+  .amb-toggle::after{content:'';position:absolute;top:5px;left:5px;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.4);transition:all .2s}
+  .amb-toggle.on{background:#3B3BFF}
+  .amb-toggle.on::after{left:31px;background:#fff}
+  .amb-label{font-size:20px;color:rgba(255,255,255,.6);width:140px;flex-shrink:0}
+  .amb-icon{font-size:22px;flex-shrink:0;width:32px}
+  .range-wrap{flex:1;position:relative}
+  input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:4px;outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#3B3BFF;cursor:pointer;transition:transform .15s;box-shadow:0 0 6px rgba(59,59,255,.4)}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
+
+  /* FOOTER VIBE BAR */
+  .vibe-footer{background:#090e1c;border-top:1px solid rgba(255,255,255,.06);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;z-index:10}
+  .vibe-people{font-size:20px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:12px}
+  .avatars-mini{display:flex}
+  .av-mini{width:38px;height:38px;border-radius:50%;border:2px solid #090e1c;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:-8px}
+  .av-mini:first-child{margin-left:0}
+</style>
+</head>
+<body>
+<div class="ambient-bg" id="ambientBg"></div>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">🌊</div>
+      <div>
+        <div class="header-title">Poolside</div>
+        <div class="header-sub">CHILL ZONE</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <button class="btn-icon" id="volBtn" title="Volume">🔊</button>
+      <button class="btn-icon" onclick="window.parent.postMessage({type:'poolside-close'},'*')">✕</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- SCENE SELECT -->
+    <div class="scene-label" style="margin-bottom:8px">SELECT YOUR VIBE</div>
+    <div class="scene-grid" id="sceneGrid">
+      <div class="scene-card s-rooftop active" data-scene="rooftop" onclick="selectScene(this)">
+        <span class="scene-icon">🌆</span>
+        <div class="scene-name">Rooftop Lounge</div>
+        <div class="scene-bpm">♩ 82 BPM · CHILL</div>
+      </div>
+      <div class="scene-card s-focus" data-scene="focus" onclick="selectScene(this)">
+        <span class="scene-icon">🧠</span>
+        <div class="scene-name">Deep Focus</div>
+        <div class="scene-bpm">♩ 70 BPM · ALPHA</div>
+      </div>
+      <div class="scene-card s-after" data-scene="after" onclick="selectScene(this)">
+        <span class="scene-icon">🌙</span>
+        <div class="scene-name">After Hours</div>
+        <div class="scene-bpm">♩ 95 BPM · NOCTURNE</div>
+      </div>
+      <div class="scene-card s-sunday" data-scene="sunday" onclick="selectScene(this)">
+        <span class="scene-icon">🌿</span>
+        <div class="scene-name">Sunday Drive</div>
+        <div class="scene-bpm">♩ 78 BPM · DREAMY</div>
+      </div>
+    </div>
+
+    <!-- NOW PLAYING -->
+    <div class="now-playing">
+      <div class="np-top">
+        <div class="album-art">
+          <div class="album-art-inner" id="albumArt" style="background:linear-gradient(135deg,#ff6616,#3B3BFF)">🎵</div>
+        </div>
+        <div class="np-info">
+          <div class="np-track" id="npTrack">City After Dark</div>
+          <div class="np-artist" id="npArtist">Openline Radio · Lofi Collective</div>
+        </div>
+        <div class="vibe-badge" id="vibeBadge">82 BPM</div>
+      </div>
+
+      <!-- VISUALIZER -->
+      <div class="visualizer" id="visualizer">
+        <!-- bars injected by JS -->
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-row">
+        <span id="progCurrent">1:24</span>
+        <div class="progress-track" onclick="seekTrack(event)">
+          <div class="progress-fill" id="progFill" style="width:32%"></div>
+        </div>
+        <span id="progTotal">4:17</span>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls-row">
+        <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
+        <button class="ctrl-btn" onclick="shuffleTrack()">🔀</button>
+        <button class="ctrl-play" id="playBtn" onclick="togglePlay()">⏸</button>
+        <button class="ctrl-btn" onclick="repeatToggle()">🔁</button>
+        <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
+      </div>
+    </div>
+
+    <!-- AMBIENT LAYERS -->
+    <div class="ambient-section">
+      <div class="ambient-title">🎚 Ambient Layers</div>
+      <div class="ambient-list">
+        <div class="ambient-row">
+          <button class="amb-toggle on" id="tog-rain" onclick="toggleAmb(this,'rain')"></button>
+          <span class="amb-icon">🌧</span>
+          <span class="amb-label">Rain</span>
+          <div class="range-wrap"><input type="range" id="vol-rain" min="0" max="100" value="55" oninput="updateAmbVol('rain',this.value)"></div>
+        </div>
+        <div class="ambient-row">
+          <button class="amb-toggle" id="tog-cafe" onclick="toggleAmb(this,'cafe')"></button>
+          <span class="amb-icon">☕</span>
+          <span class="amb-label">Café Noise</span>
+          <div class="range-wrap"><input type="range" id="vol-cafe" min="0" max="100" value="30" oninput="updateAmbVol('cafe',this.value)"></div>
+        </div>
+        <div class="ambient-row">
+          <button class="amb-toggle" id="tog-ocean" onclick="toggleAmb(this,'ocean')"></button>
+          <span class="amb-icon">🌊</span>
+          <span class="amb-label">Ocean Waves</span>
+          <div class="range-wrap"><input type="range" id="vol-ocean" min="0" max="100" value="40" oninput="updateAmbVol('ocean',this.value)"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+
+  <!-- FOOTER -->
+  <div class="vibe-footer">
+    <div class="vibe-people">
+      <div class="avatars-mini">
+        <div class="av-mini" style="background:linear-gradient(135deg,#3B3BFF,#6060FF)">AL</div>
+        <div class="av-mini" style="background:linear-gradient(135deg,#ff6616,#ff8c42)">SM</div>
+        <div class="av-mini" style="background:linear-gradient(135deg,#22c55e,#4ade80)">TK</div>
+        <div class="av-mini" style="background:linear-gradient(135deg,#a855f7,#c084fc)">JR</div>
+        <div class="av-mini" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">+3</div>
+      </div>
+      <span>7 people vibing in Chill Zone</span>
+    </div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.3)">LIVE</div>
+  </div>
+</div>
+
+<script>
+const SCENES = {
+  rooftop:{ bg:'radial-gradient(ellipse at 30% 20%, rgba(255,102,22,.08), transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(59,59,255,.06), transparent 50%)', albumGrad:'linear-gradient(135deg,#ff6616,#3B3BFF)', tracks:['City After Dark','Neon Boulevard','Late Nite Hustle','Rooftop Sessions'], bpm:'82 BPM', vibeTxt:'82 BPM · CHILL', barColor:'#ff6616' },
+  focus:{ bg:'radial-gradient(ellipse at 50% 30%, rgba(59,59,255,.1), transparent 60%)', albumGrad:'linear-gradient(135deg,#3B3BFF,#6060FF)', tracks:['Alpha State','Theta Drift','Focus Mode On','Flow State'], bpm:'70 BPM', vibeTxt:'70 BPM · ALPHA', barColor:'#3B3BFF' },
+  after:{ bg:'radial-gradient(ellipse at 20% 50%, rgba(168,85,247,.09), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(59,59,255,.06), transparent 50%)', albumGrad:'linear-gradient(135deg,#a855f7,#3B3BFF)', tracks:['Midnight Protocol','Dark Side of Noon','After Hours','Nocturnalist'], bpm:'95 BPM', vibeTxt:'95 BPM · NOCTURNE', barColor:'#a855f7' },
+  sunday:{ bg:'radial-gradient(ellipse at 40% 60%, rgba(34,197,94,.07), transparent 50%)', albumGrad:'linear-gradient(135deg,#22c55e,#3B3BFF)', tracks:['Sunday Drive','Golden Hour','Slow Burn','Easy Rider'], bpm:'78 BPM', vibeTxt:'78 BPM · DREAMY', barColor:'#22c55e' }
+};
+
+let currentScene = 'rooftop';
+let playing = true;
+let currentTrackIdx = 0;
+let progressVal = 32;
+let progressInterval;
+
+const ambBg = document.getElementById('ambientBg');
+
+function selectScene(el) {
+  document.querySelectorAll('.scene-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentScene = el.dataset.scene;
+  applyScene();
+}
+
+function applyScene() {
+  const sc = SCENES[currentScene];
+  ambBg.style.background = sc.bg;
+  document.getElementById('albumArt').style.background = sc.albumGrad;
+  document.getElementById('vibeBadge').textContent = sc.bpm;
+  document.getElementById('npTrack').textContent = sc.tracks[currentTrackIdx % sc.tracks.length];
+  document.getElementById('npArtist').textContent = 'Openline Radio · ' + {rooftop:'Lofi Collective',focus:'Ambient Works',after:'Dark Matter',sunday:'Sunday Sounds'}[currentScene];
+  // update bar colors
+  document.querySelectorAll('.viz-bar').forEach(b => { b.style.background = `linear-gradient(to top, ${sc.barColor}, ${sc.barColor}88)`; });
+  document.querySelector('.progress-fill').style.background = `linear-gradient(90deg, ${sc.barColor}, ${sc.barColor}cc)`;
+  document.querySelector('.ctrl-play').style.background = sc.barColor;
+}
+
+// Build visualizer
+const vizEl = document.getElementById('visualizer');
+for (let i=0;i<22;i++){
+  const bar = document.createElement('div');
+  bar.className = 'viz-bar' + (playing?' playing':'');
+  const spd = (.3 + Math.random()*.6).toFixed(2);
+  const del = (Math.random()*.5).toFixed(2);
+  const minH = 6 + Math.floor(Math.random()*12);
+  const maxH = 20 + Math.floor(Math.random()*22);
+  bar.style.cssText = `--spd:${spd}s;--del:-${del}s;height:${minH}px;max-height:${maxH}px;background:linear-gradient(to top,#3B3BFF,#6060FF)`;
+  vizEl.appendChild(bar);
+}
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById('playBtn').textContent = playing ? '⏸' : '▶';
+  document.querySelectorAll('.viz-bar').forEach(b => {
+    if (playing) b.classList.add('playing'); else b.classList.remove('playing');
+  });
+}
+
+function nextTrack() {
+  currentTrackIdx++;
+  progressVal = 0;
+  applyScene();
+  updateProgress();
+}
+
+function prevTrack() {
+  currentTrackIdx = Math.max(0, currentTrackIdx-1);
+  progressVal = 0;
+  applyScene();
+  updateProgress();
+}
+
+function shuffleTrack() {
+  currentTrackIdx = Math.floor(Math.random()*4);
+  progressVal = 0;
+  applyScene();
+}
+
+function repeatToggle() {}
+
+function seekTrack(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width * 100;
+  progressVal = Math.max(0, Math.min(100, pct));
+  updateProgress();
+}
+
+function updateProgress() {
+  const totalSec = 257; // 4:17
+  const curSec = Math.floor(totalSec * progressVal / 100);
+  document.getElementById('progCurrent').textContent = Math.floor(curSec/60)+':'+(curSec%60).toString().padStart(2,'0');
+  document.getElementById('progFill').style.width = progressVal + '%';
+}
+
+// Auto progress
+setInterval(() => {
+  if (!playing) return;
+  progressVal = Math.min(100, progressVal + (100/(257*10)));
+  if (progressVal >= 100) { progressVal=0; nextTrack(); }
+  updateProgress();
+}, 100);
+
+function toggleAmb(btn, name) {
+  btn.classList.toggle('on');
+}
+
+function updateAmbVol(name, val) {}
+
+// Init
+applyScene();
+updateProgress();
+</script>
+</body>
+</html>

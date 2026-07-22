@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Rooms — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070c18;--bg-card:#0c1120;--bg-header:#090e1c;
+  --text:#dde6ff;--muted:rgba(255,255,255,.45);
+  --blue:#3B3BFF;--orange:#ff6616;
+  --success:#22c55e;--warn:#f59e0b;--error:#ef4444;
+  --border:rgba(255,255,255,.07);
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;font-size:20px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes speak-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}50%{box-shadow:0 0 0 8px rgba(34,197,94,0)}}
+@keyframes wave1{0%,100%{height:4px}50%{height:16px}}
+@keyframes wave2{0%,100%{height:10px}50%{height:4px}}
+@keyframes wave3{0%,100%{height:6px}50%{height:20px}}
+@keyframes wave4{0%,100%{height:14px}50%{height:6px}}
+@keyframes wave5{0%,100%{height:8px}50%{height:18px}}
+@keyframes mic-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* Header */
+.header{background:var(--bg-header);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{color:var(--blue)}
+.header-title{font-family:'Play',sans-serif;font-weight:700;font-size:28px}
+.rooms-badge{background:rgba(59,59,255,.12);color:#7c7cff;padding:6px 16px;border-radius:100px;font-size:16px;font-weight:600;border:1px solid rgba(59,59,255,.2)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:8px;font-size:18px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-icon{padding:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.btn-icon:hover{color:var(--text)}
+
+/* App body */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* Rooms list */
+.rooms-pane{width:520px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding:24px}
+.rooms-pane::-webkit-scrollbar{width:6px}
+.rooms-pane::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+
+/* Room card */
+.room-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;cursor:pointer;transition:all .15s;animation:fade-up .2s ease both;position:relative}
+.room-card:hover{border-color:rgba(255,255,255,.15)}
+.room-card.active-room{border-color:var(--success);background:rgba(34,197,94,.04)}
+.room-card.hot-room{border-color:rgba(255,102,22,.4);background:rgba(255,102,22,.05)}
+.room-card.selected-room{border-color:var(--blue);background:rgba(59,59,255,.06)}
+.room-card.empty-room{opacity:.6}
+.room-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.room-icon{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.room-info{flex:1}
+.room-name{font-family:'Play',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.hot-tag{background:rgba(255,102,22,.2);color:var(--orange);border-radius:100px;padding:2px 12px;font-weight:600;font-family:'Press Start 2P',monospace;font-size:11px}
+.room-desc{font-size:16px;color:var(--muted)}
+.room-participants{display:flex;align-items:center;gap:6px;margin-bottom:16px}
+.p-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid var(--bg-card)}
+.p-count{font-size:18px;color:var(--muted);margin-left:6px}
+
+/* Speaking bars */
+.speak-bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.bar{width:4px;border-radius:2px;background:var(--success);opacity:.7}
+.bar.b1{animation:wave1 .7s ease infinite}
+.bar.b2{animation:wave2 .6s ease infinite .1s}
+.bar.b3{animation:wave3 .8s ease infinite .05s}
+.bar.b4{animation:wave4 .65s ease infinite .15s}
+.bar.b5{animation:wave5 .75s ease infinite}
+.speak-bars.muted .bar{background:var(--muted);animation:none;height:4px!important}
+.speak-bars.quiet .bar{background:var(--warn)}
+
+.room-actions{display:flex;gap:10px}
+.join-btn{flex:1;padding:14px;border-radius:9px;font-size:18px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif}
+.join-btn-blue{background:var(--blue);color:#fff}
+.join-btn-blue:hover{background:#4f4fff}
+.join-btn-leave{background:rgba(239,68,68,.15);color:var(--error);border:1px solid rgba(239,68,68,.3)}
+.join-btn-leave:hover{background:rgba(239,68,68,.25)}
+.join-btn-ghost{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
+.join-btn-ghost:hover{color:var(--text)}
+.current-label{position:absolute;top:16px;right:16px;background:rgba(34,197,94,.15);color:var(--success);font-size:11px;font-family:'Press Start 2P',monospace;padding:4px 10px;border-radius:4px}
+
+/* Main area */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.room-view{flex:1;overflow-y:auto;padding:28px}
+.room-view::-webkit-scrollbar{width:6px}
+.room-view::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+
+/* Participant grid */
+.participant-header{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-bottom:10px}
+.participant-sub{font-size:18px;color:var(--muted);margin-bottom:28px}
+.participant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:22px;margin-bottom:36px}
+.participant-tile{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:all .15s;cursor:pointer}
+.participant-tile:hover{border-color:rgba(255,255,255,.15)}
+.part-avatar{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Play',sans-serif;font-weight:700;font-size:22px;position:relative}
+.part-avatar.speaking{animation:speak-pulse 1.2s ease infinite}
+.part-name{font-size:18px;font-weight:600;text-align:center}
+.part-status{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.mute-icon{color:var(--error)}
+
+/* Spatial canvas area */
+.spatial-section{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:28px}
+.spatial-label{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:18px}
+canvas#spatialCanvas{border-radius:10px;background:rgba(255,255,255,.02)}
+
+/* Bottom bar */
+.audio-bar{background:var(--bg-header);border-top:1px solid var(--border);padding:22px 36px;display:flex;align-items:center;gap:28px;flex-shrink:0}
+.mic-btn{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+.mic-btn.unmuted{background:rgba(34,197,94,.15);color:var(--success);border:2px solid rgba(34,197,94,.3)}
+.mic-btn.muted{background:rgba(239,68,68,.15);color:var(--error);border:2px solid rgba(239,68,68,.3)}
+.mic-btn.unmuted::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(34,197,94,.2);animation:speak-pulse 1.5s ease infinite}
+.mic-waveform{display:flex;align-items:flex-end;gap:3px;height:22px}
+.mw-bar{width:3px;border-radius:1px;background:var(--success);opacity:.7}
+.mw-bar.mwb1{animation:wave1 .6s ease infinite}
+.mw-bar.mwb2{animation:wave3 .7s ease infinite .1s}
+.mw-bar.mwb3{animation:wave2 .5s ease infinite .05s}
+.volume-wrap{display:flex;align-items:center;gap:14px;flex:1;max-width:240px}
+.vol-icon{color:var(--muted)}
+.volume-slider{-webkit-appearance:none;width:100%;height:6px;border-radius:2px;background:rgba(255,255,255,.1);outline:none;cursor:pointer}
+.volume-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);cursor:pointer}
+.spatial-toggle{display:flex;align-items:center;gap:10px;font-size:18px;color:var(--muted);cursor:pointer}
+.spatial-toggle input{accent-color:var(--blue)}
+.bar-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.current-room-info{display:flex;align-items:center;gap:10px;font-size:18px;padding:10px 20px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:8px}
+.leave-btn{padding:12px 24px;background:rgba(239,68,68,.12);color:var(--error);border:1px solid rgba(239,68,68,.25);border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.leave-btn:hover{background:rgba(239,68,68,.25)}
+.empty-view{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:28px;text-align:center;padding:60px;opacity:.6}
+.empty-view svg{opacity:.3}
+.empty-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.empty-sub{font-size:18px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+  </div>
+  <span class="header-title">Voice Rooms</span>
+  <span class="rooms-badge">4 active rooms</span>
+  <div style="margin-left:auto">
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'voice-close'},'*') || history.back()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="app-body">
+  <!-- Rooms list -->
+  <div class="rooms-pane">
+    <div class="section-label">Rooms</div>
+    <div id="roomsList"></div>
+  </div>
+
+  <!-- Main area -->
+  <div class="main-area">
+    <div class="room-view" id="roomView">
+      <div class="empty-view">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+        <div class="empty-title">No room selected</div>
+        <div class="empty-sub">Select a room on the left to view participants,<br>or click Join to enter a voice channel.</div>
+      </div>
+    </div>
+
+    <!-- Audio controls bar -->
+    <div class="audio-bar">
+      <button class="mic-btn unmuted" id="micBtn" onclick="toggleMic()">
+        <svg id="micIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+      </button>
+      <div id="micWave" class="mic-waveform">
+        <div class="mw-bar mwb1" style="height:4px"></div>
+        <div class="mw-bar mwb2" style="height:8px"></div>
+        <div class="mw-bar mwb3" style="height:6px"></div>
+      </div>
+      <div class="volume-wrap">
+        <span class="vol-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg></span>
+        <input type="range" class="volume-slider" min="0" max="100" value="75">
+      </div>
+      <label class="spatial-toggle">
+        <input type="checkbox" checked id="spatialToggle">
+        Spatial Audio
+      </label>
+      <div class="bar-right" id="barRight">
+        <span style="font-size:18px;color:var(--muted)">Not in a room</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ROOMS = [
+  {
+    id:'main',name:'Main Hall',icon:'🏛️',iconBg:'rgba(59,59,255,.1)',desc:'General team conversation',
+    participants:[
+      {name:'Paul',initials:'PL',color:'#3B3BFF',speaking:true,muted:false},
+      {name:'Thomas',initials:'TD',color:'#f59e0b',speaking:false,muted:false},
+      {name:'Marie',initials:'MC',color:'#22c55e',speaking:true,muted:false},
+      {name:'Léa',initials:'LF',color:'#a855f7',speaking:false,muted:true},
+      {name:'Sofia',initials:'SR',color:'#ec4899',speaking:false,muted:false},
+      {name:'Carlos',initials:'CM',color:'#ef4444',speaking:false,muted:true},
+      {name:'Yuki',initials:'YT',color:'#06b6d4',speaking:true,muted:false},
+      {name:'Rania',initials:'RA',color:'#eab308',speaking:false,muted:true},
+    ]
+  },
+  {
+    id:'focus',name:'Focus Zone',icon:'🎯',iconBg:'rgba(34,197,94,.08)',desc:'Silent workspace — no talking',
+    participants:[]
+  },
+  {
+    id:'war',name:'War Room',icon:'⚡',iconBg:'rgba(255,102,22,.1)',desc:'eSIM launch strategy session',hot:true,
+    participants:[
+      {name:'Adrien',initials:'AM',color:'#ff6616',speaking:true,muted:false},
+      {name:'Marco',initials:'MS',color:'#14b8a6',speaking:true,muted:false},
+      {name:'Thomas',initials:'TD',color:'#f59e0b',speaking:false,muted:false},
+    ]
+  },
+  {
+    id:'chill',name:'Chill Lounge',icon:'🎵',iconBg:'rgba(168,85,247,.1)',desc:'Music + casual chat',
+    participants:[
+      {name:'Léa',initials:'LF',color:'#a855f7',speaking:false,muted:false},
+      {name:'Sofia',initials:'SR',color:'#ec4899',speaking:false,muted:false},
+    ]
+  }
+];
+
+let micMuted = false;
+let currentRoomId = null;
+let selectedRoomId = null;
+let spatialAnimId = null;
+
+function renderRooms() {
+  const list = document.getElementById('roomsList');
+  list.innerHTML = '';
+  ROOMS.forEach((r,i) => {
+    const card = document.createElement('div');
+    let cls = 'room-card';
+    if(r.id === currentRoomId) cls += ' active-room';
+    if(r.hot) cls += ' hot-room';
+    if(r.id === selectedRoomId) cls += ' selected-room';
+    if(r.participants.length === 0) cls += ' empty-room';
+    card.className = cls;
+    card.style.animationDelay = (i*0.06)+'s';
+    card.onclick = () => selectRoom(r.id);
+
+    const speakers = r.participants.filter(p=>p.speaking);
+    const barsHTML = r.participants.length > 0 ? `
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <div class="speak-bars ${speakers.length===0?'muted':''}">
+          <div class="bar b1"></div>
+          <div class="bar b2"></div>
+          <div class="bar b3"></div>
+          <div class="bar b4"></div>
+          <div class="bar b5"></div>
+        </div>
+        <span style="font-size:16px;color:var(--muted)">${speakers.length > 0 ? speakers[0].name+' speaking' : 'Quiet'}</span>
+      </div>
+    ` : '<div style="font-size:16px;color:var(--muted);margin-bottom:16px">No participants</div>';
+
+    const avatarsHTML = r.participants.slice(0,5).map(p => `
+      <div class="p-avatar" style="background:${p.color}22;color:${p.color}">${p.initials}</div>
+    `).join('') + (r.participants.length > 5 ? `<span class="p-count">+${r.participants.length-5}</span>` : (r.participants.length > 0 ? `<span class="p-count">${r.participants.length}</span>` : ''));
+
+    card.innerHTML = `
+      ${r.id === currentRoomId ? '<div class="current-label">YOU</div>' : ''}
+      <div class="room-top">
+        <div class="room-icon" style="background:${r.iconBg}">${r.icon}</div>
+        <div class="room-info">
+          <div class="room-name">${r.name}${r.hot?'<span class="hot-tag">HOT</span>':''}</div>
+          <div class="room-desc">${r.desc}</div>
+        </div>
+      </div>
+      ${barsHTML}
+      <div class="room-participants">${avatarsHTML}</div>
+      <div class="room-actions">
+        ${r.id === currentRoomId
+          ? `<button class="join-btn join-btn-leave" onclick="leaveRoom(event)">Leave</button>`
+          : `<button class="join-btn join-btn-blue" onclick="joinRoom('${r.id}',event)">Join</button>`
+        }
+        <button class="join-btn join-btn-ghost" onclick="selectRoom('${r.id}');event.stopPropagation()">View</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function selectRoom(id) {
+  selectedRoomId = id;
+  const room = ROOMS.find(r=>r.id===id);
+  renderRoomView(room);
+  renderRooms();
+}
+
+function renderRoomView(room) {
+  const view = document.getElementById('roomView');
+  if(room.participants.length === 0) {
+    view.innerHTML = `<div class="empty-view">
+      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+      <div class="empty-title">${room.name}</div>
+      <div class="empty-sub">${room.desc}<br><br>This room is currently empty.</div>
+    </div>`;
+    return;
+  }
+
+  const participantsHTML = room.participants.map(p => `
+    <div class="participant-tile">
+      <div class="part-avatar" style="background:${p.color}22;color:${p.color};${p.speaking?'animation:speak-pulse 1.2s ease infinite':''}">${p.initials}</div>
+      <div class="part-name">${p.name}</div>
+      <div class="part-status">
+        ${p.muted ? `<svg class="mute-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/><path d="M17 16.95A7 7 0 015 12v-2m14 0v2a7 7 0 01-.11 1.23"/></svg> Muted`
+        : p.speaking ? `<svg style="color:var(--success)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/></svg> Speaking`
+        : 'Listening'}
+      </div>
+    </div>
+  `).join('');
+
+  view.innerHTML = `
+    <div style="animation:fade-up .2s ease">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">
+        <span style="font-size:36px">${room.icon}</span>
+        <div>
+          <div class="participant-header">${room.name}</div>
+          <div class="participant-sub">${room.desc} · ${room.participants.length} participant${room.participants.length!==1?'s':''}</div>
+        </div>
+      </div>
+      <div class="participant-grid">${participantsHTML}</div>
+      <div class="spatial-section">
+        <div class="spatial-label">Spatial Layout</div>
+        <canvas id="spatialCanvas" width="100%" height="160" style="width:100%;display:block"></canvas>
+      </div>
+    </div>
+  `;
+
+  // Draw spatial canvas
+  requestAnimationFrame(() => drawSpatial(room));
+}
+
+function drawSpatial(room) {
+  const canvas = document.getElementById('spatialCanvas');
+  if(!canvas) return;
+  const W = canvas.offsetWidth;
+  const H = 160;
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  // Room outline
+  ctx.strokeStyle = 'rgba(255,255,255,.06)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(10,10,W-20,H-20);
+
+  // Room name
+  ctx.fillStyle = 'rgba(255,255,255,.08)';
+  ctx.font = '10px Inter';
+  ctx.fillText(room.name, 18, 26);
+
+  const positions = [
+    [0.2,0.3],[0.5,0.2],[0.8,0.3],[0.15,0.7],[0.5,0.75],[0.85,0.7],[0.35,0.5],[0.65,0.5]
+  ];
+
+  room.participants.forEach((p, i) => {
+    const [fx,fy] = positions[i] || [0.5,0.5];
+    const x = 10 + fx*(W-20);
+    const y = 10 + fy*(H-20);
+    const r = 14;
+
+    // Speaking ring
+    if(p.speaking) {
+      const grad = ctx.createRadialGradient(x,y,r,x,y,r+8);
+      grad.addColorStop(0,'rgba(34,197,94,.3)');
+      grad.addColorStop(1,'rgba(34,197,94,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x,y,r+8,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    // Avatar circle
+    ctx.fillStyle = p.color+'33';
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = p.speaking ? 2 : 1;
+    ctx.stroke();
+
+    // Initials
+    ctx.fillStyle = p.color;
+    ctx.font = 'bold 9px Play,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(p.initials, x, y);
+
+    // Name label
+    ctx.fillStyle = 'rgba(221,230,255,.6)';
+    ctx.font = '9px Inter';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(p.name, x, y+r+3);
+  });
+
+  // YOU dot (if in this room)
+  if(currentRoomId === room.id) {
+    const x = W/2, y = H/2;
+    ctx.fillStyle = 'rgba(59,59,255,.3)';
+    ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#3B3BFF'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 8px Play'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('YOU',x,y);
+  }
+}
+
+function joinRoom(id, e) {
+  if(e) e.stopPropagation();
+  currentRoomId = id;
+  selectedRoomId = id;
+  const room = ROOMS.find(r=>r.id===id);
+  // Update bar
+  document.getElementById('barRight').innerHTML = `
+    <div class="current-room-info">
+      <span>${room.icon}</span>
+      <span>${room.name}</span>
+      <div style="width:12px;height:12px;border-radius:50%;background:var(--success);animation:speak-pulse 2s infinite"></div>
+    </div>
+    <button class="leave-btn" onclick="leaveRoom(event)">Leave</button>
+  `;
+  renderRooms();
+  renderRoomView(room);
+}
+
+function leaveRoom(e) {
+  if(e) e.stopPropagation();
+  currentRoomId = null;
+  document.getElementById('barRight').innerHTML = `<span style="font-size:18px;color:var(--muted)">Not in a room</span>`;
+  renderRooms();
+  if(selectedRoomId) {
+    const room = ROOMS.find(r=>r.id===selectedRoomId);
+    if(room) renderRoomView(room);
+  }
+}
+
+function toggleMic() {
+  micMuted = !micMuted;
+  const btn = document.getElementById('micBtn');
+  const wave = document.getElementById('micWave');
+  if(micMuted) {
+    btn.className = 'mic-btn muted';
+    btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6"/><path d="M17 16.95A7 7 0 015 12v-2m14 0v2a7 7 0 01-.11 1.23"/></svg>`;
+    wave.style.opacity = '0.3';
+    Array.from(wave.children).forEach(b => { b.style.animation='none'; b.style.height='3px'; });
+  } else {
+    btn.className = 'mic-btn unmuted';
+    btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>`;
+    wave.style.opacity = '1';
+    const anims = ['wave1','wave3','wave2'];
+    Array.from(wave.children).forEach((b,i) => { b.style.animation = `${anims[i]} ${0.5+i*0.1}s ease infinite`; });
+  }
+}
+
+// Animate speaking bars periodically
+function animateSpeakers() {
+  // Randomly update speaking state for visual effect
+  setInterval(() => {
+    ROOMS.forEach(r => {
+      r.participants.forEach(p => {
+        if(!p.muted && Math.random() > 0.8) p.speaking = !p.speaking;
+      });
+    });
+    if(selectedRoomId) {
+      const room = ROOMS.find(r=>r.id===selectedRoomId);
+      if(room && room.participants.length > 0) drawSpatial(room);
+    }
+  }, 2000);
+}
+
+renderRooms();
+animateSpeakers();
+</script>
+</body>
+</html>

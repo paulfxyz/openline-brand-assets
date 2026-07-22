@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Sprint — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',system-ui,sans-serif;font-size:20px;line-height:1.5;overflow:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:6px}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+  @keyframes ring-glow{0%,100%{filter:drop-shadow(0 0 6px rgba(59,59,255,.4))}50%{filter:drop-shadow(0 0 14px rgba(59,59,255,.7))}}
+  @keyframes tick{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+  .app{display:flex;flex-direction:column;height:100%;animation:fade-up .4s ease}
+
+  /* HEADER */
+  .header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.06);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .header-left{display:flex;align-items:center;gap:20px}
+  .header-logo{width:52px;height:52px;background:linear-gradient(135deg,#3B3BFF,#6060FF);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px}
+  .header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff}
+  .header-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.05em}
+  .header-actions{display:flex;align-items:center;gap:16px}
+  .btn-icon{width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .2s;font-size:24px}
+  .btn-icon:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+  .btn-icon.active{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.4);color:#6060FF}
+
+  /* CONTENT */
+  .content{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:28px}
+
+  /* MODE TABS */
+  .mode-tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:6px;gap:4px}
+  .mode-tab{flex:1;padding:14px 20px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.45);font-family:'Inter',sans-serif;font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;text-align:center}
+  .mode-tab.active{background:#3B3BFF;color:#fff;box-shadow:0 2px 12px rgba(59,59,255,.4)}
+  .mode-tab.break-active{background:#22c55e;color:#fff;box-shadow:0 2px 12px rgba(34,197,94,.4)}
+  .mode-tab.long-active{background:#6060FF;color:#fff;box-shadow:0 2px 12px rgba(96,96,255,.4)}
+
+  /* TIMER SECTION */
+  .timer-section{display:flex;flex-direction:column;align-items:center;gap:24px}
+  .ring-container{position:relative;width:340px;height:340px;flex-shrink:0;animation:ring-glow 3s ease-in-out infinite}
+  .ring-container svg{transform:rotate(-90deg)}
+  .ring-track{fill:none;stroke:rgba(255,255,255,.06);stroke-width:14}
+  .ring-progress{fill:none;stroke-width:14;stroke-linecap:round;transition:stroke-dashoffset .5s ease, stroke .5s ease}
+  .ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .ring-mode-label{font-family:'Press Start 2P',monospace;font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.05em;text-align:center}
+  .ring-time{font-size:84px;font-weight:800;letter-spacing:-0.06em;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+  .ring-time.ticking{animation:tick .5s ease}
+
+  /* CONTROLS */
+  .controls{display:flex;align-items:center;gap:20px}
+  .btn-primary{background:#3B3BFF;color:#fff;border:none;border-radius:10px;padding:22px 56px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;letter-spacing:.02em}
+  .btn-primary:hover{background:#5050ff;box-shadow:0 4px 20px rgba(59,59,255,.5)}
+  .btn-primary:active{transform:scale(.97)}
+  .btn-primary.break-mode{background:#22c55e}
+  .btn-primary.break-mode:hover{background:#16a34a;box-shadow:0 4px 20px rgba(34,197,94,.4)}
+  .btn-ghost{background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:22px 32px;font-size:18px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.7)}
+
+  /* SESSION DOTS */
+  .session-row{display:flex;align-items:center;gap:16px}
+  .session-label{font-size:18px;color:rgba(255,255,255,.35);font-family:'Press Start 2P',monospace;font-size:11px}
+  .session-dots{display:flex;gap:12px}
+  .session-dot{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);transition:all .3s}
+  .session-dot.done{background:#3B3BFF;border-color:#3B3BFF;box-shadow:0 0 8px rgba(59,59,255,.5)}
+  .session-dot.current{background:rgba(59,59,255,.4);border-color:#3B3BFF;animation:pulse-dot 1.5s ease infinite}
+
+  /* TASK INPUT */
+  .task-row{display:flex;flex-direction:column;gap:12px}
+  .task-label{font-size:18px;color:rgba(255,255,255,.35);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+  .task-input{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 22px;color:#dde6ff;font-family:'Inter',sans-serif;font-size:18px;width:100%;outline:none;transition:border-color .2s}
+  .task-input:focus{border-color:rgba(59,59,255,.5)}
+  .task-input::placeholder{color:rgba(255,255,255,.25)}
+
+  /* STATS ROW */
+  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px 24px;text-align:center}
+  .stat-val{font-family:'Play',sans-serif;font-size:36px;font-weight:700;color:#dde6ff;line-height:1}
+  .stat-label{font-size:16px;color:rgba(255,255,255,.35);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+  /* TEAM FOCUS */
+  .team-section{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:24px}
+  .team-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .team-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff;display:flex;align-items:center;gap:12px}
+  .online-dot{width:12px;height:12px;border-radius:50%;background:#22c55e;animation:pulse-dot 2s ease infinite}
+  .team-count{font-size:18px;color:rgba(255,255,255,.35)}
+  .team-list{display:flex;flex-direction:column;gap:14px}
+  .team-member{display:flex;align-items:center;gap:20px}
+  .team-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+  .team-info{flex:1;min-width:0}
+  .team-name{font-size:20px;font-weight:600;color:#dde6ff}
+  .team-task{font-size:18px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .team-timer{font-family:'Press Start 2P',monospace;font-size:11px;color:#6060FF;flex-shrink:0}
+
+  /* NOTIFICATION BAR */
+  .notif-bar{background:rgba(59,59,255,.12);border:1px solid rgba(59,59,255,.25);border-radius:8px;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:18px;color:rgba(255,255,255,.7)}
+  .notif-bar button{background:#3B3BFF;border:none;color:#fff;border-radius:6px;padding:8px 20px;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+  .notif-bar button:hover{background:#5050ff}
+  .notif-bar.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">⏱</div>
+      <div>
+        <div class="header-title">Focus Sprint</div>
+        <div class="header-label">POMODORO TIMER</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" id="soundToggle" title="Toggle sound">🔔</button>
+      <button class="btn-icon" onclick="window.parent.postMessage({type:'pomodoro-close'},'*')" title="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- NOTIFICATION REQUEST -->
+    <div class="notif-bar" id="notifBar">
+      <span>🔔 Enable notifications to get alerted when your session ends.</span>
+      <button onclick="requestNotifPermission()">Enable</button>
+    </div>
+
+    <!-- MODE TABS -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-focus" onclick="setMode('focus')">Focus (25m)</button>
+      <button class="mode-tab" id="tab-short" onclick="setMode('short')">Short Break</button>
+      <button class="mode-tab" id="tab-long" onclick="setMode('long')">Long Break</button>
+    </div>
+
+    <!-- TIMER -->
+    <div class="timer-section">
+      <div class="ring-container">
+        <svg width="340" height="340" viewBox="0 0 340 340">
+          <defs>
+            <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3B3BFF"/>
+              <stop offset="100%" stop-color="#8080FF"/>
+            </linearGradient>
+            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#22c55e"/>
+              <stop offset="100%" stop-color="#4ade80"/>
+            </linearGradient>
+            <linearGradient id="violetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6060FF"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="170" cy="170" r="155"/>
+          <circle class="ring-progress" id="ringProgress" cx="170" cy="170" r="155"
+                  stroke="url(#blueGrad)"
+                  stroke-dasharray="974" stroke-dashoffset="0"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-mode-label" id="modeLabel">FOCUS</div>
+          <div class="ring-time" id="timeDisplay">25:00</div>
+        </div>
+      </div>
+
+      <!-- SESSION DOTS -->
+      <div class="session-row">
+        <span class="session-label">SESSION</span>
+        <div class="session-dots" id="sessionDots">
+          <div class="session-dot current"></div>
+          <div class="session-dot"></div>
+          <div class="session-dot"></div>
+          <div class="session-dot"></div>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <button class="btn-ghost" id="resetBtn" onclick="resetTimer()">↺ Reset</button>
+        <button class="btn-primary" id="startBtn" onclick="toggleTimer()">▶ Start Focus</button>
+      </div>
+    </div>
+
+    <!-- TASK INPUT -->
+    <div class="task-row">
+      <div class="task-label">What are you working on?</div>
+      <input type="text" class="task-input" id="taskInput" placeholder="e.g. Review eSIM partner API docs..." maxlength="80">
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="statSessions">0</div>
+        <div class="stat-label">Sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statMinutes">0</div>
+        <div class="stat-label">Focus Min</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statStreak">🔥 3</div>
+        <div class="stat-label">Day Streak</div>
+      </div>
+    </div>
+
+    <!-- TEAM FOCUS -->
+    <div class="team-section">
+      <div class="team-header">
+        <div class="team-title">
+          <div class="online-dot"></div>
+          Team Focus
+        </div>
+        <div class="team-count">3 in focus mode</div>
+      </div>
+      <div class="team-list">
+        <div class="team-member">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#3B3BFF,#6060FF)">AL</div>
+          <div class="team-info">
+            <div class="team-name">Alex Lim</div>
+            <div class="team-task">eSIM partner API integration</div>
+          </div>
+          <div class="team-timer">19:32</div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#ff6616,#ff8c42)">SM</div>
+          <div class="team-info">
+            <div class="team-name">Sara Morel</div>
+            <div class="team-task">Pricing page copy v3</div>
+          </div>
+          <div class="team-timer">08:17</div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#22c55e,#4ade80)">TK</div>
+          <div class="team-info">
+            <div class="team-name">Tom Kallis</div>
+            <div class="team-task">Deploy v2.1 staging pipeline</div>
+          </div>
+          <div class="team-timer">22:45</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div>
+
+<script>
+// --- STATE ---
+const MODES = {
+  focus: { label:'FOCUS', mins:25, gradId:'url(#blueGrad)', tabId:'tab-focus', startText:'▶ Start Focus', btnClass:'', tabClass:'active' },
+  short: { label:'SHORT BREAK', mins:5, gradId:'url(#greenGrad)', tabId:'tab-short', startText:'▶ Start Break', btnClass:'break-mode', tabClass:'break-active' },
+  long:  { label:'LONG BREAK', mins:15, gradId:'url(#violetGrad)', tabId:'tab-long', startText:'▶ Long Break', btnClass:'break-mode', tabClass:'long-active' }
+};
+let currentMode = 'focus';
+let totalSeconds = 25*60;
+let remainingSeconds = totalSeconds;
+let running = false;
+let timerInterval = null;
+let completedSessions = 0;
+let totalFocusSeconds = 0;
+let soundEnabled = true;
+const CIRCUMFERENCE = 2 * Math.PI * 155; // ~974
+
+const ringProgress = document.getElementById('ringProgress');
+const timeDisplay = document.getElementById('timeDisplay');
+const startBtn = document.getElementById('startBtn');
+const modeLabel = document.getElementById('modeLabel');
+const sessionDots = document.getElementById('sessionDots');
+const statSessions = document.getElementById('statSessions');
+const statMinutes = document.getElementById('statMinutes');
+const soundToggle = document.getElementById('soundToggle');
+
+function setMode(mode) {
+  if (running) { clearInterval(timerInterval); running = false; }
+  currentMode = mode;
+  const m = MODES[mode];
+  totalSeconds = m.mins * 60;
+  remainingSeconds = totalSeconds;
+  // Update tabs
+  document.querySelectorAll('.mode-tab').forEach(t => t.className = 'mode-tab');
+  document.getElementById(m.tabId).className = 'mode-tab ' + m.tabClass;
+  // Update ring stroke
+  ringProgress.setAttribute('stroke', m.gradId);
+  // Update labels
+  modeLabel.textContent = m.label;
+  startBtn.className = 'btn-primary ' + m.btnClass;
+  startBtn.textContent = m.startText;
+  updateDisplay();
+  updateRing();
+}
+
+function updateDisplay() {
+  const m = Math.floor(remainingSeconds / 60);
+  const s = remainingSeconds % 60;
+  timeDisplay.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function updateRing() {
+  const pct = remainingSeconds / totalSeconds;
+  const offset = CIRCUMFERENCE * (1 - pct);
+  ringProgress.style.strokeDasharray = CIRCUMFERENCE;
+  ringProgress.style.strokeDashoffset = offset;
+}
+
+function toggleTimer() {
+  if (running) {
+    pauseTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function startTimer() {
+  running = true;
+  const m = MODES[currentMode];
+  startBtn.textContent = '⏸ Pause';
+  startBtn.className = 'btn-primary ' + m.btnClass;
+  timerInterval = setInterval(() => {
+    if (remainingSeconds <= 0) {
+      clearInterval(timerInterval);
+      running = false;
+      onTimerComplete();
+      return;
+    }
+    remainingSeconds--;
+    if (currentMode === 'focus') totalFocusSeconds++;
+    updateDisplay();
+    updateRing();
+    // tick animation
+    timeDisplay.classList.remove('ticking');
+    void timeDisplay.offsetWidth;
+    if (remainingSeconds % 60 === 0) timeDisplay.classList.add('ticking');
+  }, 1000);
+}
+
+function pauseTimer() {
+  running = false;
+  clearInterval(timerInterval);
+  const m = MODES[currentMode];
+  startBtn.textContent = m.startText.replace('▶','▶');
+  startBtn.textContent = m.startText;
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  running = false;
+  const m = MODES[currentMode];
+  totalSeconds = m.mins * 60;
+  remainingSeconds = totalSeconds;
+  startBtn.textContent = m.startText;
+  updateDisplay();
+  updateRing();
+}
+
+function onTimerComplete() {
+  if (currentMode === 'focus') {
+    completedSessions++;
+    statSessions.textContent = completedSessions;
+    statMinutes.textContent = Math.floor(totalFocusSeconds / 60);
+    updateSessionDots();
+    if (Notification.permission === 'granted') {
+      new Notification('Focus Sprint Complete! 🎉', {
+        body: '25-minute session done. Time for a break!',
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect fill="%233B3BFF" rx="8" width="32" height="32"/><text y="24" x="5" font-size="20">⏱</text></svg>'
+      });
+    }
+    playChime();
+    // auto switch to short break
+    setTimeout(() => setMode('short'), 1000);
+  } else {
+    playChime();
+    setTimeout(() => setMode('focus'), 1000);
+  }
+  resetTimer();
+}
+
+function updateSessionDots() {
+  const dots = sessionDots.querySelectorAll('.session-dot');
+  dots.forEach((d,i) => {
+    d.className = 'session-dot';
+    if (i < completedSessions % 4) d.classList.add('done');
+    else if (i === completedSessions % 4) d.classList.add('current');
+  });
+}
+
+function requestNotifPermission() {
+  Notification.requestPermission().then(perm => {
+    if (perm === 'granted') {
+      document.getElementById('notifBar').classList.add('hidden');
+    }
+  });
+}
+
+// Check if already granted
+if (Notification.permission === 'granted') {
+  document.getElementById('notifBar').classList.add('hidden');
+} else if (Notification.permission === 'denied') {
+  document.getElementById('notifBar').classList.add('hidden');
+}
+
+function playChime() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [523, 659, 784, 1047];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.18, ctx.currentTime + i*0.18);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i*0.18 + 0.5);
+      osc.start(ctx.currentTime + i*0.18);
+      osc.stop(ctx.currentTime + i*0.18 + 0.5);
+    });
+  } catch(e) {}
+}
+
+soundToggle.addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  soundToggle.textContent = soundEnabled ? '🔔' : '🔕';
+  soundToggle.classList.toggle('active', !soundEnabled);
+});
+
+// Init
+updateDisplay();
+updateRing();
+
+// Simulate team timers countdown
+setInterval(() => {
+  document.querySelectorAll('.team-timer').forEach(el => {
+    const [m,s] = el.textContent.split(':').map(Number);
+    let total = m*60+s;
+    if (total > 0) total--;
+    el.textContent = String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0');
+  });
+}, 1000);
+</script>
+</body>
+</html>

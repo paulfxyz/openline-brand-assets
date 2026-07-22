@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whiteboard — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #070c18; --card: #0c1120; --header: #090e1c;
+    --text: #dde6ff; --muted: rgba(255,255,255,.45);
+    --blue: #3B3BFF; --orange: #ff6616; --green: #22c55e;
+    --border: rgba(255,255,255,.07); --canvas-bg: #0d1225;
+  }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 20px; overflow: hidden; }
+
+  .header {
+    background: var(--header); border-bottom: 1px solid var(--border);
+    height: 64px; padding: 0 20px;
+    display: flex; align-items: center; gap: 14px; flex-shrink: 0; z-index: 100; position: relative;
+  }
+  .header-icon { width: 36px; height: 36px; background: var(--blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .header-title { font-family: 'Play', sans-serif; font-size: 28px; font-weight: 700; margin-right: auto; }
+  .btn { display: flex; align-items: center; gap: 7px; padding: 10px 20px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .btn:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); }
+  .btn-primary { background: var(--blue); border-color: transparent; }
+  .btn-primary:hover { background: #5555ff; }
+  .btn-danger { background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.3); color: #ef4444; }
+  .btn-sm { padding: 8px 14px; font-size: 13px; }
+  .close-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 18px; transition: all .15s; }
+  .close-btn:hover { background: rgba(255,255,255,.1); color: var(--text); }
+
+  .app-body { display: flex; height: calc(100vh - 64px); overflow: hidden; }
+
+  /* SIDEBAR */
+  .sidebar { width: 76px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 14px 8px; gap: 4px; overflow-y: auto; flex-shrink: 0; }
+  .sidebar::-webkit-scrollbar { width: 2px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); }
+  .sidebar-div { width: 40px; height: 1px; background: var(--border); margin: 6px 0; flex-shrink: 0; }
+  .eyebrow { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--muted); text-align: center; padding: 2px 4px; line-height: 1.5; }
+
+  .tool-btn { width: 52px; height: 48px; border-radius: 10px; border: 1px solid transparent; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all .15s; font-size: 18px; color: var(--muted); flex-shrink: 0; }
+  .tool-btn:hover { background: rgba(255,255,255,.06); color: var(--text); }
+  .tool-btn.active { background: rgba(59,59,255,.2); border-color: rgba(59,59,255,.5); color: var(--blue); }
+  .tool-label { font-size: 8px; font-family: 'Inter', sans-serif; margin-top: 2px; opacity: .7; letter-spacing: .3px; }
+
+  .color-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; padding: 0 6px; }
+  .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform .1s, border-color .1s; margin: auto; }
+  .color-dot:hover { transform: scale(1.2); }
+  .color-dot.sel { border-color: #fff; transform: scale(1.15); }
+  .active-color { width: 34px; height: 34px; border-radius: 8px; border: 2px solid rgba(255,255,255,.25); margin: 2px auto; cursor: pointer; }
+
+  .stroke-col { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 100%; padding: 0 8px; }
+  .stroke-btn { width: 44px; height: 30px; border-radius: 8px; background: transparent; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .15s; }
+  .stroke-btn:hover { background: rgba(255,255,255,.07); }
+  .stroke-btn.sel { background: rgba(59,59,255,.2); border-color: rgba(59,59,255,.5); }
+  .s-dot { border-radius: 50%; background: var(--text); }
+
+  /* CANVAS */
+  .canvas-wrap { flex: 1; position: relative; overflow: hidden; background: var(--canvas-bg); cursor: crosshair; }
+  .canvas-wrap.tool-pan { cursor: grab; }
+  .canvas-wrap.tool-pan.panning { cursor: grabbing; }
+  .canvas-wrap.tool-eraser { cursor: cell; }
+  .canvas-wrap.tool-text { cursor: text; }
+  #mainCanvas { display: block; position: absolute; top: 0; left: 0; }
+
+  .sticky-note { position: absolute; width: 180px; min-height: 100px; background: #f59e0b; border-radius: 3px; padding: 30px 12px 12px; font-size: 14px; color: #1a1000; cursor: move; user-select: none; box-shadow: 4px 4px 14px rgba(0,0,0,.45); z-index: 50; word-break: break-word; line-height: 1.5; }
+  .sticky-note::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 26px; background: rgba(0,0,0,.12); border-radius: 3px 3px 0 0; }
+  .sticky-del { position: absolute; top: 4px; right: 8px; font-size: 15px; color: rgba(0,0,0,.4); cursor: pointer; z-index: 1; line-height: 1; }
+  .sticky-del:hover { color: rgba(0,0,0,.75); }
+
+  #textOverlay { position: absolute; display: none; background: transparent; border: 2px dashed rgba(59,59,255,.7); border-radius: 4px; padding: 4px 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 20px; outline: none; min-width: 120px; resize: none; z-index: 200; }
+
+  #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(70px); background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 11px 22px; border-radius: 10px; font-size: 15px; font-weight: 500; transition: transform .28s ease; pointer-events: none; z-index: 999; }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  .dialog-ov { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+  .dialog-ov.open { display: flex; }
+  .dialog-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 380px; width: 90%; }
+  .dialog-title { font-family: 'Play', sans-serif; font-size: 22px; margin-bottom: 10px; }
+  .dialog-body { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+  .dialog-acts { display: flex; gap: 12px; justify-content: flex-end; }
+
+  .status-bar { position: absolute; bottom: 10px; right: 14px; font-size: 12px; color: var(--muted); z-index: 10; pointer-events: none; display: flex; gap: 12px; }
+  .grid-tog { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: background .15s; user-select: none; }
+  .grid-tog:hover { background: rgba(255,255,255,.05); }
+  .grid-tog input { cursor: pointer; accent-color: var(--blue); }
+  #colorPickInput { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-icon">✏️</div>
+  <span class="header-title">Whiteboard</span>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <label class="grid-tog"><input type="checkbox" id="gridChk" checked> Grid</label>
+    <button class="btn btn-sm" id="undoBtn">↩ Undo</button>
+    <button class="btn btn-sm btn-danger" id="clearBtn">🗑 Clear</button>
+    <button class="btn btn-sm btn-primary" id="dlBtn">⬇ PNG</button>
+    <div class="close-btn" onclick="window.parent.postMessage({type:'whiteboard-close'},'*')">✕</div>
+  </div>
+</div>
+
+<div class="app-body">
+  <div class="sidebar">
+    <div class="eyebrow">TOOLS</div>
+    <button class="tool-btn active" data-tool="pen">✏️<span class="tool-label">Pen</span></button>
+    <button class="tool-btn" data-tool="line">📐<span class="tool-label">Line</span></button>
+    <button class="tool-btn" data-tool="rect">⬜<span class="tool-label">Rect</span></button>
+    <button class="tool-btn" data-tool="circle">⭕<span class="tool-label">Circle</span></button>
+    <button class="tool-btn" data-tool="text">📝<span class="tool-label">Text</span></button>
+    <button class="tool-btn" data-tool="sticky">🟨<span class="tool-label">Sticky</span></button>
+    <button class="tool-btn" data-tool="eraser">🧹<span class="tool-label">Erase</span></button>
+    <button class="tool-btn" data-tool="pan">🖐<span class="tool-label">Pan</span></button>
+
+    <div class="sidebar-div"></div>
+    <div class="eyebrow">COLOR</div>
+    <div class="active-color" id="activeColor" title="Custom color" onclick="document.getElementById('colorPickInput').click()">
+      <input type="color" id="colorPickInput" value="#ffffff">
+    </div>
+    <div class="color-row" id="colorPal">
+      <div class="color-dot sel" style="background:#ffffff" data-c="#ffffff"></div>
+      <div class="color-dot" style="background:#3B3BFF" data-c="#3B3BFF"></div>
+      <div class="color-dot" style="background:#ff6616" data-c="#ff6616"></div>
+      <div class="color-dot" style="background:#22c55e" data-c="#22c55e"></div>
+      <div class="color-dot" style="background:#ef4444" data-c="#ef4444"></div>
+      <div class="color-dot" style="background:#f59e0b" data-c="#f59e0b"></div>
+      <div class="color-dot" style="background:#8b5cf6" data-c="#8b5cf6"></div>
+      <div class="color-dot" style="background:#06b6d4" data-c="#06b6d4"></div>
+    </div>
+
+    <div class="sidebar-div"></div>
+    <div class="eyebrow">SIZE</div>
+    <div class="stroke-col" id="strokeBtns">
+      <button class="stroke-btn sel" data-sz="2"><span class="s-dot" style="width:4px;height:4px"></span></button>
+      <button class="stroke-btn" data-sz="6"><span class="s-dot" style="width:8px;height:8px"></span></button>
+      <button class="stroke-btn" data-sz="14"><span class="s-dot" style="width:14px;height:14px"></span></button>
+    </div>
+  </div>
+
+  <div class="canvas-wrap" id="canvasWrap">
+    <canvas id="mainCanvas"></canvas>
+    <textarea id="textOverlay" rows="1"></textarea>
+    <div class="status-bar"><span id="coords">0, 0</span></div>
+  </div>
+</div>
+
+<div class="dialog-ov" id="confirmDlg">
+  <div class="dialog-box">
+    <div class="dialog-title">Clear Canvas?</div>
+    <div class="dialog-body">This will erase all drawings and sticky notes permanently.</div>
+    <div class="dialog-acts">
+      <button class="btn" id="cancelClear">Cancel</button>
+      <button class="btn btn-danger" id="doClear">Clear Everything</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+const S = { tool:'pen', color:'#ffffff', sw:2, drawing:false, panning:false, sx:0, sy:0, lx:0, ly:0, history:[], maxH:30, grid:true, textActive:false, tx:0, ty:0, pts:[], panSX:0, panSY:0, panOX:0, panOY:0, stickyN:0 };
+const canvas = document.getElementById('mainCanvas');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
+const textOv = document.getElementById('textOverlay');
+let toastT, previewImg = null;
+
+// RESIZE
+const ro = new ResizeObserver(() => {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  const saved = canvas.width>0 ? ctx.getImageData(0,0,canvas.width,canvas.height) : null;
+  canvas.width = w; canvas.height = h;
+  if (saved) ctx.putImageData(saved, 0, 0);
+  if (S.grid) drawGrid();
+});
+ro.observe(wrap);
+
+function drawGrid() {
+  const step = 32;
+  for (let x=0; x<canvas.width; x+=step)
+    for (let y=0; y<canvas.height; y+=step) {
+      ctx.beginPath(); ctx.arc(x, y, 1, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.035)'; ctx.fill();
+    }
+}
+
+document.getElementById('gridChk').onchange = e => {
+  S.grid = e.target.checked;
+  if (S.grid) drawGrid();
+};
+
+// HISTORY
+function saveH() { S.history.push(canvas.toDataURL()); if(S.history.length>S.maxH) S.history.shift(); }
+function undo() {
+  if (!S.history.length) { toast('Nothing to undo'); return; }
+  const d = S.history.pop();
+  const img = new Image();
+  img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0); if(S.grid) drawGrid(); };
+  img.src = d;
+}
+
+// COORDS
+function xy(e) {
+  const r = canvas.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+
+// DRAW EVENTS
+function onDown(e) {
+  if (e.button !== undefined && e.button !== 0) return;
+  if (S.textActive) commitText();
+  const {x,y} = xy(e);
+  S.sx=x; S.sy=y; S.lx=x; S.ly=y; S.drawing=true;
+  if (S.tool==='pan') { S.panning=true; S.panSX=e.clientX||x; S.panSY=e.clientY||y; wrap.classList.add('panning'); S.drawing=false; return; }
+  if (S.tool==='sticky') { placeStickyNote(x,y); S.drawing=false; return; }
+  if (S.tool==='text') { showText(x,y); S.drawing=false; return; }
+  saveH();
+  if (S.tool==='pen') {
+    S.pts=[{x,y}];
+    ctx.beginPath(); ctx.moveTo(x,y);
+    ctx.strokeStyle=S.color; ctx.lineWidth=S.sw; ctx.lineCap='round'; ctx.lineJoin='round';
+  }
+  if (S.tool==='eraser') {
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath(); ctx.moveTo(x,y);
+    ctx.lineWidth=S.sw*4; ctx.lineCap='round'; ctx.lineJoin='round';
+  }
+  if (['line','rect','circle'].includes(S.tool)) previewImg = ctx.getImageData(0,0,canvas.width,canvas.height);
+}
+
+function onMove(e) {
+  const {x,y} = xy(e);
+  document.getElementById('coords').textContent = Math.round(x)+', '+Math.round(y);
+  if (S.panning) { /* pan offset handled visually */ return; }
+  if (!S.drawing) return;
+  if (S.tool==='pen') {
+    S.pts.push({x,y});
+    const p = S.pts, n = p.length;
+    if (n<2) return;
+    ctx.strokeStyle=S.color; ctx.lineWidth=S.sw; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath();
+    if (n===2) { ctx.moveTo(p[0].x,p[0].y); ctx.lineTo(p[1].x,p[1].y); }
+    else { const m={x:(p[n-2].x+p[n-1].x)/2,y:(p[n-2].y+p[n-1].y)/2}, pm={x:(p[n-3].x+p[n-2].x)/2,y:(p[n-3].y+p[n-2].y)/2}; ctx.moveTo(pm.x,pm.y); ctx.quadraticCurveTo(p[n-2].x,p[n-2].y,m.x,m.y); }
+    ctx.stroke(); return;
+  }
+  if (S.tool==='eraser') {
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath(); ctx.moveTo(S.lx,S.ly); ctx.lineTo(x,y);
+    ctx.strokeStyle='rgba(0,0,0,1)'; ctx.lineWidth=S.sw*4; ctx.lineCap='round'; ctx.stroke();
+    ctx.globalCompositeOperation='source-over';
+    S.lx=x; S.ly=y; return;
+  }
+  if (previewImg && ['line','rect','circle'].includes(S.tool)) {
+    ctx.putImageData(previewImg,0,0);
+    ctx.strokeStyle=S.color; ctx.lineWidth=S.sw; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath();
+    if (S.tool==='line') { ctx.moveTo(S.sx,S.sy); ctx.lineTo(x,y); ctx.stroke(); }
+    else if (S.tool==='rect') { ctx.strokeRect(S.sx,S.sy,x-S.sx,y-S.sy); }
+    else if (S.tool==='circle') { const rx=Math.abs(x-S.sx)/2,ry=Math.abs(y-S.sy)/2,cx2=S.sx+(x-S.sx)/2,cy2=S.sy+(y-S.sy)/2; ctx.ellipse(cx2,cy2,Math.max(rx,1),Math.max(ry,1),0,0,Math.PI*2); ctx.stroke(); }
+  }
+  S.lx=x; S.ly=y;
+}
+
+function onUp() {
+  if (S.panning) { S.panning=false; wrap.classList.remove('panning'); return; }
+  if (!S.drawing) return;
+  S.drawing=false; previewImg=null; ctx.globalCompositeOperation='source-over';
+  if (S.tool==='pen' && S.pts.length===1) { ctx.beginPath(); ctx.arc(S.pts[0].x,S.pts[0].y,S.sw/2,0,Math.PI*2); ctx.fillStyle=S.color; ctx.fill(); }
+  S.pts=[];
+}
+
+canvas.addEventListener('mousedown',onDown);
+canvas.addEventListener('mousemove',onMove);
+canvas.addEventListener('mouseup',onUp);
+canvas.addEventListener('mouseleave',onUp);
+canvas.addEventListener('touchstart',e=>{e.preventDefault();onDown(e);},{passive:false});
+canvas.addEventListener('touchmove',e=>{e.preventDefault();onMove(e);},{passive:false});
+canvas.addEventListener('touchend',e=>{e.preventDefault();onUp();},{passive:false});
+
+// TEXT
+function showText(x,y) {
+  S.tx=x; S.ty=y; S.textActive=true;
+  textOv.style.left=x+'px'; textOv.style.top=(y-26)+'px';
+  textOv.style.display='block'; textOv.style.color=S.color;
+  textOv.style.fontSize=(14+S.sw*2)+'px';
+  textOv.value=''; textOv.focus();
+}
+function commitText() {
+  const v=textOv.value.trim();
+  if (v) { saveH(); ctx.font=`${14+S.sw*2}px Inter,sans-serif`; ctx.fillStyle=S.color; ctx.fillText(v,S.tx,S.ty); }
+  textOv.style.display='none'; textOv.value=''; S.textActive=false;
+}
+textOv.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();commitText();} if(e.key==='Escape'){textOv.style.display='none';textOv.value='';S.textActive=false;} });
+
+// STICKY NOTES
+function placeStickyNote(x,y) {
+  const note=document.createElement('div');
+  note.className='sticky-note';
+  note.style.left=(x-90)+'px'; note.style.top=(y-55)+'px';
+  note.innerHTML='<span class="sticky-del">✕</span><span class="sticky-txt" style="display:block">Double-click to edit</span>';
+  wrap.appendChild(note);
+  let dr=false,dx=0,dy=0;
+  note.addEventListener('mousedown',ev=>{ if(ev.target.classList.contains('sticky-del'))return; dr=true; dx=ev.clientX-note.offsetLeft; dy=ev.clientY-note.offsetTop; note.style.zIndex=99; ev.stopPropagation(); });
+  document.addEventListener('mousemove',ev=>{ if(!dr)return; note.style.left=(ev.clientX-dx)+'px'; note.style.top=(ev.clientY-dy)+'px'; });
+  document.addEventListener('mouseup',()=>{ dr=false; note.style.zIndex=50; });
+  note.addEventListener('dblclick',ev=>{ if(ev.target.classList.contains('sticky-del'))return; const span=note.querySelector('.sticky-txt'); span.contentEditable='true'; span.focus(); span.addEventListener('blur',()=>{ span.contentEditable='false'; },{once:true}); ev.stopPropagation(); });
+  note.querySelector('.sticky-del').addEventListener('click',()=>note.remove());
+  toast('Sticky placed! Double-click to edit.');
+}
+
+// TOOLS
+document.querySelectorAll('[data-tool]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-tool]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); S.tool=b.dataset.tool;
+    wrap.className='canvas-wrap';
+    if(S.tool==='pan') wrap.classList.add('tool-pan');
+    if(S.tool==='eraser') wrap.classList.add('tool-eraser');
+    if(S.tool==='text') wrap.classList.add('tool-text');
+  });
+});
+
+// COLORS
+document.getElementById('colorPal').querySelectorAll('.color-dot').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('sel'));
+    c.classList.add('sel'); S.color=c.dataset.c;
+    document.getElementById('activeColor').style.background=S.color;
+    document.getElementById('colorPickInput').value=S.color;
+  });
+});
+document.getElementById('colorPickInput').addEventListener('input',e=>{
+  S.color=e.target.value;
+  document.getElementById('activeColor').style.background=S.color;
+  document.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('sel'));
+});
+document.getElementById('activeColor').style.background=S.color;
+
+// STROKE
+document.getElementById('strokeBtns').querySelectorAll('.stroke-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.stroke-btn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel'); S.sw=parseInt(b.dataset.sz);
+  });
+});
+
+// CLEAR
+document.getElementById('clearBtn').onclick=()=>document.getElementById('confirmDlg').classList.add('open');
+document.getElementById('cancelClear').onclick=()=>document.getElementById('confirmDlg').classList.remove('open');
+document.getElementById('doClear').onclick=()=>{
+  document.getElementById('confirmDlg').classList.remove('open');
+  saveH(); ctx.clearRect(0,0,canvas.width,canvas.height);
+  wrap.querySelectorAll('.sticky-note').forEach(n=>n.remove());
+  if(S.grid) drawGrid(); toast('Canvas cleared');
+};
+
+// DOWNLOAD
+document.getElementById('dlBtn').onclick=()=>{
+  const a=document.createElement('a'); a.download='whiteboard-'+Date.now()+'.png'; a.href=canvas.toDataURL(); a.click(); toast('Downloaded!');
+};
+
+// UNDO
+document.getElementById('undoBtn').onclick=undo;
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!S.textActive){e.preventDefault();undo();}
+  if(S.textActive) return;
+  const m={'p':'pen','l':'line','r':'rect','c':'circle','t':'text','e':'eraser'};
+  if(m[e.key]&&!e.ctrlKey&&!e.metaKey) document.querySelector('[data-tool="'+m[e.key]+'"]').click();
+  if(e.key===' '){e.preventDefault();document.querySelector('[data-tool="pan"]').click();}
+});
+
+// TOAST
+function toast(m) {
+  const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// INIT
+(()=>{
+  canvas.width=wrap.clientWidth||800;
+  canvas.height=wrap.clientHeight||600;
+  if(S.grid) drawGrid();
+  toast('P=pen  L=line  R=rect  C=circle  T=text  E=eraser  Space=pan  Ctrl+Z=undo');
+})();
+</script>
+</body>
+</html>

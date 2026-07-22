@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Openline × WorkAdventure — App Launcher v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#070c18;--surface:#0c1120;--header:#090e1c;
+    --text:#dde6ff;--muted:rgba(255,255,255,.45);
+    --blue:#3B3BFF;--orange:#ff6616;
+    --green:#22c55e;--amber:#f59e0b;--purple:#a855f7;
+    --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  }
+  html,body{min-height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
+  body{padding-bottom:60px}
+
+  /* Hero */
+  .hero{background:var(--header);border-bottom:1px solid var(--border);padding:36px 48px;display:flex;align-items:center;gap:32px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:400px;height:400px;background:radial-gradient(circle,rgba(59,59,255,.12),transparent 70%);pointer-events:none}
+  .hero-badge{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--orange);letter-spacing:.05em;margin-bottom:12px}
+  .hero-title{font-family:'Play',sans-serif;font-size:42px;font-weight:700;line-height:1.1;margin-bottom:12px}
+  .hero-title span{color:var(--orange)}
+  .hero-sub{font-size:16px;color:var(--muted);max-width:480px;line-height:1.6}
+  .hero-stats{display:flex;gap:24px;margin-top:24px}
+  .hero-stat{text-align:center}
+  .hero-stat-num{font-family:'Play',sans-serif;font-size:32px;font-weight:700;color:var(--blue)}
+  .hero-stat-label{font-size:12px;color:var(--muted);margin-top:2px}
+  .v-badge{background:linear-gradient(135deg,var(--blue),var(--purple));padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;color:#fff;margin-left:auto;align-self:flex-start}
+
+  /* Search / Filter */
+  .toolbar{padding:24px 48px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+  .search-wrap{position:relative;flex:1;max-width:360px}
+  .search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+  .search-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text);padding:11px 14px 11px 38px;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none}
+  .search-input::placeholder{color:var(--muted)}
+  .filter-group{display:flex;gap:6px;flex-wrap:wrap}
+  .filter-btn{padding:9px 16px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;font-family:'Inter',sans-serif}
+  .filter-btn:hover{background:rgba(255,255,255,.05);color:var(--text)}
+  .filter-btn.active{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.4);color:#7a7aff}
+
+  /* Content */
+  .content{padding:32px 48px}
+  .section{margin-bottom:44px}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .section-icon{font-size:22px}
+  .section-title{font-family:'Play',sans-serif;font-size:22px;font-weight:700}
+  .section-count{background:rgba(255,255,255,.07);color:var(--muted);padding:3px 10px;border-radius:12px;font-size:13px}
+
+  /* App grid */
+  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .app-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;text-decoration:none;display:block;position:relative;overflow:hidden}
+  .app-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,59,255,.06),transparent);opacity:0;transition:opacity .25s}
+  .app-card:hover{transform:translateY(-3px);border-color:rgba(59,59,255,.4);box-shadow:0 10px 32px rgba(0,0,0,.5)}
+  .app-card:hover::after{opacity:1}
+  .app-card.new-badge::before{content:'NEW';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:9px;font-family:'Press Start 2P',monospace;padding:3px 6px;border-radius:6px;letter-spacing:.04em}
+  .app-emoji{font-size:36px;margin-bottom:14px;display:block}
+  .app-name{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--text)}
+  .app-desc{font-size:13px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .app-tag{display:inline-flex;margin-top:10px;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:500}
+
+  .no-results{text-align:center;padding:60px;color:var(--muted);display:none}
+  .no-results.visible{display:block}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge">OPENLINE × WORKADVENTURE</div>
+    <div class="hero-title">App Launcher <span>v3</span></div>
+    <div class="hero-sub">39 embeddable mini-apps for your virtual office. Analytics, media, collaboration, tools — all in one place.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" id="stat-total">39</div><div class="hero-stat-label">Total Apps</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" style="color:var(--orange)">10</div><div class="hero-stat-label">New in v3</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" style="color:var(--green)">100%</div><div class="hero-stat-label">Self-Contained</div></div>
+    </div>
+  </div>
+  <div class="v-badge">v3.0</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="text" placeholder="Search apps…" oninput="filterApps(this.value)">
+  </div>
+  <div class="filter-group" id="filter-group">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All (39)</button>
+    <button class="filter-btn" onclick="setFilter('new',this)">✨ New in v3</button>
+    <button class="filter-btn" onclick="setFilter('analytics',this)">📊 Analytics</button>
+    <button class="filter-btn" onclick="setFilter('media',this)">🎵 Media</button>
+    <button class="filter-btn" onclick="setFilter('tools',this)">⚒ Tools</button>
+    <button class="filter-btn" onclick="setFilter('collab',this)">👥 Collab</button>
+    <button class="filter-btn" onclick="setFilter('comms',this)">💬 Comms</button>
+  </div>
+</div>
+
+<div class="content" id="content"></div>
+<div class="no-results" id="no-results">No apps match your search</div>
+
+<script>
+const APPS = [
+  // ──── NEW IN V3 ────
+  {file:'dashboard.html',name:'Dashboard',emoji:'📊',desc:'Rich analytics hub with Chart.js charts, KPIs, team presence & deploy history',cat:'analytics',isNew:true,tag:'Enhanced',tagColor:'rgba(59,59,255,.2)',tagText:'#7a7aff'},
+  {file:'stats.html',name:'Stats',emoji:'📈',desc:'Deep eSIM analytics — revenue trends, cohort heatmaps, country bars & partner tables',cat:'analytics',isNew:true,tag:'New',tagColor:'rgba(34,197,94,.15)',tagText:'#22c55e'},
+  {file:'database.html',name:'Database',emoji:'🗃',desc:'Notion-style database with Table, Kanban, Gallery & List views — full CRUD',cat:'tools',isNew:true,tag:'New',tagColor:'rgba(59,59,255,.2)',tagText:'#7a7aff'},
+  {file:'soundcloud.html',name:'SoundCloud',emoji:'🎧',desc:'Embedded SC player with Widget API — actually plays audio from SoundCloud',cat:'media',isNew:true,tag:'Audio',tagColor:'rgba(255,102,22,.15)',tagText:'#ff6616'},
+  {file:'spotify.html',name:'Spotify',emoji:'🎵',desc:'Spotify embed player with 30-second previews — curated tracks, liked songs, playlists',cat:'media',isNew:true,tag:'Audio',tagColor:'rgba(29,185,84,.15)',tagText:'#1DB954'},
+  {file:'youtube.html',name:'YouTube Library',emoji:'▶',desc:'Video library with embedded player, playlists by topic, search & add custom videos',cat:'media',isNew:true,tag:'Video',tagColor:'rgba(239,68,68,.15)',tagText:'#ef4444'},
+  {file:'whiteboard.html',name:'Whiteboard',emoji:'✏️',desc:'HTML5 canvas drawing — pen, shapes, text, arrows, eraser, zoom, export PNG',cat:'tools',isNew:true,tag:'New',tagColor:'rgba(59,59,255,.2)',tagText:'#7a7aff'},
+  {file:'snippets.html',name:'Snippets',emoji:'</>', desc:'Code snippet manager with highlight.js syntax, search, copy, multi-language',cat:'tools',isNew:true,tag:'Dev',tagColor:'rgba(245,158,11,.15)',tagText:'#f59e0b'},
+  {file:'links.html',name:'Quick Links',emoji:'🔗',desc:'Team bookmarks — categorized links, pin favorites, search, add custom URLs',cat:'tools',isNew:true,tag:'New',tagColor:'rgba(168,85,247,.15)',tagText:'#a855f7'},
+  {file:'ai.html',name:'AI Studio',emoji:'🤖',desc:'AI image generation UI — style presets, CFG scale, steps, multi-image, export',cat:'tools',isNew:true,tag:'AI',tagColor:'rgba(168,85,247,.2)',tagText:'#a855f7'},
+
+  // ──── V2 APPS ────
+  {file:'chat.html',name:'Chat',emoji:'💬',desc:'Real-time team messaging with channels, reactions and threads',cat:'comms',isNew:false},
+  {file:'announce.html',name:'Announce',emoji:'📢',desc:'Company-wide announcements and broadcasts to all zones',cat:'comms',isNew:false},
+  {file:'voice.html',name:'Voice',emoji:'🎙',desc:'Spatial voice chat controls — mic, speaker, noise cancellation',cat:'comms',isNew:false},
+  {file:'mercury.html',name:'Mercury',emoji:'⚡',desc:'Lightning-fast internal messaging with priority routing',cat:'comms',isNew:false},
+  {file:'poll.html',name:'Poll',emoji:'📊',desc:'Quick team polls and voting — create, vote, see live results',cat:'collab',isNew:false},
+  {file:'reactions.html',name:'Reactions',emoji:'😄',desc:'Quick emoji reactions for events, meetings and virtual moments',cat:'collab',isNew:false},
+  {file:'standup.html',name:'Standup',emoji:'🧍',desc:'Daily async standup — what I did, doing, blocked',cat:'collab',isNew:false},
+  {file:'todo.html',name:'Todo',emoji:'✅',desc:'Personal task manager with priority levels and due dates',cat:'tools',isNew:false},
+  {file:'pomodoro.html',name:'Pomodoro',emoji:'🍅',desc:'Focus timer with Pomodoro technique — work/break cycles',cat:'tools',isNew:false},
+  {file:'notes.html',name:'Notes',emoji:'📝',desc:'Quick markdown notes — write, save, search, export',cat:'tools',isNew:false},
+  {file:'projects.html',name:'Projects',emoji:'📁',desc:'Project tracking with progress bars, milestones and team assignments',cat:'tools',isNew:false},
+  {file:'files.html',name:'Files',emoji:'🗂',desc:'Team file browser with upload, preview and share links',cat:'tools',isNew:false},
+  {file:'calendar.html',name:'Calendar',emoji:'📅',desc:'Shared team calendar with events, reminders and RSVP',cat:'tools',isNew:false},
+  {file:'integrations.html',name:'Integrations',emoji:'🔌',desc:'Connect your tools — Notion, Jira, Slack, GitHub and more',cat:'tools',isNew:false},
+  {file:'backoffice.html',name:'Backoffice',emoji:'🏢',desc:'Admin panel — user management, roles, billing and settings',cat:'analytics',isNew:false},
+  {file:'directory.html',name:'Directory',emoji:'👥',desc:'Team directory with profiles, skills, zones and contact info',cat:'collab',isNew:false},
+  {file:'leaderboard.html',name:'Leaderboard',emoji:'🏆',desc:'Gamified team leaderboard — points, badges, streaks',cat:'collab',isNew:false},
+  {file:'map.html',name:'Map',emoji:'🗺',desc:'Interactive office map — navigate zones, see who is where',cat:'collab',isNew:false},
+  {file:'onboarding.html',name:'Onboarding',emoji:'🚀',desc:'New team member onboarding checklist and welcome flow',cat:'collab',isNew:false},
+  {file:'status.html',name:'Status',emoji:'🟢',desc:'Personal status — available, busy, focused, away with emoji',cat:'comms',isNew:false},
+  {file:'weather.html',name:'Weather',emoji:'🌤',desc:'Live weather widget — Lisbon, Berlin, London and more',cat:'tools',isNew:false},
+  {file:'playlist.html',name:'Playlist',emoji:'🎶',desc:'Team music playlist — vote for tracks, sync vibes across zones',cat:'media',isNew:false},
+  {file:'upload.html',name:'Upload',emoji:'⬆',desc:'File uploader with drag & drop, progress and format validation',cat:'tools',isNew:false},
+  {file:'jam.html',name:'Jam',emoji:'🎸',desc:'Music jam session for creative zones — live instrument tiles',cat:'media',isNew:false},
+  {file:'chillout.html',name:'Chillout',emoji:'🛋',desc:'Lo-fi chill zone with ambient sounds and mood lighting',cat:'media',isNew:false},
+  {file:'poolside.html',name:'Poolside',emoji:'🏊',desc:'Virtual poolside vibes — summer ambience for your workspace',cat:'media',isNew:false},
+  {file:'sleepy.html',name:'Sleepy',emoji:'😴',desc:'Ambient sleep sounds and white noise for focus or rest',cat:'media',isNew:false},
+  {file:'readme.html',name:'README',emoji:'📖',desc:'Documentation and guide for all WorkAdventure apps',cat:'tools',isNew:false},
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function getFiltered() {
+  return APPS.filter(a => {
+    if (currentFilter === 'new') return a.isNew;
+    if (currentFilter !== 'all') {
+      if (!a.cat.includes(currentFilter)) return false;
+    }
+    if (currentSearch) {
+      const q = currentSearch.toLowerCase();
+      return a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
+    }
+    return true;
+  });
+}
+
+function renderContent() {
+  const content = document.getElementById('content');
+  const noResults = document.getElementById('no-results');
+  const apps = getFiltered();
+
+  if (!apps.length) {
+    content.innerHTML = '';
+    noResults.classList.add('visible');
+    return;
+  }
+  noResults.classList.remove('visible');
+
+  if (currentFilter === 'all' && !currentSearch) {
+    // Sectioned layout
+    const sections = [
+      {key:'new', title:'New in v3', icon:'✨', filter: a=>a.isNew},
+      {key:'analytics', title:'Analytics', icon:'📊', filter: a=>a.cat==='analytics'},
+      {key:'media', title:'Media & Audio', icon:'🎵', filter: a=>a.cat==='media'},
+      {key:'tools', title:'Tools & Productivity', icon:'⚒', filter: a=>a.cat==='tools'},
+      {key:'collab', title:'Collaboration', icon:'👥', filter: a=>a.cat==='collab'},
+      {key:'comms', title:'Communications', icon:'💬', filter: a=>a.cat==='comms'},
+    ];
+
+    content.innerHTML = sections.map(sec => {
+      const secApps = apps.filter(sec.filter);
+      if (!secApps.length) return '';
+      return `<div class="section">
+        <div class="section-header">
+          <span class="section-icon">${sec.icon}</span>
+          <span class="section-title">${sec.title}</span>
+          <span class="section-count">${secApps.length}</span>
+        </div>
+        <div class="app-grid">
+          ${secApps.map(a => renderCard(a)).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    content.innerHTML = `<div class="section">
+      <div class="section-header">
+        <span class="section-title">Results</span>
+        <span class="section-count">${apps.length}</span>
+      </div>
+      <div class="app-grid">${apps.map(a=>renderCard(a)).join('')}</div>
+    </div>`;
+  }
+}
+
+function renderCard(a) {
+  const tag = a.tag ? `<span class="app-tag" style="background:${a.tagColor||'rgba(255,255,255,.07)'};color:${a.tagText||'var(--muted)'}">${a.tag}</span>` : '';
+  return `<a class="app-card${a.isNew?' new-badge':''}" href="${a.file}" target="_blank">
+    <span class="app-emoji">${a.emoji}</span>
+    <div class="app-name">${a.name}</div>
+    <div class="app-desc">${a.desc}</div>
+    ${tag}
+  </a>`;
+}
+
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderContent();
+}
+
+function filterApps(q) {
+  currentSearch = q;
+  renderContent();
+}
+
+renderContent();
+</script>
+</body>
+</html>

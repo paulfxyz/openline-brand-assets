@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Pulse — Polls</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.eyebrow{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.live-badge{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.create-btn{background:#3B3BFF;border:none;color:#fff;padding:12px 24px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;transition:all .2s}
+.create-btn:hover{background:#2d2dff;transform:translateY(-1px)}
+.close-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:24px}
+
+/* Active poll */
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:16px}
+.poll-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:28px 32px}
+.poll-meta{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.vote-count{font-size:16px;color:rgba(255,255,255,.45)}
+.time-badge{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:#f59e0b;padding:5px 12px;border-radius:20px;font-size:14px;font-weight:600}
+.poll-question{font-family:'Play',sans-serif;font-size:28px;font-weight:700;margin-bottom:24px;line-height:1.3}
+.options{display:flex;flex-direction:column;gap:12px}
+
+.option-btn{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px 22px;cursor:pointer;text-align:left;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;font-weight:500;transition:all .25s;position:relative;overflow:hidden}
+.option-btn:hover:not(.voted){border-color:rgba(59,59,255,.4);background:rgba(59,59,255,.06)}
+.option-btn.selected{border-color:#3B3BFF;background:rgba(59,59,255,.12)}
+
+.option-bar-wrap{position:relative}
+.option-bar-bg{position:absolute;inset:0;border-radius:10px;background:rgba(59,59,255,.12);transform-origin:left;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.option-bar-content{position:relative;display:flex;align-items:center;justify-content:space-between}
+.option-pct{font-size:16px;color:rgba(255,255,255,.5);font-weight:600;white-space:nowrap;margin-left:12px}
+.option-votes{font-size:14px;color:rgba(255,255,255,.35);margin-left:8px}
+
+.past-polls{display:flex;flex-direction:column;gap:12px}
+.past-card{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.past-header{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.past-header:hover{background:rgba(255,255,255,.03)}
+.past-q{font-size:18px;font-weight:600}
+.past-meta{font-size:14px;color:rgba(255,255,255,.35);margin-top:4px}
+.chevron{font-size:18px;color:rgba(255,255,255,.35);transition:transform .2s}
+.past-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.past-body.open{max-height:400px}
+.past-body-inner{padding:0 22px 20px}
+.mini-option{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.mini-bar-wrap{flex:1;background:rgba(255,255,255,.06);border-radius:4px;height:8px;overflow:hidden}
+.mini-bar{height:100%;border-radius:4px;background:#3B3BFF;transition:width 1s}
+.mini-label{font-size:15px;color:rgba(255,255,255,.6);min-width:160px}
+.mini-pct{font-size:14px;color:rgba(255,255,255,.4);min-width:36px;text-align:right}
+
+/* Create form */
+.create-form{background:#0c1120;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px 32px;display:none}
+.create-form.show{display:block}
+.form-title{font-family:'Play',sans-serif;font-size:24px;font-weight:700;margin-bottom:20px}
+.form-label{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:8px;display:block}
+.form-input{width:100%;background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:18px 22px;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;margin-bottom:12px}
+.form-input:focus{border-color:#3B3BFF}
+.form-row{display:flex;gap:12px;align-items:center}
+.btn-add-opt{background:none;border:1px dashed rgba(255,255,255,.2);color:rgba(255,255,255,.4);padding:14px 22px;border-radius:10px;font-size:16px;cursor:pointer;transition:all .2s}
+.btn-add-opt:hover{border-color:rgba(59,59,255,.4);color:rgba(255,255,255,.6)}
+.form-actions{display:flex;gap:12px;margin-top:20px}
+.btn-primary{background:#3B3BFF;border:none;color:#fff;padding:14px 28px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;transition:all .2s}
+.btn-primary:hover{background:#2d2dff}
+.btn-cancel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);padding:14px 28px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.duration-sel{background:#070c18;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 22px;color:#dde6ff;font-size:16px;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">📊</div>
+  <div>
+    <div class="eyebrow">POLLS</div>
+    <div class="header-title">Team Pulse</div>
+  </div>
+  <div class="live-badge"><div class="live-dot"></div> Live</div>
+  <div class="header-right">
+    <button class="create-btn" id="createBtn">+ Create Poll</button>
+    <button class="close-btn" onclick="window.parent.postMessage({type:'poll-close'},'*')">✕</button>
+  </div>
+</div>
+
+<div class="content" id="content">
+
+  <!-- Create form -->
+  <div class="create-form" id="createForm">
+    <div class="form-title">New Poll</div>
+    <label class="form-label">Question</label>
+    <input class="form-input" id="newQ" placeholder="Ask your team something..." />
+    <label class="form-label">Options</label>
+    <div id="optInputs">
+      <input class="form-input" placeholder="Option 1" />
+      <input class="form-input" placeholder="Option 2" />
+    </div>
+    <button class="btn-add-opt" id="addOptBtn">+ Add Option</button>
+    <div class="form-actions">
+      <select class="duration-sel">
+        <option>Duration: 30 min</option>
+        <option>Duration: 1 hr</option>
+        <option>Duration: 4 hr</option>
+        <option selected>Duration: 1 day</option>
+      </select>
+      <button class="btn-cancel" id="cancelCreate">Cancel</button>
+      <button class="btn-primary" id="launchPoll">Launch Poll</button>
+    </div>
+  </div>
+
+  <!-- Active poll -->
+  <div>
+    <div class="section-label">ACTIVE POLL</div>
+    <div class="poll-card" id="activePollCard">
+      <div class="poll-meta">
+        <span class="vote-count" id="voteCount">0 votes</span>
+        <span class="time-badge" id="timeBadge">⏱ 23 min left</span>
+      </div>
+      <div class="poll-question" id="pollQuestion">Which sprint format works best for the team?</div>
+      <div class="options" id="optionsList"></div>
+    </div>
+  </div>
+
+  <!-- Past polls -->
+  <div>
+    <div class="section-label">PAST POLLS</div>
+    <div class="past-polls" id="pastPolls"></div>
+  </div>
+</div>
+
+<script>
+const POLL_KEY = 'openline_poll_v2';
+
+const defaultPoll = {
+  question: 'Which sprint format works best for the team?',
+  options: [
+    {label:'2-week sprints (standard)', votes:14},
+    {label:'1-week rapid sprints', votes:8},
+    {label:'3-week sprints for big features', votes:5},
+    {label:'Kanban — no fixed sprints', votes:3},
+  ],
+  voted: false,
+  selectedIdx: null,
+};
+
+let poll = JSON.parse(localStorage.getItem(POLL_KEY) || 'null') || defaultPoll;
+
+const pastPolls = [
+  {question:'Best day for the weekly All-Hands?', options:[{label:'Monday morning',votes:11},{label:'Wednesday noon',votes:7},{label:'Friday afternoon',votes:4},{label:'Thursday EOD',votes:2}]},
+  {question:'Which tool should we use for async video updates?', options:[{label:'Loom',votes:9},{label:'Notion video',votes:5},{label:'Slack clips',votes:6}]},
+  {question:'How satisfied are you with our onboarding process?', options:[{label:'Very satisfied',votes:8},{label:'Somewhat satisfied',votes:6},{label:'Needs improvement',votes:4},{label:'Not satisfied',votes:1}]},
+];
+
+function savePoll() { localStorage.setItem(POLL_KEY, JSON.stringify(poll)); }
+
+function totalVotes(opts) { return opts.reduce((a,o)=>a+o.votes,0); }
+
+function renderActive() {
+  document.getElementById('pollQuestion').textContent = poll.question;
+  const total = totalVotes(poll.options);
+  document.getElementById('voteCount').textContent = `${total} vote${total!==1?'s':''}`;
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+
+  poll.options.forEach((opt, idx) => {
+    const pct = total > 0 ? Math.round(opt.votes / total * 100) : 0;
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (poll.voted && poll.selectedIdx === idx ? ' selected' : '');
+
+    if (!poll.voted) {
+      btn.innerHTML = `<span>${opt.label}</span>`;
+      btn.addEventListener('click', () => vote(idx));
+    } else {
+      btn.innerHTML = `
+        <div class="option-bar-wrap">
+          <div class="option-bar-bg" style="transform:scaleX(${pct/100})"></div>
+          <div class="option-bar-content">
+            <span>${opt.label}</span>
+            <span><span class="option-pct">${pct}%</span><span class="option-votes">${opt.votes} votes</span></span>
+          </div>
+        </div>`;
+      btn.style.cursor = 'default';
+    }
+    list.appendChild(btn);
+  });
+}
+
+function vote(idx) {
+  poll.options[idx].votes++;
+  poll.voted = true;
+  poll.selectedIdx = idx;
+  savePoll();
+  renderActive();
+}
+
+function renderPast() {
+  const container = document.getElementById('pastPolls');
+  container.innerHTML = '';
+  pastPolls.forEach((p, pi) => {
+    const total = totalVotes(p.options);
+    const card = document.createElement('div');
+    card.className = 'past-card';
+    const maxV = Math.max(...p.options.map(o=>o.votes));
+    card.innerHTML = `
+      <div class="past-header" onclick="togglePast(${pi},this)">
+        <div>
+          <div class="past-q">${p.question}</div>
+          <div class="past-meta">${total} votes · Closed</div>
+        </div>
+        <span class="chevron" id="chev${pi}">▾</span>
+      </div>
+      <div class="past-body" id="pastBody${pi}">
+        <div class="past-body-inner">
+          ${p.options.map(o=>{
+            const pct=Math.round(o.votes/total*100);
+            return `<div class="mini-option">
+              <span class="mini-label">${o.label}</span>
+              <div class="mini-bar-wrap"><div class="mini-bar" style="width:${pct}%"></div></div>
+              <span class="mini-pct">${pct}%</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function togglePast(idx, headerEl) {
+  const body = document.getElementById(`pastBody${idx}`);
+  const chev = document.getElementById(`chev${idx}`);
+  const isOpen = body.classList.toggle('open');
+  chev.style.transform = isOpen ? 'rotate(180deg)' : '';
+}
+
+document.getElementById('createBtn').addEventListener('click', () => {
+  document.getElementById('createForm').classList.toggle('show');
+});
+document.getElementById('cancelCreate').addEventListener('click', () => {
+  document.getElementById('createForm').classList.remove('show');
+});
+document.getElementById('addOptBtn').addEventListener('click', () => {
+  const wrap = document.getElementById('optInputs');
+  const count = wrap.children.length + 1;
+  if (count > 4) return;
+  const inp = document.createElement('input');
+  inp.className = 'form-input';
+  inp.placeholder = `Option ${count}`;
+  wrap.appendChild(inp);
+});
+document.getElementById('launchPoll').addEventListener('click', () => {
+  const q = document.getElementById('newQ').value.trim();
+  const inputs = document.querySelectorAll('#optInputs input');
+  const opts = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+  if (!q || opts.length < 2) return;
+  poll = { question: q, options: opts.map(l=>({label:l,votes:0})), voted: false, selectedIdx: null };
+  savePoll();
+  document.getElementById('createForm').classList.remove('show');
+  document.getElementById('newQ').value = '';
+  document.querySelectorAll('#optInputs input').forEach(i=>i.value='');
+  renderActive();
+});
+
+// countdown
+let mins = 23, secs = 0;
+setInterval(() => {
+  secs--;
+  if (secs < 0) { secs = 59; mins--; }
+  if (mins < 0) { mins = 0; secs = 0; }
+  document.getElementById('timeBadge').textContent = `⏱ ${mins}m ${String(secs).padStart(2,'0')}s left`;
+}, 1000);
+
+renderActive();
+renderPast();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Hub — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',system-ui,sans-serif;font-size:20px;line-height:1.5;overflow:hidden}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:6px}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes progress-shine{from{background-position:200% 0}to{background-position:-200% 0}}
+  @keyframes file-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drop-pulse{0%,100%{border-color:rgba(59,59,255,.35);background:rgba(59,59,255,.03)}50%{border-color:rgba(59,59,255,.7);background:rgba(59,59,255,.08)}}
+
+  .app{display:flex;flex-direction:column;height:100%;animation:fade-up .35s ease}
+
+  /* HEADER */
+  .header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.06);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .header-left{display:flex;align-items:center;gap:20px}
+  .header-icon{width:52px;height:52px;background:linear-gradient(135deg,#3B3BFF,#6060FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:28px}
+  .header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+  .header-sub{font-size:18px;color:rgba(255,255,255,.35)}
+  .btn-icon{width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:22px;transition:all .2s}
+  .btn-icon:hover{background:rgba(255,255,255,.1);color:#dde6ff}
+
+  /* STORAGE WIDGET */
+  .storage-bar-wrap{margin-top:6px}
+  .storage-track{height:3px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+  .storage-fill{height:100%;width:24%;background:linear-gradient(90deg,#3B3BFF,#6060FF);border-radius:4px}
+  .storage-label{font-size:16px;color:rgba(255,255,255,.3);margin-top:6px}
+
+  /* CONTENT */
+  .content{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:24px}
+
+  /* DROP ZONE */
+  .drop-zone{border:2px dashed rgba(59,59,255,.35);border-radius:14px;padding:56px 40px;display:flex;flex-direction:column;align-items:center;gap:20px;cursor:pointer;transition:all .2s;background:rgba(59,59,255,.03);text-align:center;position:relative}
+  .drop-zone:hover,.drop-zone.dragover{border-color:rgba(59,59,255,.7);background:rgba(59,59,255,.08);animation:drop-pulse .8s ease infinite}
+  .drop-zone.dragover{box-shadow:0 0 30px rgba(59,59,255,.15)}
+  .drop-icon svg{opacity:.7}
+  .drop-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700;color:#dde6ff}
+  .drop-sub{font-size:20px;color:rgba(255,255,255,.35)}
+  .drop-accepts{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.25);margin-top:6px}
+  .drop-input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+  /* ACTIVE UPLOAD CARD */
+  .upload-progress-card{background:#0c1120;border:1px solid rgba(59,59,255,.2);border-radius:12px;padding:24px;animation:file-in .3s ease;display:none}
+  .upload-progress-card.visible{display:block}
+  .up-top{display:flex;align-items:center;gap:20px;margin-bottom:20px}
+  .up-icon{font-size:32px;flex-shrink:0}
+  .up-name{flex:1;min-width:0;font-size:20px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dde6ff}
+  .up-status{font-size:18px;color:rgba(255,255,255,.4)}
+  .up-cancel{background:transparent;border:none;color:rgba(255,255,255,.3);cursor:pointer;padding:8px;font-size:20px;transition:color .15s}
+  .up-cancel:hover{color:#ef4444}
+  .up-bar-track{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+  .up-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#3B3BFF,#6060FF,#3B3BFF);background-size:200%;animation:progress-shine 1.5s linear infinite;transition:width .2s ease}
+  .up-pct{font-size:18px;color:rgba(255,255,255,.35);margin-top:10px;text-align:right}
+
+  /* FILTER CHIPS */
+  .filter-chips{display:flex;gap:12px;flex-wrap:wrap}
+  .chip{padding:10px 22px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+  .chip.active{background:#3B3BFF;color:#fff;border-color:#3B3BFF}
+  .chip:hover:not(.active){border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.7)}
+
+  /* FILE LIST */
+  .file-list{display:flex;flex-direction:column;gap:12px}
+  .file-item{background:#0c1120;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px 24px;display:flex;align-items:center;gap:20px;transition:all .2s;animation:file-in .2s ease}
+  .file-item:hover{border-color:rgba(255,255,255,.13);background:#0e1428}
+  .file-type-icon{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+  .ft-pdf{background:rgba(239,68,68,.15)}
+  .ft-img{background:rgba(34,197,94,.15)}
+  .ft-code{background:rgba(245,158,11,.15)}
+  .ft-doc{background:rgba(139,92,246,.15)}
+  .ft-zip{background:rgba(255,102,22,.12)}
+  .file-info{flex:1;min-width:0}
+  .file-name{font-size:20px;font-weight:600;color:#dde6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+  .file-meta{display:flex;align-items:center;gap:12px;margin-top:4px;flex-wrap:wrap}
+  .file-size{font-size:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 10px;color:rgba(255,255,255,.45)}
+  .file-uploader{font-size:16px;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:6px}
+  .upl-av{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .file-time{font-size:16px;color:rgba(255,255,255,.25)}
+  .file-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .btn-dl{background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.25);border-radius:7px;padding:10px 16px;font-size:18px;color:#8080FF;cursor:pointer;font-weight:600;transition:all .2s;font-family:'Inter',sans-serif}
+  .btn-dl:hover{background:rgba(59,59,255,.3)}
+  .btn-more{background:transparent;border:none;color:rgba(255,255,255,.3);cursor:pointer;padding:8px 10px;border-radius:5px;font-size:20px;transition:all .2s}
+  .btn-more:hover{color:#dde6ff;background:rgba(255,255,255,.06)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">📤</div>
+      <div>
+        <div class="header-title">Upload Hub</div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div class="header-sub">Space Storage</div>
+        </div>
+        <div class="storage-bar-wrap">
+          <div class="storage-track"><div class="storage-fill"></div></div>
+          <div class="storage-label">2.4 GB / 10 GB used</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'upload-close'},'*')">✕</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- DROP ZONE -->
+    <div class="drop-zone" id="dropZone">
+      <input type="file" class="drop-input" id="fileInput" multiple onchange="handleFiles(this.files)">
+      <div class="drop-icon">
+        <svg width="68" height="68" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="8" width="38" height="28" rx="6" stroke="rgba(59,59,255,.5)" stroke-width="1.5"/>
+          <path d="M20 26V14M20 14L15 19M20 14L25 19" stroke="rgba(59,59,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="30" cy="8" r="6" fill="#070c18"/>
+          <circle cx="30" cy="8" r="6" stroke="rgba(59,59,255,.5)" stroke-width="1.5"/>
+          <path d="M30 5v6M27 8h6" stroke="rgba(59,59,255,.7)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="drop-title">Drop files here or click to browse</div>
+      <div class="drop-sub">Share files with your workspace</div>
+      <div class="drop-accepts">ACCEPTS ANY FILE TYPE · MAX 500MB</div>
+    </div>
+
+    <!-- ACTIVE UPLOAD CARD -->
+    <div class="upload-progress-card" id="uploadCard">
+      <div class="up-top">
+        <div class="up-icon" id="upIcon">📄</div>
+        <div>
+          <div class="up-name" id="upName">Loading...</div>
+          <div class="up-status" id="upStatus">Uploading…</div>
+        </div>
+        <button class="up-cancel" onclick="cancelUpload()">✕</button>
+      </div>
+      <div class="up-bar-track"><div class="up-bar-fill" id="upBarFill" style="width:0%"></div></div>
+      <div class="up-pct" id="upPct">0%</div>
+    </div>
+
+    <!-- FILTER CHIPS -->
+    <div class="filter-chips">
+      <button class="chip active" data-filter="all" onclick="setFilter(this)">All</button>
+      <button class="chip" data-filter="img" onclick="setFilter(this)">Images</button>
+      <button class="chip" data-filter="doc" onclick="setFilter(this)">Docs</button>
+      <button class="chip" data-filter="code" onclick="setFilter(this)">Code</button>
+      <button class="chip" data-filter="other" onclick="setFilter(this)">Other</button>
+    </div>
+
+    <!-- FILE LIST -->
+    <div class="file-list" id="fileList"></div>
+
+  </div><!-- end content -->
+</div>
+
+<script>
+const DEMO_FILES = [
+  { id:1, name:'eSIM_Partner_API_Documentation_v3.pdf', size:'2.1 MB', type:'pdf', cat:'doc', uploader:{name:'Alex L', color:'linear-gradient(135deg,#3B3BFF,#6060FF)', initials:'AL'}, time:'2h ago' },
+  { id:2, name:'Openline_Q1_2025_Pitch_Deck.pptx', size:'8.4 MB', type:'doc', cat:'doc', uploader:{name:'Sara M', color:'linear-gradient(135deg,#ff6616,#ff8c42)', initials:'SM'}, time:'Yesterday' },
+  { id:3, name:'esim-core-client-v2.1.tar.gz', size:'340 KB', type:'code', cat:'code', uploader:{name:'Tom K', color:'linear-gradient(135deg,#22c55e,#4ade80)', initials:'TK'}, time:'2d ago' },
+  { id:4, name:'Orange_Spain_LogoKit_2025.zip', size:'5.6 MB', type:'zip', cat:'img', uploader:{name:'Jade R', color:'linear-gradient(135deg,#a855f7,#c084fc)', initials:'JR'}, time:'3d ago' },
+  { id:5, name:'workspace-config.json', size:'4.2 KB', type:'code', cat:'code', uploader:{name:'Alex L', color:'linear-gradient(135deg,#3B3BFF,#6060FF)', initials:'AL'}, time:'5d ago' }
+];
+
+const FILE_ICONS = { pdf:'📕', doc:'📝', code:'💻', img:'🖼', zip:'📦', other:'📄' };
+const FT_CLASSES = { pdf:'ft-pdf', doc:'ft-doc', code:'ft-code', img:'ft-img', zip:'ft-zip', other:'ft-pdf' };
+
+let currentFilter = 'all';
+let uploadInterval;
+
+function renderFiles() {
+  const list = document.getElementById('fileList');
+  const files = currentFilter === 'all' ? DEMO_FILES : DEMO_FILES.filter(f => f.cat === currentFilter);
+  if (files.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:40px;color:rgba(255,255,255,.25);font-size:20px">No files in this category.</div>`;
+    return;
+  }
+  list.innerHTML = files.map(f => `
+    <div class="file-item">
+      <div class="file-type-icon ${FT_CLASSES[f.type]||'ft-zip'}">${FILE_ICONS[f.type]||'📄'}</div>
+      <div class="file-info">
+        <div class="file-name" title="${f.name}">${f.name}</div>
+        <div class="file-meta">
+          <span class="file-size">${f.size}</span>
+          <span class="file-uploader">
+            <span class="upl-av" style="background:${f.uploader.color}">${f.uploader.initials}</span>
+            ${f.uploader.name}
+          </span>
+          <span class="file-time">${f.time}</span>
+        </div>
+      </div>
+      <div class="file-actions">
+        <button class="btn-dl" onclick="downloadFile(${f.id})">↓</button>
+        <button class="btn-more" onclick="moreOptions(${f.id})">···</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setFilter(el) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = el.dataset.filter;
+  renderFiles();
+}
+
+// DRAG & DROP
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+dz.addEventListener('dragleave', e => { dz.classList.remove('dragover'); });
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+
+function handleFiles(files) {
+  if (!files || files.length === 0) return;
+  const f = files[0];
+  const ext = f.name.split('.').pop().toLowerCase();
+  const typeMap = { pdf:'pdf', doc:'doc', docx:'doc', pptx:'doc', xlsx:'doc', js:'code', ts:'code', json:'code', py:'code', sh:'code', gz:'code', tar:'code', zip:'zip', png:'img', jpg:'img', jpeg:'img', gif:'img', svg:'img', webp:'img' };
+  const ftype = typeMap[ext] || 'other';
+  simulateUpload(f.name, formatBytes(f.size), ftype);
+}
+
+function simulateUpload(name, size, type) {
+  clearInterval(uploadInterval);
+  const card = document.getElementById('uploadCard');
+  const icon = document.getElementById('upIcon');
+  const nameEl = document.getElementById('upName');
+  const statusEl = document.getElementById('upStatus');
+  const barFill = document.getElementById('upBarFill');
+  const pctEl = document.getElementById('upPct');
+
+  icon.textContent = FILE_ICONS[type] || '📄';
+  nameEl.textContent = name;
+  statusEl.textContent = 'Preparing upload…';
+  barFill.style.width = '0%';
+  pctEl.textContent = '0%';
+  card.classList.add('visible');
+
+  let pct = 0;
+  uploadInterval = setInterval(() => {
+    pct += 2 + Math.random() * 5;
+    if (pct >= 100) {
+      pct = 100;
+      clearInterval(uploadInterval);
+      barFill.style.width = '100%';
+      pctEl.textContent = '100%';
+      statusEl.textContent = 'Upload complete!';
+      statusEl.style.color = '#22c55e';
+      // Add to list
+      DEMO_FILES.unshift({ id: Date.now(), name, size, type, cat: type==='img'?'img':type==='code'?'code':'doc', uploader:{name:'You', color:'linear-gradient(135deg,#3B3BFF,#6060FF)', initials:'YO'}, time:'Just now' });
+      renderFiles();
+      setTimeout(() => { card.classList.remove('visible'); statusEl.style.color=''; }, 2200);
+      return;
+    }
+    barFill.style.width = pct + '%';
+    pctEl.textContent = Math.floor(pct) + '%';
+    statusEl.textContent = pct < 40 ? 'Uploading…' : pct < 80 ? 'Processing…' : 'Finalizing…';
+  }, 80);
+}
+
+function cancelUpload() {
+  clearInterval(uploadInterval);
+  document.getElementById('uploadCard').classList.remove('visible');
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(1) + ' MB';
+}
+
+function downloadFile(id) { showToast('Downloading file…'); }
+function moreOptions(id) { showToast('Options coming soon'); }
+
+let toastEl;
+function showToast(msg) {
+  if (toastEl) toastEl.remove();
+  toastEl = document.createElement('div');
+  toastEl.textContent = msg;
+  toastEl.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#0c1120;border:1px solid rgba(59,59,255,.3);color:#dde6ff;padding:14px 24px;border-radius:10px;font-size:18px;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.5)';
+  document.body.appendChild(toastEl);
+  setTimeout(() => toastEl?.remove(), 2000);
+}
+
+renderFiles();
+</script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070c18;color:#dde6ff;font-family:'Inter',sans-serif;font-size:20px}
+body{display:flex;flex-direction:column;overflow:hidden}
+
+.header{background:#090e1c;border-bottom:1px solid rgba(255,255,255,.07);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.header-icon{width:52px;height:52px;background:rgba(59,59,255,.15);border:1px solid rgba(59,59,255,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.header-title{font-family:'Play',sans-serif;font-size:28px;font-weight:700}
+.search-wrap{flex:1;max-width:360px;position:relative;margin-left:auto}
+.search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 22px 14px 44px;color:#dde6ff;font-size:18px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:rgba(59,59,255,.4);background:rgba(59,59,255,.04)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:20px;opacity:.4}
+.new-btn{background:#3B3BFF;border:none;color:#fff;padding:12px 24px;border-radius:10px;font-size:18px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;white-space:nowrap;transition:all .2s}
+.new-btn:hover{background:#2d2dff;transform:translateY(-1px)}
+.close-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);width:44px;height:44px;border-radius:10px;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.main{flex:1;display:flex;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:300px;background:#090e1c;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;flex-shrink:0}
+.tags-bar{padding:16px 20px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.07)}
+.tag-btn{padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:none;color:rgba(255,255,255,.45);font-size:14px;cursor:pointer;transition:all .2s}
+.tag-btn.active{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.4);color:#a5b4fc}
+.notes-list{flex:1;overflow-y:auto;padding:12px}
+.note-row{padding:16px;border-radius:10px;cursor:pointer;margin-bottom:6px;transition:all .2s;border:1px solid transparent}
+.note-row:hover{background:rgba(255,255,255,.04)}
+.note-row.active{background:rgba(59,59,255,.08);border-color:rgba(59,59,255,.2)}
+.note-row-title{font-size:17px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-row-date{font-size:13px;color:rgba(255,255,255,.35)}
+.note-row-snippet{font-size:14px;color:rgba(255,255,255,.4);margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.note-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:4px;margin-top:4px}
+.tag-Work{background:rgba(59,59,255,.2);color:#a5b4fc}
+.tag-Docs{background:rgba(34,197,94,.12);color:#86efac}
+.tag-Ideas{background:rgba(245,158,11,.12);color:#fcd34d}
+.tag-Personal{background:rgba(139,92,246,.15);color:#c4b5fd}
+
+/* EDITOR */
+.editor-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.toolbar{padding:12px 24px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px}
+.tool-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:16px;font-family:monospace;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.tool-btn:hover{background:rgba(59,59,255,.2);border-color:rgba(59,59,255,.3);color:#dde6ff}
+.tool-sep{width:1px;height:28px;background:rgba(255,255,255,.08);margin:0 4px}
+.save-badge{margin-left:auto;font-size:14px;color:#22c55e;opacity:0;transition:opacity .3s}
+.save-badge.show{opacity:1}
+
+.note-editor{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column;gap:16px}
+.note-title-input{background:none;border:none;color:#dde6ff;font-family:'Play',sans-serif;font-size:32px;font-weight:700;outline:none;width:100%;line-height:1.2}
+.note-title-input::placeholder{color:rgba(255,255,255,.2)}
+.tags-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.note-tag-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:14px;cursor:pointer;border:none}
+.add-tag-btn{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.15);color:rgba(255,255,255,.35);padding:5px 12px;border-radius:20px;font-size:14px;cursor:pointer;transition:all .2s}
+.add-tag-btn:hover{background:rgba(255,255,255,.1)}
+.section-label{font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-bottom:12px}
+.note-body{flex:1;background:none;border:none;color:#dde6ff;font-family:'JetBrains Mono','Courier New',monospace;font-size:17px;line-height:1.7;outline:none;resize:none;min-height:320px;width:100%}
+.note-body::placeholder{color:rgba(255,255,255,.2)}
+.note-footer{padding:12px 32px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:16px}
+.word-count{font-size:15px;color:rgba(255,255,255,.35)}
+.empty-state{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,.2)}
+.empty-icon{font-size:56px;opacity:.3}
+.empty-text{font-size:18px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">✏️</div>
+  <div class="header-title">Notes</div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" placeholder="Search notes..." />
+  </div>
+  <button class="new-btn" id="newNoteBtn">+ New Note</button>
+  <button class="close-btn" onclick="window.parent.postMessage({type:'notes-close'},'*')">✕</button>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="tags-bar" id="tagsBar">
+      <button class="tag-btn active" data-tag="All">All</button>
+      <button class="tag-btn" data-tag="Work">Work</button>
+      <button class="tag-btn" data-tag="Docs">Docs</button>
+      <button class="tag-btn" data-tag="Ideas">Ideas</button>
+      <button class="tag-btn" data-tag="Personal">Personal</button>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+  </div>
+
+  <div class="editor-area" id="editorArea">
+    <div class="toolbar">
+      <button class="tool-btn" title="Bold" data-insert="**|**">B</button>
+      <button class="tool-btn" title="Italic" data-insert="_|_"><i>I</i></button>
+      <button class="tool-btn" title="Code" data-insert="`|`">&lt;/&gt;</button>
+      <button class="tool-btn" title="Link" data-insert="[|](url)">🔗</button>
+      <div class="tool-sep"></div>
+      <button class="tool-btn" title="H1" data-insert="# |">H1</button>
+      <button class="tool-btn" title="H2" data-insert="## |">H2</button>
+      <button class="tool-btn" title="Bullet" data-insert="- |">•</button>
+      <div class="save-badge" id="saveBadge">✓ Saved</div>
+    </div>
+    <div class="note-editor" id="noteEditor">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">📝</div>
+        <div class="empty-text">Select a note or create a new one</div>
+      </div>
+      <div id="noteForm" style="display:none;flex-direction:column;gap:16px;flex:1">
+        <input class="note-title-input" id="noteTitleInput" placeholder="Note title..." />
+        <div class="tags-row" id="noteTags"></div>
+        <textarea class="note-body" id="noteBody" placeholder="Start writing...&#10;&#10;Supports Markdown: **bold**, _italic_, `code`, # Heading"></textarea>
+      </div>
+    </div>
+    <div class="note-footer" id="noteFooter" style="display:none">
+      <span class="word-count" id="wordCount">0 words</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const NOTES_KEY = 'openline_notes_v2';
+const now = new Date();
+const fmt = (d) => new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+const tagColors = {Work:'tag-Work',Docs:'tag-Docs',Ideas:'tag-Ideas',Personal:'tag-Personal'};
+
+let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || 'null') || [
+  {id:1, title:'Sprint Planning — Q4', tags:['Work'], date: now.toISOString(), body:`# Sprint Planning — Q4\n\n## Goals\n- Launch API v2 before Nov 30\n- Complete onboarding redesign\n- Fix critical P0 bugs in inbox module\n\n## Team Capacity\n- Paul: 8 pts\n- Thomas: 10 pts\n- Léa: 7 pts (OOO Fri)\n\n## Blockers\n- Waiting on design sign-off for notifications\n- Need access to staging DB from DevOps`},
+  {id:2, title:'API Specification v2', tags:['Docs'], date: new Date(now-86400000*2).toISOString(), body:`# API Specification v2\n\n## Authentication\nAll endpoints require Bearer token.\n\n\`\`\`\nAuthorization: Bearer <token>\n\`\`\`\n\n## Endpoints\n\n### GET /contacts\nReturns paginated contact list.\n\nParams: page, limit, search\n\n### POST /contacts\nCreate new contact.\n\nRequired fields: email, name`},
+  {id:3, title:'Team Meeting Notes — Oct 14', tags:['Work'], date: new Date(now-86400000*5).toISOString(), body:`# Team Meeting Notes — Oct 14\n\nAttendees: Paul, Marie, Thomas, Léa, Hugo\n\n## Action Items\n- **Paul**: Set up new CI pipeline by Friday\n- **Thomas**: Review PR #234 before EOD\n- **Léa**: Update Figma mockups for mobile\n\n## Decisions\n- Adopting weekly async video updates\n- Moving standup to 9:30am Paris time\n- New QA process starts next sprint`},
+  {id:4, title:'Product Brief — Inbox 2.0', tags:['Docs','Ideas'], date: new Date(now-86400000*8).toISOString(), body:`# Product Brief — Inbox 2.0\n\n## Problem\nUsers struggle to manage high-volume conversations. Current inbox lacks prioritization and context.\n\n## Solution\nAI-powered inbox with smart sorting, contact scoring, and team collaboration threads.\n\n## Success Metrics\n- 40% reduction in response time\n- 90% CSAT on inbox experience\n\n## Timeline\n- Design: 2 weeks\n- Dev: 6 weeks\n- QA: 1 week`},
+];
+
+let activeId = null;
+let activeTag = 'All';
+let saveTimer = null;
+
+function saveNotes() { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }
+
+function filtered() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  return notes.filter(n => {
+    const matchTag = activeTag === 'All' || n.tags.includes(activeTag);
+    const matchQ = !q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q);
+    return matchTag && matchQ;
+  });
+}
+
+function renderList() {
+  const list = document.getElementById('notesList');
+  const items = filtered();
+  list.innerHTML = '';
+  if (!items.length) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:rgba(255,255,255,.25);font-size:16px">No notes found</div>';
+    return;
+  }
+  items.forEach(n => {
+    const row = document.createElement('div');
+    row.className = 'note-row' + (n.id === activeId ? ' active' : '');
+    row.innerHTML = `
+      <div class="note-row-title">${n.title}</div>
+      <div class="note-row-date">${fmt(n.date)}</div>
+      <div class="note-row-snippet">${n.body.replace(/#+ /g,'').slice(0,80)}</div>
+      <div>${n.tags.map(t=>`<span class="note-tag ${tagColors[t]||''}">${t}</span>`).join('')}</div>`;
+    row.addEventListener('click', () => openNote(n.id));
+    list.appendChild(row);
+  });
+}
+
+function openNote(id) {
+  activeId = id;
+  const n = notes.find(x=>x.id===id);
+  document.getElementById('emptyState').style.display = 'none';
+  const form = document.getElementById('noteForm');
+  form.style.display = 'flex';
+  document.getElementById('noteFooter').style.display = 'flex';
+  document.getElementById('noteTitleInput').value = n.title;
+  document.getElementById('noteBody').value = n.body;
+  renderNoteTags(n.tags);
+  updateWordCount();
+  renderList();
+}
+
+function renderNoteTags(tags) {
+  const row = document.getElementById('noteTags');
+  row.innerHTML = '';
+  tags.forEach(t => {
+    const chip = document.createElement('span');
+    chip.className = `note-tag-chip ${tagColors[t]||''}`;
+    chip.textContent = t + ' ✕';
+    chip.style.cursor = 'pointer';
+    chip.addEventListener('click', () => {
+      const n = notes.find(x=>x.id===activeId);
+      n.tags = n.tags.filter(x=>x!==t);
+      saveNotes(); renderNoteTags(n.tags); renderList();
+    });
+    row.appendChild(chip);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-tag-btn';
+  addBtn.textContent = '+ Tag';
+  addBtn.addEventListener('click', () => {
+    const opts = ['Work','Docs','Ideas','Personal'];
+    const n = notes.find(x=>x.id===activeId);
+    const avail = opts.filter(o=>!n.tags.includes(o));
+    if (!avail.length) return;
+    n.tags.push(avail[0]);
+    saveNotes(); renderNoteTags(n.tags); renderList();
+  });
+  row.appendChild(addBtn);
+}
+
+function updateWordCount() {
+  const text = document.getElementById('noteBody').value;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('wordCount').textContent = `${words} word${words!==1?'s':''}`;
+}
+
+// Auto-save
+function scheduleAutoSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    const n = notes.find(x=>x.id===activeId);
+    if (!n) return;
+    n.title = document.getElementById('noteTitleInput').value || 'Untitled';
+    n.body = document.getElementById('noteBody').value;
+    n.date = new Date().toISOString();
+    saveNotes(); renderList();
+    const badge = document.getElementById('saveBadge');
+    badge.classList.add('show');
+    setTimeout(() => badge.classList.remove('show'), 2000);
+  }, 800);
+}
+
+document.getElementById('noteTitleInput').addEventListener('input', scheduleAutoSave);
+document.getElementById('noteBody').addEventListener('input', () => { updateWordCount(); scheduleAutoSave(); });
+
+// New note
+document.getElementById('newNoteBtn').addEventListener('click', () => {
+  const n = { id: Date.now(), title: 'Untitled Note', tags: ['Work'], date: new Date().toISOString(), body: '' };
+  notes.unshift(n);
+  saveNotes(); renderList(); openNote(n.id);
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', renderList);
+
+// Tags filter
+document.querySelectorAll('.tag-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    activeTag = this.dataset.tag;
+    renderList();
+  });
+});
+
+// Toolbar
+document.querySelectorAll('.tool-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const textarea = document.getElementById('noteBody');
+    const tpl = this.dataset.insert;
+    if (!tpl || !activeId) return;
+    const [before, after] = tpl.split('|');
+    const start = textarea.selectionStart, end = textarea.selectionEnd;
+    const sel = textarea.value.slice(start, end);
+    const replacement = before + sel + after;
+    textarea.setRangeText(replacement, start, end, 'end');
+    textarea.focus();
+    scheduleAutoSave();
+  });
+});
+
+renderList();
+if (notes.length) openNote(notes[0].id);
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Files — Openline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070c18;--bg-card:#0c1120;--bg-header:#090e1c;
+  --text:#dde6ff;--muted:rgba(255,255,255,.45);
+  --blue:#3B3BFF;--orange:#ff6616;
+  --success:#22c55e;--warn:#f59e0b;--error:#ef4444;
+  --border:rgba(255,255,255,.07);
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;font-size:20px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Header */
+.header{background:var(--bg-header);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;flex-shrink:0;position:sticky;top:0;z-index:100}
+.header-icon{color:var(--blue);display:flex;align-items:center}
+.header-title{font-family:'Play',sans-serif;font-weight:700;font-size:28px;color:var(--text);white-space:nowrap}
+.header-search{flex:1;max-width:580px;margin-left:16px;position:relative}
+.header-search input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 22px 10px 54px;color:var(--text);font-size:18px;outline:none;font-family:'Inter',sans-serif}
+.header-search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,59,255,.15)}
+.header-search input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:8px;font-size:18px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#4f4fff}
+.btn-ghost{background:transparent;color:var(--blue);border:1px solid rgba(59,59,255,.4)}
+.btn-ghost:hover{background:rgba(59,59,255,.1)}
+.btn-icon{padding:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.btn-icon:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-icon.active{color:var(--blue);border-color:var(--blue);background:rgba(59,59,255,.1)}
+
+/* Layout */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* Sidebar */
+.sidebar{width:380px;background:var(--bg-card);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-section{padding:28px 22px 16px}
+.sidebar-label{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:18px;padding:0 6px}
+.tree-item{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:18px;transition:all .15s;position:relative}
+.tree-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.tree-item.active{background:rgba(59,59,255,.15);color:var(--blue)}
+.tree-item svg{flex-shrink:0}
+.tree-children{padding-left:24px}
+.tree-toggle{margin-left:auto;transition:transform .2s}
+.tree-toggle.open{transform:rotate(90deg)}
+.sidebar-quota{margin:auto 0 0;padding:28px}
+.quota-bar{background:rgba(255,255,255,.06);border-radius:4px;height:6px;overflow:hidden;margin:14px 0 8px}
+.quota-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),#7c7cff)}
+.quota-text{font-size:16px;color:var(--muted)}
+
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main-top{padding:22px 36px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:18px;color:var(--muted)}
+.breadcrumb span{cursor:pointer}
+.breadcrumb span:hover{color:var(--text)}
+.breadcrumb span.crumb-active{color:var(--text)}
+.breadcrumb-sep{color:var(--border)}
+.view-toggle{display:flex;gap:6px}
+.file-area{flex:1;overflow-y:auto;padding:0 36px 36px}
+
+/* List view */
+.file-table{width:100%;border-collapse:collapse;margin-top:22px}
+.file-table th{text-align:left;color:var(--muted);font-weight:500;padding:16px 22px;border-bottom:1px solid var(--border);white-space:nowrap;font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:.05em}
+.file-table td{padding:0}
+.file-row{display:grid;grid-template-columns:1fr 200px 180px 100px 120px;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;position:relative}
+.file-row:hover{background:rgba(255,255,255,.03)}
+.file-row:hover .row-actions{opacity:1}
+.file-name-cell{display:flex;align-items:center;gap:16px;min-width:0}
+.file-icon{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;font-family:'Press Start 2P',monospace}
+.file-icon.pdf{background:rgba(239,68,68,.15);color:#ef4444}
+.file-icon.doc{background:rgba(59,130,246,.15);color:#3b82f6}
+.file-icon.xls{background:rgba(34,197,94,.15);color:#22c55e}
+.file-icon.img{background:rgba(168,85,247,.15);color:#a855f7}
+.file-icon.zip{background:rgba(245,158,11,.15);color:#f59e0b}
+.file-icon.code{background:rgba(6,182,212,.15);color:#06b6d4}
+.file-icon.folder{background:rgba(59,59,255,.15);color:var(--blue)}
+.file-fname{font-size:18px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-ext{font-size:16px;color:var(--muted);flex-shrink:0}
+.file-meta{font-size:18px;color:var(--muted)}
+.row-actions{opacity:0;display:flex;gap:6px;transition:opacity .15s}
+.row-act-btn{padding:8px 10px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:16px;transition:all .1s;display:flex;align-items:center}
+.row-act-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+
+/* Grid view */
+.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;padding:22px 0}
+.file-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .15s;animation:fade-up .2s ease both}
+.file-card:hover{border-color:rgba(59,59,255,.4);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.file-card-preview{height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;border-bottom:1px solid var(--border)}
+.file-card-info{padding:18px}
+.file-card-name{font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-card-date{font-size:16px;color:var(--muted);margin-top:6px}
+
+/* Context menu */
+.ctx-menu{position:fixed;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px;z-index:1000;min-width:240px;box-shadow:0 12px 32px rgba(0,0,0,.5);animation:fade-up .1s ease}
+.ctx-item{display:flex;align-items:center;gap:14px;padding:14px 22px;border-radius:7px;font-size:18px;cursor:pointer;color:var(--text);transition:background .1s}
+.ctx-item:hover{background:rgba(255,255,255,.06)}
+.ctx-item.danger{color:var(--error)}
+.ctx-item.danger:hover{background:rgba(239,68,68,.1)}
+.ctx-sep{height:1px;background:var(--border);margin:6px 0}
+
+/* Empty state */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:100px 36px;text-align:center;animation:fade-up .3s ease}
+.empty-state svg{opacity:.3}
+.empty-title{font-family:'Play',sans-serif;font-size:32px;font-weight:700}
+.empty-sub{font-size:18px;color:var(--muted)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+  </div>
+  <span class="header-title">Files</span>
+  <div class="header-search">
+    <span class="search-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+    <input type="text" placeholder="Search files…" id="searchInput" oninput="filterFiles()">
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-primary" onclick="alert('Upload dialog')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      Upload
+    </button>
+    <button class="btn-icon" onclick="window.parent.postMessage({type:'files-close'},'*') || history.back()" title="Close">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="app-body">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <div class="tree-item active" onclick="navigateTo('home')" id="nav-home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12L12 3l9 9M4 10v10a1 1 0 001 1h5v-6h4v6h5a1 1 0 001-1V10"/></svg>
+        Home
+      </div>
+      <div class="tree-item" onclick="navigateTo('shared')" id="nav-shared">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49"/></svg>
+        Shared with me
+      </div>
+      <div class="tree-item" id="nav-projects" onclick="toggleProjects()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        Projects
+        <span class="tree-toggle" id="proj-toggle" style="margin-left:auto">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
+      </div>
+      <div id="proj-children" class="tree-children" style="display:none">
+        <div class="tree-item" onclick="navigateTo('esim')" id="nav-esim" style="font-size:16px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M8 11h.01M12 11h.01M16 11h.01"/></svg>
+          eSIM Platform
+        </div>
+        <div class="tree-item" onclick="navigateTo('marketing')" id="nav-marketing" style="font-size:16px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Marketing
+        </div>
+        <div class="tree-item" onclick="navigateTo('legal')" id="nav-legal" style="font-size:16px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l4 4-4 4-4-4 4-4zM3 18l4-4 4 4-4 4-4-4zM17 18l4-4 4 4-4 4-4-4z"/></svg>
+          Legal
+        </div>
+      </div>
+      <div class="tree-item" onclick="navigateTo('archive')" id="nav-archive">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        Archive
+      </div>
+    </div>
+    <div class="sidebar-quota">
+      <div class="quota-text" style="font-size:16px;font-weight:500">Storage</div>
+      <div class="quota-bar"><div class="quota-fill" style="width:38%"></div></div>
+      <div class="quota-text">3.8 GB of 10 GB used</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="main-top">
+      <div class="breadcrumb" id="breadcrumb">
+        <span onclick="navigateTo('home')">Home</span>
+      </div>
+      <div class="view-toggle">
+        <button class="btn-icon active" id="btn-list" onclick="setView('list')" title="List view">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+        <button class="btn-icon" id="btn-grid" onclick="setView('grid')" title="Grid view">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="file-area" id="fileArea"></div>
+  </div>
+</div>
+
+<!-- Context Menu -->
+<div class="ctx-menu" id="ctxMenu" style="display:none">
+  <div class="ctx-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Rename</div>
+  <div class="ctx-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download</div>
+  <div class="ctx-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49"/></svg> Share</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item danger"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg> Delete</div>
+</div>
+
+<script>
+const FOLDERS = {
+  home: {
+    label: 'Home',
+    path: ['Home'],
+    items: [
+      {type:'folder',name:'Projects',icon:'folder',modified:'2 hours ago',by:'Paul Lambert',size:'—'},
+      {type:'folder',name:'Shared',icon:'folder',modified:'Yesterday',by:'Marie Curet',size:'—'},
+      {type:'file',name:'Q3 2024 Roadmap.pdf',ext:'PDF',icon:'pdf',modified:'3 hours ago',by:'Paul Lambert',size:'2.4 MB'},
+      {type:'file',name:'Openline Pitch Deck v4.pdf',ext:'PDF',icon:'pdf',modified:'Yesterday',by:'Thomas Delacroix',size:'8.1 MB'},
+      {type:'file',name:'Team Handbook.docx',ext:'DOC',icon:'doc',modified:'3 days ago',by:'Marie Curet',size:'1.2 MB'},
+      {type:'file',name:'Brand Guidelines.pdf',ext:'PDF',icon:'pdf',modified:'1 week ago',by:'Léa Fontaine',size:'5.7 MB'},
+      {type:'file',name:'Budget Tracker Q3.xlsx',ext:'XLS',icon:'xls',modified:'1 week ago',by:'Carlos Mendez',size:'340 KB'},
+    ]
+  },
+  shared: {
+    label: 'Shared with me',
+    path: ['Home','Shared'],
+    items: [
+      {type:'file',name:'Partner Agreement Draft.docx',ext:'DOC',icon:'doc',modified:'1 day ago',by:'Rania Aziz',size:'890 KB'},
+      {type:'file',name:'MVNO Integration Spec.pdf',ext:'PDF',icon:'pdf',modified:'2 days ago',by:'Marco Silva',size:'1.8 MB'},
+      {type:'file',name:'Investor Update Oct 2024.pdf',ext:'PDF',icon:'pdf',modified:'5 days ago',by:'Paul Lambert',size:'3.3 MB'},
+    ]
+  },
+  esim: {
+    label: 'eSIM Platform',
+    path: ['Home','Projects','eSIM Platform'],
+    items: [
+      {type:'file',name:'eSIM Provisioning API v2.pdf',ext:'PDF',icon:'pdf',modified:'1 hour ago',by:'Adrien Moreau',size:'4.2 MB'},
+      {type:'file',name:'RSP Architecture Diagram.png',ext:'IMG',icon:'img',modified:'4 hours ago',by:'Yuki Tanaka',size:'1.1 MB'},
+      {type:'file',name:'GSMA SGP.22 Compliance.docx',ext:'DOC',icon:'doc',modified:'Yesterday',by:'Adrien Moreau',size:'760 KB'},
+      {type:'file',name:'Backend Services.tar.gz',ext:'ZIP',icon:'zip',modified:'2 days ago',by:'Marco Silva',size:'128 MB'},
+      {type:'file',name:'profile-manager.ts',ext:'CODE',icon:'code',modified:'2 days ago',by:'Marco Silva',size:'42 KB'},
+      {type:'file',name:'KPI Dashboard Oct.xlsx',ext:'XLS',icon:'xls',modified:'3 days ago',by:'Carlos Mendez',size:'210 KB'},
+    ]
+  },
+  marketing: {
+    label: 'Marketing',
+    path: ['Home','Projects','Marketing'],
+    items: [
+      {type:'file',name:'Go-to-Market Strategy.pdf',ext:'PDF',icon:'pdf',modified:'2 days ago',by:'Léa Fontaine',size:'2.9 MB'},
+      {type:'file',name:'Brand Assets Pack.zip',ext:'ZIP',icon:'zip',modified:'1 week ago',by:'Léa Fontaine',size:'45 MB'},
+      {type:'file',name:'Social Media Calendar Q4.xlsx',ext:'XLS',icon:'xls',modified:'1 week ago',by:'Sofia Ribeiro',size:'180 KB'},
+      {type:'file',name:'Product Screenshots.zip',ext:'ZIP',icon:'zip',modified:'2 weeks ago',by:'Léa Fontaine',size:'23 MB'},
+    ]
+  },
+  legal: {
+    label: 'Legal',
+    path: ['Home','Projects','Legal'],
+    items: [
+      {type:'file',name:'SLA Template v3.docx',ext:'DOC',icon:'doc',modified:'4 days ago',by:'Rania Aziz',size:'220 KB'},
+      {type:'file',name:'NDA — Partner Telco A.pdf',ext:'PDF',icon:'pdf',modified:'1 week ago',by:'Rania Aziz',size:'410 KB'},
+      {type:'file',name:'GDPR DPA Framework.docx',ext:'DOC',icon:'doc',modified:'2 weeks ago',by:'Rania Aziz',size:'580 KB'},
+      {type:'file',name:'IP Assignment Agreements.pdf',ext:'PDF',icon:'pdf',modified:'1 month ago',by:'Paul Lambert',size:'1.1 MB'},
+    ]
+  },
+  archive: {
+    label: 'Archive',
+    path: ['Home','Archive'],
+    items: []
+  }
+};
+
+let currentFolder = 'home';
+let viewMode = 'list';
+
+function setView(mode) {
+  viewMode = mode;
+  document.getElementById('btn-list').classList.toggle('active', mode==='list');
+  document.getElementById('btn-grid').classList.toggle('active', mode==='grid');
+  renderFiles();
+}
+
+function navigateTo(folder) {
+  currentFolder = folder;
+  document.querySelectorAll('.tree-item').forEach(el=>el.classList.remove('active'));
+  const nav = document.getElementById('nav-'+folder);
+  if(nav) nav.classList.add('active');
+  renderBreadcrumb();
+  renderFiles();
+}
+
+function toggleProjects() {
+  const ch = document.getElementById('proj-children');
+  const tog = document.getElementById('proj-toggle');
+  const open = ch.style.display === 'block';
+  ch.style.display = open ? 'none' : 'block';
+  tog.classList.toggle('open', !open);
+  if(!open) document.getElementById('nav-projects').classList.add('active');
+}
+
+function renderBreadcrumb() {
+  const folder = FOLDERS[currentFolder];
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = folder.path.map((p,i) => {
+    if(i === folder.path.length-1) return `<span class="crumb-active">${p}</span>`;
+    return `<span onclick="navigateTo('home')">${p}</span><span class="breadcrumb-sep">/</span>`;
+  }).join('');
+}
+
+function filterFiles() {
+  renderFiles();
+}
+
+function iconLabel(icon) {
+  const map={pdf:'PDF',doc:'DOC',xls:'XLS',img:'IMG',zip:'ZIP',code:'</>'}; 
+  return map[icon]||icon.toUpperCase();
+}
+function iconEmoji(icon) {
+  const map={pdf:'📄',doc:'📝',xls:'📊',img:'🖼',zip:'📦',code:'⚡',folder:'📁'};
+  return map[icon]||'📄';
+}
+
+function renderFiles() {
+  const folder = FOLDERS[currentFolder];
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let items = folder.items.filter(f => f.name.toLowerCase().includes(q));
+  const area = document.getElementById('fileArea');
+
+  if(items.length === 0) {
+    area.innerHTML = `<div class="empty-state">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+      <div class="empty-title">No files here</div>
+      <div class="empty-sub">${q ? 'No results for "'+q+'"' : 'This folder is empty.'}</div>
+    </div>`;
+    return;
+  }
+
+  if(viewMode === 'list') {
+    area.innerHTML = `<table class="file-table">
+      <thead><tr>
+        <th style="padding:16px 22px">Name</th>
+        <th style="padding:16px 22px">Modified</th>
+        <th style="padding:16px 22px">By</th>
+        <th style="padding:16px 22px">Size</th>
+        <th style="padding:16px 22px">Actions</th>
+      </tr></thead>
+      <tbody id="fileBody"></tbody>
+    </table>`;
+    const tbody = document.getElementById('fileBody');
+    items.forEach(f => {
+      const row = document.createElement('div');
+      row.className = 'file-row';
+      row.oncontextmenu = e => showCtx(e);
+      if(f.type === 'folder') {
+        row.onclick = () => { for(let k in FOLDERS) if(FOLDERS[k].label===f.name) navigateTo(k); };
+      }
+      row.innerHTML = `
+        <div class="file-name-cell">
+          <div class="file-icon ${f.icon}">${iconLabel(f.icon)}</div>
+          <span class="file-fname">${f.name}</span>
+        </div>
+        <div class="file-meta">${f.modified}</div>
+        <div class="file-meta">${f.by}</div>
+        <div class="file-meta">${f.size}</div>
+        <div class="row-actions">
+          <button class="row-act-btn" title="Download"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button>
+          <button class="row-act-btn" title="Share"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49"/></svg></button>
+          <button class="row-act-btn" title="More"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+        </div>
+      `;
+      tbody.appendChild(row);
+    });
+  } else {
+    const grid = document.createElement('div');
+    grid.className = 'file-grid';
+    items.forEach((f,i) => {
+      const card = document.createElement('div');
+      card.className = 'file-card';
+      card.style.animationDelay = (i*0.04)+'s';
+      card.oncontextmenu = e => showCtx(e);
+      const bgMap = {pdf:'rgba(239,68,68,.08)',doc:'rgba(59,130,246,.08)',xls:'rgba(34,197,94,.08)',img:'rgba(168,85,247,.08)',zip:'rgba(245,158,11,.08)',code:'rgba(6,182,212,.08)',folder:'rgba(59,59,255,.08)'};
+      card.innerHTML = `
+        <div class="file-card-preview" style="background:${bgMap[f.icon]||'rgba(255,255,255,.02)'}">
+          <span style="font-size:56px">${iconEmoji(f.icon)}</span>
+        </div>
+        <div class="file-card-info">
+          <div class="file-card-name">${f.name}</div>
+          <div class="file-card-date">${f.modified}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    area.innerHTML = '';
+    area.appendChild(grid);
+  }
+}
+
+function showCtx(e) {
+  e.preventDefault();
+  const menu = document.getElementById('ctxMenu');
+  menu.style.display = 'block';
+  menu.style.left = Math.min(e.clientX, window.innerWidth-180)+'px';
+  menu.style.top = Math.min(e.clientY, window.innerHeight-160)+'px';
+}
+
+document.addEventListener('click', () => { document.getElementById('ctxMenu').style.display='none'; });
+
+// init
+toggleProjects();
+renderBreadcrumb();
+renderFiles();
+</script>
+</body>
+</html>
