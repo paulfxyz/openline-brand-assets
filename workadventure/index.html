@@ -51,14 +51,20 @@
   .section-count{background:rgba(255,255,255,.07);color:var(--muted);padding:3px 10px;border-radius:12px;font-size:13px}
 
   /* App grid */
-  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-  .app-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;text-decoration:none;display:block;position:relative;overflow:hidden}
-  .app-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,59,255,.06),transparent);opacity:0;transition:opacity .25s}
+  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .app-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;cursor:pointer;transition:all .25s;text-decoration:none;display:block;position:relative;overflow:hidden}
+  .app-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,59,255,.06),transparent);opacity:0;transition:opacity .25s;pointer-events:none}
   .app-card:hover{transform:translateY(-3px);border-color:rgba(59,59,255,.4);box-shadow:0 10px 32px rgba(0,0,0,.5)}
   .app-card:hover::after{opacity:1}
-  .app-card.new-badge::before{content:'NEW';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:9px;font-family:'Press Start 2P',monospace;padding:3px 6px;border-radius:6px;letter-spacing:.04em}
-  .app-emoji{font-size:36px;margin-bottom:14px;display:block}
-  .app-name{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--text)}
+  .app-card:hover .app-thumb img{transform:scale(1.03)}
+  .app-card.new-badge .app-thumb::before{content:'NEW';position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-size:9px;font-family:'Press Start 2P',monospace;padding:3px 6px;border-radius:6px;letter-spacing:.04em;z-index:2}
+  .app-thumb{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#0a0f1e,#111731)}
+  .app-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .35s ease}
+  .app-thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:56px}
+  .app-body{padding:16px 18px 18px}
+  .app-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .app-emoji{font-size:20px;line-height:1;flex-shrink:0}
+  .app-name{font-size:15px;font-weight:600;color:var(--text)}
   .app-desc{font-size:13px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .app-tag{display:inline-flex;margin-top:10px;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:500}
 
@@ -213,11 +219,18 @@ function renderContent() {
 
 function renderCard(a) {
   const tag = a.tag ? `<span class="app-tag" style="background:${a.tagColor||'rgba(255,255,255,.07)'};color:${a.tagText||'var(--muted)'}">${a.tag}</span>` : '';
+  const slug = a.file.replace(/\.html$/, '');
+  const thumb = `apps/screenshots/${slug}.png`;
   return `<a class="app-card${a.isNew?' new-badge':''}" href="${a.file}" target="_blank">
-    <span class="app-emoji">${a.emoji}</span>
-    <div class="app-name">${a.name}</div>
-    <div class="app-desc">${a.desc}</div>
-    ${tag}
+    <div class="app-thumb">
+      <div class="app-thumb-fallback">${a.emoji}</div>
+      <img src="${thumb}" alt="${a.name} screenshot" loading="lazy" onload="this.previousElementSibling.style.display='none'" onerror="this.style.display='none'"/>
+    </div>
+    <div class="app-body">
+      <div class="app-head"><span class="app-emoji">${a.emoji}</span><span class="app-name">${a.name}</span></div>
+      <div class="app-desc">${a.desc}</div>
+      ${tag}
+    </div>
   </a>`;
 }
 

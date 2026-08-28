@@ -8,12 +8,29 @@ to see the finished UI; use the launcher for a bird's-eye tour of the whole set.
 
 ```
 workadventure/
-├── index.html    ← App launcher (start here — grid of every app with quick preview)
-├── readme.html   ← Full narrative README rendered as a styled HTML page
-├── links.html    ← Cross-reference index of every app URL
-├── sdk.html      ← SDK overview / integration reference
-└── apps/         ← 36 individual app UI previews (self-contained HTML)
+├── index.html                 ← App launcher (start here — grid of every app with a real screenshot)
+├── readme.html                ← Full narrative README rendered as a styled HTML page
+├── links.html                 ← Cross-reference index of every app URL
+├── sdk.html                   ← SDK overview / integration reference
+└── apps/
+    ├── <slug>.html            ← 36 individual app UI previews (self-contained HTML)
+    └── screenshots/
+        ├── <slug>.png         ← 640×400 launcher thumbnail (one per app)
+        └── full/<slug>.png    ← 1280×800 full-resolution capture (for docs, press)
 ```
+
+### Screenshots (v1.3+)
+
+Every app now has a **real screenshot** rendered from the actual HTML — no mockups, no
+placeholders. The launcher displays the 640×400 thumbnail on each card and falls back to
+the emoji if the image fails to load. Full 1280×800 captures live in `apps/screenshots/full/`
+for use in docs, press kits, and app-store listings.
+
+To **re-generate** screenshots after an app change: serve the folder with any static
+server (`python3 -m http.server` from `workadventure/`), then run Playwright over
+`http://localhost:PORT/apps/*.html` at 1280×800 viewport, save as PNG, and resize to
+640×400 for the launcher thumbs. Any headless-browser tool works; the requirement is
+just a real render (fonts, charts, gradients all need to load).
 
 ## The apps (36)
 

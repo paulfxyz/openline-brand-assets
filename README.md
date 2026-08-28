@@ -9,9 +9,9 @@
 
 **The canonical public home for the Openline logo, wordmark, social templates, animated brand, payment-method logos, transactional emails, Figma exports and WorkAdventure SDK.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.2-FF6A00?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.3-FF6A00?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
-[![Assets](https://img.shields.io/badge/assets-290%2B%20files-2563EB?style=flat-square)](#repository-layout)
+[![Assets](https://img.shields.io/badge/assets-370%2B%20files-2563EB?style=flat-square)](#repository-layout)
 [![Formats](https://img.shields.io/badge/formats-PNG%20·%20JPG%20·%20SVG%20·%20EPS%20·%20AI%20·%20PDF%20·%20MP4%20·%20GIF%20·%20Lottie%20·%20HTML%20·%20TSX-22C55E?style=flat-square)](#repository-layout)
 [![CDN](https://img.shields.io/badge/CDN-jsDelivr%20·%20Cloudflare-F38020?style=flat-square)](#cdn-and-hot-linking)
 [![Hot-link](https://img.shields.io/badge/hot--link-friendly-9333EA?style=flat-square)](#hot-link-urls-raw-github)
@@ -445,6 +445,14 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 ---
 
 ## Changelog
+
+### v1.3 — 2026-08-28
+
+- 🖼️ **Every WorkAdventure app now has a real screenshot** — 74 new PNGs (640×400 launcher thumbs + 1280×800 full captures) rendered from the actual HTML, no mockups. The launcher grid displays them inline, with an emoji fallback if a thumbnail fails to load.
+- ✏️ **Renamed every Figma export** from Figma's generic auto-labels (`Frame1.tsx`, `Container.tsx`, `List.tsx`…) to descriptive `kebab-case` filenames like `hero-best-signal.tsx`, `carriers-grid-34.tsx`, `payment-list-wechat.tsx`, `chevron-glyph.tsx`. Shared `svg-*.ts` path-data modules kept their hashed names.
+- 📖 [`figma/README.md`](figma/README.md) now includes a grouped index of the renamed components (Hero & marketing · Coverage & carriers · Checkout / payment · Icons & glyphs).
+- 📚 [`workadventure/README.md`](workadventure/README.md) documents the new `apps/screenshots/` folder and the re-generation workflow.
+- ✅ No breaking changes to hot-links for identity assets (logo, wordmark, social, animation, payment methods, email). Figma exports were renamed, so anyone deep-linking to `figma/code-exports/Frame*.tsx` should switch to the new filenames.
 
 ### v1.2 — 2026-07-22
 

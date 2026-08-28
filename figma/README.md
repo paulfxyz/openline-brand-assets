@@ -9,9 +9,23 @@ this repo stays in sync with the design source of truth.
 ```
 figma/
 ├── code-exports/    ← Auto-generated TSX / TS components straight from Figma Dev Mode
-│                      (Container.tsx, Frame*.tsx, List*.tsx, svg-*.ts, world-map-dotted.tsx…)
+│                      — named by what they render, not by Figma's auto-labels
 └── LINKS.md         ← Paste Figma share links here (one row per file / design)
 ```
+
+### Named components (v1.3+)
+
+Every export has been renamed from Figma's generic auto-labels (`Frame1.tsx`, `Container.tsx`,
+`List.tsx`, …) to descriptive `kebab-case` filenames. The `svg-*.ts` path-data modules keep
+their hashed names because they're shared assets referenced by hash from multiple components.
+
+| Area | Files |
+| --- | --- |
+| **Hero & marketing** | `hero-best-signal.tsx`, `testimonial-quote-card.tsx`, `referral-cta-banner.tsx`, `how-does-saily-work.tsx`, `saily-footer.tsx`, `partner-logos-row.tsx`, `bundle-app-logos.tsx`, `dual-image-panel.tsx` |
+| **Coverage & carriers** | `carriers-row-5.tsx`, `carriers-row-6.tsx`, `carriers-grid-34.tsx`, `carriers-grid-37-airtel-play.tsx`, `carriers-grid-37-alt.tsx`, `carriers-row-airtel-play-turkcell.tsx`, `country-flags-strip.tsx`, `regions-quad-1.tsx`, `regions-quad-2.tsx`, `world-map-dotted.tsx` |
+| **Checkout / payment** | `payment-list.tsx`, `payment-list-3.tsx`, `payment-list-item.tsx`, `payment-list-alipay-1.tsx`, `payment-list-alipay-2.tsx`, `payment-list-alipay-3.tsx`, `payment-list-wechat.tsx`, `payment-methods-alipay-1.tsx`, `payment-methods-alipay-2.tsx`, `payment-group-mini.tsx`, `visa-glyph.tsx`, `wechat-pay-glyph.tsx`, `wechat-pay-icon-1.tsx`, `wechat-pay-icon-2.tsx` |
+| **Icons & glyphs** | `chevron-glyph.tsx`, `security-shield-icon.tsx`, `phosphor-currency-eth.tsx`, `icon-mini-1.tsx`, `icon-mini-2.tsx` |
+| **Shared SVG paths** | `svg-*.ts` (path-data modules, keep hashed names) |
 
 ## What these files are (and aren't)
 
