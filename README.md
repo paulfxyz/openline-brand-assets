@@ -5,19 +5,26 @@
   <img src="https://raw.githubusercontent.com/paulfxyz/openline-brand-assets/main/logo/png/openline-logo-color.png" alt="Openline" width="140" height="140" />
 </picture>
 
-# Openline · Media Kit
+# Openline · Brand & Media Kit
 
-**The canonical public home for the Openline logo, wordmark, social templates, animated brand, payment-method logos, transactional emails, Figma exports and WorkAdventure SDK.**
+**The single source of truth for the Openline brand — logo, wordmark, social, motion, payment-method logos, transactional email, Figma code exports, WorkAdventure SDK apps, and the shared web design system.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.3-FF6A00?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Media Kit](https://img.shields.io/badge/media--kit-v1.1-FF6A00?style=flat-square)](#changelog)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
-[![Assets](https://img.shields.io/badge/assets-370%2B%20files-2563EB?style=flat-square)](#repository-layout)
-[![Formats](https://img.shields.io/badge/formats-PNG%20·%20JPG%20·%20SVG%20·%20EPS%20·%20AI%20·%20PDF%20·%20MP4%20·%20GIF%20·%20Lottie%20·%20HTML%20·%20TSX-22C55E?style=flat-square)](#repository-layout)
-[![CDN](https://img.shields.io/badge/CDN-jsDelivr%20·%20Cloudflare-F38020?style=flat-square)](#cdn-and-hot-linking)
+[![Assets](https://img.shields.io/badge/assets-385%20files-2563EB?style=flat-square)](#repository-layout)
+[![Formats](https://img.shields.io/badge/formats-PNG%20%C2%B7%20JPG%20%C2%B7%20SVG%20%C2%B7%20EPS%20%C2%B7%20AI%20%C2%B7%20PDF%20%C2%B7%20MP4%20%C2%B7%20GIF%20%C2%B7%20Lottie%20%C2%B7%20HTML%20%C2%B7%20TSX%20%C2%B7%20CSS-22C55E?style=flat-square)](#file-format-guide)
+[![CDN](https://img.shields.io/badge/CDN-jsDelivr%20%C2%B7%20Cloudflare-F38020?style=flat-square)](#cdn-and-hot-linking)
 [![Hot-link](https://img.shields.io/badge/hot--link-friendly-9333EA?style=flat-square)](#hot-link-urls-raw-github)
-[![Status](https://img.shields.io/badge/status-actively%20maintained-22C55E?style=flat-square)](#changelog)
+[![Status](https://img.shields.io/badge/status-actively%20maintained-22C55E?style=flat-square)](#contributing--maintenance)
+[![Updated](https://img.shields.io/badge/updated-2026--09--06-FF6A00?style=flat-square)](#changelog)
+[![PRs](https://img.shields.io/badge/PRs-welcome-1A1A1A?style=flat-square)](#contributing--maintenance)
 [![Website](https://img.shields.io/badge/openline.com-Visit-FF6A00?style=flat-square)](https://openline.com)
 [![Contact](https://img.shields.io/badge/contact-ask%40openline.com-1A1A1A?style=flat-square)](mailto:ask@openline.com)
+
+[![GitHub stars](https://img.shields.io/github/stars/paulfxyz/openline-brand-assets?style=flat-square&color=FF6A00)](https://github.com/paulfxyz/openline-brand-assets/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/paulfxyz/openline-brand-assets?style=flat-square&color=1A1A1A)](https://github.com/paulfxyz/openline-brand-assets/commits/main)
+[![jsDelivr](https://img.shields.io/jsdelivr/gh/hm/paulfxyz/openline-brand-assets?style=flat-square&color=F38020&label=jsDelivr%20hits)](https://www.jsdelivr.com/package/gh/paulfxyz/openline-brand-assets)
+[![Made in Lisbon](https://img.shields.io/badge/made%20in-Lisbon-FF6A00?style=flat-square)](#)
 
 </div>
 
@@ -27,11 +34,13 @@
 >
 > Website: **[openline.com](https://openline.com)**
 
-This repository is the **single source of truth** for everything that visually represents Openline in the wild — press articles, partner pages, decks, status pages, auth screens, integrations, conference signage, integrator dashboards, third-party app stores, browser extensions, and anywhere else the brand needs to render.
+This repository is the **canonical public home for everything that visually represents Openline** in the wild — press articles, partner pages, decks, status pages, auth screens, integrations, conference signage, integrator dashboards, third-party app stores, browser extensions, and anywhere else the brand needs to render.
 
-Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
+It spans **ten areas, 385 files**: the **logo** and **wordmark**, **social** assets, the **animation / motion** system, the **payment-method** logo library, **transactional email** templates and signatures, **Figma** code exports, the **WorkAdventure SDK** app previews, and the shared **web design system** stylesheet. Every area is built from the same design tokens, so the brand never fragments across surfaces.
 
 You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own CDN mirror). No download-and-reupload is necessary — and we'd prefer you didn't, because hot-linking guarantees you always get the latest, on-brand version.
+
+This media kit is **actively maintained and updated on a regular cadence**: expect recurring drops of new sequences, refreshed motion, seasonal variants, additional formats, and partner co-marks as they're approved. See [Contributing & maintenance](#contributing--maintenance) and [Roadmap](#whats-next) for how new content lands.
 
 ---
 
@@ -39,7 +48,8 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 
 - [At a glance](#at-a-glance)
 - [Repository layout](#repository-layout)
-- [The eight areas](#the-eight-areas)
+- [File-format guide](#file-format-guide)
+- [The ten areas](#the-ten-areas)
   - [1 · Logo](#1--logo)
   - [2 · Wordmark](#2--wordmark)
   - [3 · Social](#3--social)
@@ -48,14 +58,19 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
   - [6 · Email](#6--email)
   - [7 · Figma](#7--figma)
   - [8 · WorkAdventure SDK](#8--workadventure-sdk)
+  - [9 · Web design system](#9--web-design-system)
+  - [10 · Misc](#10--misc)
 - [Hot-link URLs (raw GitHub)](#hot-link-urls-raw-github)
 - [CDN and hot-linking](#cdn-and-hot-linking)
 - [How to use](#how-to-use)
 - [Branding strategy](#branding-strategy)
 - [Brand basics](#brand-basics)
+- [Colour palette](#colour-palette)
+- [Typography stack](#typography-stack)
 - [Do / Don't gallery](#do--dont-gallery)
 - [Usage policy](#usage-policy)
 - [Contributing & maintenance](#contributing--maintenance)
+- [What's next](#whats-next)
 - [Press contact](#press-contact)
 - [Changelog](#changelog)
 
@@ -73,11 +88,12 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 | A **512×512 mark** for auth pages, favicons, app icons | [`openline-mark-512.png`](openline-mark-512.png) |
 | A **2250×2250 mark** master (transparent PNG) | [`logo/png/openline-mark-2250.png`](logo/png/openline-mark-2250.png) |
 | The Openline **animated loader** (looping, ~1s) | [`animation/loading-loop/openline-loading-loop.mp4`](animation/loading-loop/openline-loading-loop.mp4) · [`.gif`](animation/loading-loop/openline-loading-loop.gif) · [`.lottie.json`](animation/loading-loop/openline-loading-loop.lottie.json) |
-| A **payment-method logo** (Visa, Apple Pay, PayPal, …) | [`payment-methods/svg/`](payment-methods/svg/) (100 logos) |
+| A **payment-method logo** (Visa, Apple Pay, PayPal, …) | [`payment-methods/svg/`](payment-methods/svg/) (99 logos) |
 | A **transactional email template** (OTP, activation, code delivery, letterhead) | [`email/templates/`](email/templates/) |
 | An **HTML email signature** for `ask@openline.com` or a teammate | [`email/signatures/`](email/signatures/) |
 | A **Figma → React** export to lift for a component | [`figma/code-exports/`](figma/code-exports/) |
 | A **WorkAdventure SDK app** preview (36 apps) | [`workadventure/apps/`](workadventure/apps/) |
+| The **shared web design-system** stylesheet (one CSS file, two apps in lockstep) | [`web/openline-ui.css`](web/openline-ui.css) |
 
 ---
 
@@ -114,9 +130,9 @@ openline-brand-assets/
 │   ├── square/                    ← Intro + loop + 8 reels (Instagram-ready)
 │   └── vertical/                  ← Intro + loop + 8 reels (Stories / Reels)
 │
-├── payment-methods/               ← 100 individual payment-method logos + reference
+├── payment-methods/               ← 99 individual payment-method logos + reference
 │   ├── svg/                       ← Every method as a self-contained SVG
-│   ├── app-source/                ← Hand-built SVGs used inside the mobile checkout
+│   ├── app-source/                ← 6 hand-built SVGs used inside the mobile checkout
 │   └── reference.html             ← Visual index — open in a browser
 │
 ├── email/                         ← Transactional email templates & signatures
@@ -131,12 +147,19 @@ openline-brand-assets/
 ├── workadventure/                 ← Openline × WorkAdventure SDK app previews
 │   ├── index.html                 ← App launcher (start here)
 │   ├── readme.html · links.html · sdk.html
-│   └── apps/                      ← 36 self-contained app UIs
+│   ├── apps/                      ← 36 self-contained app UIs + 76 rendered screenshots
+│   └── screenshots/               ← Launcher thumbs (640×400) + full captures (1280×800)
+│
+├── web/                           ← Shared web design system (one CSS file, two apps)
+│   ├── openline-ui.css            ← v1.0.0 · tokens, components, layouts
+│   └── README.md                  ← Usage, tokens, consuming apps, change process
 │
 └── misc/                          ← Catch-all landing spot for future contributions
 ```
 
-**File-format guide**
+---
+
+## File-format guide
 
 | Format | Best for |
 | --- | --- |
@@ -151,10 +174,11 @@ openline-brand-assets/
 | **Lottie JSON** | Native-quality animation in web / iOS / Android with tiny payloads |
 | **HTML** | Email templates, signatures, WorkAdventure SDK app previews |
 | **TSX** | Figma → React code exports (reference implementation) |
+| **CSS** | The shared Openline web design-system stylesheet |
 
 ---
 
-## The eight areas
+## The ten areas
 
 ### 1 · Logo
 The Openline symbol — the mark that stands alone. Available in **color / black / white**, five formats (PNG, JPG, EPS, AI, PDF), plus a **2250×2250 transparent master** and the **512×512** favicon / auth mark. → [`logo/`](logo/)
@@ -169,16 +193,22 @@ Ready-to-post assets for Twitter/X, Instagram, LinkedIn, YouTube: square social-
 The Openline motion system. The signature **~1-second loading loop** (MP4 · GIF · Lottie), animated **favicons**, and three format-tuned animation packs — **horizontal / square / vertical**, each with intro, loop and 8 reels. → [`animation/`](animation/)
 
 ### 5 · Payment methods
-**100 individual payment-method logos** as self-contained SVGs (cards, wallets, buy-now-pay-later, bank transfers, crypto), plus 6 hand-built app-source logotypes and a standalone HTML visual index. → [`payment-methods/`](payment-methods/) · [reference.html](payment-methods/reference.html)
+**99 individual payment-method logos** as self-contained SVGs (cards, wallets, buy-now-pay-later, bank transfers, crypto), plus **6 hand-built app-source logotypes** (Revolut, BLIK, TWINT, Pix, Bancontact, iDEAL) used inside the mobile checkout, and a standalone HTML visual index. → [`payment-methods/`](payment-methods/) · [reference.html](payment-methods/reference.html)
 
 ### 6 · Email
-The applied brand in transactional email: **OTP**, **code delivery**, **eSIM activation**, **letterhead**, **UI SDK announcement**, **WorkAdventure SDK announcement**, an **email component library** and **HTML signatures** (Openline brand + Paul Fleury personal). Every template is table-based, inline-styled, and battle-tested across mail clients. → [`email/`](email/)
+The applied brand in transactional email: **OTP**, **code delivery**, **eSIM activation**, **letterhead**, **UI SDK announcement**, **WorkAdventure SDK announcement**, an **email component library** and **two HTML signatures** (Openline brand + Paul Fleury personal). Every template is table-based, inline-styled, and battle-tested across mail clients. → [`email/`](email/)
 
 ### 7 · Figma
-The **code side** of the Openline design system — React/TSX components auto-generated from Figma via Dev Mode, plus [`LINKS.md`](figma/LINKS.md) with the live Figma share links so this repo stays in sync with the design source of truth. → [`figma/`](figma/)
+The **code side** of the Openline design system — 67 React/TSX components auto-generated from Figma via Dev Mode, plus [`LINKS.md`](figma/LINKS.md) with the live Figma share links so this repo stays in sync with the design source of truth. → [`figma/`](figma/)
 
 ### 8 · WorkAdventure SDK
-Openline × WorkAdventure: **36 self-contained HTML app previews** for the virtual-office SDK (todo, notes, pomodoro, calendar, chat, voice, whiteboard, stats, AI, and more), an **app launcher**, and an **integration reference**. Same design tokens as the Openline product. → [`workadventure/`](workadventure/) · [launcher](workadventure/index.html)
+Openline × WorkAdventure: **36 self-contained HTML app previews** for the virtual-office SDK (todo, notes, pomodoro, calendar, chat, voice, whiteboard, stats, AI, and more), an **app launcher**, **76 rendered screenshots** (launcher thumbs + full captures), and an **integration reference**. Same design tokens as the Openline product. → [`workadventure/`](workadventure/) · [launcher](workadventure/index.html)
+
+### 9 · Web design system
+One CSS file keeping two Openline web apps in lockstep. [`web/openline-ui.css`](web/openline-ui.css) (v1.0.0) ships the full token set (`--brand`, `--ink*`, `--line*`, `--bg*`, `--ok/--err`, `--shadow-*`, `--radius*`), topbar / hero / search / filters / card-grid / row-list / modal components, and `prefers-reduced-motion` support. Consumed by the Knowledge Base and eSIM Compatibility apps. → [`web/`](web/) · [web/README.md](web/README.md)
+
+### 10 · Misc
+Catch-all landing spot for future one-off contributions that don't yet belong to a named area. → [`misc/`](misc/)
 
 ---
 
@@ -224,9 +254,12 @@ https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/openline-mark-51
 https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/logo/png/openline-logo-color.png
 https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/payment-methods/svg/visa.svg
 https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/animation/loading-loop/openline-loading-loop.lottie.json
+https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/web/openline-ui.css
 ```
 
-Pin to a tag (`@v1.2`) instead of `@main` for immutable, cache-forever URLs in production.
+Pin to a tag (`@v1.1`) instead of `@main` for immutable, cache-forever URLs in production.
+
+> Note: GitHub raw serves CSS as `text/plain`, so modern browsers refuse to apply it as a stylesheet. Always load [`web/openline-ui.css`](web/openline-ui.css) through jsDelivr (or your own CDN), not raw GitHub.
 
 ### Cloudflare / your own CDN
 
@@ -268,6 +301,14 @@ Set up a Worker or Transform Rule that proxies `https://brand.yourdomain.tld/<pa
 ```html
 <img src="https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/payment-methods/svg/visa.svg" alt="Visa" width="38" height="24" />
 <img src="https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/payment-methods/svg/apple-pay.svg" alt="Apple Pay" height="24" />
+```
+
+### The shared web design system
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/paulfxyz/openline-brand-assets@main/web/openline-ui.css" />
+<link rel="stylesheet" href="./style.css" /> <!-- app-specific overrides -->
 ```
 
 ### An HTML email signature
@@ -312,6 +353,14 @@ Openline is a **traveller-first connectivity brand**. The visual system exists t
 2. **Borderless travel** — the orange is intentionally warm, sun-lit, and globally legible. It reads the same in Lisbon, Lagos, Lima or Lahore.
 3. **Premium simplicity** — restraint over ornament. We earn trust with telecom-grade reliability and software-grade polish, not with decoration.
 
+### Brand principles
+
+- **One mark, everywhere.** The same symbol renders at 16px on a favicon and on a billboard. We don't fragment the identity across surfaces.
+- **One token set, everywhere.** Logo, wordmark, motion, email, checkout, SDK apps and the web design system all draw from the same colours, the same type pair, the same radii and shadows. The brand doesn't stop at the logo.
+- **Numbers over adjectives.** 190+ countries, 30 seconds, 1M+ travellers. Travellers buy reliability, not poetry.
+- **Hot-link over re-upload.** The on-brand version is the canonical version. We'd rather you link to it than freeze a stale copy.
+- **Restraint over decoration.** No gradients in the core mark, no drop shadows, no ornament. The orange does the work.
+
 ### Visual pillars
 
 | Pillar | What it looks like | Why it matters |
@@ -319,9 +368,9 @@ Openline is a **traveller-first connectivity brand**. The visual system exists t
 | **The mark** | A single, confident circular symbol — the "line" that's always open. | Stand-alone identity. Works at 16px (favicon) and on a billboard. |
 | **The wordmark** | Typeset "Openline" — geometric, low-contrast, modern. | The plain-language brand. Used when context already explains who we are. |
 | **The motion system** | A ~1-second loading loop and three format-tuned animation sets. | A signature beat that's recognisable across product, social and broadcast. |
-| **The colour** | Openline orange (`#FF6616`) — one primary, no gradients in the core mark. | Memorability. One colour is faster to recognise than a palette. |
+| **The colour** | Openline orange (`#FF6A00`) — one primary, no gradients in the core mark. | Memorability. One colour is faster to recognise than a palette. |
 | **The voice** | Direct, warm, expert. Plain numbers (190+, 30 seconds, 1M+) over adjectives. | Travellers buy reliability, not poetry. |
-| **The applied surfaces** | Payment logos, email templates, launcher UIs — all built from the same tokens. | The brand doesn't stop at the logo. Every touchpoint uses the same orange, the same Play / Inter type pair, the same restraint. |
+| **The applied surfaces** | Payment logos, email templates, launcher UIs, web CSS — all built from the same tokens. | The brand doesn't stop at the logo. Every touchpoint uses the same orange, the same type pair, the same restraint. |
 
 ### Where the brand shows up
 
@@ -331,12 +380,15 @@ Openline is a **traveller-first connectivity brand**. The visual system exists t
 - **Transactional** — OTPs, receipts, activation, letterhead (see [`email/`](email/))
 - **Checkout** — payment-method logos in cart, at pay, in receipts (see [`payment-methods/`](payment-methods/))
 - **Ecosystem** — WorkAdventure SDK apps and integrator surfaces (see [`workadventure/`](workadventure/))
+- **Web apps** — Knowledge Base & eSIM Compatibility, both styled by the shared [`web/openline-ui.css`](web/openline-ui.css)
 - **Press & partners** — journalist hot-link, integrator marketplaces, conference signage, slide decks
 - **Internal** — investor decks, board reporting, hiring materials
 
 ### How we decide what ships
 
 Anything in this repo has been signed off as **on-brand and reusable**. If an asset isn't here, it isn't approved for public reuse — yet. To propose a new asset, see [Contributing & maintenance](#contributing--maintenance).
+
+The asset lifecycle is: **propose → review → approve → tag → release**. Core mark, wordmark, and primary colour changes never ship via PR — they go through internal brand review and land as a new tagged release.
 
 ---
 
@@ -346,16 +398,48 @@ Anything in this repo has been signed off as **on-brand and reusable**. If an as
 | --- | --- |
 | **Primary mark** | The Openline symbol — use on a clean background |
 | **Wordmark** | Typeset "Openline" — pairs with the mark or stands alone |
-| **Primary colour** | Openline orange — `#FF6616` |
-| **Secondary colour** | Openline blue — `#3B3BFF` (used in the WorkAdventure surface, secondary UI accents) |
+| **Primary colour** | Openline orange — `#FF6A00` |
+| **Secondary colour** | Openline orange tint — `#FF8A3D` (hover / focus accents) |
+| **Tertiary colour** | Openline blue — `#3B3BFF` (WorkAdventure surface, secondary UI accents) |
 | **Type — display** | **Play** — hero titles, marketing, section headers |
-| **Type — body** | **Inter** — UI, product, email body |
+| **Type — body** | **Inter** — UI, product, email body, web design system |
 | **Type — mono / code** | **JetBrains Mono** — code blocks, technical surfaces |
 | **Type — retro badges** | **Press Start 2P** — micro badges, easter-egg accents (WorkAdventure) |
 | **Backgrounds** | White variant on dark, black on light, color on neutral |
 | **Clear space** | ≥ the stroke height of the mark on every side |
 | **Minimum size** | 16px (mark) · 80px (wordmark) |
 | **Don'ts** | No recolour, rotate, distort, outline, drop-shadow, or busy-photo placement without a contrast plate |
+
+---
+
+## Colour palette
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--brand` | `#FF6A00` | Openline orange — primary, the one colour people remember |
+| `--brand-2` | `#FF8A3D` | Orange tint — hover, focus halos, secondary accents |
+| `--focus` | `#FFB06A` | Focus ring — accessible, AA against white |
+| `--brand-ink` | `#1A1A1A` | Primary ink — the black mark, body text on light |
+| `--ink` | `#0F1114` | App ink — deepest text on light surfaces |
+| `--accent-bg` | `#FFF3E9` | Orange wash — tints, highlight backgrounds |
+| Openline blue | `#3B3BFF` | WorkAdventure surface, secondary UI accents |
+| `--ok` | `#128A3D` | Success states |
+| `--err` | `#B3261E` | Error states |
+
+Core mark uses **one** colour (`#FF6A00`) with no gradients. Black (`#1A1A1A`) and white variants exist for reproduction constraints, not as separate brand colours.
+
+---
+
+## Typography stack
+
+| Face | Weights | Where it's used |
+| --- | --- | --- |
+| **Play** | Display | Hero titles, marketing, section headers — the brand's voice at scale |
+| **Inter** | 400 / 500 / 600 / 700 / 800 | UI, product, email body, and the web design system (`web/openline-ui.css`) |
+| **JetBrains Mono** | Mono | Code blocks, technical surfaces, terminal-style accents |
+| **Press Start 2P** | Pixel | Micro badges, easter-egg accents in the WorkAdventure surface |
+
+Pair **Play** with **Inter** wherever the brand speaks at scale — Play carries the headline, Inter carries the body. Never set "Openline" in a face other than the wordmark file.
 
 ---
 
@@ -369,6 +453,7 @@ Anything in this repo has been signed off as **on-brand and reusable**. If an as
 - Use the **Lottie** version wherever possible for crispness and tiny file sizes.
 - Pair the mark with the wordmark only when there's room — at small sizes, pick one.
 - Use **payment-method logos** at their canonical size (38×24 for card marks) and follow each brand's own guidelines.
+- **Hot-link** assets rather than re-uploading — you'll always get the on-brand version.
 
 ❌ **Don't**
 
@@ -379,6 +464,7 @@ Anything in this repo has been signed off as **on-brand and reusable**. If an as
 - Don't typeset "Openline" yourself — always use the wordmark file.
 - Don't combine the mark with another logo without a clear separator and equal clear space.
 - Don't rebuild a payment-method logo — always use the SVG from [`payment-methods/svg/`](payment-methods/svg/).
+- Don't freeze a copy of an asset you'll forget to update — hot-link it instead.
 
 ---
 
@@ -398,7 +484,7 @@ For anything beyond standard editorial / partner usage — co-branding, merchand
 
 ## Contributing & maintenance
 
-This repo is **actively maintained**. Expect regular drops — new sequences, refreshed motion, seasonal variants, partner co-marks (when approved), and additional formats as we encounter new surfaces.
+This repo is **actively maintained and updated on a regular cadence**. Expect recurring drops — new sequences, refreshed motion, seasonal variants, partner co-marks (when approved), and additional formats as we encounter new surfaces.
 
 ### Open a request
 
@@ -426,13 +512,28 @@ This media kit follows lightweight semver:
 
 - **Major** (`v2.0`) — the mark, wordmark, or primary colour materially change.
 - **Minor** (`v1.1`, `v1.2`, …) — new asset families, new formats, new motion sets, restructure that breaks no existing hot-link.
-- **Patch** (`v1.2.1`) — file-level fixes (compression, metadata strip, small re-export) with no URL changes.
+- **Patch** (`v1.1.1`) — file-level fixes (compression, metadata strip, small re-export) with no URL changes.
 
-Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` instead of `@main` for production embeds.
+Tag a release on GitHub when bumping the version so consumers can pin `@v1.1` instead of `@main` for production embeds.
 
 ### Maintainer
 
 - **[@paulfxyz](https://github.com/paulfxyz)** — repository owner, brand custodian.
+
+---
+
+## What's next
+
+This kit is a living document. The roadmap is intentionally open so new content lands as the brand grows:
+
+- **More surfaces** — new applied brand surfaces (in-product, partner, event) as they're signed off.
+- **More payment methods** — regional wallets and local bank-transfer logos as Openline expands coverage.
+- **More motion** — seasonal variants, product intro sequences, broadcast-length reels.
+- **More formats** — WebP / AVIF for raster, AV1 for video, APNG where Lottie isn't an option.
+- **More email** — additional transactional templates and refreshed signatures.
+- **Documentation** — richer framework snippets, translations, onboarding for new contributors.
+
+Have a surface, format, or asset the kit should cover? Open an [issue](https://github.com/paulfxyz/openline-brand-assets/issues) — that's exactly how the next drop starts.
 
 ---
 
@@ -445,6 +546,19 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 ---
 
 ## Changelog
+
+### v1.1 — 2026-09-06
+
+- 📝 **Proper README rewrite** — restructured end-to-end with a cleaner information architecture: a ten-area model (the shared **web design system** is now a first-class area), a dedicated **Colour palette** table sourced from the live `web/openline-ui.css` tokens, a **Typography stack** table, an expanded **Branding strategy** with brand principles + asset lifecycle, and a **What's next** roadmap section.
+- 🎯 **Canonical colour** — standardised the primary orange to `#FF6A00` (the `--brand` token actually shipped in `web/openline-ui.css`), with `--brand-2` `#FF8A3D`, `--focus` `#FFB06A`, and Openline blue `#3B3BFF` documented with their roles.
+- 📛 **More badges** — added GitHub stars, last-commit, jsDelivr hits, last-updated, and PRs-welcome shields on top of the existing badge row.
+- 🧩 **More usage snippets** — added the shared web design-system `<link>` include and a note that CSS must be served via jsDelivr (raw GitHub serves CSS as `text/plain`).
+- 🔢 **Accurate counts** — 385 files total, 99 payment-method SVGs + 6 app-source logotypes, 67 Figma exports, 36 WorkAdventure apps + 76 screenshots, 6 email templates + 2 signatures.
+- ✅ No breaking changes — every existing hot-link still resolves.
+- 🤝 Framed the repo as **actively maintained on a regular cadence** and documented the roadmap so new content has a clear on-ramp.
+
+<details>
+<summary><strong>Pre-rewrite history (v1.0 – v1.3)</strong></summary>
 
 ### v1.3 — 2026-08-28
 
@@ -466,7 +580,7 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 - 📝 Rewrote the main README to cover the eight areas, updated brand basics with the full typography stack (Play, Inter, JetBrains Mono, Press Start 2P) and the secondary Openline blue (`#3B3BFF`).
 - ✅ No breaking changes — every hot-link from v1.1 still resolves.
 
-### v1.1 — 2026-06-15
+### v1.1 (pre-rewrite) — 2026-06-15
 
 - 📝 Rewrote README with full table of contents, badges, and richer guidance.
 - 🎯 Added Branding strategy section (pillars, surfaces, decision principles).
@@ -480,6 +594,8 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 ### v1.0 — 2026-06-14
 
 - Initial media-kit drop: mark, wordmark, social, loading loop, favicon animations, horizontal / square / vertical animation sets (76 files, ~78 MB).
+
+</details>
 
 ---
 
