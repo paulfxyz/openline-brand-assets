@@ -7,11 +7,12 @@
 
 # Openline · Media Kit
 
-**The canonical public home for the Openline logo, wordmark, social templates, animated brand, payment-method logos, transactional emails, Figma exports and WorkAdventure SDK.**
+**Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.3-FF6A00?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.4-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
-[![Assets](https://img.shields.io/badge/assets-370%2B%20files-2563EB?style=flat-square)](#repository-layout)
+[![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
+[![App icons](https://img.shields.io/badge/app%20icons-iOS%20%2B%20Android-22C55E?style=flat-square)](app-icons/)
 [![Formats](https://img.shields.io/badge/formats-PNG%20·%20JPG%20·%20SVG%20·%20EPS%20·%20AI%20·%20PDF%20·%20MP4%20·%20GIF%20·%20Lottie%20·%20HTML%20·%20TSX-22C55E?style=flat-square)](#repository-layout)
 [![CDN](https://img.shields.io/badge/CDN-jsDelivr%20·%20Cloudflare-F38020?style=flat-square)](#cdn-and-hot-linking)
 [![Hot-link](https://img.shields.io/badge/hot--link-friendly-9333EA?style=flat-square)](#hot-link-urls-raw-github)
@@ -31,6 +32,8 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
+**New in v1.4:** [native app icons](app-icons/), a [19-screen React mobile gallery](mobile/), and a [dated native Figma source](figma/mobile/). The mobile gallery is a buildable UI reference with mock data, not a production native app or live checkout.
+
 You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own CDN mirror). No download-and-reupload is necessary — and we'd prefer you didn't, because hot-linking guarantees you always get the latest, on-brand version.
 
 ---
@@ -39,15 +42,18 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 
 - [At a glance](#at-a-glance)
 - [Repository layout](#repository-layout)
-- [The eight areas](#the-eight-areas)
-  - [1 · Logo](#1--logo)
-  - [2 · Wordmark](#2--wordmark)
-  - [3 · Social](#3--social)
-  - [4 · Animation](#4--animation)
-  - [5 · Payment methods](#5--payment-methods)
-  - [6 · Email](#6--email)
-  - [7 · Figma](#7--figma)
-  - [8 · WorkAdventure SDK](#8--workadventure-sdk)
+- [Resource areas](#resource-areas)
+  - [Logo](#logo)
+  - [Wordmark](#wordmark)
+  - [Social](#social)
+  - [Animation](#animation)
+  - [Payment methods](#payment-methods)
+  - [Email](#email)
+  - [Figma](#figma)
+  - [WorkAdventure SDK](#workadventure-sdk)
+  - [App icons](#app-icons)
+  - [Mobile app sources](#mobile-app-sources)
+  - [Web styles](#web-styles)
 - [Hot-link URLs (raw GitHub)](#hot-link-urls-raw-github)
 - [CDN and hot-linking](#cdn-and-hot-linking)
 - [How to use](#how-to-use)
@@ -78,6 +84,10 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 | An **HTML email signature** for `ask@openline.com` or a teammate | [`email/signatures/`](email/signatures/) |
 | A **Figma → React** export to lift for a component | [`figma/code-exports/`](figma/code-exports/) |
 | A **WorkAdventure SDK app** preview (36 apps) | [`workadventure/apps/`](workadventure/apps/) |
+| **iOS and Android app icons**, including store sizes | [`app-icons/`](app-icons/) |
+| The mobile app's **native Figma source** | [`figma/mobile/openline-mobile-screens-2026-09-24.fig`](figma/mobile/openline-mobile-screens-2026-09-24.fig) |
+| The **19-screen React mobile gallery** and build instructions | [`mobile/app-screens/`](mobile/app-screens/) |
+| Shared **web UI styles** | [`web/openline-ui.css`](web/openline-ui.css) |
 
 ---
 
@@ -126,7 +136,18 @@ openline-brand-assets/
 │
 ├── figma/                         ← Figma → React code exports (Dev Mode copies)
 │   ├── code-exports/              ← 67 TSX + SVG modules
+│   ├── mobile/                    ← Native .fig snapshots and embedded thumbnails
 │   └── LINKS.md                   ← Live Figma share links (design source of truth)
+│
+├── app-icons/                    ← Native iOS and Android app icons
+│   ├── ios/AppIcon.appiconset/   ← 15 PNGs and Xcode Contents.json
+│   └── android/                 ← Density icons, adaptive layers, Play Store icon
+│
+├── mobile/                       ← Mobile design and implementation references
+│   ├── app-screens/             ← React/Vite source, lockfile and static preview/
+│   └── deliveries/              ← Intake provenance, checksums and validation
+│
+├── web/                          ← Shared web UI CSS and usage documentation
 │
 ├── workadventure/                 ← Openline × WorkAdventure SDK app previews
 │   ├── index.html                 ← App launcher (start here)
@@ -151,34 +172,50 @@ openline-brand-assets/
 | **Lottie JSON** | Native-quality animation in web / iOS / Android with tiny payloads |
 | **HTML** | Email templates, signatures, WorkAdventure SDK app previews |
 | **TSX** | Figma → React code exports (reference implementation) |
+| **FIG** | Native Figma design snapshots for import and editing |
 
 ---
 
-## The eight areas
+## Resource areas
 
-### 1 · Logo
+### Logo
 The Openline symbol — the mark that stands alone. Available in **color / black / white**, five formats (PNG, JPG, EPS, AI, PDF), plus a **2250×2250 transparent master** and the **512×512** favicon / auth mark. → [`logo/`](logo/)
 
-### 2 · Wordmark
+### Wordmark
 "Openline" typeset — the plain-language brand. Same three variants and five formats as the mark, meant for surfaces where context already introduces us (press stories, app store listings). → [`wordmark/`](wordmark/)
 
-### 3 · Social
+### Social
 Ready-to-post assets for Twitter/X, Instagram, LinkedIn, YouTube: square social-card logos in **black / white / orange / transparent**, small variants, full-bleed **brand backgrounds**, and the **YouTube channel watermark**. → [`social/`](social/)
 
-### 4 · Animation
+### Animation
 The Openline motion system. The signature **~1-second loading loop** (MP4 · GIF · Lottie), animated **favicons**, and three format-tuned animation packs — **horizontal / square / vertical**, each with intro, loop and 8 reels. → [`animation/`](animation/)
 
-### 5 · Payment methods
+### Payment methods
 **100 individual payment-method logos** as self-contained SVGs (cards, wallets, buy-now-pay-later, bank transfers, crypto), plus 6 hand-built app-source logotypes and a standalone HTML visual index. → [`payment-methods/`](payment-methods/) · [reference.html](payment-methods/reference.html)
 
-### 6 · Email
+### Email
 The applied brand in transactional email: **OTP**, **code delivery**, **eSIM activation**, **letterhead**, **UI SDK announcement**, **WorkAdventure SDK announcement**, an **email component library** and **HTML signatures** (Openline brand + Paul Fleury personal). Every template is table-based, inline-styled, and battle-tested across mail clients. → [`email/`](email/)
 
-### 7 · Figma
-The **code side** of the Openline design system — React/TSX components auto-generated from Figma via Dev Mode, plus [`LINKS.md`](figma/LINKS.md) with the live Figma share links so this repo stays in sync with the design source of truth. → [`figma/`](figma/)
+### Figma
 
-### 8 · WorkAdventure SDK
+Legacy named React/TSX exports live in [`figma/code-exports/`](figma/code-exports/), while native mobile `.fig` snapshots now live in [`figma/mobile/`](figma/mobile/). [`LINKS.md`](figma/LINKS.md) records supplied live design links and companion code; archived snapshots and live files may evolve independently.
+
+### WorkAdventure SDK
 Openline × WorkAdventure: **36 self-contained HTML app previews** for the virtual-office SDK (todo, notes, pomodoro, calendar, chat, voice, whiteboard, stats, AI, and more), an **app launcher**, and an **integration reference**. Same design tokens as the Openline product. → [`workadventure/`](workadventure/) · [launcher](workadventure/index.html)
+
+### App icons
+
+[`app-icons/`](app-icons/) contains 24 PNGs: 15 for the Xcode catalog and nine for Android, including legacy density variants, three adaptive layers and a Play Store icon. Native filenames are preserved, and the platform README explains how to integrate them without replacing the transparent web/brand mark.
+
+### Mobile app sources
+
+[`mobile/`](mobile/) connects the native design, icon pack and standalone React/Vite screen gallery. Its 19 screens cover login, dashboard, eSIM management, country and plan selection, checkout, account/settings, connection states and six variants.
+
+The gallery offers an overview and a phone-sized screen switcher. Source, asset dependencies, a lockfile, prebuilt preview and [delivery provenance](mobile/deliveries/2026-09-24.md) are included; all service and account data are mock content.
+
+### Web styles
+
+[`web/`](web/) contains the shared `openline-ui.css` stylesheet and its integration notes. This existing web resource is separate from the mobile gallery's precompiled stylesheet; consult each surface's own documentation before combining styles or tokens.
 
 ---
 
@@ -445,6 +482,17 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 ---
 
 ## Changelog
+
+### v1.4: 2026-09-24
+
+- Added `app-icons/`: 24 native app PNGs with the original Xcode catalog and Android resource names.
+- Archived `figma/mobile/openline-mobile-screens-2026-09-24.fig` unchanged, with its embedded thumbnail and supplied live Figma reference.
+- Added `mobile/app-screens/`: 19 React/TypeScript screen entries, local image/SVG dependencies, lockfile and rebuilt static preview.
+- Fixed the missing demo payment registry and PNG type declarations; made Vite output subdirectory-safe.
+- Fixed screen deep links to prefer exact names, including the `Me` account screen.
+- Updated Vite from 6.3.5 to 6.4.3 and added an explicit type-check command.
+- Added mobile intake checksums, usage notes and regeneration instructions. Listed the existing `web/` library in the resource directory.
+- Preserved all existing asset paths and the transparent, theme-aware README hero.
 
 ### v1.3 — 2026-08-28
 

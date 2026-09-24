@@ -10,6 +10,7 @@ this repo stays in sync with the design source of truth.
 figma/
 ├── code-exports/    ← Auto-generated TSX / TS components straight from Figma Dev Mode
 │                      — named by what they render, not by Figma's auto-labels
+├── mobile/          ← Dated native mobile .fig snapshots and embedded previews
 └── LINKS.md         ← Paste Figma share links here (one row per file / design)
 ```
 
@@ -40,13 +41,15 @@ their hashed names because they're shared assets referenced by hash from multipl
 
 Figma-exported **PNG** assets are large and belong with the app that consumes them
 (typically `openline-native-sdk/src/assets/` inside the mobile / SDK repo), not here.
-This folder only holds the **code** side of Figma exports.
+The legacy `code-exports/` folder holds the code side of those exports. The
+standalone [mobile gallery](../mobile/app-screens/) includes its own image
+dependencies so it builds without the original site repository.
 
 ## Source files (`.fig`)
 
-The original `.fig` files themselves live in the Figma workspace, not on disk. Use
-[`LINKS.md`](LINKS.md) to keep a running index of the share links so anyone with this
-repo can jump straight to the live source.
+Native mobile snapshots now live in [`mobile/`](mobile/), starting with the
+September 24, 2026 delivery. Use [`LINKS.md`](LINKS.md) for live design references;
+the buildable companion is in [`../mobile/app-screens/`](../mobile/app-screens/).
 
 ## Contributing
 
