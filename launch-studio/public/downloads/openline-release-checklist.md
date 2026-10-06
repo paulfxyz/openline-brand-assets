@@ -4,7 +4,7 @@ All initial items require review or evidence. Nothing here is store approval.
 
 - [ ] Approve the smaller icon (Both; required)
   Owner: Design
-  Review the 62% iOS/store artwork and test the separate 48dp Android adaptive mark on real launchers.
+  Paul requested 10–20% smaller than the 62% candidate. Review 52.7% (15% smaller), with 55.8% and 49.6% alternatives. Test the separate 48dp Android adaptive mark on real launchers.
 
 - [ ] Integrate icons in release targets (Both; required)
   Owner: Engineering

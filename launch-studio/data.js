@@ -1,33 +1,39 @@
 export const screens = [
-  {slug:'dashboard',title:'Your next trip. Connected.',short:'Stay connected',detail:'A clear view of your travel data.',screen:'Dashboard'},
-  {slug:'countries',title:'Find your place. Find your plan.',short:'Explore destinations',detail:'Find a destination and compare available plans.',screen:'Countries'},
-  {slug:'plans',title:'A plan for your kind of trip.',short:'Choose a plan',detail:'Compare data and validity for your journey.',screen:'Plans · 3 · options'},
+  {slug:'countries',title:'Travel data. Made clear.',short:'Find your destination',detail:'Find an eSIM for your next destination.',screen:'Countries'},
+  {slug:'plans',title:'Your trip. Your data plan.',short:'Compare the plans',detail:'Compare data, duration and price before you buy.',screen:'Plans · 3 · options'},
+  {slug:'profile',title:'Your eSIM. Details in reach.',short:'Find setup details',detail:'Find installation information and plan details.',screen:'eSIM profile (activated)'},
+  {slug:'dashboard',title:'Your data. At a glance.',short:'See your data',detail:'See your remaining data and current plan.',screen:'Dashboard'},
   {slug:'esims',title:'All your eSIMs. One clear view.',short:'Manage your eSIMs',detail:'Keep travel connections in one place.',screen:'My eSIMs'},
-  {slug:'profile',title:'Your connection. At a glance.',short:'See the details',detail:'Plan details and installation information.',screen:'eSIM profile (activated)'},
-  {slug:'settings',title:'Make yourself at home.',short:'Make it yours',detail:'Manage your preferences.',screen:'Settings'}
+  {slug:'settings',title:'Your account. Your preferences.',short:'Make it yours',detail:'Manage your account preferences in one place.',screen:'Settings'}
 ];
 export const copyDefaults={
   apple:{
-    name:'Openline: Travel eSIM',
-    subtitle:'Mobile data for your next trip',
-    promotional:'Plan your next connection with Openline. Explore travel eSIM plans, keep your eSIMs together, and check your plan details in one place.',
-    keywords:'travel,data,international,roaming,internet,connectivity,abroad,holiday,mobile',
-    description:`Meet Openline, your travel eSIM companion.
+    name:'Openline: Travel eSIM & Data',
+    subtitle:'Find your plan. See your data.',
+    promotional:'Find a travel eSIM for your next destination. Compare data and duration, find installation details, and keep your plans together in Openline.',
+    keywords:'international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid',
+    description:`Your next destination. Your choice of data.
 
-Explore mobile data plans for your next destination and keep your travel connections in one place.
+Find a travel eSIM, compare plans and keep your connection details in view with Openline.
 
-FIND A PLAN FOR YOUR TRIP
-Browse destinations and compare available data allowances and validity periods. Review the plan details before you buy.
+CHOOSE WITH THE DETAILS IN FRONT OF YOU
+Browse your destination, compare data allowances and duration, and review the price and activation conditions before you buy.
 
-KEEP YOUR eSIMs TOGETHER
-View your eSIMs, find installation information and check the details of your current plans from a single dashboard.
+KEEP SETUP INFORMATION CLOSE
+Find your eSIM's installation information and plan details in the app. Follow the instructions for your device and plan.
 
-TRAVEL PREPARED
-Before purchasing, check that your device supports eSIM and is network-unlocked. Plan availability, coverage and service conditions vary by destination and provider.
+SEE YOUR PLANS IN ONE PLACE
+Check the usage information shown for your plan and keep your travel eSIMs together. Availability and reporting can vary by plan.
 
-Openline is free to download. Mobile data plans are purchased separately. Review each plan's pricing, validity, activation conditions and included services before checkout.
+NEW TO eSIM?
+An eSIM is a digital SIM for a compatible device. Before purchasing, check that your phone supports eSIM and is network-unlocked.
 
-Need help? Visit openline.com for support information.`,
+BEFORE YOU GO
+Review destination coverage, validity, activation timing and included services. Do not assume a data plan includes a phone number, calls or SMS. If you keep your usual line active, your home carrier's charges may still apply.
+
+Openline is free to download. Mobile data plans are purchased separately. Availability and service conditions vary by destination and provider.
+
+Visit openline.com for support information.`,
     reviewNotes:`Openline provides travel eSIM connectivity.
 
 Before submission, the release owner must enter a working, non-expiring review account through App Store Connect's secure review fields. Do not put credentials in this workspace.
@@ -39,25 +45,29 @@ Describe the exact connectivity product and payment model, and confirm the appli
 Provide tested steps for account deletion, support access, purchases and installation. Replace this preparation note with the verified build-specific instructions.`
   },
   google:{
-    name:'Openline: Travel eSIM',
-    shortDescription:'Find travel eSIM plans and manage your mobile data in one place.',
-    description:`Travel with your mobile data organised.
+    name:'Openline: Travel eSIM & Data',
+    shortDescription:'Find a travel eSIM, compare plans and keep your mobile data in view.',
+    description:`Find a travel eSIM for your next destination.
 
-Openline brings travel eSIM plans and connection details into one place, helping you prepare for your next trip.
+With Openline, compare data plans, find installation information and keep your travel eSIMs together.
 
-EXPLORE YOUR DESTINATION
-Browse destinations and compare available data allowances and validity periods. Review the details and choose the plan that fits your journey.
+COMPARE BEFORE YOU BUY
+Browse a destination and review available data allowances, duration and prices. Check coverage, activation conditions and included services before choosing a plan.
 
-MANAGE YOUR eSIMs
-Keep your eSIMs together. Find installation information and review your plan details from a clear dashboard.
+FIND YOUR SETUP DETAILS
+Keep your eSIM's installation information and plan details in reach. Follow the instructions for your device and plan.
 
-BEFORE YOU TRAVEL
-Check that your phone supports eSIM and is network-unlocked before purchasing. Availability, network coverage and service conditions depend on the destination and provider.
+KEEP YOUR DATA IN VIEW
+See the usage information available for your plan and manage your eSIMs from one place. Availability and reporting can vary by plan.
 
-The app is free to download. Mobile data plans are purchased separately. Check the price, validity, activation conditions and included services shown for each plan before checkout.
+NEW TO eSIM?
+An eSIM is a digital SIM for a compatible device. Check that your phone supports eSIM and is network-unlocked before purchasing.
+
+TRAVEL PREPARED
+Mobile data plans are purchased separately from this free app. Coverage, validity and service conditions vary by destination and provider. Check whether your plan includes a phone number, calls or SMS; do not assume these are included with data. Your home carrier's charges may still apply if you keep your usual line active.
 
 Visit openline.com for support information.`,
-    releaseNotes:'Initial release of Openline. Explore travel eSIM plans and manage your eSIMs in one place. Verify this summary against the features in the release build before publishing.'
+    releaseNotes:'Welcome to Openline. Explore travel eSIM plans, find installation details and keep your eSIMs together.'
   }
 };
 export const fieldSpecs={
@@ -65,7 +75,7 @@ export const fieldSpecs={
  google:[['name','App name',30],['shortDescription','Short description',80],['description','Full description',4000],['releaseNotes','Release notes draft',500]]
 };
 export const tasks=[
- ['icon','Approve the smaller icon','Creative','Both','review','Review the 62% iOS/store artwork and test the separate 48dp Android adaptive mark on real launchers.','apple-icons','Design','required'],
+ ['icon','Approve the smaller icon','Creative','Both','review','Paul requested 10–20% smaller than the 62% candidate. Review 52.7% (15% smaller), with 55.8% and 49.6% alternatives. Test the separate 48dp Android adaptive mark on real launchers.','apple-icons','Design','required'],
  ['native-icons','Integrate icons in release targets','Build','Both','todo','Import the Xcode catalog; merge Android resources; verify masks and dark/themed variants in the actual builds.','android-icons','Engineering','required'],
  ['art','Review the 12 screenshot compositions','Creative','Both','review','These are rendered from the supplied React design reference, not signed iOS or Android builds. Approve the direction only.','google-assets','Design','recommended'],
  ['captures','Recapture from the native release builds','Creative','Both','blocked','Replace the design-reference imagery with accurate platform-native screens. Remove draft labels only after comparison and approval.','apple-screenshots','Engineering','required'],
@@ -96,7 +106,7 @@ export const tasks=[
  ['submit','Final submission review','Release','Both','blocked','Compare every listing asset and declaration to the signed build. This workspace does not submit to either store.','apple-review','Release owner','required']
 ].map(([id,title,group,platform,status,detail,source,owner,requirement])=>({id,title,group,platform,status,detail,source,owner,requirement,notes:''}));
 export const suggestedSettings=[
- ['Store identity','App name','Openline: Travel eSIM','Draft','Verify name availability in both consoles.','apple-copy'],
+ ['Store identity','App name','Openline: Travel eSIM & Data','Draft','Verify name availability in both consoles.','apple-copy'],
  ['Store identity','Category','Apple: Travel · Google: Travel & Local','Suggested','Confirm these are the best categories for the shipped app.','google-copy-build'],
  ['Store identity','Pricing','Free download; data plans purchased separately','Suggested','Confirm exact product and billing setup. Free download does not mean free data.','google-policy'],
  ['Store identity','Primary language','English (US)','Suggested','Add only languages supported and reviewed for the release.','apple-copy'],
@@ -114,4 +124,4 @@ export const suggestedSettings=[
  ['Release controls','Google release','Controlled rollout where available','Suggested','Configure countries and monitoring; verify options for the first release.','google-copy-build'],
  ['Release controls','EU availability','Trader status and legal review first','Blocked','Confirm public legal/contact data before EU distribution.','apple-dsa']
 ].map(([group,field,value,status,detail,source])=>({group,field,value,status,detail,source}));
-export const initialWorkspace={schemaVersion:1,iconSize:62,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};
+export const initialWorkspace={schemaVersion:2,artworkRevision:2,iconSize:52.7,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};

@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.5-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.5.1-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-review%20workspace-FF6616?style=flat-square)](launch-studio/)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,7 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.5:** [Openline Brand Studio](launch-studio/) brings icon comparisons, store-artwork previews, editable listing drafts, suggested settings and a 29-item launch checklist together. The recommended icon candidate gives the original mark more breathing room: 62% visible width versus the prior approximately 68%. Existing icon paths are unchanged pending approval.
+**New in v1.5.1:** [Openline Brand Studio](launch-studio/) adds a source-cited Saily/Airalo/Holafly review and improved listing copy and artwork. The default icon now uses 52.7% visible mark width, 15% smaller than the previous 62% candidate; 10% and 20% reductions are also available for comparison. Existing production icon paths remain unchanged pending approval.
 
 The [native app icons](app-icons/), [19-screen React mobile gallery](mobile/), and [dated native Figma source](figma/mobile/) remain available. The gallery and new store artwork are design references with mock data, not production native app captures or a live checkout.
 
@@ -490,9 +490,10 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 
 [`launch-studio/`](launch-studio/) is a buildable React/Vite workspace for preparing the mobile app launch. It includes:
 
-- **Icon review:** 58%, 62%, 66% and 68% compositions, dark references, home-screen previews, Android masks and downloadable native resource candidates.
+- **Icon review:** 49.6%, 52.7%, 55.8% and 62% comparisons, dark references, home-screen previews, Android masks and downloadable native resource candidates.
 - **Store artwork:** six iPhone compositions at 1320×2868, six Android compositions at 1080×1920, and a Google Play feature graphic at 1024×500.
 - **Listing copy:** editable English drafts, character/byte limits, copy controls and Markdown exports.
+- **Competitor review:** Saily, Airalo and Holafly text and screenshot analysis, official listing links, implemented improvements and an Openline before/after comparison.
 - **Readiness tracking:** 29 checklist items with platform filters, owners, notes, status and a portable JSON save/import workflow.
 - **Submission guidance:** suggested settings, unresolved product/legal decisions and links to official Apple and Google documentation, checked October 6, 2026.
 
@@ -500,9 +501,18 @@ The screenshots are rendered from the supplied React design reference, **not sig
 
 Progress is held in session memory: use **Save workspace** and later **Import workspace** to resume. There is no shared database or public write API, and credentials must not be entered here.
 
-For Vercel, import this repository with root directory `launch-studio`, Vite preset, build command `npm run build`, output directory `dist`. The requested `openline-brand` deployment is pending project-creation permission in the connected Vercel team.
+For Vercel, import this repository with root directory `launch-studio`, Vite preset, build command `npm run build`, output directory `dist`. An empty project was created through the owner's browser, but renaming, Git linking and deployment remain pending due to connector access and browser-session failures.
 
 ## Changelog
+
+### v1.5.1: 2026-10-06
+
+- Reduced the flat icon to 52.7% mark coverage, with alternatives spanning the requested 10–20% reduction from 62%. The white square remains unchanged.
+- Added a source-cited competitor review of Saily, Airalo and Holafly, plus before/after artwork comparison.
+- Revised English listing copy and the first-image proposition to “Travel data. Made clear.”
+- Regenerated the 12 store compositions with a clearer sequence and larger UI crops.
+- Added revision-aware import so old screenshot approvals are not applied to new artwork.
+- Native device validation and Vercel production deployment remain open.
 
 ### v1.5: 2026-10-06
 

@@ -18,7 +18,7 @@ with zipfile.ZipFile(downloads/'openline-store-artwork.zip','w',zipfile.ZIP_DEFL
     z.write(downloads/'asset-manifest.json','asset-manifest.json')
     z.writestr('README.md','# Openline store artwork: review candidates\n\nThese images are rendered from React design-reference screens, NOT the native release binaries. Keep the review footer until accurate native screenshots and all copy are approved. Mock prices/data are illustrative. No iPad/tablet set is included; native device support must first be confirmed.\n\nApple: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications\nGoogle: https://support.google.com/googleplay/android-developer/answer/9866151?hl=en\n')
 with zipfile.ZipFile(downloads/'openline-launch-kit.zip','w',zipfile.ZIP_DEFLATED) as z:
-    for name in ['openline-native-icons.zip','openline-store-artwork.zip','openline-store-copy.md','openline-store-settings.md','openline-release-checklist.md','openline-launch-workspace.json','store-requirements.md','asset-manifest.json']:
+    for name in ['openline-native-icons.zip','openline-store-artwork.zip','openline-store-copy.md','openline-store-settings.md','openline-release-checklist.md','openline-launch-workspace.json','store-requirements.md','competitor-review.md','asset-manifest.json']:
         z.write(downloads/name,name)
     z.write(root/'README.md','README.md')
     z.write(root/'sources.json','official-sources.json')

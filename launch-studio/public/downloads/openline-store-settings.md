@@ -4,7 +4,7 @@ No console settings have been changed. Confirm all unknowns against the actual b
 
 ## App name
 
-Openline: Travel eSIM
+Openline: Travel eSIM & Data
 
 Status: Draft. Verify name availability in both consoles.
 

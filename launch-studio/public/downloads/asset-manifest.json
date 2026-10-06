@@ -5,7 +5,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "313a363efca29fdffce8d7f45abef8eb4b4f78dafa49e48ca411e545d96e9d48"
+    "sha256": "88c60baa49e63b4a10646913ec7118a3d9b6703a60c5685e0c502bfd84dee46d"
   },
   {
     "file": "ios-02.png",
@@ -13,7 +13,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "0d6f16b2405b7c7b1818bf46d5e0add1a5640627f19aaea8199e1d09abdc8203"
+    "sha256": "66a6df0cf0cf3cdc191ad7aee51fa4f6d28f5a70863c2b032e8af85b741494ba"
   },
   {
     "file": "ios-03.png",
@@ -21,7 +21,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "f26fb2d89660d8caae49928af4d367982966d69ac8bdbf221ca808e9470ef90d"
+    "sha256": "793ca9eb54d928042225b2737a8704f11b9ad65ec78fd864276dd4d016cec858"
   },
   {
     "file": "ios-04.png",
@@ -29,7 +29,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "b5d35ec2d6095b572e204a8cd38b779c5a339cc414bca1f460f9c8d8028d76ce"
+    "sha256": "cfcbd8484c0128e4332cdef84d9bc163ceba9f87aa9153e0361a4a50bf417e88"
   },
   {
     "file": "ios-05.png",
@@ -37,7 +37,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "d597bfcd8ae747018f176832dbcef48813abd694dec4907c4a5b066facb3a77f"
+    "sha256": "782dbb8a758b4132454787ab0053f8366d7344d0b794fd9a9453c62bdd7936ca"
   },
   {
     "file": "ios-06.png",
@@ -45,7 +45,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "540a6af457b4b33298822f4a6746f135ff2195630a70f04e8633be80a713d880"
+    "sha256": "58aee288eb7f72340cf6ffa4f91cb7a7bd7e3095190f04867876c4e9491cf9e1"
   },
   {
     "file": "android-01.png",
@@ -53,7 +53,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "53680c4c792604bb3d04f01976ef5119a6d228f165136fac11c50985fc1de79d"
+    "sha256": "eb8af14c3341f4ff11a7e64c7f58ef5352196ca3fce7ee4d320a3824e6a919c8"
   },
   {
     "file": "android-02.png",
@@ -61,7 +61,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "d271e4a8f835951f58470bf5b477c91fb9e6e6e48dca191c82bd2954b337f6d8"
+    "sha256": "87edb17ae771ad6acf0e25929498bef4b2cfbcffdbc1867a54a219502b2b66ac"
   },
   {
     "file": "android-03.png",
@@ -69,7 +69,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "c998dedf1db52a006848bed88f7d8bddd1a58f06d4ed1a11a1dac168ad50533f"
+    "sha256": "f219883abc0ce0b6350ac4c39540032bc344648640744e6985d5ec80b5b1cd6b"
   },
   {
     "file": "android-04.png",
@@ -77,7 +77,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "cda63c66c7d0971f648bcf91ac90568ea6e9d5b205e5264e403e97dcbf5d1aa2"
+    "sha256": "44299600d86a3b63cc2544effc003ec0ee2142d3433b01b4630b16e18f721059"
   },
   {
     "file": "android-05.png",
@@ -85,7 +85,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "a7c0b46a3926569cb9a131484a51f78e28be88733aef0e42da3935d8cf3b0305"
+    "sha256": "b7139211ffa5706b94d3da9163bb25c1a7bdf725a03cba4022cede0891d5ceec"
   },
   {
     "file": "android-06.png",
@@ -93,7 +93,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "85bd866a67032d3fef6294530272b4a9c7fb5ba69ea3721eb84929e5d23b3266"
+    "sha256": "a52d5827b5c7e03395358a84dabb28f2df7f73e9671a1d44e7106d7a862e5dfe"
   },
   {
     "file": "google-feature.png",
@@ -101,6 +101,6 @@
     "height": 500,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "424957985bee2008d764f92a425c376ba3e69a62e53980ce4eadc32dd3301321"
+    "sha256": "e135bf8b8eb1b4d8123a10604cdea7d336e72352686f295ba90d60e479f2e9c8"
   }
 ]

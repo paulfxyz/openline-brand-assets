@@ -1,7 +1,9 @@
 # Openline mobile icon candidate · 2026-10-06
 
-Canonical mark geometry preserved. Default visible mark width: 62% of square;
-previous export: approximately 68%. No pre-rendered rounded corners or shadows.
+Canonical mark geometry preserved. Default visible mark width: 52.7% of square,
+15% smaller linearly than the 62% candidate. The white square is unchanged.
+49.6% and 55.8% alternatives represent 20% and 10% reductions from 62%.
+Original export: approximately 68%. No pre-rendered corners or shadows.
 
 ## iOS
 Import ios/AppIcon.appiconset into Assets.xcassets for the standard PNG workflow.
@@ -17,6 +19,9 @@ blindly. Point android:icon to @mipmap/ic_launcher. Configure roundIcon as appro
 for your app and test masks on real devices. v26 adaptive XML and v33 monochrome XML
 are supplied. Artwork spans 48dp on a 108dp canvas, the small end of Android's
 recommended 48–66dp range. Masked appearance differs from iOS; validate every mask.
+This adaptive sizing is intentionally independent of the 52.7% flat icon, not
+the same percentage applied to a different canvas. The 52.7% reduction applies
+to iOS, legacy Android and store-listing white-square icons.
 Google Play icon: 512x512 RGBA PNG, fully opaque. No rounded corners baked in.
 
 ## Release gate

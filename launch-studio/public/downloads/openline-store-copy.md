@@ -6,48 +6,54 @@ English (US), prepared October 6, 2026. Verify every statement against the nativ
 
 ### App name
 
-Openline: Travel eSIM
+Openline: Travel eSIM & Data
 
-21 / 30 characters
+28 / 30 characters
 
 ### Subtitle
 
-Mobile data for your next trip
+Find your plan. See your data.
 
 30 / 30 characters
 
 ### Promotional text
 
-Plan your next connection with Openline. Explore travel eSIM plans, keep your eSIMs together, and check your plan details in one place.
+Find a travel eSIM for your next destination. Compare data and duration, find installation details, and keep your plans together in Openline.
 
-135 / 170 characters
+141 / 170 characters
 
 ### Keywords
 
-travel,data,international,roaming,internet,connectivity,abroad,holiday,mobile
+international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid
 
-77 / 100 bytes
+73 / 100 bytes
 
 ### Description
 
-Meet Openline, your travel eSIM companion.
+Your next destination. Your choice of data.
 
-Explore mobile data plans for your next destination and keep your travel connections in one place.
+Find a travel eSIM, compare plans and keep your connection details in view with Openline.
 
-FIND A PLAN FOR YOUR TRIP
-Browse destinations and compare available data allowances and validity periods. Review the plan details before you buy.
+CHOOSE WITH THE DETAILS IN FRONT OF YOU
+Browse your destination, compare data allowances and duration, and review the price and activation conditions before you buy.
 
-KEEP YOUR eSIMs TOGETHER
-View your eSIMs, find installation information and check the details of your current plans from a single dashboard.
+KEEP SETUP INFORMATION CLOSE
+Find your eSIM's installation information and plan details in the app. Follow the instructions for your device and plan.
 
-TRAVEL PREPARED
-Before purchasing, check that your device supports eSIM and is network-unlocked. Plan availability, coverage and service conditions vary by destination and provider.
+SEE YOUR PLANS IN ONE PLACE
+Check the usage information shown for your plan and keep your travel eSIMs together. Availability and reporting can vary by plan.
 
-Openline is free to download. Mobile data plans are purchased separately. Review each plan's pricing, validity, activation conditions and included services before checkout.
+NEW TO eSIM?
+An eSIM is a digital SIM for a compatible device. Before purchasing, check that your phone supports eSIM and is network-unlocked.
 
-Need help? Visit openline.com for support information.
+BEFORE YOU GO
+Review destination coverage, validity, activation timing and included services. Do not assume a data plan includes a phone number, calls or SMS. If you keep your usual line active, your home carrier's charges may still apply.
 
-844 / 4000 characters
+Openline is free to download. Mobile data plans are purchased separately. Availability and service conditions vary by destination and provider.
+
+Visit openline.com for support information.
+
+1186 / 4000 characters
 
 ### Review notes template
 
@@ -67,42 +73,46 @@ Provide tested steps for account deletion, support access, purchases and install
 
 ### App name
 
-Openline: Travel eSIM
+Openline: Travel eSIM & Data
 
-21 / 30 characters
+28 / 30 characters
 
 ### Short description
 
-Find travel eSIM plans and manage your mobile data in one place.
+Find a travel eSIM, compare plans and keep your mobile data in view.
 
-64 / 80 characters
+68 / 80 characters
 
 ### Full description
 
-Travel with your mobile data organised.
+Find a travel eSIM for your next destination.
 
-Openline brings travel eSIM plans and connection details into one place, helping you prepare for your next trip.
+With Openline, compare data plans, find installation information and keep your travel eSIMs together.
 
-EXPLORE YOUR DESTINATION
-Browse destinations and compare available data allowances and validity periods. Review the details and choose the plan that fits your journey.
+COMPARE BEFORE YOU BUY
+Browse a destination and review available data allowances, duration and prices. Check coverage, activation conditions and included services before choosing a plan.
 
-MANAGE YOUR eSIMs
-Keep your eSIMs together. Find installation information and review your plan details from a clear dashboard.
+FIND YOUR SETUP DETAILS
+Keep your eSIM's installation information and plan details in reach. Follow the instructions for your device and plan.
 
-BEFORE YOU TRAVEL
-Check that your phone supports eSIM and is network-unlocked before purchasing. Availability, network coverage and service conditions depend on the destination and provider.
+KEEP YOUR DATA IN VIEW
+See the usage information available for your plan and manage your eSIMs from one place. Availability and reporting can vary by plan.
 
-The app is free to download. Mobile data plans are purchased separately. Check the price, validity, activation conditions and included services shown for each plan before checkout.
+NEW TO eSIM?
+An eSIM is a digital SIM for a compatible device. Check that your phone supports eSIM and is network-unlocked before purchasing.
+
+TRAVEL PREPARED
+Mobile data plans are purchased separately from this free app. Coverage, validity and service conditions vary by destination and provider. Check whether your plan includes a phone number, calls or SMS; do not assume these are included with data. Your home carrier's charges may still apply if you keep your usual line active.
 
 Visit openline.com for support information.
 
-869 / 4000 characters
+1168 / 4000 characters
 
 ### Release notes draft
 
-Initial release of Openline. Explore travel eSIM plans and manage your eSIMs in one place. Verify this summary against the features in the release build before publishing.
+Welcome to Openline. Explore travel eSIM plans, find installation details and keep your eSIMs together.
 
-171 / 500 characters
+103 / 500 characters
 
 
 Official metadata references:

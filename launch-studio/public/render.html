@@ -1,22 +1,38 @@
-<!doctype html><html lang="en"><meta charset="UTF-8"><title>Openline store artwork renderer</title>
+<!doctype html><html lang="en"><meta charset="UTF-8"><title>Openline store artwork renderer · R02</title>
 <style>
 @font-face{font-family:Inter;src:url('./fonts/inter-latin-600-normal.woff2')}@font-face{font-family:Inter;src:url('./fonts/inter-latin-800-normal.woff2');font-weight:800}
-*{box-sizing:border-box}body{margin:0;background:#f8f6f2;font-family:Inter,sans-serif;color:#141517}#canvas{position:relative;overflow:hidden;width:1320px;height:2868px;background:#f8f6f2}.brand{position:absolute;left:98px;top:95px;display:flex;gap:24px;align-items:center;font-weight:800;font-size:42px}.brand img{width:58px}h1{position:absolute;top:225px;left:98px;margin:0;font-size:120px;line-height:1.04;letter-spacing:-5px;width:1110px;font-weight:800}h1 span{color:#e6540b}.deck{position:absolute;top:510px;left:100px;font-size:37px;line-height:1.4;max-width:1000px}.phone{position:absolute;top:720px;left:188px;width:944px;border:10px solid #222326;border-radius:100px;overflow:hidden;box-shadow:0 36px 72px #22222220;background:white}.phone img{display:block;width:100%;height:auto}.foot{position:absolute;bottom:38px;left:0;width:100%;text-align:center;font-size:23px;letter-spacing:2px;color:#65676b}.number{position:absolute;top:105px;right:96px;font-size:30px;color:#65676b}
-.orange{background:#ff6616!important}.orange h1 span{color:white}.orange .foot,.orange .number{color:#472207}.orange .deck{color:#3d1d0c}
-.android{width:1080px!important;height:1920px!important}.android .brand{top:65px;left:75px;font-size:32px}.android .brand img{width:46px}.android h1{top:170px;left:75px;font-size:88px;letter-spacing:-3px;width:940px}.android .deck{top:370px;left:78px;font-size:28px;max-width:850px}.android .phone{top:540px;left:222px;width:636px;border-radius:62px;border-width:8px}.android .phone img{margin-top:-35px}.android .foot{font-size:18px;bottom:25px}.android .number{top:76px;right:75px}
-.feature{width:1024px!important;height:500px!important;background:#ff6616!important}.feature .brand{top:50px;left:55px;font-size:25px;gap:14px}.feature .brand img{width:34px}.feature h1{top:135px;left:55px;font-size: sixty;width:590px;font-size:62px;line-height:1.1;letter-spacing:-2px}.feature h1 span{color:white}.feature .deck{top:310px;left:58px;font-size:20px;max-width:450px}.feature .phone{left:715px;top:62px;width:250px;border-width:4px;border-radius:27px;transform:rotate(5deg)}.feature .foot{font-size:12px;bottom:16px;left:55px;width:auto}.feature .number{display:none}
-.brand img{background:#fff;border-radius:13px;padding:8px}
+*{box-sizing:border-box}body{margin:0;background:#f8f6f2;font-family:Inter,sans-serif;color:#141517}
+#canvas{position:relative;overflow:hidden;width:1320px;height:2868px;background:#f8f6f2}
+.brand{position:absolute;left:98px;top:88px;display:flex;gap:20px;align-items:center;font-weight:800;font-size:40px}
+.brand img{width:64px;background:#fff;border-radius:14px;padding:12px}
+h1{position:absolute;top:250px;left:96px;margin:0;font-size:138px;line-height:1.02;letter-spacing:-6px;width:1120px;font-weight:800}h1 span{color:#db4b08}
+.deck{position:absolute;top:590px;left:100px;font-size:39px;line-height:1.35;max-width:1020px}
+.phone{position:absolute;top:830px;left:124px;width:1072px;border:10px solid #222326;border-radius:104px;overflow:hidden;box-shadow:0 36px 72px #22222220;background:white}
+.phone img{display:block;width:100%;height:auto}
+.foot{position:absolute;bottom:0;left:0;width:100%;text-align:center;padding:24px 12px 28px;font-size:21px;letter-spacing:1.5px;color:#53565a;background:#f8f6f2}
+.number{position:absolute;top:107px;right:98px;font-size:27px;color:#62656a}
+.orange{background:#ff6616!important}.orange h1 span{color:white}.orange .foot{background:#ff6616;color:#462105}.orange .number,.orange .deck{color:#3d1d0c}
+.long-headline h1{font-size:122px;letter-spacing:-5px}
+.android{width:1080px!important;height:1920px!important}.android .brand{top:64px;left:75px;font-size:30px}.android .brand img{width:50px;padding:9px;border-radius:10px}
+.android h1{top:195px;left:72px;font-size:106px;letter-spacing:-4.5px;width:940px}.android .deck{top:455px;left:77px;font-size:31px;max-width:880px}
+.android .phone{top:650px;left:108px;width:864px;border-radius:78px;border-width:8px}.android .phone img{margin-top:-92px}.android.long-headline h1{font-size:106px}
+.android .foot{font-size:17px;padding:22px 8px}.android .number{top:80px;right:75px}
+.feature{width:1024px!important;height:500px!important;background:#ff6616!important}.feature .brand{top:38px;left:54px;font-size:24px;gap:12px}.feature .brand img{width:37px;padding:7px;border-radius:8px}
+.feature h1{top:133px;left:50px;width:640px;font-size:79px;line-height:1.04;letter-spacing:-3px}.feature h1 span{color:white}
+.feature .deck{top:335px;left:54px;font-size:22px;max-width:570px}
+.feature .phone{left:745px;top:34px;width:245px;border-width:4px;border-radius:27px;transform:rotate(4deg)}
+.feature .foot{font-size:11px;bottom:0;left:0;text-align:left;padding:12px 54px;background:#ff6616f5;color:#462105}.feature .number{display:none}
 </style>
 <div id="canvas"><div class="brand"><img src="./assets/mark.png" alt="">Openline</div><div class="number"></div><h1></h1><div class="deck"></div><div class="phone"><img id="screen" alt="Openline UI design reference"></div><div class="foot">DESIGN REFERENCE · VERIFY AGAINST THE RELEASE BUILD</div></div>
 <script>
 const slides=[
-['dashboard','Your next trip.<br><span>Connected.</span>','Travel eSIMs. One simple place to manage them.'],
-['countries','Find your place.<br><span>Find your plan.</span>','Explore destinations before you go.'],
-['plans','A plan for<br><span>your kind of trip.</span>','Compare data and validity for your journey.'],
+['countries','Travel data.<br><span>Made clear.</span>','Find an eSIM for your next destination.'],
+['plans','Your trip.<br><span>Your data plan.</span>','Compare data, duration and price before you buy.'],
+['profile','Your eSIM.<br><span>Details in reach.</span>','Find installation information and plan details.'],
+['dashboard','Your data.<br><span>At a glance.</span>','See your remaining data and current plan.'],
 ['esims','All your eSIMs.<br><span>One clear view.</span>','Keep your travel connections together.'],
-['profile','Your connection.<br><span>At a glance.</span>','See plan details and installation information.'],
-['settings','Make yourself<br><span>at home.</span>','Manage your preferences in one place.']];
-const q=new URLSearchParams(location.search),n=Number(q.get('slide')||0),platform=q.get('platform')||'ios';const s=slides[n];
+['settings','Your account.<br><span>Your preferences.</span>','Manage your account preferences in one place.']];
+const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide')||0))),platform=q.get('platform')||'ios',s=slides[n];
 document.querySelector('h1').innerHTML=s[1];document.querySelector('.deck').textContent=s[2];document.querySelector('#screen').src='./assets/screen-'+s[0]+'.png';document.querySelector('.number').textContent='0'+(n+1)+' / 06';
-document.querySelector('#canvas').className=(n%3===0?'orange ':'')+(platform==='android'?'android':platform==='feature'?'feature':'');
+document.querySelector('#canvas').className=(n===5?'long-headline ':'')+(n===0||n===3?'orange ':'')+(platform==='android'?'android':platform==='feature'?'feature':'');
 </script></html>

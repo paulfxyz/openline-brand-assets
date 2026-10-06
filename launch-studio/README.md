@@ -15,8 +15,8 @@ npm run build
 Vercel: use the Vite preset, build command `npm run build`, output `dist`.
 When importing the brand-assets repository, set the root directory to `launch-studio`.
 The included `vercel.json` sets those defaults and noindex/security headers.
-No environment secrets are required. Deployment needs permission to create or
-access `openline-brand` in the connected Vercel team.
+No environment secrets are required. Deployment needs working access to
+`openline-brand` in the connected Vercel team.
 
 ## Saving review work
 
@@ -34,15 +34,29 @@ and authentication before adding a write API.
 ## Creative specification
 
 - The canonical Openline mark is preserved, cropped to its visible artwork.
-- iOS and store master: 62% visible width, approximately 9% smaller than the prior
-  68% composition. 58%, 66% and 68% masters are supplied as review alternatives.
+- iOS and store master: 52.7% visible width, 15% smaller linearly than the 62%
+  candidate. 55.8% and 49.6% compare the requested 10% and 20% reductions.
+  The white square stays unchanged; previous masters remain available.
 - No shadows or rounded corners are baked into flat export artwork. The UI adds
   a mask and presentation shadow for preview only.
 - Dark Apple PNG is a reference. Icon Composer layer assets are supplied, not a
   compiled `.icon` file. Check all actual OS appearances in Xcode.
 - Android adaptive source: 48dp visible artwork on a 108dp canvas, with foreground,
   monochrome and XML resources. This differs from the flat store icon because
-  Android masks/scales adaptive icons.
+  Android masks/scales adaptive icons. The 52.7% reduction also applies to
+  legacy Android launcher icons, not the independently sized adaptive layers.
+
+## Competitor-informed revision
+
+The Competitor review view documents Saily, Airalo and Holafly, with direct
+App Store and Google Play evidence. Revision 02 uses a clearer first image,
+larger UI crops, a decision-led screenshot sequence and more explanatory copy.
+No competitor artwork, ratings, customer counts or feature promises are copied.
+See `public/downloads/competitor-review.md` for the complete source-cited review.
+
+Workspace schema 2 accepts earlier exports, preserving their text and checklist
+notes. It clears earlier screenshot approvals when the artwork revision differs.
+Previously edited copy is not silently replaced with the new baseline.
 
 ## Artwork
 
@@ -82,5 +96,7 @@ Policy research was checked on October 6, 2026; recheck at submission.
 
 Prepared October 6, 2026. The studio and download packages are review deliverables,
 not a store submission. Existing production-path icons in the parent repository
-remain unchanged. Vercel creation was blocked by the connected team's project
-creation permissions; no Vercel production deployment is claimed.
+remain unchanged. The connected CLI cannot create or see the intended project.
+An empty project was created through the owner's browser, but renaming, Git linking
+and deployment are pending because the browser session became unstable.
+No Vercel production deployment is claimed.
