@@ -23,14 +23,21 @@ certification or store acceptance.
 - Revision 02: 10%, 15% and 20% icon-reduction options resolve to the correct files.
 - Schema-1 imports preserve user copy and notes but clear obsolete artwork
   approvals and return completed artwork-review tasks to review.
+- Revision 03: new 42.2%, 43.5% and 44.8% masters resolve correctly; desktop and
+  375px mobile icon views have no horizontal overflow or browser errors.
+- Revision 03: older completed icon approvals return to review on import.
+- Revision 03: adaptive candidate and 48dp fallback bounds are validated at all
+  five Android resource densities.
 
 ## Still required
 
 - Working Vercel project access and a stable authenticated browser session. An empty
   project was created through the owner browser session, but renaming, Git linking
   and deployment could not be completed. The connector cannot see that new project.
-- Final visual approval of the 52.7% icon candidate (15% smaller than 62%), with
-  49.6% and 55.8% alternatives corresponding to the requested 20% and 10% reductions.
+- Final visual approval of the 43.5% icon candidate (another ~17.5% smaller than
+  52.7%), with 42.2% and 44.8% alternatives for approximately 20% and 15% reductions.
+- Android adaptive legibility testing: the 39.6dp experimental candidate is below
+  the recommended 48–66dp artwork range. The prior 48dp fallback is preserved.
 - Real iOS and Android device testing, including adaptive masks and Apple appearances.
 - Native release screenshots to replace the labelled React design references.
 - Verification of production claims, plan prices, permissions and data handling.

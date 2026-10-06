@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.5.1-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.5.2-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-review%20workspace-FF6616?style=flat-square)](launch-studio/)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,7 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.5.1:** [Openline Brand Studio](launch-studio/) adds a source-cited Saily/Airalo/Holafly review and improved listing copy and artwork. The default icon now uses 52.7% visible mark width, 15% smaller than the previous 62% candidate; 10% and 20% reductions are also available for comparison. Existing production icon paths remain unchanged pending approval.
+**New in v1.5.2:** [Openline Brand Studio](launch-studio/) reduces the default flat icon again to 43.5% visible mark width, approximately 17.5% smaller than the previous 52.7% candidate. 42.2% and 44.8% alternatives compare approximately 20% and 15% reductions. The white square remains unchanged, and previous masters stay available. Existing production icon paths remain unchanged pending approval.
 
 The [native app icons](app-icons/), [19-screen React mobile gallery](mobile/), and [dated native Figma source](figma/mobile/) remain available. The gallery and new store artwork are design references with mock data, not production native app captures or a live checkout.
 
@@ -490,7 +490,7 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 
 [`launch-studio/`](launch-studio/) is a buildable React/Vite workspace for preparing the mobile app launch. It includes:
 
-- **Icon review:** 49.6%, 52.7%, 55.8% and 62% comparisons, dark references, home-screen previews, Android masks and downloadable native resource candidates.
+- **Icon review:** 42.2%, 43.5%, 44.8% and 52.7% comparisons, dark references, home-screen previews, Android masks and downloadable native resource candidates. The smaller adaptive candidate includes a 48dp fallback and a native-legibility warning.
 - **Store artwork:** six iPhone compositions at 1320×2868, six Android compositions at 1080×1920, and a Google Play feature graphic at 1024×500.
 - **Listing copy:** editable English drafts, character/byte limits, copy controls and Markdown exports.
 - **Competitor review:** Saily, Airalo and Holafly text and screenshot analysis, official listing links, implemented improvements and an Openline before/after comparison.
@@ -504,6 +504,13 @@ Progress is held in session memory: use **Save workspace** and later **Import wo
 For Vercel, import this repository with root directory `launch-studio`, Vite preset, build command `npm run build`, output directory `dist`. An empty project was created through the owner's browser, but renaming, Git linking and deployment remain pending due to connector access and browser-session failures.
 
 ## Changelog
+
+### v1.5.2: 2026-10-06
+
+- Reduced the flat mark again to 43.5% of the white square, about 17.5% smaller than 52.7%. Added approximately 15% and 20% reduction comparisons.
+- Reduced the Android adaptive candidate from 48dp to 39.6dp and retained a 48dp fallback. The smaller candidate is explicitly below the recommended range and needs native legibility testing.
+- Regenerated native packages and preview masters, and added icon-revision-aware review migration.
+- A fresh Vercel browser attempt again failed with a CDP session error before any settings could be saved. The existing empty project remains undeployed.
 
 ### v1.5.1: 2026-10-06
 

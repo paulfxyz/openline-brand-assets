@@ -1,8 +1,8 @@
 # Openline mobile icon candidate · 2026-10-06
 
-Canonical mark geometry preserved. Default visible mark width: 52.7% of square,
-15% smaller linearly than the 62% candidate. The white square is unchanged.
-49.6% and 55.8% alternatives represent 20% and 10% reductions from 62%.
+Canonical mark geometry preserved. Default visible mark width: 43.5% of square,
+approximately 17.5% smaller linearly than the 52.7% candidate. White square unchanged.
+44.8% and 42.2% alternatives represent approximately 15% and 20% reductions from 52.7%.
 Original export: approximately 68%. No pre-rendered corners or shadows.
 
 ## iOS
@@ -17,11 +17,13 @@ in current Xcode on-device. Appearance-reference PNGs are design references only
 Merge android/res into your application resources; do not overwrite app resources
 blindly. Point android:icon to @mipmap/ic_launcher. Configure roundIcon as appropriate
 for your app and test masks on real devices. v26 adaptive XML and v33 monochrome XML
-are supplied. Artwork spans 48dp on a 108dp canvas, the small end of Android's
-recommended 48–66dp range. Masked appearance differs from iOS; validate every mask.
-This adaptive sizing is intentionally independent of the 52.7% flat icon, not
-the same percentage applied to a different canvas. The 52.7% reduction applies
-to iOS, legacy Android and store-listing white-square icons.
+are supplied. The adaptive candidate spans 39.6dp on a 108dp canvas, a 17.5%
+reduction from the prior 48dp artwork. This is below Android's recommended
+48–66dp range: it is an explicit smaller-size experiment, not a recommendation
+to skip native legibility testing. The android/48dp-reference directory supplies
+foreground and monochrome replacements at the prior guideline-aligned size.
+Masked appearance differs from iOS; validate every mask on actual launchers.
+The 43.5% flat composition applies to iOS, legacy Android and store-listing icons.
 Google Play icon: 512x512 RGBA PNG, fully opaque. No rounded corners baked in.
 
 ## Release gate

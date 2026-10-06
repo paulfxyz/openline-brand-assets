@@ -34,17 +34,19 @@ and authentication before adding a write API.
 ## Creative specification
 
 - The canonical Openline mark is preserved, cropped to its visible artwork.
-- iOS and store master: 52.7% visible width, 15% smaller linearly than the 62%
-  candidate. 55.8% and 49.6% compare the requested 10% and 20% reductions.
+- iOS and store master: 43.5% visible width, approximately 17.5% smaller linearly
+  than the 52.7% candidate. 44.8% and 42.2% compare the requested 15% and 20%
+  reductions, rounded to one decimal place.
   The white square stays unchanged; previous masters remain available.
 - No shadows or rounded corners are baked into flat export artwork. The UI adds
   a mask and presentation shadow for preview only.
 - Dark Apple PNG is a reference. Icon Composer layer assets are supplied, not a
   compiled `.icon` file. Check all actual OS appearances in Xcode.
-- Android adaptive source: 48dp visible artwork on a 108dp canvas, with foreground,
-  monochrome and XML resources. This differs from the flat store icon because
-  Android masks/scales adaptive icons. The 52.7% reduction also applies to
-  legacy Android launcher icons, not the independently sized adaptive layers.
+- Android adaptive candidate: 39.6dp visible artwork on a 108dp canvas, with
+  foreground, monochrome and XML resources. This is a 17.5% reduction from the
+  prior 48dp mark, below Android's recommended 48–66dp range. A 48dp reference
+  fallback is included in the native kit. Test readability on actual launchers.
+  Legacy Android and store-listing icons use the 43.5% flat composition.
 
 ## Competitor-informed revision
 
@@ -57,6 +59,8 @@ See `public/downloads/competitor-review.md` for the complete source-cited review
 Workspace schema 2 accepts earlier exports, preserving their text and checklist
 notes. It clears earlier screenshot approvals when the artwork revision differs.
 Previously edited copy is not silently replaced with the new baseline.
+Icon revision 3 reopens older completed icon-review tasks, since native resources
+have changed. The current selectable sizes are 42.2%, 43.5%, 44.8% and 52.7%.
 
 ## Artwork
 

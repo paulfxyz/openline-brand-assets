@@ -4,7 +4,7 @@ All initial items require review or evidence. Nothing here is store approval.
 
 - [ ] Approve the smaller icon (Both; required)
   Owner: Design
-  Paul requested 10–20% smaller than the 62% candidate. Review 52.7% (15% smaller), with 55.8% and 49.6% alternatives. Test the separate 48dp Android adaptive mark on real launchers.
+  Paul requested another 15–20% reduction from 52.7%. Review 43.5% (about 17.5% smaller), with 44.8% and 42.2% alternatives. The Android adaptive candidate is also 17.5% smaller, at 39.6dp; it is below the recommended 48–66dp range and needs device legibility review. A 48dp fallback is included.
 
 - [ ] Integrate icons in release targets (Both; required)
   Owner: Engineering

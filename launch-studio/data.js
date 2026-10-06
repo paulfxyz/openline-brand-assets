@@ -75,7 +75,7 @@ export const fieldSpecs={
  google:[['name','App name',30],['shortDescription','Short description',80],['description','Full description',4000],['releaseNotes','Release notes draft',500]]
 };
 export const tasks=[
- ['icon','Approve the smaller icon','Creative','Both','review','Paul requested 10–20% smaller than the 62% candidate. Review 52.7% (15% smaller), with 55.8% and 49.6% alternatives. Test the separate 48dp Android adaptive mark on real launchers.','apple-icons','Design','required'],
+ ['icon','Approve the smaller icon','Creative','Both','review','Paul requested another 15–20% reduction from 52.7%. Review 43.5% (about 17.5% smaller), with 44.8% and 42.2% alternatives. The Android adaptive candidate is also 17.5% smaller, at 39.6dp; it is below the recommended 48–66dp range and needs device legibility review. A 48dp fallback is included.','apple-icons','Design','required'],
  ['native-icons','Integrate icons in release targets','Build','Both','todo','Import the Xcode catalog; merge Android resources; verify masks and dark/themed variants in the actual builds.','android-icons','Engineering','required'],
  ['art','Review the 12 screenshot compositions','Creative','Both','review','These are rendered from the supplied React design reference, not signed iOS or Android builds. Approve the direction only.','google-assets','Design','recommended'],
  ['captures','Recapture from the native release builds','Creative','Both','blocked','Replace the design-reference imagery with accurate platform-native screens. Remove draft labels only after comparison and approval.','apple-screenshots','Engineering','required'],
@@ -124,4 +124,4 @@ export const suggestedSettings=[
  ['Release controls','Google release','Controlled rollout where available','Suggested','Configure countries and monitoring; verify options for the first release.','google-copy-build'],
  ['Release controls','EU availability','Trader status and legal review first','Blocked','Confirm public legal/contact data before EU distribution.','apple-dsa']
 ].map(([group,field,value,status,detail,source])=>({group,field,value,status,detail,source}));
-export const initialWorkspace={schemaVersion:2,artworkRevision:2,iconSize:52.7,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};
+export const initialWorkspace={schemaVersion:2,artworkRevision:2,iconRevision:3,iconSize:43.5,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};

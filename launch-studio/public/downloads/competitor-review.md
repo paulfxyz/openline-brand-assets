@@ -43,7 +43,18 @@ Make Openline's launch presentation more explicit rather than more decorative. L
 | Icon | 62% mark coverage | 52.7% default: 15% smaller linearly; 55.8% and 49.6% comparisons show 10% and 20% reductions |
 | Review continuity | Artwork approvals by index | Revision-aware import clears old artwork approvals when designs change |
 
-The white icon canvas remains unchanged. The reduced mark applies to iOS, legacy Android and flat store icons. Android adaptive resources remain separately sized at 48dp on a 108dp canvas, the small end of Android's recommended range; different masks make direct percentage comparison misleading. [Android adaptive-icon guidance](https://developer.android.com/develop/ui/compose/system/icon_design_adaptive)
+### Subsequent icon revision 03
+
+Paul requested another 15–20% reduction from the 52.7% candidate. The current
+default is **43.5%**, approximately 17.5% smaller linearly; **44.8%** and **42.2%**
+compare approximately 15% and 20% reductions. These values are rounded to one
+decimal place. The white square remains unchanged.
+
+The Android adaptive candidate also shrinks by 17.5%, from 48dp to 39.6dp on the
+108dp canvas. This is below Android's recommended 48–66dp range, so it is a
+user-requested small-size experiment requiring real-device legibility testing.
+The native package preserves the previous 48dp foreground and monochrome layers
+as a fallback. [Android adaptive-icon guidance](https://developer.android.com/develop/ui/compose/system/icon_design_adaptive)
 
 ## Keep, improve, verify
 

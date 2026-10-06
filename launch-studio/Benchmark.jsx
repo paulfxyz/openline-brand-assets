@@ -17,13 +17,13 @@ export default function Benchmark(){
    <div className="competitor-links"><a className="source" href={c.apple} target="_blank" rel="noreferrer">App Store evidence <ArrowUpRight size={14}/></a><a className="source" href={c.google} target="_blank" rel="noreferrer">Google Play text <ArrowUpRight size={14}/></a></div>
    <div className="lesson"><span className="eyebrow">TAKEAWAY FOR OPENLINE</span><p>{c.lesson}</p></div>
   </article>)}</div>
-  <div className="section-heading"><div><h2>What changed in revision 02</h2><p>Editorial and design improvements, not measured conversion gains.</p></div><span className="badge green">Implemented</span></div>
+  <div className="section-heading"><div><h2>What changed in the studio</h2><p>Revision 02 artwork, revision 03 icons. Not measured conversion gains.</p></div><span className="badge green">Implemented</span></div>
   <div className="benchmark-changes">{[
    ['A clearer opening','“Your next trip. Connected.” becomes “Travel data. Made clear.” The category and benefit arrive together.'],
    ['A decision-led sequence','Destination → plan comparison → eSIM details → data view → eSIM library → account preferences.'],
    ['Larger, more readable UI','Phone widths grow from 944 to 1072px on iPhone artboards and from 636 to 864px on Android. Intentional crops prioritise relevant detail over tiny full-screen thumbnails.'],
    ['Copy that answers first-time questions','The title includes “eSIM & Data”; descriptions explain compatibility, setup information, separate plan purchases and home-carrier charges.'],
-   ['A quieter app icon','Default 52.7% mark coverage: 15% smaller than the 62% candidate. Compare the requested 10%, 15% and 20% reductions.'],
+   ['A quieter app icon','The latest default is 43.5% mark coverage: another ~17.5% smaller than 52.7%. Compare approximately 15%, 17.5% and 20% reductions inside the same white square.'],
    ['No invented proof','No imported ratings, customer counts, destination totals, unlimited guarantees, instant-setup times or round-the-clock support claims.']
   ].map(([title,body])=><article className="panel" key={title}><CheckCircle2 size={19}/><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
   <div className="section-heading"><div><h2>Our first impression, before and after</h2><p>The same identity, with a clearer product story and more legible detail.</p></div></div>
