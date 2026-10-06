@@ -2,9 +2,12 @@
 
 App icon review, store artwork, editable English listing drafts, suggested settings
 and a 29-item launch checklist. This is a static React/Vite application, designed
-for the `openline-brand` Vercel project.
+published at [openline-brand.fly.dev](https://openline-brand.fly.dev).
 
 ## Run and deploy
+
+Production hosting is Fly.io. See [hosting/README.md](hosting/README.md) for the
+pinned-bundle deployment and update procedure. Git pushes do not auto-deploy.
 
 ```sh
 npm ci
@@ -15,8 +18,8 @@ npm run build
 Vercel: use the Vite preset, build command `npm run build`, output `dist`.
 When importing the brand-assets repository, set the root directory to `launch-studio`.
 The included `vercel.json` sets those defaults and noindex/security headers.
-No environment secrets are required. Deployment needs working access to
-`openline-brand` in the connected Vercel team.
+No environment secrets are required. Vercel remains an optional deployment route;
+the earlier empty Vercel placeholder is not used by the live site.
 
 ## Saving review work
 
@@ -100,7 +103,7 @@ Policy research was checked on October 6, 2026; recheck at submission.
 
 Prepared October 6, 2026. The studio and download packages are review deliverables,
 not a store submission. Existing production-path icons in the parent repository
-remain unchanged. The connected CLI cannot create or see the intended project.
-An empty project was created through the owner's browser, but renaming, Git linking
-and deployment are pending because the browser session became unstable.
-No Vercel production deployment is claimed.
+remain unchanged. The studio is live on Fly.io with HTTPS, a passing health check
+and verified download ZIP. All eight views were checked on the production site;
+desktop and mobile layouts retain the 43.5% icon candidate.
+The empty Vercel placeholder remains undeployed; no Vercel deployment is claimed.

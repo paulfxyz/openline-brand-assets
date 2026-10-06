@@ -29,11 +29,19 @@ certification or store acceptance.
 - Revision 03: adaptive candidate and 48dp fallback bounds are validated at all
   five Android resource densities.
 
+## Production verification: Fly.io
+
+- https://openline-brand.fly.dev serves the studio over HTTPS.
+- Machine `8d7155be3ed118` in `cdg` reports a passing HTTP health check.
+- All eight views render without browser page errors or horizontal overflow.
+- Desktop icon canvas and 375px mobile overview visually checked.
+- Default remains Candidate 03, 43.5%; the white square is unchanged.
+- Public launch-kit ZIP downloads successfully and passes ZIP integrity checks.
+- Hosting uses one shared CPU, 256 MB, shared IPv4/IPv6 and idle autostop.
+- Vercel placeholder remains unused. Git pushes do not automatically deploy to Fly.
+
 ## Still required
 
-- Working Vercel project access and a stable authenticated browser session. An empty
-  project was created through the owner browser session, but renaming, Git linking
-  and deployment could not be completed. The connector cannot see that new project.
 - Final visual approval of the 43.5% icon candidate (another ~17.5% smaller than
   52.7%), with 42.2% and 44.8% alternatives for approximately 20% and 15% reductions.
 - Android adaptive legibility testing: the 39.6dp experimental candidate is below

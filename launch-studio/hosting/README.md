@@ -30,7 +30,7 @@ through an appropriate credential-aware HTTP transport.
 4. Create one small, shared-CPU Machine with the release commit.
 5. Verify its health check, HTTPS page, icon controls and download packages.
 
-The API configuration requests Madrid (`mad`), 256 MB memory, one shared CPU,
+The API configuration requests Paris (`cdg`), 256 MB memory, one shared CPU,
 HTTPS redirect, health checks, autostart and idle autostop with zero minimum
 running Machines. No database, volume, API secret, dedicated IPv4, or external
 write endpoint is required. Fly compute/transfer usage follows the account's
@@ -49,8 +49,20 @@ Updates are explicit; no automatic GitHub Actions deployment is configured.
 
 ## Status
 
-Hosting files are prepared. Provisioning and live URL verification are pending
-authorization to use the saved Fly.io organization credential.
+Live: https://openline-brand.fly.dev
+
+- Organization: `paul-fleury`
+- App: `openline-brand`
+- Machine: `8d7155be3ed118` (`openline-brand-web`)
+- HTTPS and `/healthz` verified; Fly health check passing.
+- All eight views load, with Candidate 03 at 43.5% and intact launch-kit downloads.
+- Shared IPv4 and IPv6 allocated. No dedicated IPv4, database or volume.
+- Madrid rejected new provisioning; Paris was used instead.
+
+In Computer's sandbox, use `REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt`
+so Requests trusts the platform credential proxy. Do not disable TLS validation.
+Read `config.metadata.openline.source_commit` on the Machine for its exact
+deployed source revision. The GitHub repository is the durable release source.
 
 Official API guidance:
 https://docs.fly.io/machines/api/apps-resource

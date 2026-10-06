@@ -9,8 +9,8 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.5.2-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
-[![Launch studio](https://img.shields.io/badge/launch%20studio-review%20workspace-FF6616?style=flat-square)](launch-studio/)
+[![Version](https://img.shields.io/badge/media--kit-v1.6.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
 [![App icons](https://img.shields.io/badge/app%20icons-iOS%20%2B%20Android-22C55E?style=flat-square)](app-icons/)
@@ -33,7 +33,7 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.5.2:** [Openline Brand Studio](launch-studio/) reduces the default flat icon again to 43.5% visible mark width, approximately 17.5% smaller than the previous 52.7% candidate. 42.2% and 44.8% alternatives compare approximately 20% and 15% reductions. The white square remains unchanged, and previous masters stay available. Existing production icon paths remain unchanged pending approval.
+**New in v1.6.0:** [Openline Brand Studio is live](https://openline-brand.fly.dev), with eight review views and a [downloadable launch kit](https://openline-brand.fly.dev/downloads/openline-launch-kit.zip). The default flat icon remains at 43.5% visible mark width, approximately 17.5% smaller than the previous 52.7% candidate. 42.2% and 44.8% alternatives compare approximately 20% and 15% reductions. The white square remains unchanged, and previous masters stay available. Existing production icon paths remain unchanged pending approval.
 
 The [native app icons](app-icons/), [19-screen React mobile gallery](mobile/), and [dated native Figma source](figma/mobile/) remain available. The gallery and new store artwork are design references with mock data, not production native app captures or a live checkout.
 
@@ -501,9 +501,26 @@ The screenshots are rendered from the supplied React design reference, **not sig
 
 Progress is held in session memory: use **Save workspace** and later **Import workspace** to resume. There is no shared database or public write API, and credentials must not be entered here.
 
-For Vercel, import this repository with root directory `launch-studio`, Vite preset, build command `npm run build`, output directory `dist`. An empty project was created through the owner's browser, but renaming, Git linking and deployment remain pending due to connector access and browser-session failures.
+**Live workspace:** https://openline-brand.fly.dev
+
+Hosted on Fly.io in Paris using a small NGINX Machine with HTTPS, health checks
+and idle autostop. See [hosting and updates](launch-studio/hosting/README.md).
+Releases pin the public static bundle to a Git commit and verify its SHA-256;
+Git pushes do not automatically deploy.
+
+For optional Vercel hosting, import this repository with root directory
+`launch-studio`, Vite preset, build `npm run build`, output `dist`. The earlier
+empty Vercel placeholder remains unused; the live deployment is on Fly.io.
 
 ## Changelog
+
+### v1.6.0: 2026-10-06
+
+- Published Openline Brand Studio at https://openline-brand.fly.dev.
+- Verified all eight views, the 43.5% icon default, mobile layout, health checks
+  and downloadable launch-kit ZIP.
+- Added reproducible, commit-pinned Fly hosting with checksum verification.
+- Preserved explicit review status for native screenshots and store submissions.
 
 ### v1.5.2: 2026-10-06
 

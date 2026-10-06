@@ -56,7 +56,7 @@ elif args.operation in ["machines", "create-machine", "update-machine"]:
         method = "POST"
         payload = {
             "name": "openline-brand-web",
-            "region": "mad",
+            "region": "cdg",
             "config": {
                 "image": "registry-1.docker.io/library/nginx:stable-alpine",
                 "init": {"exec": ["/bin/sh", "/tmp/openline-bootstrap.sh"]},
