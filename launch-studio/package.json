@@ -1,0 +1,9 @@
+{
+  "name":"openline-brand",
+  "private":true,
+  "version":"1.0.0",
+  "type":"module",
+  "scripts":{"dev":"vite --host 0.0.0.0 --port 5173","build":"vite build","preview":"vite preview --host 0.0.0.0"},
+  "dependencies":{"react":"^18.3.1","react-dom":"^18.3.1","lucide-react":"^0.487.0","@fontsource/inter":"^5.2.5","@fontsource/play":"^5.2.5"},
+  "devDependencies":{"vite":"6.4.3","@vitejs/plugin-react":"^4.7.0"}
+}

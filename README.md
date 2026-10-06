@@ -9,7 +9,8 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.4-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.5-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Launch studio](https://img.shields.io/badge/launch%20studio-review%20workspace-FF6616?style=flat-square)](launch-studio/)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
 [![App icons](https://img.shields.io/badge/app%20icons-iOS%20%2B%20Android-22C55E?style=flat-square)](app-icons/)
@@ -24,7 +25,7 @@
 
 ---
 
-> **Openline** is an eSIM provider that always gets the best signal. Instant data in **190+ countries**, multi-carrier Tier-1 networks, automatic switching, no roaming bills, no SIM cards, activates in **30 seconds**. Loved by **1M+ travellers**.
+> **Openline** is building an eSIM experience around clear choices, straightforward setup and mobile connectivity for travel. Coverage, pricing, compatibility and activation details must match the current product before appearing in published marketing.
 >
 > Website: **[openline.com](https://openline.com)**
 
@@ -32,7 +33,9 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.4:** [native app icons](app-icons/), a [19-screen React mobile gallery](mobile/), and a [dated native Figma source](figma/mobile/). The mobile gallery is a buildable UI reference with mock data, not a production native app or live checkout.
+**New in v1.5:** [Openline Brand Studio](launch-studio/) brings icon comparisons, store-artwork previews, editable listing drafts, suggested settings and a 29-item launch checklist together. The recommended icon candidate gives the original mark more breathing room: 62% visible width versus the prior approximately 68%. Existing icon paths are unchanged pending approval.
+
+The [native app icons](app-icons/), [19-screen React mobile gallery](mobile/), and [dated native Figma source](figma/mobile/) remain available. The gallery and new store artwork are design references with mock data, not production native app captures or a live checkout.
 
 You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own CDN mirror). No download-and-reupload is necessary — and we'd prefer you didn't, because hot-linking guarantees you always get the latest, on-brand version.
 
@@ -42,6 +45,7 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 
 - [At a glance](#at-a-glance)
 - [Repository layout](#repository-layout)
+- [App launch studio](#app-launch-studio)
 - [Resource areas](#resource-areas)
   - [Logo](#logo)
   - [Wordmark](#wordmark)
@@ -85,6 +89,7 @@ You can **hot-link freely** from these URLs (raw GitHub, jsDelivr, or your own C
 | A **Figma → React** export to lift for a component | [`figma/code-exports/`](figma/code-exports/) |
 | A **WorkAdventure SDK app** preview (36 apps) | [`workadventure/apps/`](workadventure/apps/) |
 | **iOS and Android app icons**, including store sizes | [`app-icons/`](app-icons/) |
+| **Icon review, store artwork, listing drafts and launch checklist** | [`launch-studio/`](launch-studio/) |
 | The mobile app's **native Figma source** | [`figma/mobile/openline-mobile-screens-2026-09-24.fig`](figma/mobile/openline-mobile-screens-2026-09-24.fig) |
 | The **19-screen React mobile gallery** and build instructions | [`mobile/app-screens/`](mobile/app-screens/) |
 | Shared **web UI styles** | [`web/openline-ui.css`](web/openline-ui.css) |
@@ -481,7 +486,32 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 
 ---
 
+## App launch studio
+
+[`launch-studio/`](launch-studio/) is a buildable React/Vite workspace for preparing the mobile app launch. It includes:
+
+- **Icon review:** 58%, 62%, 66% and 68% compositions, dark references, home-screen previews, Android masks and downloadable native resource candidates.
+- **Store artwork:** six iPhone compositions at 1320×2868, six Android compositions at 1080×1920, and a Google Play feature graphic at 1024×500.
+- **Listing copy:** editable English drafts, character/byte limits, copy controls and Markdown exports.
+- **Readiness tracking:** 29 checklist items with platform filters, owners, notes, status and a portable JSON save/import workflow.
+- **Submission guidance:** suggested settings, unresolved product/legal decisions and links to official Apple and Google documentation, checked October 6, 2026.
+
+The screenshots are rendered from the supplied React design reference, **not signed native release builds**. They retain a review footer; sample data, plan claims and actual UI behavior require verification before submission. The checklist is self-reported, not store approval. No production app identifiers, privacy declarations, payment exemptions or developer-account details are assumed.
+
+Progress is held in session memory: use **Save workspace** and later **Import workspace** to resume. There is no shared database or public write API, and credentials must not be entered here.
+
+For Vercel, import this repository with root directory `launch-studio`, Vite preset, build command `npm run build`, output directory `dist`. The requested `openline-brand` deployment is pending project-creation permission in the connected Vercel team.
+
 ## Changelog
+
+### v1.5: 2026-10-06
+
+- Added the app launch studio, native icon candidates, 12 store artwork compositions, feature graphic, English copy drafts and portable review checklist.
+- Preserved the original mark geometry while proposing a smaller 62% composition, approximately 9% smaller linearly than the prior icon.
+- Added official requirements, asset manifests, package-generation scripts and documented submission blockers.
+- Kept all existing asset paths and production-path icons unchanged.
+- Replaced unverified headline marketing claims in this README with a product-grounded introduction.
+- Vercel publication remains blocked by project-creation permissions; this release does not claim native or store approval.
 
 ### v1.4: 2026-09-24
 
