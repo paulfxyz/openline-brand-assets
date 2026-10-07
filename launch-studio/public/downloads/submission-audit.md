@@ -1,5 +1,14 @@
 # Openline submission preparation audit
 
+## Current creative status: v1.12.1
+
+Owner correction restores explicit OMDM pricing positioning on screenshot 6:
+“Smarter market. Better prices.” The supporting copy explains supplier comparison.
+Both platforms use this review creative, not the prior neutral plan-choice ending.
+Validate sourcing and comparable retail evidence before submission. Google Play
+price-promotional screenshot recommendations still require review. No universal
+cheapest guarantee or store clearance is implied. Native capture remains pending.
+
 ## Current creative status: v1.12.0
 
 The simplified Main view contains the final icon, device and listing previews,

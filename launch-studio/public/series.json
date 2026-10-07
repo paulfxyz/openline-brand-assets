@@ -1,11 +1,11 @@
 {
-  "revision":12,
+  "revision":13,
   "artworkLabels":"Review footers, category micro-labels and qualification strips removed from images. Review status and claim boundaries remain in the Archive and handoff documents.",
   "sourceOrder":[0,2,2,4,3,1],
   "submissionStatus":"blocked-creative-review-only",
   "backgroundSequence":["orange","warm-cream","orange","warm-cream","orange","warm-cream"],
   "frameOverrides":{"1":{"detail":"Keep your purchase code close. Activate when you are ready.","captures":{"ios":"./assets/screen-purchase.png","android":"./assets/screen-purchase.png"}}},
-  "androidHeadlines":{"5":["Your trip.","Your kind of plan."]},
+  "androidHeadlines":{"5":["Smarter market.","Better prices."]},
   "status":"design-reference-not-native-capture",
   "selectedSeries":"signal",
   "differentiator":{
@@ -21,14 +21,14 @@
   },
   "market":{
     "slide":5,
-    "detail":"Compare the days, data and price before you choose.",
+    "detail":"Our Openline Mobile Data Market (OMDM) compares supplier offers to help bring you lower-priced travel data.",
     "visual":"Supplied plan-selection UI with displayed duration and price choices. Sample prices are not evidence of comparative savings.",
     "captures":{"ios":"./assets/screen-plans.png","android":"./assets/screen-plans.png"},
-    "androidDetail":"Compare the days, data and price before you choose.",
+    "androidDetail":"Our Openline Mobile Data Market (OMDM) compares supplier offers to help bring you lower-priced travel data.",
     "label":"Openline Mobile Data Market",
     "qualification":"Plan prices vary by destination, data allowance and validity."
   },
   "series":[
-    {"id":"signal","name":"Original orange","number":"01","color":"#ff6418","description":"App-led story with alternating orange and warm cream backgrounds. Six distinct product views, no diagram-only frames.","intent":"Destination, purchase, setup and eSIM collection first. The connection dashboard is frame 5; neutral plan choice closes at frame 6 on both platforms. Native captures and claims review are still required.","heads":[["Your next stop.","Connected."],["Your purchase.","Ready when you are."],["Your eSIM.","Ready to set up."],["All your eSIMs.","One place."],["More networks.","More ways to connect."],["Your trip.","Your kind of plan."]]}
+    {"id":"signal","name":"Original orange","number":"01","color":"#ff6418","description":"App-led story with alternating orange and warm cream backgrounds. Six distinct product views, no diagram-only frames.","intent":"Destination, purchase, setup and eSIM collection first. The connection dashboard is frame 5; OMDM supplier comparison and better-price positioning close at frame 6 on both platforms. Native captures and pricing evidence are still required.","heads":[["Your next stop.","Connected."],["Your purchase.","Ready when you are."],["Your eSIM.","Ready to set up."],["All your eSIMs.","One place."],["More networks.","More ways to connect."],["Smarter market.","Better prices."]]}
   ]
 }

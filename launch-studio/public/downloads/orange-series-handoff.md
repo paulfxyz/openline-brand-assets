@@ -1,4 +1,4 @@
-# Openline selected orange screenshots / Revision 12
+# Openline selected orange screenshots / Revision 13
 
 Original orange is the selected direction. Native screenshot approval is pending.
 The final 43.5% icon is unchanged.
@@ -8,7 +8,8 @@ Order: destination, purchase confirmation, setup, eSIM collection, connection da
 Backgrounds alternate orange and warm cream, starting with orange.
 All six are distinct supplied React UI references, not native release screenshots.
 No illustration-only frames remain. Frame 5 uses the connection dashboard.
-Frame 6 uses plan selection, with a neutral plan-choice headline on both platforms.
+Frame 6 uses plan selection with “Smarter market. Better prices.” and an explicit
+OMDM supplier-comparison explanation on both platforms. Pricing evidence is required.
 Review labels are not burned into the artwork. Review status remains in this handoff.
 Replace the captures with accurate native captures,
 verify every visible price, coverage, plan, feature and usage value, then recompose and approve.

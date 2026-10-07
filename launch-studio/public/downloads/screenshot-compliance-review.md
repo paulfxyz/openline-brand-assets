@@ -21,8 +21,9 @@ Review warnings and claim boundaries remain in the Archive and these handoff not
 6. Plan selection, warm cream.
 
 No new signal readings, carrier affiliations or prices were invented. The
-dashboard appears only once. Both platforms' last headline is “Your trip. Your kind
-of plan.” instead of “For better prices.”
+dashboard appears only once. Both platforms' final headline is “Smarter market.
+Better prices.” with an explicit OMDM supplier-comparison explanation. This is
+owner-directed price-led review creative, not a verified cheapest-price claim.
 
 ## Apple
 
@@ -47,7 +48,8 @@ the listing. The screenshot recommendations call for actual in-app captures,
 prioritizing UI in the first three, taglines occupying no more than 20% of the
 image, and no price/promotional content. They also advise avoiding device imagery.
 The current Android artwork uses actual supplied UI references, upright flat
-app panels rather than hardware bezels, and a neutral final headline.
+app panels rather than hardware bezels. Its restored price-led final headline
+is not the conservative submission variant and needs platform-specific review.
 ([Google preview assets: requirements and recommendations](https://support.google.com/googleplay/android-developer/answer/9866151?hl=en))
 
 The binding Metadata policy separately prohibits misleading metadata, including
@@ -63,8 +65,8 @@ Android caption the more conservative choice.
 - Verify all country coverage, plan prices, allowances, activation conditions,
   purchases and displayed product features against the launch catalog/build.
 - Substantiate “Tier-1”, partner flexibility, replacement-profile availability
-  and the value/sourcing explanation retained in description copy. The price-led
-  screenshot headline is now removed on both platforms. Do not infer comparative performance from
+  and the value/sourcing explanation in description copy and the restored price-led
+  final screenshot. Do not infer comparative performance from
   full status-bar bars or a Connected badge.
 - The supplied price-selection UI includes “BEST VALUE” and “Unlimited data ·
   full speed · hotspot included.” Validate/correct these against fair-use terms,

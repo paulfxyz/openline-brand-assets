@@ -51,7 +51,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "ba3f457ff6157e225b20116fd2ef8871ce9b12c85e0a351479c4bef66a9f7c97"
+    "sha256": "5f05f7ee28c4c9bdb90b6bd27e64c3624a75dbe03caf6f66af2be1d8081993a7"
   },
   {
     "series": "signal",
@@ -105,6 +105,6 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "89ed1acc0bc5788474de88af748b081a351c67e3744ed6ae97225587296f5b68"
+    "sha256": "f43d0a63db00b2be072b3f6176a4ce58af09d44d22924685e64be3a752a43c81"
   }
 ]

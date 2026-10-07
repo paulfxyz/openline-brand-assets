@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.12.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.12.1-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,13 +33,14 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**Current: v1.12.0.** A simplified [Main view](https://openline-brand.fly.dev)
+**Current: v1.12.1.** A simplified [Main view](https://openline-brand.fly.dev)
 contains the approved icon, iPhone and Android previews, App Store and Google Play
 listing previews, and a concise download recap. All previous tools, comparisons,
 checklists and review notes remain in [Archive](https://openline-brand.fly.dev/#archive).
 Only Original orange is current, alternating orange and warm cream. The network
-dashboard is fifth; plan selection is sixth. Both platforms end with the larger,
-neutral “Your trip. Your kind of plan.” headline. Micro-labels and review footers
+dashboard is fifth; plan selection is sixth. Both platforms end with the larger
+“Smarter market. Better prices.” headline and explicit OMDM supplier-comparison
+copy. Pricing evidence and platform review remain gates. Micro-labels and review footers
 are removed from current screenshot artwork, while readiness notes remain in
 the handoff. Native captures and claim verification still gate submission.
 The actual Openline icon accompanies the name, white on orange and black on cream.

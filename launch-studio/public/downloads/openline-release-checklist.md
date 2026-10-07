@@ -12,7 +12,7 @@ The final flat icon visual choice is approved. Native integration, capture repla
 
 - [ ] Verify native app screenshots and launch claims (Both; required; blocked)
   Owner: Design
-  Alternating orange/cream, six distinct app views. Dashboard at frame 5 and plan selection at 6 replace illustrations. These are supplied React captures, not native evidence. Verify release UI, network claims, price/FUP wording and platform-specific copy. Android uses neutral plan-choice copy. See screenshot-compliance-review.md.
+  Alternating orange/cream, six distinct app views. Dashboard at frame 5 and plan selection at 6 replace illustrations. These are supplied React captures, not native evidence. Verify release UI, network claims, price/FUP wording and platform-specific copy. Both platforms carry OMDM pricing positioning requiring evidence. See screenshot-compliance-review.md.
 
 - [ ] Recapture from the native release builds (Both; required; blocked)
   Owner: Engineering

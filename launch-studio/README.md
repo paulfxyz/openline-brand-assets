@@ -1,5 +1,14 @@
 # Openline Brand Studio
 
+## Current: v1.12.1, OMDM pricing story restored
+
+Frame 6 on both platforms now reads “Smarter market. Better prices.”
+Supporting copy explicitly explains that Openline Mobile Data Market (OMDM)
+compares supplier offers to help bring lower-priced travel data. The plan-selection
+capture and large headline remain. This supersedes the neutral ending in v1.12.0.
+Pricing evidence and platform review remain submission gates; no blanket
+“cheapest” guarantee is made. Main/Archive and the final icon are unchanged.
+
 ## Current: v1.12.0, clean Main and separate Archive
 
 Main contains only the approved app icon, four device/store preview cards and

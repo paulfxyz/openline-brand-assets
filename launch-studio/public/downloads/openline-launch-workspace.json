@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "artworkRevision": 3,
-  "previewRevision": 12,
+  "previewRevision": 13,
   "copyRevision": 3,
   "preferredSeries": "signal",
   "screenshotNotes": "",
@@ -56,7 +56,7 @@
       "group": "Creative",
       "platform": "Both",
       "status": "blocked",
-      "detail": "Alternating orange/cream, six distinct app views. Dashboard at frame 5 and plan selection at 6 replace illustrations. These are supplied React captures, not native evidence. Verify release UI, network claims, price/FUP wording and platform-specific copy. Android uses neutral plan-choice copy. See screenshot-compliance-review.md.",
+      "detail": "Alternating orange/cream, six distinct app views. Dashboard at frame 5 and plan selection at 6 replace illustrations. These are supplied React captures, not native evidence. Verify release UI, network claims, price/FUP wording and platform-specific copy. Both platforms carry OMDM pricing positioning requiring evidence. See screenshot-compliance-review.md.",
       "source": "google-assets",
       "owner": "Design",
       "requirement": "required",

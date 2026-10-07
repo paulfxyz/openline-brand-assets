@@ -32,11 +32,12 @@ Current iPhone and Android screenshot designs, approved icon formats, native ico
 resources, editable screenshot sources, store copy, settings, checklist and policies.
 The icon choice is final; screenshots and feature graphic are review candidates.
 
-Both platforms end with “Your trip. Your kind of plan.” The network dashboard
+Both platforms end with “Smarter market. Better prices.” and an explicit OMDM
+supplier-comparison explanation. Comparative pricing needs launch evidence. The network dashboard
 is fifth. Backgrounds alternate orange and warm cream. All six app views are
 supplied React design captures, not verified native release captures.
 Artwork has no review footer, category micro-label or qualification strip.
-The larger final headline remains neutral. Review status and claim boundaries
+The larger final headline restores the value story. Review status and claim boundaries
 are retained in the handoff documents and the site's Archive view.
 
 No competitor imagery, superseded screenshot series, credentials, signed app

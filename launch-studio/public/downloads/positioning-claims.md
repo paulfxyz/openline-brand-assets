@@ -27,14 +27,15 @@ switching. Unlimited plans remain subject to the local network's fair-use rules.
 
 ## Screenshot 6: OMDM and value
 
-**Your trip. Your kind of plan.**
+**Smarter market. Better prices.**
 
-Compare the days, data and price before you choose.
+Our Openline Mobile Data Market (OMDM) compares supplier offers to help bring you lower-priced travel data.
 
 The visual uses supplied plan-selection UI with duration and price choices.
-These sample figures are not savings evidence. Both platforms use “Your trip.
-Your kind of plan.” instead of a price-superiority headline. The OMDM explanation
-is retained in description copy, separately subject to launch verification.
+These sample figures are not savings evidence. Both platforms now explicitly
+connect better-price positioning to OMDM supplier comparison on the final image.
+This replaces the rejected neutral plan-choice ending. The description paragraph
+also retains the OMDM explanation. Both require launch evidence before submission.
 
 This is owner-provided positioning for the Openline Mobile Data Market (OMDM).
 Verify the production sourcing workflow and comparable retail evidence before
