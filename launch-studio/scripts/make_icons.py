@@ -66,7 +66,7 @@ icon(432,39.6/108,transparent=True).save(OUT/'android-foreground.png')
 icon(432,39.6/108,'mono',transparent=True).save(OUT/'android-monochrome.png')
 shutil.copy(ios/'icon-1024.png',OUT/'apple-icon-1024.png')
 shutil.copy(android/'google-play-icon-512.png',OUT/'google-play-icon-512.png')
-(PACK/'README.md').write_text("""# Openline mobile icon candidate · 2026-10-06
+(PACK/'README.md').write_text("""# Openline mobile icon · final visual choice · 2026-10-07
 
 Canonical mark geometry preserved. Default visible mark width: 43.5% of square,
 approximately 17.5% smaller linearly than the 52.7% candidate. White square unchanged.
@@ -95,8 +95,9 @@ The 43.5% flat composition applies to iOS, legacy Android and store-listing icon
 Google Play icon: 512x512 RGBA PNG, fully opaque. No rounded corners baked in.
 
 ## Release gate
-These files are design candidates, not store approval. Verify rendering in the
-signed release builds and approve the final size before replacing production icons.
+Paul approved the 43.5% flat visual composition on 7 October 2026. These files
+are not store approval. Verify rendering in signed release builds; native
+adaptive sizing, masks and appearances still need engineering/device validation.
 
 Official guidance:
 https://developer.apple.com/design/human-interface-guidelines/app-icons

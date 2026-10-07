@@ -1,0 +1,33 @@
+{
+  "status": "preparation-only-not-console-configuration",
+  "locale": "en-US",
+  "finalIcon": {"approved":true,"approvedAt":"2026-10-07","coverage":0.435,"nativeIntegrationVerified":false},
+  "apple": {
+    "name":"Openline: Travel eSIM & Data",
+    "subtitle":"Find your plan. See your data.",
+    "categorySuggestion":"Travel",
+    "bundleId":null,"sku":null,"copyright":null,"supportUrl":null,"marketingUrl":null,
+    "privacyPolicyUrl":null,"reviewContact":null,"traderDeclaration":null,
+    "reviewCredentials":"Enter only in App Store Connect, not this public file",
+    "screenshots":"Design references. Replace with native 6.9-inch captures before upload.",
+    "ipadSupport":null,"ageRating":null,"encryptionDeclaration":null,
+    "releaseSuggestion":"Manual release after approval"
+  },
+  "google": {
+    "name":"Openline: Travel eSIM & Data",
+    "categorySuggestion":"Travel & Local",
+    "packageName":null,"supportEmail":null,"supportWebsite":null,
+    "privacyPolicyUrl":null,"deletionRequestUrl":null,"packageRegistrationVerified":false,
+    "dataSafety":null,"adsDeclaration":null,"targetAudience":null,"contentRating":null,
+    "reviewCredentials":"Enter only in Play Console, not this public file",
+    "screenshots":"Design references. Replace with native Android captures before upload.",
+    "firstProductionRelease":"All eligible users in chosen countries; no percentage rollout",
+    "releaseCountries":[]
+  },
+  "decisionsRequired":["Publishing legal entity","Minimum supported OS","Supported device families","Supported locales","Plan/payment classification","Actual SDK and data inventory","Provisioning method","Review access","Launch countries"],
+  "officialReferences":[
+    "https://developer.apple.com/help/app-store-connect/reference/app-information/platform-version-information/",
+    "https://support.google.com/googleplay/android-developer/answer/9859152?hl=en",
+    "https://support.google.com/googleplay/android-developer/answer/9859348?hl=en"
+  ]
+}

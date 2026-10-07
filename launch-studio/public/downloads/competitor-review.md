@@ -1,4 +1,25 @@
-# Openline store presentation: competitor review and revision 02
+# Openline store presentation: competitor review and revision 03
+
+## Update: 7 October 2026
+
+Paul finalized the 43.5% icon and requested more breathing room with Saily-like
+headline/product hierarchy. The current artwork replaces oversized crops with
+complete, upright phones, shorter taglines and generous margins. The opening is
+“Go places. Stay connected.”, paired with a Travel eSIM label. iPhone phone width
+is 840px on 1320px; Android is 576px on 1080px. This is a design judgment, not a
+claimed conversion improvement.
+
+Saily's first card was re-inspected: large brand, benefit headline with a yellow
+highlight, blue background and a hand-held phone. Openline adopts clarity and
+spacing, not Saily's artwork, colors, coverage claims or exact copy.
+https://apps.apple.com/us/app/saily-esim-data-for-travel/id6475045151
+
+The sixth card now uses the account reference instead of settings, removing the
+old network-switching/ad-blocking claims from the narrative. All six cards still
+contain sample UI that must be replaced by verified native captures. See
+`submission-audit.md` and `screenshot-handoff.md` for each card's risks and workflow.
+The historical revision-02 observations below are retained as an audit trail,
+not a description of the current layout.
 
 Reviewed October 6, 2026. Scope: Saily, Airalo and Holafly, using US English App Store descriptions and the first four visible iPhone screenshot cards, plus Google Play descriptions. Screenshot sets can vary by storefront, device, campaign and date. This is an editorial/design review, not a conversion study or independent verification of competitors' product claims.
 

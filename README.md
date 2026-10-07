@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.6.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.7.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,15 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.6.0:** [Openline Brand Studio is live](https://openline-brand.fly.dev), with eight review views and a [downloadable launch kit](https://openline-brand.fly.dev/downloads/openline-launch-kit.zip). The default flat icon remains at 43.5% visible mark width, approximately 17.5% smaller than the previous 52.7% candidate. 42.2% and 44.8% alternatives compare approximately 20% and 15% reductions. The white square remains unchanged, and previous masters stay available. Existing production icon paths remain unchanged pending approval.
+**New in v1.7.0:** The **43.5% icon is final**, approved on 7 October 2026, and
+[downloadable in all practical formats](https://openline-brand.fly.dev/downloads/openline-final-icon-all-formats.zip).
+[Openline Brand Studio](https://openline-brand.fly.dev) now has airier,
+Saily-informed store compositions, stronger taglines, editable screenshot sources
+and an audited 33-item release checklist. The
+[launch kit](https://openline-brand.fly.dev/downloads/openline-launch-kit.zip)
+contains the full creative handoff and explicit remaining submission gates.
+The approved repository pack is [app-icons/final/](app-icons/final/);
+earlier delivery paths remain historical, not silently replaced.
 
 The [native app icons](app-icons/), [19-screen React mobile gallery](mobile/), and [dated native Figma source](figma/mobile/) remain available. The gallery and new store artwork are design references with mock data, not production native app captures or a live checkout.
 
@@ -490,11 +498,11 @@ Tag a release on GitHub when bumping the version so consumers can pin `@v1.2` in
 
 [`launch-studio/`](launch-studio/) is a buildable React/Vite workspace for preparing the mobile app launch. It includes:
 
-- **Icon review:** 42.2%, 43.5%, 44.8% and 52.7% comparisons, dark references, home-screen previews, Android masks and downloadable native resource candidates. The smaller adaptive candidate includes a 48dp fallback and a native-legibility warning.
+- **Final icon:** 43.5% white-square composition, approved visual choice. PNG, transparent PNG, SVG, PDF, EPS, JPEG, WebP, ICO, ICNS and native resources. The smaller adaptive treatment includes a separate 48dp fallback and native-legibility warning.
 - **Store artwork:** six iPhone compositions at 1320×2868, six Android compositions at 1080×1920, and a Google Play feature graphic at 1024×500.
 - **Listing copy:** editable English drafts, character/byte limits, copy controls and Markdown exports.
 - **Competitor review:** Saily, Airalo and Holafly text and screenshot analysis, official listing links, implemented improvements and an Openline before/after comparison.
-- **Readiness tracking:** 29 checklist items with platform filters, owners, notes, status and a portable JSON save/import workflow.
+- **Readiness tracking:** 33 checklist items with platform filters, owners, notes, status and a portable JSON save/import workflow. Only the final visual icon choice is pre-approved.
 - **Submission guidance:** suggested settings, unresolved product/legal decisions and links to official Apple and Google documentation, checked October 6, 2026.
 
 The screenshots are rendered from the supplied React design reference, **not signed native release builds**. They retain a review footer; sample data, plan claims and actual UI behavior require verification before submission. The checklist is self-reported, not store approval. No production app identifiers, privacy declarations, payment exemptions or developer-account details are assumed.
@@ -513,6 +521,18 @@ For optional Vercel hosting, import this repository with root directory
 empty Vercel placeholder remains unused; the live deployment is on Fly.io.
 
 ## Changelog
+
+### v1.7.0: 2026-10-07
+
+- Locked Paul's final 43.5% icon choice and added all-format downloads derived
+  from canonical vector geometry, with native resources and SHA-256 manifests.
+- Rebuilt twelve store screenshots and the feature graphic with more air,
+  complete phones and shorter benefit-led copy; supplied editable source ZIP.
+- Added per-platform artwork approvals and safe migration from earlier workspaces.
+- Audited store requirements and expanded native compatibility, entitlement,
+  SDK signature, trader, Android registration and initial-rollout checks.
+- Added console metadata worksheet, Google alt text, native capture handoff and
+  a candid per-screen sample-data risk audit. No native/store acceptance claimed.
 
 ### v1.6.0: 2026-10-06
 

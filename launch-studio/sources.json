@@ -1,4 +1,9 @@
 [
+  {"id":"google-technical","title":"Google Play: technical requirements","url":"https://support.google.com/googleplay/android-developer/answer/17492799?hl=en-GB","summary":"Checked 7 October 2026. Verify actual AAB 64-bit and 16 KB page-size support, including native dependencies. Do not assume an extension or compliance without bundle evidence."},
+  {"id":"apple-sdks","title":"Apple: third-party SDK requirements","url":"https://developer.apple.com/support/third-party-SDK-requirements","summary":"Checked 7 October 2026. Listed SDKs require privacy manifests; signatures apply to binary dependencies, including repackaged listed SDKs."},
+  {"id":"apple-provisioning","title":"Apple: cellular provisioning entitlement","url":"https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.commcenter.fine-grained","summary":"Checked 7 October 2026. Native cellular-plan provisioning requires the appropriate entitlement and distribution profile. This is conditional on the integration, not a universal QR/manual-install requirement."},
+  {"id":"android-verification","title":"Android: developer verification","url":"https://developer.android.com/developer-verification","summary":"Checked 7 October 2026. Verify developer and package/signing-key registration for intended distribution territories; do not assume automatic registration has completed."},
+  {"id":"google-release","title":"Google Play: prepare and roll out a release","url":"https://support.google.com/googleplay/android-developer/answer/9859348?hl=en","summary":"Checked 7 October 2026. First production releases do not offer percentage rollout. They reach all eligible users in selected countries. Release notes allow 500 Unicode characters per language."},
   {
     "id": "apple-screenshots",
     "title": "Apple — Screenshot specifications",

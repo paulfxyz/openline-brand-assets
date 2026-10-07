@@ -1,7 +1,8 @@
 {
-  "schemaVersion": 2,
-  "artworkRevision": 2,
-  "iconRevision": 3,
+  "schemaVersion": 3,
+  "artworkRevision": 3,
+  "iconRevision": 4,
+  "iconApproval": "approved-2026-10-07",
   "iconSize": 43.5,
   "iconTone": "light",
   "copy": {
@@ -23,13 +24,13 @@
   "tasks": [
     {
       "id": "icon",
-      "title": "Approve the smaller icon",
+      "title": "Final icon visual choice approved",
       "group": "Creative",
       "platform": "Both",
-      "status": "review",
-      "detail": "Paul requested another 15–20% reduction from 52.7%. Review 43.5% (about 17.5% smaller), with 44.8% and 42.2% alternatives. The Android adaptive candidate is also 17.5% smaller, at 39.6dp; it is below the recommended 48–66dp range and needs device legibility review. A 48dp fallback is included.",
+      "status": "done",
+      "detail": "Paul finalized the 43.5% white-square composition on 7 October 2026. Download the final all-formats pack. This approval covers the visual choice, not native integration or platform acceptance. Android adaptive 39.6dp legibility remains a native QA gate; 48dp fallback is preserved.",
       "source": "apple-icons",
-      "owner": "Design",
+      "owner": "Paul",
       "requirement": "required",
       "notes": ""
     },
@@ -178,6 +179,30 @@
       "notes": ""
     },
     {
+      "id": "binary-compat",
+      "title": "Verify Android 64-bit / 16 KB compatibility",
+      "group": "Build",
+      "platform": "Google",
+      "status": "todo",
+      "detail": "Inspect the actual AAB and every native SDK dependency for 64-bit and 16 KB page-size compatibility. Save bundle/Console validation and device evidence; Java/Kotlin-only apps are compatible by default. Do not assume a deadline extension.",
+      "source": "google-technical",
+      "owner": "Engineering",
+      "requirement": "conditional",
+      "notes": ""
+    },
+    {
+      "id": "provisioning",
+      "title": "Validate the native eSIM provisioning path",
+      "group": "Build",
+      "platform": "Apple",
+      "status": "todo",
+      "detail": "If using CTCellularPlanProvisioning, validate the required public-cellular-plan entitlement, distribution profile and real-device provisioning. QR/manual-only installation follows a different route; document which route the release actually uses.",
+      "source": "apple-provisioning",
+      "owner": "Engineering",
+      "requirement": "conditional",
+      "notes": ""
+    },
+    {
       "id": "privacy-map",
       "title": "Map actual data and SDK behavior",
       "group": "Privacy",
@@ -227,12 +252,12 @@
     },
     {
       "id": "sdk-manifest",
-      "title": "Review privacy manifests and permissions",
+      "title": "Review SDK manifests, signatures and permissions",
       "group": "Privacy",
       "platform": "Both",
       "status": "todo",
-      "detail": "Audit required-reason APIs, SDK manifests and runtime permissions. Request ATT only if the app actually tracks under Apple’s definition.",
-      "source": "apple-review",
+      "detail": "Audit required-reason APIs, listed SDK privacy manifests and binary SDK signatures, including repackaged listed SDKs. Review runtime permissions. Request ATT only if the app actually tracks under Apple’s definition.",
+      "source": "apple-sdks",
       "owner": "Engineering",
       "requirement": "conditional",
       "notes": ""
@@ -299,13 +324,37 @@
     },
     {
       "id": "trader",
-      "title": "Verify EU trader and public contacts",
+      "title": "Declare Apple trader status",
       "group": "Accounts",
       "platform": "Apple",
       "status": "blocked",
-      "detail": "Declare actual trader status; complete EU trader verification if applicable. Approve public business address, phone and email.",
+      "detail": "Declare actual trader status even when not distributing in the EU. This is separate from conditional EU trader contact verification.",
       "source": "apple-dsa",
       "owner": "Founder",
+      "requirement": "required",
+      "notes": ""
+    },
+    {
+      "id": "trader-eu",
+      "title": "Verify EU trader public contacts",
+      "group": "Accounts",
+      "platform": "Apple",
+      "status": "blocked",
+      "detail": "If distributing as a trader in the EU, verify the public legal address, phone and email. Approve what will be displayed; do not infer legal status.",
+      "source": "apple-dsa",
+      "owner": "Founder",
+      "requirement": "conditional",
+      "notes": ""
+    },
+    {
+      "id": "package-registration",
+      "title": "Verify Android package registration",
+      "group": "Accounts",
+      "platform": "Google",
+      "status": "todo",
+      "detail": "Confirm the actual package/signing key is registered under Android developer verification for selected territories. Most Play apps are automatically registered, but verify Console status rather than assuming it.",
+      "source": "android-verification",
+      "owner": "Engineering",
       "requirement": "conditional",
       "notes": ""
     },
@@ -351,8 +400,8 @@
       "group": "Release",
       "platform": "Both",
       "status": "todo",
-      "detail": "Recommend manual Apple release after approval, and controlled Google production rollout as available. Confirm countries, availability and monitoring.",
-      "source": "google-copy-build",
+      "detail": "Recommend manual Apple release after approval. The first Google production release cannot use a percentage rollout: it reaches all eligible users in selected countries. Confirm territories, launch timing and monitoring; percentage rollouts are for later updates.",
+      "source": "google-release",
       "owner": "Release owner",
       "requirement": "recommended",
       "notes": ""
@@ -371,12 +420,12 @@
     }
   ],
   "titles": [
-    "Travel data. Made clear.",
-    "Your trip. Your data plan.",
-    "Your eSIM. Details in reach.",
-    "Your data. At a glance.",
-    "All your eSIMs. One clear view.",
-    "Your account. Your preferences."
+    "Go places. Stay connected.",
+    "Your trip. Your kind of plan.",
+    "Setup details. Close at hand.",
+    "Know your data. Enjoy your day.",
+    "Every eSIM. One place.",
+    "Your account. Made simple."
   ],
   "approvedScreens": [],
   "settingsNotes": "",

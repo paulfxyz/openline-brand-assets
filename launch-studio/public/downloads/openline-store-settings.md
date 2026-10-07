@@ -94,9 +94,15 @@ Status: Suggested. Coordinate support, production APIs and the public launch.
 
 ## Google release
 
-Controlled rollout where available
+First release: selected countries, no percentage rollout
 
-Status: Suggested. Configure countries and monitoring; verify options for the first release.
+Status: Requirement. Initial production goes to all eligible users in selected countries. Plan monitoring; percentage rollouts apply to later updates.
+
+## Public listing contacts
+
+Support URL, support email, copyright and review contact
+
+Status: Unconfirmed. Enter verified public URLs, legal owner/year and operational contact details in the secure consoles. No reviewer credentials in this studio.
 
 ## EU availability
 

@@ -1,6 +1,6 @@
 # Openline store listing drafts
 
-English (US), prepared October 6, 2026. Verify every statement against the native release build before submission. No coverage, speed or timing claims are assumed.
+English (US), audited October 7, 2026. Verify every statement against the native release build before submission. No coverage, speed or timing claims are assumed.
 
 ## Apple App Store
 

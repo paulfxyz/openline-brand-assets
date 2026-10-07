@@ -1,5 +1,42 @@
 # Openline — store submission requirements
 
+## Audit addendum: 7 October 2026
+
+The prior baseline below was rechecked against current primary documentation.
+The source index now contains 17 references. These additional release gates are
+reflected in the 33-item checklist and `submission-audit.md`:
+
+- Validate Android native dependencies for 64-bit and 16 KB compatibility from
+  the actual AAB and Console results; do not infer compliance from UI code.
+  https://support.google.com/googleplay/android-developer/answer/17492799?hl=en-GB
+  https://developer.android.com/guide/practices/page-sizes
+- Validate listed Apple SDK privacy manifests and conditional binary signatures.
+  https://developer.apple.com/support/third-party-SDK-requirements
+- Validate the eSIM provisioning entitlement/profile if using the native
+  CTCellularPlanProvisioning route; QR/manual workflows do not automatically
+  inherit this requirement.
+  https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.commcenter.fine-grained
+- Declare Apple trader status independently of the conditional EU trader
+  public-contact verification.
+  https://developer.apple.com/help/app-store-connect/manage-compliance-information/manage-european-union-digital-services-act-trader-requirements/
+- Verify actual Android developer/package/signing-key registration for intended
+  territories.
+  https://developer.android.com/developer-verification
+- First Google production release has no percentage rollout; all eligible users
+  in selected countries can receive it. Release notes have a 500-Unicode-character
+  per-language limit.
+  https://support.google.com/googleplay/android-developer/answer/9859348?hl=en
+- Prepare verified support/privacy/deletion URLs, copyright owner/year, review
+  contact and Google support email. Console fields in `console-metadata.json`
+  are deliberately blank until confirmed.
+  https://developer.apple.com/help/app-store-connect/reference/app-information/platform-version-information/
+  https://support.google.com/googleplay/android-developer/answer/9859152?hl=en
+
+The flat icon's visual choice is approved at 43.5%. Native masking/appearance,
+the 39.6dp adaptive treatment and actual app integration still require testing.
+Screenshot artwork is a labelled reference, ready for replacement of its image
+inputs rather than ready for store upload.
+
 **Research checkpoint: 6 October 2026.** Scope: a phone-first travel eSIM app; iPad/tablet distribution remains an explicit decision, not an assumed Openline setting. This is a requirements reference, not a declaration that the app complies. **Required** means a submission rule; **Conditional** applies only when its trigger is met; **Recommended** is launch guidance, not a universal store gate. The accompanying JSON contains 12 primary official references; narrowly scoped supporting documentation is linked inline below.
 
 ## 1. Screenshot and graphics production

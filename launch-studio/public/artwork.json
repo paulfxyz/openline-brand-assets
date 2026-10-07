@@ -1,0 +1,13 @@
+{
+  "revision": 3,
+  "status": "design-reference-not-native-capture",
+  "locale": "en-US",
+  "slides": [
+    {"slug":"countries","lines":["Go places.","Stay connected."],"title":"Go places. Stay connected.","short":"Find your destination","detail":"Travel eSIMs for wherever comes next.","theme":"peach","screen":"Countries","captures":{"ios":"./assets/screen-countries.png","android":"./assets/screen-countries.png"}},
+    {"slug":"plans","lines":["Your trip.","Your kind of plan."],"title":"Your trip. Your kind of plan.","short":"Choose your plan","detail":"Compare the data, the days and the details.","theme":"white","screen":"Plans · 3 · options","captures":{"ios":"./assets/screen-plans.png","android":"./assets/screen-plans.png"}},
+    {"slug":"profile","lines":["Setup details.","Close at hand."],"title":"Setup details. Close at hand.","short":"Find your setup details","detail":"Your installation information, all in one view.","theme":"orange","screen":"eSIM profile (activated)","captures":{"ios":"./assets/screen-profile.png","android":"./assets/screen-profile-android.png"}},
+    {"slug":"dashboard","lines":["Know your data.","Enjoy your day."],"title":"Know your data. Enjoy your day.","short":"Keep track of your data","detail":"A clearer view of your plan and usage.","theme":"white","screen":"Dashboard","captures":{"ios":"./assets/screen-dashboard.png","android":"./assets/screen-dashboard.png"}},
+    {"slug":"esims","lines":["Every eSIM.","One place."],"title":"Every eSIM. One place.","short":"Keep your eSIMs together","detail":"Find your travel connections without the search.","theme":"peach","screen":"My eSIMs","captures":{"ios":"./assets/screen-esims.png","android":"./assets/screen-esims.png"}},
+    {"slug":"account","lines":["Your account.","Made simple."],"title":"Your account. Made simple.","short":"Manage your account","detail":"Your profile and account tools, together.","theme":"white","screen":"Me","captures":{"ios":"./assets/screen-account.png","android":"./assets/screen-account.png"}}
+  ]
+}

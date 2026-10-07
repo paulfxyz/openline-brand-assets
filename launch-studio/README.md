@@ -1,7 +1,7 @@
 # Openline Brand Studio
 
 App icon review, store artwork, editable English listing drafts, suggested settings
-and a 29-item launch checklist. This is a static React/Vite application, designed
+and a 33-item launch checklist. This is a static React/Vite application
 published at [openline-brand.fly.dev](https://openline-brand.fly.dev).
 
 ## Run and deploy
@@ -38,9 +38,9 @@ and authentication before adding a write API.
 
 - The canonical Openline mark is preserved, cropped to its visible artwork.
 - iOS and store master: 43.5% visible width, approximately 17.5% smaller linearly
-  than the 52.7% candidate. 44.8% and 42.2% compare the requested 15% and 20%
-  reductions, rounded to one decimal place.
-  The white square stays unchanged; previous masters remain available.
+  than the 52.7% candidate. Paul finalized this composition on 7 October 2026.
+  The white square stays unchanged. Earlier experiments remain in version history,
+  separate from the final-download interface.
 - No shadows or rounded corners are baked into flat export artwork. The UI adds
   a mask and presentation shadow for preview only.
 - Dark Apple PNG is a reference. Icon Composer layer assets are supplied, not a
@@ -59,16 +59,28 @@ larger UI crops, a decision-led screenshot sequence and more explanatory copy.
 No competitor artwork, ratings, customer counts or feature promises are copied.
 See `public/downloads/competitor-review.md` for the complete source-cited review.
 
-Workspace schema 2 accepts earlier exports, preserving their text and checklist
-notes. It clears earlier screenshot approvals when the artwork revision differs.
+Workspace schema 3 accepts earlier exports, preserving their text and checklist
+notes. It clears obsolete artwork approvals and separates Apple/Google card
+approval state. It locks the final icon to 43.5% and records Paul's approval.
+New technical gates are added; expanded older requirements return to review.
 Previously edited copy is not silently replaced with the new baseline.
-Icon revision 3 reopens older completed icon-review tasks, since native resources
-have changed. The current selectable sizes are 42.2%, 43.5%, 44.8% and 52.7%.
+
+## Final icon downloads
+
+`public/downloads/openline-final-icon-all-formats.zip` contains the approved
+composition as PNG (16–4096px), transparent PNG, SVG, vector PDF/EPS, JPEG,
+lossless WebP, ICO and ICNS, alongside native integration resources.
+SVG/PDF preserve the original vector paths and can be edited in Illustrator.
+No native `.ai` or compiled Icon Composer `.icon` file is claimed.
+The direct downloads and checksums are under `public/downloads/final-icon/`.
 
 ## Artwork
 
 Six iPhone compositions at 1320×2868; six Android compositions at 1080×1920;
-one Google Play feature graphic at 1024×500. All are RGB PNGs.
+one Google Play feature graphic at 1024×500. All are RGB PNGs. Revision 03
+introduces shorter taglines, generous margins and full, upright phones.
+`public/artwork.json` drives the narrative and per-platform capture mapping.
+The editable source ZIP and `screenshot-handoff.md` document native replacement.
 
 **These are design references rendered from the September 24 React delivery,
 not native iOS or Android captures.** A footer preserves that status on each
@@ -97,13 +109,15 @@ dates are asserted. The requirements reference and source index distinguish
 current requirements, conditional rules and recommendations.
 
 See `public/downloads/store-requirements.md` and `sources.json` for official URLs.
-Policy research was checked on October 6, 2026; recheck at submission.
+Policy research was rechecked on October 7, 2026; recheck at submission.
+See `public/downloads/submission-audit.md` for technical gates and owner decisions.
 
 ## Release status
 
-Prepared October 6, 2026. The studio and download packages are review deliverables,
-not a store submission. Existing production-path icons in the parent repository
-remain unchanged. The studio is live on Fly.io with HTTPS, a passing health check
+Revised October 7, 2026. The icon visual choice is final; screenshots are
+replacement-ready design references, not native submissions. Historical intake
+icons remain available; the approved pack is separated under `app-icons/final/`
+in the parent repository. The studio is live on Fly.io with HTTPS, a passing health check
 and verified download ZIP. All eight views were checked on the production site;
-desktop and mobile layouts retain the 43.5% icon candidate.
+desktop and mobile layouts retain the final 43.5% icon.
 The empty Vercel placeholder remains undeployed; no Vercel deployment is claimed.

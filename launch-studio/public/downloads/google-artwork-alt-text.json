@@ -1,0 +1,44 @@
+[
+  {
+    "order": 1,
+    "file": "android-01.png",
+    "locale": "en-US",
+    "altText": "Openline find your destination: Travel eSIMs for wherever comes next. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  },
+  {
+    "order": 2,
+    "file": "android-02.png",
+    "locale": "en-US",
+    "altText": "Openline choose your plan: Compare the data, the days and the details. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  },
+  {
+    "order": 3,
+    "file": "android-03.png",
+    "locale": "en-US",
+    "altText": "Openline find your setup details: Your installation information, all in one view. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  },
+  {
+    "order": 4,
+    "file": "android-04.png",
+    "locale": "en-US",
+    "altText": "Openline keep track of your data: A clearer view of your plan and usage. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  },
+  {
+    "order": 5,
+    "file": "android-05.png",
+    "locale": "en-US",
+    "altText": "Openline keep your esims together: Find your travel connections without the search. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  },
+  {
+    "order": 6,
+    "file": "android-06.png",
+    "locale": "en-US",
+    "altText": "Openline manage your account: Your profile and account tools, together. App design preview; sample data.",
+    "status": "draft-replace-with-native"
+  }
+]

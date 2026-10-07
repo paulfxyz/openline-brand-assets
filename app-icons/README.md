@@ -1,5 +1,20 @@
 # Openline - App Icons (iOS + Android)
 
+## Current approved icon
+
+**Use [final/](final/) for the approved 43.5% white-square composition**, finalized
+by Paul on 7 October 2026. It includes native resources and PNG, SVG, vector PDF,
+EPS, JPEG, WebP, ICO and ICNS exports. Native device validation remains separate.
+
+Direct download:
+https://openline-brand.fly.dev/downloads/openline-final-icon-all-formats.zip
+
+The `ios/` and `android/` paths described below are the historical September
+intake, preserved for compatibility and comparison. They are not the final
+approved export. New integrations should start from `final/native/`.
+
+## Historical September delivery
+
 Registered in media kit **v1.4** from the September 24, 2026 delivery. The pack
 contains 24 PNGs: 15 iOS images and nine Android images, plus the Xcode catalog.
 Native filenames are intentionally preserved for integration.

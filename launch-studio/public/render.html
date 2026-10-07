@@ -1,38 +1,61 @@
-<!doctype html><html lang="en"><meta charset="UTF-8"><title>Openline store artwork renderer · R02</title>
+<!doctype html>
+<html lang="en"><meta charset="UTF-8"><title>Openline store artwork · Air / revision 03</title>
 <style>
-@font-face{font-family:Inter;src:url('./fonts/inter-latin-600-normal.woff2')}@font-face{font-family:Inter;src:url('./fonts/inter-latin-800-normal.woff2');font-weight:800}
-*{box-sizing:border-box}body{margin:0;background:#f8f6f2;font-family:Inter,sans-serif;color:#141517}
-#canvas{position:relative;overflow:hidden;width:1320px;height:2868px;background:#f8f6f2}
-.brand{position:absolute;left:98px;top:88px;display:flex;gap:20px;align-items:center;font-weight:800;font-size:40px}
-.brand img{width:64px;background:#fff;border-radius:14px;padding:12px}
-h1{position:absolute;top:250px;left:96px;margin:0;font-size:138px;line-height:1.02;letter-spacing:-6px;width:1120px;font-weight:800}h1 span{color:#db4b08}
-.deck{position:absolute;top:590px;left:100px;font-size:39px;line-height:1.35;max-width:1020px}
-.phone{position:absolute;top:830px;left:124px;width:1072px;border:10px solid #222326;border-radius:104px;overflow:hidden;box-shadow:0 36px 72px #22222220;background:white}
-.phone img{display:block;width:100%;height:auto}
-.foot{position:absolute;bottom:0;left:0;width:100%;text-align:center;padding:24px 12px 28px;font-size:21px;letter-spacing:1.5px;color:#53565a;background:#f8f6f2}
-.number{position:absolute;top:107px;right:98px;font-size:27px;color:#62656a}
-.orange{background:#ff6616!important}.orange h1 span{color:white}.orange .foot{background:#ff6616;color:#462105}.orange .number,.orange .deck{color:#3d1d0c}
-.long-headline h1{font-size:122px;letter-spacing:-5px}
-.android{width:1080px!important;height:1920px!important}.android .brand{top:64px;left:75px;font-size:30px}.android .brand img{width:50px;padding:9px;border-radius:10px}
-.android h1{top:195px;left:72px;font-size:106px;letter-spacing:-4.5px;width:940px}.android .deck{top:455px;left:77px;font-size:31px;max-width:880px}
-.android .phone{top:650px;left:108px;width:864px;border-radius:78px;border-width:8px}.android .phone img{margin-top:-92px}.android.long-headline h1{font-size:106px}
-.android .foot{font-size:17px;padding:22px 8px}.android .number{top:80px;right:75px}
-.feature{width:1024px!important;height:500px!important;background:#ff6616!important}.feature .brand{top:38px;left:54px;font-size:24px;gap:12px}.feature .brand img{width:37px;padding:7px;border-radius:8px}
-.feature h1{top:133px;left:50px;width:640px;font-size:79px;line-height:1.04;letter-spacing:-3px}.feature h1 span{color:white}
-.feature .deck{top:335px;left:54px;font-size:22px;max-width:570px}
-.feature .phone{left:745px;top:34px;width:245px;border-width:4px;border-radius:27px;transform:rotate(4deg)}
-.feature .foot{font-size:11px;bottom:0;left:0;text-align:left;padding:12px 54px;background:#ff6616f5;color:#462105}.feature .number{display:none}
+@font-face{font-family:Inter;src:url('./fonts/inter-latin-600-normal.woff2');font-weight:600}
+@font-face{font-family:Inter;src:url('./fonts/inter-latin-800-normal.woff2');font-weight:800}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;color:#191919}
+#canvas{width:1320px;height:2868px;position:relative;overflow:hidden;background:#fffaf5;--accent:#e6530b}
+.brand{position:absolute;top:110px;left:116px;display:flex;align-items:center;gap:20px;font-size:43px;font-weight:800;letter-spacing:-1.8px}
+.brand img{width:56px;height:56px;object-fit:contain}
+.category{position:absolute;right:116px;top:130px;font-size:22px;letter-spacing:3px;font-weight:600}
+.copy{position:absolute;left:116px;right:100px;top:320px;z-index:2}
+h1{font-size:120px;line-height:1.09;letter-spacing:-5.5px;font-weight:800;margin:0}
+h1 span{color:var(--accent)}
+.deck{font-size:35px;line-height:1.5;max-width:900px;margin:46px 0 0;font-weight:600;color:#64605c}
+.wash{position:absolute;left:160px;top:1010px;width:1000px;height:1350px;border-radius:500px;background:#ffe8d7}
+.phone{position:absolute;left:240px;top:860px;width:840px;border:9px solid #30302e;border-radius:90px;overflow:hidden;box-shadow:0 22px 0 #00000007,0 48px 80px #3c2a1b14;background:#f8f9fb}
+.phone img{width:100%;height:auto;display:block}
+.caption{position:absolute;bottom:154px;left:116px;right:116px;display:flex;align-items:center;justify-content:space-between;font-size:22px;letter-spacing:2px;color:#77706a}
+.foot{position:absolute;bottom:62px;left:116px;right:116px;font-size:20px;letter-spacing:1px;text-align:center;color:#756b63}
+#canvas.orange{background:#ff6616!important;--accent:#fff}.orange .deck{color:#462209}.orange .wash{background:#ff863f}.orange .caption,.orange .foot{color:#502509}
+.orange .brand img{filter:brightness(0)}
+.white{background:#fcfcfa!important}.white .wash{background:#f0eee9}
+.peach{background:#fff0e6!important}
+.android{width:1080px!important;height:1920px!important}
+.android .brand{top:68px;left:84px;font-size:34px;gap:16px}.android .brand img{width:46px;height:46px}
+.android .category{top:83px;right:84px;font-size:18px;letter-spacing:2px}
+.android .copy{top:225px;left:84px;right:84px}.android h1{font-size:88px;letter-spacing:-3.5px;line-height:1.1}
+.android .deck{font-size:27px;margin-top:30px;max-width:860px}
+.android .phone{top:615px;left:252px;width:576px;border-radius:57px;border-width:6px}
+.android .phone img{margin-top:-61px}
+.android .wash{top:720px;left:154px;width:772px;height:890px;border-radius:430px}
+.android .caption{bottom:116px;left:84px;right:84px;font-size:17px}
+.android .foot{bottom:47px;left:72px;right:72px;font-size:15px}
+.feature{width:1024px!important;height:500px!important;background:#fff0e6!important}
+.feature .brand{top:47px;left:60px;font-size:29px;gap:13px}.feature .brand img{width:36px;height:36px}
+.feature .category{display:none}.feature .copy{top:153px;left:60px;right:auto;width:600px}.feature h1{font-size:67px;letter-spacing:-2.8px;line-height:1.09}.feature h1 span{color:#e6530b}
+.feature .deck{font-size:20px;margin-top:28px;max-width:550px}.feature .wash{left:720px;top:70px;width:320px;height:400px}
+.feature .phone{top:70px;left:748px;width:220px;border-width:3px;border-radius:24px}
+.feature .caption{display:none}.feature .foot{bottom:20px;left:60px;text-align:left;font-size:10px}
 </style>
-<div id="canvas"><div class="brand"><img src="./assets/mark.png" alt="">Openline</div><div class="number"></div><h1></h1><div class="deck"></div><div class="phone"><img id="screen" alt="Openline UI design reference"></div><div class="foot">DESIGN REFERENCE · VERIFY AGAINST THE RELEASE BUILD</div></div>
-<script>
-const slides=[
-['countries','Travel data.<br><span>Made clear.</span>','Find an eSIM for your next destination.'],
-['plans','Your trip.<br><span>Your data plan.</span>','Compare data, duration and price before you buy.'],
-['profile','Your eSIM.<br><span>Details in reach.</span>','Find installation information and plan details.'],
-['dashboard','Your data.<br><span>At a glance.</span>','See your remaining data and current plan.'],
-['esims','All your eSIMs.<br><span>One clear view.</span>','Keep your travel connections together.'],
-['settings','Your account.<br><span>Your preferences.</span>','Manage your account preferences in one place.']];
-const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide')||0))),platform=q.get('platform')||'ios',s=slides[n];
-document.querySelector('h1').innerHTML=s[1];document.querySelector('.deck').textContent=s[2];document.querySelector('#screen').src='./assets/screen-'+s[0]+'.png';document.querySelector('.number').textContent='0'+(n+1)+' / 06';
-document.querySelector('#canvas').className=(n===5?'long-headline ':'')+(n===0||n===3?'orange ':'')+(platform==='android'?'android':platform==='feature'?'feature':'');
+<div id="canvas">
+ <div class="wash"></div><div class="brand"><img src="./assets/mark.png" alt="">Openline</div>
+ <div class="category">TRAVEL eSIM</div>
+ <div class="copy"><h1></h1><p class="deck"></p></div>
+ <div class="phone"><img id="screen" alt="Openline app design reference"></div>
+ <div class="caption"><span id="step"></span><span id="number"></span></div>
+ <div class="foot">DESIGN PREVIEW · SAMPLE DATA · NATIVE CAPTURE PENDING</div>
+</div>
+<script type="module">
+const {slides}=await (await fetch('./artwork.json')).json();
+const q=new URLSearchParams(location.search);
+const n=Math.max(0,Math.min(slides.length-1,Number(q.get('slide')||0)));
+const platform=q.get('platform')||'ios',s=slides[n];
+document.querySelector('h1').replaceChildren(document.createTextNode(s.lines[0]),document.createElement('br'),Object.assign(document.createElement('span'),{textContent:s.lines[1]}));
+document.querySelector('.deck').textContent=s.detail;
+document.querySelector('#screen').src=s.captures[platform==='android'?'android':'ios'];
+document.querySelector('#step').textContent=s.short.toUpperCase();
+document.querySelector('#number').textContent=`0${n+1} / 0${slides.length}`;
+document.querySelector('#canvas').className=s.theme+' '+platform;
+window.artworkReady=true;
 </script></html>

@@ -1,0 +1,192 @@
+{
+  "status": "visual-choice-approved",
+  "coverage": 0.435,
+  "approvedAt": "2026-10-07",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 1951,
+      "sha256": "0bfd28a002604c777af3ebba3ca17b00ed44fd6885edc954c7195fe85380fb37"
+    },
+    {
+      "file": "openline-icon-transparent-1024.png",
+      "bytes": 14315,
+      "sha256": "ea117dc0bdbb37b582ed0193047b190c1f7e9e33042aa4ea5987003e0d48aa35"
+    },
+    {
+      "file": "openline-icon-transparent-1024.webp",
+      "bytes": 4836,
+      "sha256": "6911b9865ea38460e3be4ae2d78750a61e349f308d2c40e8d37964f02f71964a"
+    },
+    {
+      "file": "openline-icon-transparent-128.png",
+      "bytes": 1306,
+      "sha256": "026d62f9999f8c6ac000356c9e275ffd6d144ba8dfa4894672b0f5631ff13706"
+    },
+    {
+      "file": "openline-icon-transparent-16.png",
+      "bytes": 245,
+      "sha256": "83cf1959d54034e93480ed3b58813a9619da2a082a72d6b6951e6bd2a64d3383"
+    },
+    {
+      "file": "openline-icon-transparent-180.png",
+      "bytes": 1778,
+      "sha256": "ba9aebb7c89a4755413317126392902d1fc12f97c3004f2c2b0dfd26d042496e"
+    },
+    {
+      "file": "openline-icon-transparent-192.png",
+      "bytes": 1890,
+      "sha256": "2e9bb69799d8ffce292f353cc331a263ce7deb332bec2212721f36688f99af7d"
+    },
+    {
+      "file": "openline-icon-transparent-2048.png",
+      "bytes": 37153,
+      "sha256": "479486bf97fbb3b3385628fe359c69fdb9d69ea1e1c9c5bbfd640176572c0a5d"
+    },
+    {
+      "file": "openline-icon-transparent-24.png",
+      "bytes": 336,
+      "sha256": "baf2363503b066ea50f08ea3194539e4371d91fd80b1bb17ac6531fb1cdb01e8"
+    },
+    {
+      "file": "openline-icon-transparent-256.png",
+      "bytes": 2619,
+      "sha256": "5bede7a4276a7fd4977d9dcda2226a55bd729239317a38399a34befadd44f762"
+    },
+    {
+      "file": "openline-icon-transparent-32.png",
+      "bytes": 356,
+      "sha256": "9be4f73b68d492b7af44753b3940d89f310a2cdb85b0b0ddf638adfc5b94c634"
+    },
+    {
+      "file": "openline-icon-transparent-4096.png",
+      "bytes": 107279,
+      "sha256": "12628cdde425f35517f0d5418c8881903470ddcdc1986020d31422b6442c5e85"
+    },
+    {
+      "file": "openline-icon-transparent-48.png",
+      "bytes": 563,
+      "sha256": "4cf6968082f121de49d64bd254f04814163274f5f6ab9bc694073a51cef1282d"
+    },
+    {
+      "file": "openline-icon-transparent-512.png",
+      "bytes": 5876,
+      "sha256": "2091665c8dba289b443a13670b8cdbe71ac6d60e32e7febaf38dce683c8c010d"
+    },
+    {
+      "file": "openline-icon-transparent-64.png",
+      "bytes": 664,
+      "sha256": "0cfb8509075b0a2ca171cff2b6d2ce9d749a443e224fc0a188bfe9216bb4fa29"
+    },
+    {
+      "file": "openline-icon-transparent.pdf",
+      "bytes": 1430,
+      "sha256": "d6e97ff6bfeb4fca2f215c58cb6c53a02523b99d259b702c74b944d99e420400"
+    },
+    {
+      "file": "openline-icon-transparent.svg",
+      "bytes": 1545,
+      "sha256": "2ec6b11ad51c1b80b81de10731ee42fc350b20a821912a48a7730894d4f92e89"
+    },
+    {
+      "file": "openline-icon-white-1024.jpg",
+      "bytes": 47261,
+      "sha256": "a74396ce7239ce55723164206358e5ec0d3b23548b6466b9024b499bebb977cf"
+    },
+    {
+      "file": "openline-icon-white-1024.png",
+      "bytes": 16313,
+      "sha256": "e31d54cfb1a89b43bc53a19967126aebc1b5fc3dcbc11808509c253e794e2cdf"
+    },
+    {
+      "file": "openline-icon-white-1024.webp",
+      "bytes": 4830,
+      "sha256": "05a113df9fab151fadd1a61691bc6017fe582008d839ab6742b64147c6e29955"
+    },
+    {
+      "file": "openline-icon-white-128.png",
+      "bytes": 1577,
+      "sha256": "208fddf39892483d05a2c79244686891f82e58a19826ccd03835235c1e4b9000"
+    },
+    {
+      "file": "openline-icon-white-16.png",
+      "bytes": 254,
+      "sha256": "4f82368fa332c97311058d286d9e18d44e901e638c38339f56125e86b3396836"
+    },
+    {
+      "file": "openline-icon-white-180.png",
+      "bytes": 2261,
+      "sha256": "13584a2a33db541cca73becca592d6f6f0d9ccd7df1ad260445089762e64d4a6"
+    },
+    {
+      "file": "openline-icon-white-192.png",
+      "bytes": 2420,
+      "sha256": "17256b55dacb887a2083559cbba4304dccab6872f4b41810b0c488e69ca142e0"
+    },
+    {
+      "file": "openline-icon-white-2048.png",
+      "bytes": 41318,
+      "sha256": "ff6366d19f69ed179d39a0c847fbad7b5c9d0740ad8988e2392d3b1d118a2b0f"
+    },
+    {
+      "file": "openline-icon-white-24.png",
+      "bytes": 381,
+      "sha256": "1d201af3e1c5d8d67a1596609c506392cabd0c2e93df9a2123ea18893bce0d12"
+    },
+    {
+      "file": "openline-icon-white-256.png",
+      "bytes": 3384,
+      "sha256": "b1bc9af03f8ac9b700129f5e4eab4ac8ebd3ab1bf99a2a2ce7d6bb6d6f8722d7"
+    },
+    {
+      "file": "openline-icon-white-32.png",
+      "bytes": 410,
+      "sha256": "e5feac32961674ba0546e65de5ecb311649c207c89eb7b8b18d342b3b795e19a"
+    },
+    {
+      "file": "openline-icon-white-4096.png",
+      "bytes": 106929,
+      "sha256": "334991cfaefbc67ac5249ff45bc820fb4742fb0263686e08e39e1e5ef3037feb"
+    },
+    {
+      "file": "openline-icon-white-48.png",
+      "bytes": 608,
+      "sha256": "8bb5c1b31eef9b0fcbbf3aeb871e4e5e71b6ceeaf1897c0fcb0ef16099285431"
+    },
+    {
+      "file": "openline-icon-white-512.png",
+      "bytes": 7348,
+      "sha256": "a0be0a03dd54fc7f0c798c680e61754898c47856031ee264609c136bdd021894"
+    },
+    {
+      "file": "openline-icon-white-64.png",
+      "bytes": 773,
+      "sha256": "5434d65a30ea2c7bf824ab75a23c29c0d86c9aa54b45d82a39a3f84c7d57cfd6"
+    },
+    {
+      "file": "openline-icon-white.eps",
+      "bytes": 3444,
+      "sha256": "373e2323c9f899b5d664cff79285a3b2f8be305bcc6361c493bfe531ee9aa24b"
+    },
+    {
+      "file": "openline-icon-white.pdf",
+      "bytes": 1440,
+      "sha256": "7e3d55881064748706b1afe2df8b8f1e636d73fde624834951ae4f26cb56b8c9"
+    },
+    {
+      "file": "openline-icon-white.svg",
+      "bytes": 1594,
+      "sha256": "b87240d973cdaad52ed9a802dc926e022fb900b1a0eaa7928f3a3bdcf6f54ba4"
+    },
+    {
+      "file": "openline-icon.icns",
+      "bytes": 53692,
+      "sha256": "26ee0e2519c708c41551ca47890a9e8c9c3623c24532030d162b6743bb5f1edd"
+    },
+    {
+      "file": "openline-icon.ico",
+      "bytes": 11692,
+      "sha256": "fd15aa1914d9e7a2abffac6ff79b311fa0cffe2a2287275428c5c59e0d0188ab"
+    }
+  ]
+}

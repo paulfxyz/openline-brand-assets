@@ -1,5 +1,36 @@
 # Brand Studio QA
 
+## Revision 03 / v1.7.0 verification inventory
+
+7 October 2026. This pass covers all eight views at 1440px and 375px, light/dark
+overview, final-icon download links and format validity, screenshot gallery on
+both platforms, modal keyboard handling, independent Apple/Google approvals,
+schema-2 migration, new 33-task state, copy limits, save/import and invalid import.
+Off-happy paths: malformed JSON must not change state; old completed artwork and
+expanded technical checks must reopen without undoing the final icon decision.
+Review all twelve compositions, contrast, text/phone bounds, feature graphic,
+native resources, vector paths, alpha, export sizes and archive checksums.
+Deployment verification must compare the live launch-kit hash with the local kit.
+
+Completed local pass:
+- Eight desktop and eight 375px mobile views pass overflow and page-error checks.
+- Light/dark overview and mobile views inspected after transitions settle.
+- All 14 direct final-icon/package/manifest links return 200.
+- Final-format validator passes 18 Apple catalog references, opaque Play icon,
+  five Android densities, vector-path presence, EPS header, PNG dimensions/
+  coverage, 37 file checksums, alt-text limits and archive integrity.
+- Schema-2 import preserves copy/notes, adds new tasks, clears obsolete artwork
+  approvals, reopens expanded technical requirements and retains final icon approval.
+- Apple card approval does not approve Google; both retain independent choices.
+- Malformed import is rejected; copy over-limit fields flag errors; Escape closes
+  image modals. Workspace JSON exports contain 33 tasks and the final icon state.
+- All 12 artboard text/phone bounds and the feature graphic pass layout checks.
+- Removed Apple Wallet from the Android profile reference; fixed the orange
+  card headline/accent contrast and monochrome brand treatment.
+
+The historical checks below describe prior milestones; the current final icon
+is approved and its comparison controls are intentionally removed.
+
 Checked October 6, 2026. This is browser and asset-package QA, not native app
 certification or store acceptance.
 
