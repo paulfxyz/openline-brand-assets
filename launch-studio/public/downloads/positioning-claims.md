@@ -4,19 +4,19 @@
 
 Only Original orange remains. The actual icon accompanies the Openline name,
 white on orange and black on cream. The underscore wordmark is not used.
-Screens 1, 3, 4 and 5 retain their travel/product story.
+Frames 1–4 cover destination, purchase confirmation, setup and eSIM collection.
+All six use distinct supplied app UI, alternating orange and warm cream.
 
-## Screenshot 2: network flexibility
+## Screenshot 5: network flexibility
 
 **More networks. More ways to connect.**
 
 Multiple leading network partners. Another way to keep you connected.
 
-The visual shows three illustrative partner routes converging on the Openline
-icon and a potential replacement eSIM. Three is an illustration, not a partner
-count. It is editorial benefit artwork, not native UI, and does not reuse the
-setup screen. No carrier logos or network-switching controls are invented.
-A profile replacement is best effort and may require
+The visual uses the supplied connection dashboard, including its existing
+Connected badge and data card. No new signal readings or carrier logos are
+invented. A Connected badge does not independently prove superior signal or
+multi-network access. A profile replacement is best effort and may require
 setup; available alternatives depend on the location and plan.
 
 This reflects Paul's explanation on 4 October 2026: Openline can sometimes
@@ -31,11 +31,10 @@ switching. Unlimited plans remain subject to the local network's fair-use rules.
 
 We compare supplier offers through our data market to build better-value travel plans.
 
-The visual uses stacked supplier offer cards, a dark Openline market comparison
-layer and a cream travel-plan benefit card. It is an editorial illustration,
-not a consumer bidding interface. No unrelated plan-duration screenshot is used.
-It does not invent bid prices, savings percentages, competitor quotes, carrier
-logos or rankings.
+The visual uses supplied plan-selection UI with duration and price choices.
+These sample figures are not savings evidence. Android uses “Your trip. Your
+kind of plan.” instead of a price-superiority headline. The iPhone caption
+remains a claim-review candidate.
 
 This is owner-provided positioning for the Openline Mobile Data Market (OMDM).
 Verify the production sourcing workflow and comparable retail evidence before
@@ -61,6 +60,7 @@ The market/price concept is a review candidate, not pre-cleared Play creative.
 Review store-specific wording before submission; a conservative alternative headline
 is “A smarter market. More plan choices.” No store submission is performed here.
 
-Frames 2 and 6 are labeled benefit illustrations, not app screens. The other four
-remain React design references with sample data, not native captures.
+All six frames use supplied React UI with sample data, not verified native
+captures. No illustration-only frames remain. See screenshot-compliance-review.md
+for the official-policy assessment and remaining native/claim/FUP gates.
 Saved workspaces preserve existing edited copy rather than silently replacing it.

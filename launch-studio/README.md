@@ -1,6 +1,17 @@
 # Openline Brand Studio
 
-## Current: v1.10.1, coherent benefit illustrations
+## Current: v1.10.2, app-led sequence and alternating backgrounds
+
+Six distinct app views: destination, purchase confirmation, setup, eSIM collection,
+connection dashboard and plan selection. Network story is fifth, not fourth.
+Every frame alternates orange / warm cream, beginning with orange.
+
+The illustration-only frames are removed. Frame 5 uses the supplied Connected
+dashboard; frame 6 uses plan selection. Android has neutral plan-choice copy
+instead of “better prices.” These remain React references, not verified native
+captures. See `public/downloads/screenshot-compliance-review.md` for remaining gates.
+
+## Previous: v1.10.1, benefit illustrations
 
 Frames 2 and 6 no longer reuse unrelated mobile captures. Frame 2 is a bespoke
 network-route illustration connecting multiple partners through Openline to an

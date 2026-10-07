@@ -1,6 +1,16 @@
 # Openline submission preparation audit
 
-## Current creative status: v1.10.1
+## Current creative status: v1.10.2
+
+The network story is frame 5, plan selection frame 6. All backgrounds alternate
+orange and warm cream. Six distinct supplied React app views replace the rejected
+illustration-only treatment. The connection dashboard is shown only once.
+Android uses a neutral plan-choice headline. This is closer to the official
+app-in-use guidance, but is not native release evidence or store approval.
+See screenshot-compliance-review.md for the official-source assessment, including
+sample price/FUP wording, BEST VALUE badge, claim and screenshot verification gates.
+
+## Historical creative status: v1.10.1
 
 Frames 2 and 6 replace mismatched app captures with purpose-built explanatory
 artwork. Network routes converge on Openline and an alternative eSIM; supplier

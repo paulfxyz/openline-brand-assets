@@ -13,12 +13,7 @@ for(const series of config.series){
    await page.waitForFunction(()=>window.artworkReady);
    await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode()));const bg=getComputedStyle(document.querySelector('.backdrop')).backgroundImage.match(/url\(["']?(.*?)["']?\)/)?.[1];if(bg){const i=new Image();i.src=bg;await i.decode()}});
    const bounds=await page.evaluate(()=>{const b=s=>{const r=document.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right}};return {copy:b('.copy'),phone:b('.phone'),head:b('h1'),footer:b('.foot')}});
-   if(i===config.differentiator.slide||i===config.market.slide){
-    const art=await page.locator('.benefit-art').boundingBox();
-    const end=await page.locator('.benefit-caption').boundingBox();
-    const qualifier=await page.locator('.qualification').boundingBox();
-    if(bounds.copy.bottom>art.y-10||end.y+end.height>qualifier.y-10)throw Error(`Benefit illustration overlap ${platform} ${i}`);
-   }else if(bounds.copy.bottom>bounds.phone.top-10)throw Error(`Copy/phone overlap ${series.id} ${platform} ${i}: ${JSON.stringify(bounds)}`);
+   if(bounds.copy.bottom>bounds.phone.top-10)throw Error(`Copy/phone overlap ${series.id} ${platform} ${i}: ${JSON.stringify(bounds)}`);
    const file=`${platform}-${String(i+1).padStart(2,'0')}.png`;
    await page.screenshot({path:path.join(dir,file)});
    report.push({series:series.id,file,width,height,bounds,status:config.status});

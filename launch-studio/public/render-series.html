@@ -1,188 +1,49 @@
 <!doctype html>
-<html lang="en"><meta charset="UTF-8"><title>Openline / Original orange / review artwork</title>
+<html lang="en"><meta charset="UTF-8"><title>Openline / Original orange / app-led review artwork</title>
 <style>
 @font-face{font-family:Inter;src:url('./fonts/inter-latin-600-normal.woff2');font-weight:600}
 @font-face{font-family:Inter;src:url('./fonts/inter-latin-800-normal.woff2');font-weight:800}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif}
-#canvas{position:relative;overflow:hidden;width:1320px;height:2868px;background:#ff6418;color:#171717;--w:1320px;--h:2868px}
-.brand{position:absolute;top:4.5%;left:8%;display:flex;align-items:center;gap:18px;font-size:40px;font-weight:800;letter-spacing:-1.7px;z-index:4}
-.brand img{width:51px;height:51px;object-fit:contain;filter:brightness(0)}
-.category{position:absolute;top:5.2%;right:8%;font-size:20px;letter-spacing:2px;z-index:4}
+#canvas{position:relative;overflow:hidden;width:1320px;height:2868px;background:#ff6418;color:#171717}
+.brand{position:absolute;top:4.2%;left:8%;display:flex;align-items:center;gap:24px;color:#fff;font-size:76px;font-weight:800;letter-spacing:-3px;line-height:1;z-index:4}
+.brand img{width:104px;height:104px;filter:brightness(0) invert(1);object-fit:contain}
+.category{position:absolute;top:5.2%;right:8%;font-size:20px;letter-spacing:2px;color:#fff;z-index:4}
 .copy{position:absolute;left:8%;right:7%;top:13%;z-index:3}
-h1{margin:0;font-size:126px;font-weight:800;line-height:1.04;letter-spacing:-6px}
+h1{margin:0;font-size:126px;font-weight:800;line-height:1.04;letter-spacing:-6px}h1 span{color:#fff}
 .copy p{margin:36px 0 0;font-size:32px;line-height:1.5;max-width:95%;font-weight:600}
-.phone{position:absolute;top:36%;left:14%;width:79%;border:11px solid #252525;border-radius:94px;overflow:hidden;background:#f8f9fb;box-shadow:0 36px 80px #0002;transform:rotate(-5deg);z-index:2}
+.phone{position:absolute;top:36%;left:12%;width:80%;border:9px solid #252525;border-radius:85px;overflow:hidden;background:#f8f9fb;box-shadow:0 36px 80px #0002;transform:rotate(-4deg);z-index:2}
 .phone img{width:100%;display:block}
 .orb{position:absolute;width:1150px;height:1150px;background:#ff9e65;border-radius:50%;left:-590px;top:46%}
-.label{position:absolute;right:6%;bottom:11%;writing-mode:vertical-rl;font-size:23px;letter-spacing:5px;z-index:3}
 .foot{position:absolute;left:0;right:0;bottom:0;padding:26px 20px;text-align:center;font-size:17px;letter-spacing:.7px;background:#ff6418;color:#351403;z-index:6}
-.backdrop{display:none}
-.index{display:none}
-.signal h1 span{color:#fff}
-.signal.alt{background:#fff5e9!important}.signal.alt h1 span{color:#e6550c}.signal.alt .orb{background:#ffdec3}.signal.alt .foot{background:#fff5e9;color:#65564c}
-.signal.alt .phone{transform:rotate(5deg);left:8%}
-.editorial{background:#fbfaf7!important}
-.editorial .copy{top:15%;right:6%}.editorial h1{font-family:Georgia,serif;font-weight:400;letter-spacing:-6px;font-size:138px;line-height:1.04}
-.editorial h1 span{font-style:italic;color:#d65012}
-.editorial .copy p{max-width:850px;font-size:30px;color:#5d5852}
-.editorial .phone{top:39%;width:77%;left:31%;transform:rotate(0);border-width:9px;border-radius:83px}
-.editorial .orb{border-radius:0;background:#e7e2d9;width:64%;height:45%;left:0;top:auto;bottom:0}
-.editorial .label{right:auto;left:8%;bottom:19%;writing-mode:vertical-rl;transform:rotate(180deg);color:#716a60}
-.editorial .foot{background:#fbfaf7;color:#666057}
-.editorial .index{display:block;position:absolute;left:8%;bottom:5%;font-size:145px;font-family:Georgia,serif;color:#b4aa9c;z-index:4}
-.postcard{color:#fff!important;background:#417c9a!important}
-.postcard .backdrop{display:block;position:absolute;inset:0;background-size:cover;background-position:center}
-.postcard .backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(#112c4a66 0%,#112c4a22 37%,#06182e22 65%,#06182e55 100%)}
-.postcard .brand img{filter:brightness(0) invert(1)}
-.postcard .copy{top:14%;text-align:center;left:6%;right:6%}
-.postcard h1{font-size:123px;letter-spacing:-5px;text-shadow:0 4px 25px #102b4633}
-.postcard .copy p{font-size:30px;max-width:870px;margin:32px auto 0}
-.postcard .phone{width:69%;left:15.5%;top:37.5%;transform:rotate(0);border:9px solid #e4e1d8;border-radius:83px;box-shadow:0 40px 90px #05182c55}
-.postcard .orb,.postcard .label{display:none}
-.postcard .foot{background:#173343;color:#e6edf1}
-.focus{background:#ede6d7!important}
-.focus .copy{top:13%;right:8%}.focus h1{font-size:119px;line-height:1.05;letter-spacing:-5px}.focus h1 span{color:#aa481b}
-.focus .phone{left:8%;width:105%;top:38%;transform:none;border:1px solid #dedbd4;border-radius:64px;box-shadow:0 18px 60px #4a3e2e18}
-.focus .phone img{margin-top:-4%}
-.focus .orb{display:none}
-.focus .label{bottom:10%;right:auto;left:0;padding:28px 40px;background:#ff6418;color:#151515;writing-mode:horizontal-tb;font-size:26px;font-weight:800;letter-spacing:0;box-shadow:0 8px 24px #0001}
-.focus .foot{background:#ede6d7;color:#62574a}
-.night{background:#17191c!important;color:#f9f6ef!important}
-.night .brand img{filter:none}
-.night .category{color:#a8a9ad}
-.night .copy{top:14%}.night h1{font-size:128px;letter-spacing:-5px}.night h1 span{color:#ff7934}
-.night .copy p{font-size:30px;color:#b5b7bd;max-width:900px}
-.night .orb{border:2px solid #54514d;background:none;border-radius:170px;left:8%;top:36%;width:84%;height:70%}
-.night .phone{top:40%;left:19%;width:69%;transform:rotate(7deg);border-color:#626363;border-width:8px;border-radius:82px;box-shadow:0 50px 80px #0006}
-.night .label{color:#ff7934;left:11%;right:auto;bottom:12%;font-size:21px}
-.night .foot{background:#17191c;color:#a8a9ad}
-#canvas.android{width:1080px;height:1920px;--w:1080px;--h:1920px}
-.android .brand{font-size:32px;gap:14px}.android .brand img{width:42px;height:42px}.android .category{font-size:16px}
-.android h1{font-size:100px;letter-spacing:-4.5px}
-.android .copy{top:13.5%}.android .copy p{font-size:25px;margin-top:26px}
-.android .phone{top:38%;width:76%;left:16%;border-width:8px;border-radius:74px}
-.android .foot{font-size:13px;padding:20px}.android .label{font-size:18px}
-.android.editorial h1{font-size:110px}.android.editorial .phone{left:33%;width:76%;top:42%}
-.android.editorial .index{font-size:110px}
-.android.postcard h1{font-size:98px}.android.postcard .copy p{max-width:750px}.android.postcard .phone{width:66%;left:17%;top:41%}
-.android.focus h1{font-size:98px}.android.focus .phone{width:106%;left:8%;top:40%}
-.android.night h1{font-size:102px}.android.night .phone{top:42%;width:70%;left:19%}.android.night .orb{top:38%}
-.orange-air{background:#ff7b37!important}
-.orange-air h1 span{color:#fff}.orange-air .copy{top:14%;left:8%;right:8%;text-align:center}.orange-air h1{font-size:118px;line-height:1.09}
-.orange-air .copy p{font-size:30px;max-width:920px;margin:34px auto 0}
-.orange-air .phone{width:64%;left:18%;top:39%;transform:none;border:9px solid #2c2927;border-radius:82px}
-.orange-air .orb{background:#ff965f;width:110%;height:46%;border-radius:50% 50% 0 0;left:-5%;top:57%}
-.orange-air .label{display:none}.orange-air .foot{background:#ff7b37;color:#422008}
-.orange-bold{background:#ed5512!important}
-.orange-bold .copy{top:12%;left:8%;right:5%}.orange-bold h1{font-size:133px;letter-spacing:-6px;line-height:1.03}.orange-bold h1 span{color:#fff}
-.orange-bold .copy p{font-size:31px;max-width:94%}
-.orange-bold .phone{top:38%;left:8%;width:95%;border:9px solid #26211e;border-radius:74px;transform:none;box-shadow:0 25px 60px #64200030}
-.orange-bold .orb{display:none}.orange-bold .label{display:none}.orange-bold .foot{background:#ed5512;color:#301100}
-.android.orange-air h1{font-size:94px;line-height:1.08}.android.orange-air .copy{top:14%}.android.orange-air .copy p{font-size:25px;max-width:810px;margin-top:25px}
-.android.orange-air .phone{top:41%;width:63%;left:18.5%;border-width:7px;border-radius:65px}
-.android.orange-bold h1{font-size:109px;line-height:1.02;letter-spacing:-4px}.android.orange-bold .copy p{font-size:25px}
-.android.orange-bold .phone{top:40%;left:8%;width:95%;border-width:8px;border-radius:62px}
-.brand{top:4.2%;left:8%;gap:24px;color:#fff;font-size:76px;letter-spacing:-3px;line-height:1}
-#canvas .brand img{width:104px;height:104px;filter:brightness(0) invert(1);display:block;object-fit:contain}
-#canvas.android .brand{gap:20px;font-size:62px;letter-spacing:-2.5px}
-#canvas.android .brand img{width:85px;height:85px;filter:brightness(0) invert(1)}
-#canvas.signal.alt .brand{color:#171717}
-#canvas.signal.alt .brand img{filter:brightness(0)}
-.signal:not(.alt) .category,.orange-air .category,.orange-bold .category{color:#fff;font-weight:800}
-.story-flow{display:none;position:absolute;left:8%;right:8%;top:32%;z-index:4;grid-template-columns:1fr 62px 1fr 62px 1fr;align-items:stretch;gap:0}
-.story-flow .flow-card{border:2px solid #ffffff65;border-radius:22px;padding:28px 15px;text-align:center;background:#fff4;color:#351706;min-height:155px;display:flex;flex-direction:column;justify-content:center;font-size:26px;font-weight:800;line-height:1.3}
-.story-flow .flow-card small{font-size:18px;display:block;font-weight:600;margin-top:12px;opacity:.82}
-.story-flow .flow-arrow{display:flex;align-items:center;justify-content:center;color:#fff;font-size:45px;font-weight:600}
-.story-flow .flow-card.ours{background:#fff;color:#222;border-color:#fff}
-.story-flow .flow-card.ours img{width:42px;height:42px;object-fit:contain;margin:0 auto 12px}
 .qualification{display:none;position:absolute;left:8%;right:8%;bottom:4.3%;z-index:5;font-size:21px;line-height:1.45;padding:18px 22px;border-radius:12px;background:#fff3e7;color:#351706}
-#canvas.network,#canvas.market{background:#ff6418!important}
-.network .story-flow,.market .story-flow{display:grid}
-.network .qualification,.market .qualification{display:block}
+.backdrop,.label,.index{display:none}
+.alt{background:#fff5e9!important}.alt h1 span{color:#e6550c}.alt .orb{background:#ffdec3}
+.alt .brand,.alt .category{color:#171717}.alt .brand img{filter:brightness(0)}
+.alt .phone{transform:rotate(4deg);left:8%}.alt .foot{background:#fff5e9;color:#65564c}
 .network h1,.market h1{font-size:115px;letter-spacing:-5px}
-.network .phone,.market .phone{top:42%;left:18%;width:68%;transform:rotate(-3deg);border-radius:83px}
-.market .phone{left:14%;width:73%;transform:rotate(3deg)}
-.network .label,.market .label{display:none}
-.network .orb,.market .orb{top:49%}
+.network .phone,.market .phone{top:34%;left:8%;width:84%;transform:none;border:2px solid #ded6cc;border-radius:48px}
+.network .qualification,.market .qualification{display:block}
+.market .qualification{background:#ffe7d3}
+#canvas.android{width:1080px;height:1920px}
+.android .brand{gap:20px;font-size:62px;letter-spacing:-2.5px}.android .brand img{width:85px;height:85px}
+.android .category{font-size:16px}.android h1{font-size:100px;letter-spacing:-4.5px}
+.android .copy{top:13.5%}.android .copy p{font-size:25px;margin-top:26px}
+.android .phone{top:38%;width:79%;left:12%;border:2px solid #ded6cc;border-radius:34px;transform:none}
+.android .foot{font-size:13px;padding:20px}
 .android.network h1,.android.market h1{font-size:93px;letter-spacing:-4px}
-.android .story-flow{top:33.5%;grid-template-columns:1fr 45px 1fr 45px 1fr}
-.android .flow-card{font-size:21px;min-height:130px;padding:20px 10px;border-radius:18px}
-.android .flow-card small{font-size:15px;margin-top:8px}.android .flow-arrow{font-size:33px}
-.android .flow-card.ours img{width:32px;height:32px;margin-bottom:9px}
-.android.network .phone,.android.market .phone{top:45%;left:18%;width:65%;border-radius:63px}
-.android.market .phone{left:16%;width:69%}
+.android.network .phone,.android.market .phone{top:34%;left:8%;width:84%;border-radius:34px}
 .android .qualification{font-size:16px;padding:14px 17px;bottom:4.3%}
-.network .phone,.market .phone,.network .story-flow,.market .story-flow{display:none}
-.benefit-art{display:none;position:absolute;left:8%;right:8%;top:33%;height:57%;z-index:3;container-type:inline-size}
-.network .benefit-art,.market .benefit-art{display:block}
-.network .orb{top:48%;left:-37%;width:1600px;height:1600px;background:#ff8a4b}
-.market .orb{top:65%;left:38%;background:#ff934f}
-.partner-row{display:flex;justify-content:space-between;gap:3cqw}
-.partner-card{width:31%;height:22cqw;border:2px solid #ffffff80;border-radius:3cqw;background:#ffffff24;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2cqw}
-.partner-card strong{font-size:2.9cqw;letter-spacing:-.1cqw}.partner-card small{font-size:1.8cqw}
-.bars{height:7cqw;display:flex;align-items:flex-end;gap:1cqw}
-.bars i{display:block;width:1.5cqw;background:#fff;border-radius:.5cqw;height:25%}.bars i:nth-child(2){height:50%}.bars i:nth-child(3){height:75%}.bars i:nth-child(4){height:100%}
-.routes{height:23cqw;position:relative;margin:0 14%}
-.routes:before,.routes:after{content:"";position:absolute;top:0;width:50%;height:17cqw;border-bottom:3px solid #fff;border-radius:0 0 0 7cqw;border-left:3px solid #fff}
-.routes:after{right:0;border-left:0;border-right:3px solid #fff;border-radius:0 0 7cqw 0}
-.routes i{position:absolute;left:50%;height:100%;width:3px;background:#fff}
-.connection-hub{width:26cqw;height:26cqw;margin:-1cqw auto 0;background:#fff;border-radius:7cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 3cqw 7cqw #87360020;position:relative;z-index:2}
-.connection-hub img{width:15cqw;height:15cqw;object-fit:contain}
-.route-stem{width:3px;background:#fff;height:9cqw;margin:auto}
-.esim-ticket{background:#fff5e9;border-radius:5cqw;padding:5cqw;display:flex;align-items:center;gap:4cqw;box-shadow:0 3cqw 8cqw #87360015}
-.sim-chip{width:12cqw;height:15cqw;border:3px solid #ed5d18;border-radius:2cqw 5cqw 2cqw 2cqw;display:grid;place-items:center;flex:none}
-.sim-chip:after{content:"";width:6cqw;height:7cqw;border:2px solid #ed5d18;border-radius:1cqw;background:linear-gradient(90deg,transparent 45%,#ed5d18 46%,#ed5d18 51%,transparent 52%),linear-gradient(transparent 45%,#ed5d18 46%,#ed5d18 51%,transparent 52%)}
-.esim-ticket small,.value-plan small{font-size:2cqw;letter-spacing:.25cqw;text-transform:uppercase;color:#8d4828}
-.esim-ticket h2{font-size:5.7cqw;line-height:1.1;letter-spacing:-.25cqw;margin:1.5cqw 0}
-.esim-ticket p{font-size:2.6cqw;line-height:1.4;margin:0;color:#655247}
-.benefit-caption{text-align:center;font-size:3.1cqw;line-height:1.5;margin:6cqw 5cqw 0;letter-spacing:-.08cqw}
-.benefit-caption strong{font-weight:800}
-.offer-stack{position:relative;height:41cqw;margin:0 4cqw}
-.offer-slip{position:absolute;left:0;top:0;width:76cqw;height:25cqw;padding:3.5cqw 4.5cqw;background:#fff4e8;border:2px solid #f4cdb6;border-radius:3cqw;transform:rotate(-7deg);box-shadow:0 2cqw 5cqw #9e360018}
-.offer-slip:nth-child(2){top:7cqw;left:6cqw;transform:rotate(4deg);background:#ffe5d0}
-.offer-slip:nth-child(3){top:15cqw;left:12cqw;transform:rotate(-2deg);background:#fff}
-.offer-top{display:flex;justify-content:space-between;align-items:center;font-size:2.4cqw;color:#776258}.offer-top b{font-size:2cqw;border:1px solid #e5d7cf;border-radius:2cqw;padding:.7cqw 1.5cqw;font-weight:600}
-.offer-slip h2{font-size:5cqw;margin:2cqw 0 1cqw;letter-spacing:-.15cqw}.offer-slip p{font-size:2.2cqw;color:#776258;margin:0}
-.market-connector{height:7cqw;border-left:3px dashed #fff;margin-left:50%}
-.market-engine{background:#25211e;color:#fff;border-radius:4cqw;padding:4cqw 5cqw;display:flex;align-items:center;gap:4cqw;box-shadow:0 3cqw 7cqw #7c2a0020}
-.market-engine img{width:11cqw;height:11cqw;filter:brightness(0) invert(1)}
-.market-engine small{font-size:1.8cqw;color:#ffc8a8;letter-spacing:.1cqw}.market-engine h2{margin:.7cqw 0;font-size:5.5cqw;letter-spacing:-.15cqw}.market-engine p{margin:0;font-size:2.4cqw;color:#fff1e8}
-.value-plan{background:#fff5e9;border-radius:4cqw;padding:4.5cqw 5cqw;position:relative}
-.value-plan h2{font-size:6.6cqw;line-height:1.05;letter-spacing:-.3cqw;margin:2cqw 0 3cqw}
-.value-plan .plan-meta{display:flex;gap:1.7cqw}.plan-meta span{font-size:2cqw;padding:1.2cqw 2cqw;border:1px solid #e7cbb8;border-radius:2cqw}
-.value-plan .value-seal{position:absolute;right:5cqw;top:5cqw;width:10cqw;height:10cqw;border:2px solid #ff6418;border-radius:50%;display:grid;place-items:center;color:#e95b12;font-size:5cqw}
-.market .benefit-caption{margin-top:4cqw}
-.android .benefit-art{top:34%;height:55%}
-.android .partner-card{height:19cqw}.android .routes{height:13cqw}.android .routes:before,.android .routes:after{height:9cqw}
-.android .connection-hub{width:22cqw;height:22cqw;border-radius:6cqw}.android .connection-hub img{width:13cqw;height:13cqw}
-.android .route-stem{height:5cqw}.android .esim-ticket{padding:3.8cqw}.android .benefit-caption{margin-top:3cqw;font-size:2.9cqw}
-.android .offer-stack{height:33cqw}.android .offer-slip{height:22cqw;padding:2.5cqw 4cqw}.android .offer-slip:nth-child(2){top:5cqw}.android .offer-slip:nth-child(3){top:10cqw}
-.android .market-connector{height:4cqw}.android .market-engine{padding:3cqw 5cqw}.android .value-plan{padding:3cqw 5cqw}.android .value-plan h2{font-size:5.9cqw;margin:1.5cqw 0 2cqw}
 </style>
-<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/mark.png" alt=""><span>Openline</span></div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="story-flow"></div><div class="benefit-art"></div><div class="phone"><img id="screen" alt="Openline design reference"></div><div class="label"></div><div class="index"></div><div class="qualification"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH NATIVE CAPTURE</div></div>
+<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/mark.png" alt=""><span>Openline</span></div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="phone"><img id="screen" alt="Supplied Openline React UI reference"></div><div class="label"></div><div class="index"></div><div class="qualification"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH VERIFIED NATIVE CAPTURE</div></div>
 <script type="module">
 const [config,art]=await Promise.all(['series.json','artwork.json'].map(async p=>(await fetch('./'+p)).json()));
-const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide'))||0)),s=config.series.find(x=>x.id===q.get('series'))||config.series[0],slide=art.slides[n],platform=q.get('platform')==='android'?'android':'ios';
-const network=n===config.differentiator?.slide,market=n===config.market?.slide;
-const story=network?config.differentiator:market?config.market:null;
-const canvas=document.querySelector('#canvas');canvas.className=s.id+' '+platform+(network?' network':market?' market':n%2?' alt':'');
-document.querySelector('h1').replaceChildren(document.createTextNode(s.heads[n][0]),document.createElement('br'),Object.assign(document.createElement('span'),{textContent:s.heads[n][1]}));
-document.querySelector('.copy p').textContent=story?.detail||slide.detail;
-document.querySelector('#screen').src=story?.captures?.[platform]||slide.captures[platform];
-document.querySelector('.label').textContent=story?.label||slide.short;
-document.querySelector('.index').textContent='0'+(n+1);
+const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide'))||0)),s=config.series.find(x=>x.id===q.get('series'))||config.series[0],sourceIndex=config.sourceOrder?.[n]??n,slide=art.slides[sourceIndex],platform=q.get('platform')==='android'?'android':'ios';
+const network=n===config.differentiator.slide,market=n===config.market.slide,story=network?config.differentiator:market?config.market:null,override=config.frameOverrides?.[n];
+const canvas=document.querySelector('#canvas');canvas.className=s.id+' '+platform+(network?' network':market?' market':'')+(n%2?' alt':'');
+const heads=platform==='android'&&config.androidHeadlines?.[n]?config.androidHeadlines[n]:s.heads[n];
+document.querySelector('h1').replaceChildren(document.createTextNode(heads[0]),document.createElement('br'),Object.assign(document.createElement('span'),{textContent:heads[1]}));
+document.querySelector('.copy p').textContent=platform==='android'&&story?.androidDetail?story.androidDetail:story?.detail||override?.detail||slide.detail;
+document.querySelector('#screen').src=story?.captures?.[platform]||override?.captures?.[platform]||slide.captures[platform];
 document.querySelector('.qualification').textContent=story?.qualification||'';
-if(story){
- document.querySelector('.benefit-art').innerHTML=network?`
- <div class="partner-row">${[1,2,3].map(()=>`<div class="partner-card"><div class="bars"><i></i><i></i><i></i><i></i></div><strong>Network partner</strong><small>Illustrative route</small></div>`).join('')}</div>
- <div class="routes"><i></i></div><div class="connection-hub"><img src="./assets/mark.png" alt="Openline"></div><div class="route-stem"></div>
- <div class="esim-ticket"><div class="sim-chip"></div><div><small>More flexibility behind your eSIM</small><h2>A different route.<br>When you need it.</h2><p>A replacement profile, where available.</p></div></div>
- <p class="benefit-caption"><strong>Not tied to just one partner.</strong><br>More options for your connection.</p>`:`
- <div class="offer-stack">${[1,2,3].map(()=>`<div class="offer-slip"><div class="offer-top"><span>NETWORK SUPPLIER</span><b>DATA OFFER</b></div><h2>Travel data</h2><p>Destination · Data · Validity · Cost</p></div>`).join('')}</div>
- <div class="market-connector"></div><div class="market-engine"><img src="./assets/mark.png" alt=""><div><small>OPENLINE MOBILE DATA MARKET</small><h2>We compare the offers.</h2><p>Smarter sourcing, behind the scenes.</p></div></div>
- <div class="market-connector"></div><div class="value-plan"><small>The benefit for you</small><span class="value-seal">↓</span><h2>Better value.<br>For your trip.</h2><div class="plan-meta"><span>Your destination</span><span>Your data</span><span>Your budget</span></div></div>
- <p class="benefit-caption">The market works in the background.<br><strong>You just choose your travel plan.</strong></p>`;
- document.querySelector('.foot').textContent='BENEFIT ILLUSTRATION · NOT AN APP SCREEN · CLAIMS REQUIRE LAUNCH VALIDATION';
-}
 window.artworkReady=true;
 </script></html>

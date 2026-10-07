@@ -1,25 +1,33 @@
 {
-  "revision":9,
+  "revision":10,
+  "sourceOrder":[0,2,2,4,3,1],
+  "submissionStatus":"blocked-creative-review-only",
+  "backgroundSequence":["orange","warm-cream","orange","warm-cream","orange","warm-cream"],
+  "frameOverrides":{"1":{"detail":"Keep your purchase code close. Activate when you are ready.","captures":{"ios":"./assets/screen-purchase.png","android":"./assets/screen-purchase.png"}}},
+  "androidHeadlines":{"5":["Your trip.","Your kind of plan."]},
   "status":"design-reference-not-native-capture",
   "selectedSeries":"signal",
   "differentiator":{
-    "slide":1,
+    "slide":4,
     "detail":"Leading Tier-1 partners. More than one way to keep you connected.",
     "paragraph":"Openline works with multiple leading network partners, not just one. If your service needs a different route, we can try to provide a replacement eSIM profile where an alternative is available. Behind our plans, the Openline Mobile Data Market (OMDM) compares supplier offers to help us source data at better prices and build better-value travel plans. Network options depend on your destination and plan, and a profile change may require setup on your phone.",
     "status":"Owner-confirmed product positioning. Validate launch availability, sourcing workflow and retail price evidence before store submission.",
     "boundaries":["No cheapest or quantified savings claim","No instant, invisible or automatic profile-replacement guarantee","No universal multi-network access","No fixed speed guarantee","Unlimited plans remain subject to local network fair-use rules"],
-    "visual":"Purpose-built network-route illustration; not native UI. No setup capture reused.",
+    "visual":"Supplied connection dashboard capture showing the existing Connected badge and usage card. This does not independently prove signal quality or multi-network capability.",
+    "captures":{"ios":"./assets/screen-dashboard.png","android":"./assets/screen-dashboard.png"},
     "label":"Another eSIM profile, if needed",
     "qualification":"Alternative availability varies. A profile change may require setup."
   },
   "market":{
     "slide":5,
     "detail":"We compare supplier offers through our data market to build better-value travel plans.",
-    "visual":"Purpose-built supplier-offer to OMDM to travel-plan illustration; no sample retail pricing or duration-selector capture.",
+    "visual":"Supplied plan-selection UI with displayed duration and price choices. Sample prices are not evidence of comparative savings.",
+    "captures":{"ios":"./assets/screen-plans.png","android":"./assets/screen-plans.png"},
+    "androidDetail":"Compare the days, data and price before you choose.",
     "label":"Openline Mobile Data Market",
     "qualification":"Plan prices vary by destination, data allowance and validity."
   },
   "series":[
-    {"id":"signal","name":"Original orange","number":"01","color":"#ff6418","description":"The selected orange direction. Clear travel benefits, real icon branding and two stronger reasons to choose Openline.","intent":"Network flexibility on screen 2. Smarter sourcing through the OMDM market on screen 6. The other screens stay simple and travel-led.","heads":[["Your next stop.","Connected."],["More networks.","More ways to connect."],["Your eSIM.","Ready to set up."],["Less guessing.","More going."],["All your eSIMs.","One place."],["A smarter market.","For better prices."]]}
+    {"id":"signal","name":"Original orange","number":"01","color":"#ff6418","description":"App-led story with alternating orange and warm cream backgrounds. Six distinct product views, no diagram-only frames.","intent":"Destination, purchase, setup and eSIM collection first. The connection dashboard is frame 5; plan selection closes at frame 6. Native captures and claims review are still required.","heads":[["Your next stop.","Connected."],["Your purchase.","Ready when you are."],["Your eSIM.","Ready to set up."],["All your eSIMs.","One place."],["More networks.","More ways to connect."],["A smarter market.","For better prices."]]}
   ]
 }

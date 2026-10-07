@@ -10,9 +10,9 @@ The final flat icon visual choice is approved. Native integration, capture repla
   Owner: Engineering
   Import the Xcode catalog; merge Android resources; verify masks and dark/themed variants in the actual builds.
 
-- [ ] Review the selected orange screenshot sequence (Both; recommended; review)
+- [ ] Verify native app screenshots and launch claims (Both; required; blocked)
   Owner: Design
-  Original orange is selected: six iPhone and six Android compositions. Screen 2 explains multiple partners and best-effort profile replacement; screen 6 explains OMDM sourcing/value. Other screens remain travel-led. Native captures and final image approval are still pending.
+  Alternating orange/cream, six distinct app views. Dashboard at frame 5 and plan selection at 6 replace illustrations. These are supplied React captures, not native evidence. Verify release UI, network claims, price/FUP wording and platform-specific copy. Android uses neutral plan-choice copy. See screenshot-compliance-review.md.
 
 - [ ] Recapture from the native release builds (Both; required; blocked)
   Owner: Engineering
