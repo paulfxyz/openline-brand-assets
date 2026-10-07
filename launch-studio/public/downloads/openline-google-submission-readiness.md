@@ -2,9 +2,9 @@
 
 NOT READY TO UPLOAD: native captures and release evidence are pending.
 
-This is a separate, lower-risk copy/layout variant. The approved marketing master is unchanged. Six RGB PNG phone compositions are included; these are still supplied React design references, not certified native screenshots.
+This variant restores the approved Openline visual style: large angled app panels, bold headlines, orange/cream alternation and generous space. Store-specific conservative wording is retained. The approved marketing master is unchanged. Six RGB PNG phone compositions are included; these are still supplied React design references, not certified native screenshots.
 
-Google overlays omit price promotions, superlatives, Tier-1 and switching claims. Flat app panels have no added hardware bezels. Overlay bounding-box area and tagline height are each tested below 20%; this engineering check is not store certification. The source UI still contains sample prices and a BEST VALUE badge, so replacement captures remain a blocker.
+Google overlays omit price promotions, superlatives, Tier-1 and switching claims. Angled app panels have no added hardware bezels. Overlay bounding-box area and tagline height are each tested below 20%; this engineering check is not store certification. The source UI still contains sample prices and a BEST VALUE badge, so replacement captures remain a blocker.
 
 ## Required before upload
 

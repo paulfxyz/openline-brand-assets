@@ -1,5 +1,12 @@
 # Openline Brand Studio
 
+## Current: v1.13.1, approved style restored across variants
+
+Submission sets use the approved orange/cream visual language again: enlarged
+app panels tilted 3–4 degrees, bold headlines and generous space, rather than
+small upright screens. Conservative platform copy and readiness gates remain.
+The marketing master is unchanged. Both store previews and downloads are updated.
+
 ## Current: v1.13.0, separate submission variants
 
 The approved marketing master remains unchanged. Open either store listing preview

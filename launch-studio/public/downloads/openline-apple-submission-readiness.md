@@ -2,7 +2,7 @@
 
 NOT READY TO UPLOAD: native captures and release evidence are pending.
 
-This is a separate, lower-risk copy/layout variant. The approved marketing master is unchanged. Six RGB PNG phone compositions are included; these are still supplied React design references, not certified native screenshots.
+This variant restores the approved Openline visual style: large angled app panels, bold headlines, orange/cream alternation and generous space. Store-specific conservative wording is retained. The approved marketing master is unchanged. Six RGB PNG phone compositions are included; these are still supplied React design references, not certified native screenshots.
 
 Apple retains a factual OMDM sourcing explanation without lower-price, Tier-1 or switching claims.
 

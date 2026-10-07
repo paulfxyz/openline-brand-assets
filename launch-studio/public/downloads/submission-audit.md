@@ -1,5 +1,13 @@
 # Openline submission preparation audit
 
+## Current status: v1.13.1, consistent Openline art direction
+
+Both store drafts restore the approved bold orange/cream composition with large,
+inclined app panels. The conservative copy remains. Google measured tagline
+height is 14.1–16.5%, and combined text/brand bounding-box area is 13.5–15.5%.
+These measurements supersede v1.13.0's smaller layout and are not store approval.
+All native-capture and commercial verification gates remain unchanged.
+
 ## Current status: v1.13.0, separate platform drafts
 
 The marketing master retains its approved OMDM pricing story. Separate submission

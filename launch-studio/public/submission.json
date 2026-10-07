@@ -1,5 +1,6 @@
 {
-  "revision": 1,
+  "revision": 2,
+  "visualDirection": "Approved Openline orange/cream system with large angled app panels, generous space and bold typography. Conservative store-specific copy is retained.",
   "status": "draft-native-captures-and-release-evidence-pending",
   "marketingUnchanged": true,
   "locale": "en-US",
@@ -13,7 +14,7 @@
       {"head":["Your eSIM.","Ready to set up."],"detail":"Find the installation instructions for your device and plan.","capture":"screen-profile.png"},
       {"head":["Your travel eSIMs.","Together."],"detail":"Keep your plans and their details in one place.","capture":"screen-esims.png"},
       {"head":["Your data.","At a glance."],"detail":"See the connection and usage information available for your plan.","capture":"screen-dashboard.png"},
-      {"head":["A smarter market.","Your choice of plan."],"detail":"Openline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans.","capture":"screen-plans.png"}
+      {"head":["Smarter market.","More choice."],"detail":"Openline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans.","capture":"screen-plans.png"}
     ],
     "metadata": {
       "name":"Openline: Travel eSIM & Data",
