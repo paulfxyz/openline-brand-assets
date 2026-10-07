@@ -1,6 +1,14 @@
 # Openline submission preparation audit
 
-## Current creative status: v1.10.2
+## Current creative status: v1.11.0
+
+Both platforms now use neutral “Your trip. Your kind of plan.” screenshot copy.
+New device previews and store previews are simulations using the same supplied
+React captures; no native verification is implied. The complete-resource archive
+is a current review bundle, not an approved or signed store submission.
+All native-capture, sample-data, FUP and network-evidence gates remain.
+
+## Previous creative status: v1.10.2
 
 The network story is frame 5, plan selection frame 6. All backgrounds alternate
 orange and warm cream. Six distinct supplied React app views replace the rejected

@@ -141,7 +141,8 @@ function Workspace(){
  <FinalIconDownloads/>
  <div className="download-hero"><Package size={36}/><div><Badge type="green">PREPARED FOR HANDOFF</Badge><h2>The launch foundation + selected orange story</h2><p>The foundation kit includes final icons, updated copy, settings, requirements and historical R03 artwork. The current pack contains only Original orange. Native captures, pricing evidence and compliance checks remain required.</p></div><a className="btn primary" href="./downloads/openline-launch-kit.zip" download><Download size={17}/> Foundation kit</a></div>
  <div className="download-list">{[
- ['Selected orange screenshots','12 review PNGs, not submission-ready. Network flexibility on screen 5; OMDM value on screen 6.','./downloads/openline-orange-series.zip'],
+ ['All current mobile launch resources','Current screenshots, approved and native icons, editable artwork, metadata and checklists in one ZIP.','./downloads/openline-all-resources.zip'],
+ ['Selected orange screenshots','12 review PNGs, not submission-ready. Dashboard on screen 5; neutral plan choice on screen 6.','./downloads/openline-orange-series.zip'],
  ['Editable orange-series sources','Current layouts, headlines, image inputs and reproducible renderer','./downloads/openline-orange-series-sources.zip'],
  ['Orange-series handoff','Selection status, native capture replacement and competitor-use boundaries','./downloads/orange-series-handoff.md'],
  ['Why Openline: positioning','Two focused frames and one paragraph: multi-partner connectivity, profile replacement and OMDM sourcing','./downloads/positioning-claims.md'],

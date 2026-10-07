@@ -19,7 +19,7 @@ Meeting pixel dimensions and adding a review disclaimer do not establish complia
 6. Plan selection, warm cream.
 
 No new signal readings, carrier affiliations or prices were invented. The
-dashboard appears only once. Android's last headline is “Your trip. Your kind
+dashboard appears only once. Both platforms' last headline is “Your trip. Your kind
 of plan.” instead of “For better prices.”
 
 ## Apple
@@ -61,7 +61,8 @@ Android caption the more conservative choice.
 - Verify all country coverage, plan prices, allowances, activation conditions,
   purchases and displayed product features against the launch catalog/build.
 - Substantiate “Tier-1”, partner flexibility, replacement-profile availability
-  and the iPhone “better prices” claim. Do not infer comparative performance from
+  and the value/sourcing explanation retained in description copy. The price-led
+  screenshot headline is now removed on both platforms. Do not infer comparative performance from
   full status-bar bars or a Connected badge.
 - The supplied price-selection UI includes “BEST VALUE” and “Unlimited data ·
   full speed · hotspot included.” Validate/correct these against fair-use terms,

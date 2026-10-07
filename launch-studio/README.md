@@ -1,6 +1,19 @@
 # Openline Brand Studio
 
-## Current: v1.10.2, app-led sequence and alternating backgrounds
+## Current: v1.11.0, direct previews and complete resource bundle
+
+iPhone and Android both end with “Your trip. Your kind of plan.” and neutral
+plan-details copy. Four prominent CTA shortcuts open app-on-device previews or
+store-listing previews. Deep links: `#iphone`, `#android`, `#app-store`, `#google-play`.
+Phone previews show six supplied app captures, with screen selection and navigation.
+The phone shells are simulations, not native test evidence.
+
+`downloads/openline-all-resources.zip` contains current screenshots, approved and
+native icon kits, editable art sources, metadata, checklist, policy assessment and
+feature-graphic review. It excludes competitor assets and obsolete screenshot sets.
+Build it with `python scripts/package_resources.py` after the existing packaging steps.
+
+## Previous: v1.10.2, app-led sequence and alternating backgrounds
 
 Six distinct app views: destination, purchase confirmation, setup, eSIM collection,
 connection dashboard and plan selection. Network story is fifth, not fourth.
