@@ -7,7 +7,9 @@ Checked 7 October 2026 against official Apple and Google guidance.
 All six current frames contain supplied app UI. Illustration-only frames were
 removed following Paul's correction. These are still React design captures with
 sample data, not verified native release captures. No store has approved them.
-Meeting pixel dimensions and adding a review disclaimer do not establish compliance.
+Meeting pixel dimensions does not establish compliance. Review labels are now
+removed from the artwork at Paul's request; this does not change its draft status.
+Review warnings and claim boundaries remain in the Archive and these handoff notes.
 
 ## Current sequence
 
@@ -70,8 +72,8 @@ Android caption the more conservative choice.
   issues, not approved production claims.
 - Verify display dimensions and supported device families; inspect taglines at
   listing size and against Play's recommended 20% area. Localize all overlay text.
-- Remove internal review footers only after replacement/verification. Review
-  platform-specific metadata again at actual submission time.
+- Review platform-specific metadata again at actual submission time. The visual
+  cleanup and larger final headline do not waive any remaining verification gate.
 
 If network/value claims cannot be supported at launch, use factual captions
 such as “Your connection, at a glance” and “Plans for your trip.” Relevant app UI

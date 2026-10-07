@@ -1,6 +1,14 @@
 # Openline submission preparation audit
 
-## Current creative status: v1.11.0
+## Current creative status: v1.12.0
+
+The simplified Main view contains the final icon, device and listing previews,
+and downloads. All prior tools and review notes remain in Archive.
+Current artwork no longer contains category micro-labels, qualification strips
+or review footers. This does not convert design captures into native evidence
+or remove any submission gate. The final neutral headline is larger.
+
+## Previous creative status: v1.11.0
 
 Both platforms now use neutral “Your trip. Your kind of plan.” screenshot copy.
 New device previews and store previews are simulations using the same supplied

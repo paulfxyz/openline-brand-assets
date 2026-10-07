@@ -24,10 +24,10 @@
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -57,10 +57,10 @@
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -90,10 +90,10 @@
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -123,10 +123,10 @@
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -156,10 +156,10 @@
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -172,27 +172,27 @@
     "bounds": {
       "copy": {
         "top": 372.828125,
-        "bottom": 696.015625,
+        "bottom": 924.828125,
         "left": 105.59375,
         "right": 1227.609375
       },
       "phone": {
-        "top": 975.109375,
-        "bottom": 3251.109375,
+        "top": 1147.1875,
+        "bottom": 3423.1875,
         "left": 105.59375,
         "right": 1214.390625
       },
       "head": {
         "top": 372.828125,
-        "bottom": 612.015625,
+        "bottom": 840.828125,
         "left": 105.59375,
         "right": 1227.609375
       },
       "footer": {
-        "top": 2796,
-        "bottom": 2868,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1320
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -222,10 +222,10 @@
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -255,10 +255,10 @@
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -288,10 +288,10 @@
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -321,10 +321,10 @@
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -354,10 +354,10 @@
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"
@@ -370,27 +370,27 @@
     "bounds": {
       "copy": {
         "top": 259.1875,
-        "bottom": 516.125,
+        "bottom": 703.3125,
         "left": 86.390625,
         "right": 1004.40625
       },
       "phone": {
-        "top": 652.796875,
-        "bottom": 2514.1875,
+        "top": 806.390625,
+        "bottom": 2667.78125,
         "left": 86.390625,
         "right": 993.578125
       },
       "head": {
         "top": 259.1875,
-        "bottom": 452.625,
+        "bottom": 639.8125,
         "left": 86.390625,
         "right": 1004.40625
       },
       "footer": {
-        "top": 1864,
-        "bottom": 1920,
+        "top": 0,
+        "bottom": 0,
         "left": 0,
-        "right": 1080
+        "right": 0
       }
     },
     "status": "design-reference-not-native-capture"

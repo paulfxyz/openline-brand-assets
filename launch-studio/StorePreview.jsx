@@ -23,7 +23,7 @@ export default function StorePreview({ws,change,platform,setPlatform}){
   history.replaceState(null,'','#'+target);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{workbench.current?.focus({preventScroll:true});workbench.current?.scrollIntoView({behavior:'instant',block:'start'})}));
  }
- useEffect(()=>{const follow=()=>navigate(location.hash.slice(1));follow();window.addEventListener('hashchange',follow);return()=>window.removeEventListener('hashchange',follow)},[]);
+ useEffect(()=>{const follow=()=>{if(!workbench.current?.closest('[hidden]'))navigate(location.hash.slice(1))};follow();window.addEventListener('hashchange',follow);return()=>window.removeEventListener('hashchange',follow)},[]);
  useEffect(()=>{const el=document.querySelector('.sp-device-screen');if(el)el.scrollTop=0},[frame,platform]);
  const current=config.series.find(s=>s.id===series),preferred=config.series.find(s=>s.id===ws.preferredSeries);
  useEffect(()=>{if(ws.preferredSeries)setSeries(ws.preferredSeries)},[ws.preferredSeries]);

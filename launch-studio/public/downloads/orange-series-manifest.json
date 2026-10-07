@@ -6,7 +6,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "6279bd0d48e1abd1e057a7365f084aecb3561ef7c81cf56f5e80cf0d97f401f0"
+    "sha256": "1c869248095290304113580827b5ba6a49b7c7cfd9227466a3f3b2bafa0322a2"
   },
   {
     "series": "signal",
@@ -15,7 +15,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "635d77b740739038dc906ae5d54293c051788f8774692c3ade1eb2eb00588702"
+    "sha256": "8e1db74807e1bdc20915a43a8dddd21db4722e32b91c95c25c4929ee7f555197"
   },
   {
     "series": "signal",
@@ -24,7 +24,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "9c8fae9bf77949793d6dcbbebe1eb88277863603ba3fa93ed174877cbdf584ed"
+    "sha256": "721e6c5785bdabf3f5ccdd26855b2bba78c09d03bc1b72e032a22be2b51cf203"
   },
   {
     "series": "signal",
@@ -33,7 +33,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "fbc1495242e6cbc44e3dcc88a64db85690992bbaf037bdc4a2e6a6a21304ec72"
+    "sha256": "5730663f2e8a1ac1868a82c60c13d718a2a5a1d33567b797553afa4d90b1e66b"
   },
   {
     "series": "signal",
@@ -42,7 +42,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "3cf7f344850af401cca0b9ab806138541697353b739abe3bf6650d09dcd9d67c"
+    "sha256": "92b894856dc53b496393cbc3b5c1c197d9c05c291d9f6825a5617badb2ab05a3"
   },
   {
     "series": "signal",
@@ -51,7 +51,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "feea147dbc5f98b039e174eb03e0eeea02e606632599f8c910eb3cb0f1dcc4c2"
+    "sha256": "ba3f457ff6157e225b20116fd2ef8871ce9b12c85e0a351479c4bef66a9f7c97"
   },
   {
     "series": "signal",
@@ -60,7 +60,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "1ea72a8814364f1f00753c8d562fe29a025e5dcedd7a448d0e15db90c45ec330"
+    "sha256": "42f719cf799a3fe16d1eec9f0adf7b817fe237bcf345ca5f90a189bad63e8b0e"
   },
   {
     "series": "signal",
@@ -69,7 +69,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "e1bfda80308c45bacc010a47f044c3b3e61161f990655f80159b9d31e11a35eb"
+    "sha256": "47e8cef6e4f4a5f446e04edd17d96037be999ca59ab766b25dc39899511ba2b7"
   },
   {
     "series": "signal",
@@ -78,7 +78,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "87810dcabff808b97ab7a3df5685f036d925e1954fd504574c46fb5b212b3483"
+    "sha256": "e9cfbae1a31bcd4c6936a880de747be105880674c3e5c43b8a4c6f5caff5eb2f"
   },
   {
     "series": "signal",
@@ -87,7 +87,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "7fa27248a346c4b7f5f5434184519be59d7132cbd266c2b787c0eee3cafe9cb9"
+    "sha256": "73187595584311db66944c856dd3be0e1a4a92851c9c67196d28b1cc45b2390a"
   },
   {
     "series": "signal",
@@ -96,7 +96,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "bbde532bbaf531b16148ad33dae9088917247413fb2b118d8b623d516b3c0cdc"
+    "sha256": "3d6ae468d71c7e78665549277bd41b058727962309dc1b6a96288505eed4cc52"
   },
   {
     "series": "signal",
@@ -105,6 +105,6 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "e0286af7281bc1c4e85f184a64f0920fd6959699b0e1b94ef4d64b1d2012da35"
+    "sha256": "89ed1acc0bc5788474de88af748b081a351c67e3744ed6ae97225587296f5b68"
   }
 ]

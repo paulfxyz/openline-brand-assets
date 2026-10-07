@@ -10,7 +10,7 @@ small=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',16)
 manifest=[]
 sheet=Image.new('RGB',(1560,len(config['series'])*630),'#f3f1ed')
 draw=ImageDraw.Draw(sheet)
-readme="""# Openline selected orange screenshots / Revision 11
+readme="""# Openline selected orange screenshots / Revision 12
 
 Original orange is the selected direction. Native screenshot approval is pending.
 The final 43.5% icon is unchanged.
@@ -21,7 +21,8 @@ Backgrounds alternate orange and warm cream, starting with orange.
 All six are distinct supplied React UI references, not native release screenshots.
 No illustration-only frames remain. Frame 5 uses the connection dashboard.
 Frame 6 uses plan selection, with a neutral plan-choice headline on both platforms.
-Keep the design-reference footer during review. Replace the captures with accurate native captures,
+Review labels are not burned into the artwork. Review status remains in this handoff.
+Replace the captures with accurate native captures,
 verify every visible price, coverage, plan, feature and usage value, then recompose and approve.
 No tablets, localization or native store upload has been completed.
 Only Original orange remains. Other directions are discarded from this package.

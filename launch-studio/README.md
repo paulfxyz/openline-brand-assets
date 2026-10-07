@@ -1,6 +1,18 @@
 # Openline Brand Studio
 
-## Current: v1.11.0, direct previews and complete resource bundle
+## Current: v1.12.0, clean Main and separate Archive
+
+Main contains only the approved app icon, four device/store preview cards and
+a concise download recap. `#archive` preserves the previous full workbench,
+including comparisons, checklists, settings and review notes. Switching views
+does not discard in-session Archive edits.
+
+All 12 current screenshot compositions omit category micro-labels, qualification
+strips and review footers. The final neutral headline is larger on both platforms.
+Review status is documented in Archive and the downloadable handoff, not burned
+into the artwork. Native capture and claims verification remain required.
+
+## Previous: v1.11.0, direct previews and complete resource bundle
 
 iPhone and Android both end with “Your trip. Your kind of plan.” and neutral
 plan-details copy. Four prominent CTA shortcuts open app-on-device previews or

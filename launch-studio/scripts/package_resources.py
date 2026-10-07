@@ -35,6 +35,9 @@ The icon choice is final; screenshots and feature graphic are review candidates.
 Both platforms end with “Your trip. Your kind of plan.” The network dashboard
 is fifth. Backgrounds alternate orange and warm cream. All six app views are
 supplied React design captures, not verified native release captures.
+Artwork has no review footer, category micro-label or qualification strip.
+The larger final headline remains neutral. Review status and claim boundaries
+are retained in the handoff documents and the site's Archive view.
 
 No competitor imagery, superseded screenshot series, credentials, signed app
 binaries or native app source code is included. This is the complete current
@@ -42,6 +45,7 @@ mobile launch resource bundle, not an archive of the entire brand repository.
 Read handoff/screenshot-compliance-review.md before any store submission.
 
 Live previews: https://openline-brand.fly.dev
+Archive and working notes: https://openline-brand.fly.dev/#archive
 iPhone: https://openline-brand.fly.dev/#iphone
 Android: https://openline-brand.fly.dev/#android
 App Store: https://openline-brand.fly.dev/#app-store
