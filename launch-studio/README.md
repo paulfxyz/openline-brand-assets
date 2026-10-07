@@ -1,5 +1,12 @@
 # Openline Brand Studio
 
+## Current: v1.13.2, more legible supporting copy
+
+All current screenshot editions use larger supporting text: 42px on iPhone and
+34px on Android, white on orange and near-black on warm cream. Headline wording,
+inclined layouts and icons remain unchanged. All 24 compositions and downloads
+have been regenerated; native-capture and commercial verification gates remain.
+
 ## Current: v1.13.1, approved style restored across variants
 
 Submission sets use the approved orange/cream visual language again: enlarged

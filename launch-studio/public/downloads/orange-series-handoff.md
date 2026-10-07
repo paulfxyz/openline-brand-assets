@@ -1,4 +1,4 @@
-# Openline selected orange screenshots / Revision 13
+# Openline selected orange screenshots / Revision 14
 
 Original orange is the selected direction. Native screenshot approval is pending.
 The final 43.5% icon is unchanged.

@@ -10,7 +10,7 @@ small=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',16)
 manifest=[]
 sheet=Image.new('RGB',(1560,len(config['series'])*630),'#f3f1ed')
 draw=ImageDraw.Draw(sheet)
-readme="""# Openline selected orange screenshots / Revision 13
+readme="""# Openline selected orange screenshots / Revision 14
 
 Original orange is the selected direction. Native screenshot approval is pending.
 The final 43.5% icon is unchanged.

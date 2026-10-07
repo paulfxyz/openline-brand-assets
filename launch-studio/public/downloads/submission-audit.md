@@ -1,5 +1,13 @@
 # Openline submission preparation audit
 
+## Current status: v1.13.2, larger supporting text
+
+White supporting copy on orange and near-black on cream, increased to 42px on
+iPhone and 34px on Android. Submission and marketing artwork both updated.
+Google submission tagline-height checks now measure 14.7–19.5%, and combined
+text/brand bounding-box area 13.9–18.1%. All 24 compositions pass overlap checks.
+This typography update does not change native-capture or claim-evidence gates.
+
 ## Current status: v1.13.1, consistent Openline art direction
 
 Both store drafts restore the approved bold orange/cream composition with large,
