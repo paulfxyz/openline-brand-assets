@@ -1,12 +1,17 @@
 {
-  "revision":4,
+  "revision":6,
   "status":"design-reference-not-native-capture",
   "selectedSeries":null,
+  "differentiator":{
+    "slide":1,
+    "detail":"Leading network partners. Plans for your kind of trip.",
+    "paragraph":"Good travel data should give you both quality and value. Openline brings together leading mobile network partners, so you can compare plans for your destination and choose what fits your trip and budget. Available networks and service conditions vary by destination and plan.",
+    "status":"Positioning draft based on owner-provided network strategy; verify launch partner and plan evidence before submission.",
+    "boundaries":["No cheapest or quantified savings claim","No automatic switching or best-signal guarantee","No universal multi-network access claim","No network-count, speed or coverage guarantee"]
+  },
   "series":[
-    {"id":"signal","name":"Signal","number":"01","color":"#ff6418","description":"Confident orange. Large type. A product you can see at a glance.","intent":"The strongest category thumbnail: bold benefits and large, deliberately cropped devices.","heads":[["Your next stop.","Connected."],["A plan for","your plans."],["Your eSIM.","Ready to set up."],["Less guessing.","More going."],["All your eSIMs.","One place."],["Your world.","Your Openline."]]},
-    {"id":"editorial","name":"Editorial","number":"02","color":"#e6e1d8","description":"Quiet confidence. Precise type. An off-centre product story.","intent":"A more premium, understated direction. White space frames the UI rather than shrinking it.","heads":[["Go further.","Stay close."],["Make room","for your plans."],["The details.","All together."],["See your data.","Find your pace."],["Many journeys.","One place."],["A little more","you."]]},
-    {"id":"postcard","name":"Postcard","number":"03","color":"#4b91b2","description":"A place you want to be. A connection to take with you.","intent":"Travel atmosphere leads; the app stays tangible. Original illustrative photography, not destination promises.","heads":[["Be here.","Stay connected."],["New horizons.","Your kind of plan."],["Next stop:","getting set up."],["More exploring.","Less wondering."],["Every trip.","In good company."],["Your account.","Along for the ride."]]},
-    {"id":"focus","name":"Product focus","number":"04","color":"#eddfbd","description":"Closer to the product. One useful detail on each screen.","intent":"Oversized, honest crops of the supplied interface. Best for judging what the product actually explains.","heads":[["Where to?","Start here."],["Compare plans.","Find your fit."],["Setup details.","In plain sight."],["Your data.","At a glance."],["Find the eSIM.","Keep moving."],["Your account.","Within reach."]]},
-    {"id":"night","name":"After hours","number":"05","color":"#25282c","description":"Deep charcoal. Warm orange. A sharply framed interface.","intent":"A darker, high-contrast system with a framed product stage and punchier type hierarchy.","heads":[["The world","is calling."],["Big trip.","Your choice."],["A clear view","of what’s next."],["Keep an eye","on your data."],["Keep your","connections close."],["Make yourself","at home."]]}
+    {"id":"signal","name":"Original orange","number":"01","color":"#ff6418","description":"The original. Confident orange, cream contrasts and angled phones.","intent":"Your retained orange direction, with its original composition. Only screen 2 adds the stronger reason to choose Openline.","heads":[["Your next stop.","Connected."],["Big networks.","More choice."],["Your eSIM.","Ready to set up."],["Less guessing.","More going."],["All your eSIMs.","One place."],["Your world.","Your Openline."]]},
+    {"id":"orange-air","name":"Airy orange","number":"02","color":"#ff7b37","description":"More breathing room. Upright phones. Warm, uninterrupted orange.","intent":"A calmer orange treatment: centred product, generous spacing and clear benefit-led type. Same six-screen story.","heads":[["Your next stop.","Connected."],["Big networks.","More choice."],["Your eSIM.","Ready to set up."],["Less guessing.","More going."],["All your eSIMs.","One place."],["Your world.","Your Openline."]]},
+    {"id":"orange-bold","name":"Bold orange","number":"03","color":"#ed5512","description":"A closer look. Bigger type. A product that fills the frame.","intent":"The most product-forward orange option: oversized interface crops, strong type and minimal decoration. Same six-screen story.","heads":[["Your next stop.","Connected."],["Big networks.","More choice."],["Your eSIM.","Ready to set up."],["Less guessing.","More going."],["All your eSIMs.","One place."],["Your world.","Your Openline."]]}
   ]
 }

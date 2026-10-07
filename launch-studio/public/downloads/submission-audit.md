@@ -1,5 +1,16 @@
 # Openline submission preparation audit
 
+## Current creative status: v1.9.0
+
+Paul retained orange and discarded the other directions. There are now three
+orange options (36 phone compositions); no final option is approved. Screen 2
+and one description paragraph add the network-quality/choice/value positioning.
+The network-partner statement is owner-provided positioning and needs launch
+contract/catalog evidence, not an independently verified universal service claim.
+No cheapest, quantified savings, automatic switching or universal multi-network
+access promise is made. The official wordmark is larger, white on orange and
+black on cream. Native capture and compliance gates below remain open.
+
 ## Creative-status addendum: v1.8.0
 
 Revision 03 was rejected as a final visual direction and is now historical.

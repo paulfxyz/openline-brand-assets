@@ -9,7 +9,7 @@ NGINX Alpine image on a small Fly Machine.
 ```sh
 npm ci
 npm run build
-tar -C dist --exclude='./downloads/openline-five-series.zip' \
+tar -C dist --exclude='./downloads/openline-orange-series.zip' \
   --exclude='./downloads/openline-series-*.zip' \
   -czf hosting/openline-brand-dist.tar.gz .
 ```
@@ -19,7 +19,7 @@ The Fly Machine pins its download URL to a full Git commit and verifies a SHA-25
 checksum before serving it. No repository credential is needed in the container.
 The bundle contains only the same public static files as the approved preview.
 
-Since v1.8, the six large review ZIP downloads are excluded from the boot bundle
+Since v1.8, the large review ZIP downloads are excluded from the boot bundle
 to avoid storing identical archived artwork twice. NGINX redirects these exact
 download paths to `public/downloads/` in the same public GitHub repository,
 pinned to the same full commit by `fly_operation.py`. All other downloads are
@@ -63,7 +63,7 @@ Live: https://openline-brand.fly.dev
 - App: `openline-brand`
 - Machine: `8d7155be3ed118` (`openline-brand-web`)
 - HTTPS and `/healthz` verified; Fly health check passing.
-- Nine views include the new five-series preview; the final 43.5% icon remains locked.
+- Nine views include the three-orange-options preview; the final 43.5% icon remains locked.
 - Shared IPv4 and IPv6 allocated. No dedicated IPv4, database or volume.
 - Madrid rejected new provisioning; Paris was used instead.
 

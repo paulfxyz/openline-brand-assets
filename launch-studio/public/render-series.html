@@ -67,17 +67,36 @@ h1{margin:0;font-size:126px;font-weight:800;line-height:1.04;letter-spacing:-6px
 .android.postcard h1{font-size:98px}.android.postcard .copy p{max-width:750px}.android.postcard .phone{width:66%;left:17%;top:41%}
 .android.focus h1{font-size:98px}.android.focus .phone{width:106%;left:8%;top:40%}
 .android.night h1{font-size:102px}.android.night .phone{top:42%;width:70%;left:19%}.android.night .orb{top:38%}
+.orange-air{background:#ff7b37!important}
+.orange-air h1 span{color:#fff}.orange-air .copy{top:14%;left:8%;right:8%;text-align:center}.orange-air h1{font-size:118px;line-height:1.09}
+.orange-air .copy p{font-size:30px;max-width:920px;margin:34px auto 0}
+.orange-air .phone{width:64%;left:18%;top:39%;transform:none;border:9px solid #2c2927;border-radius:82px}
+.orange-air .orb{background:#ff965f;width:110%;height:46%;border-radius:50% 50% 0 0;left:-5%;top:57%}
+.orange-air .label{display:none}.orange-air .foot{background:#ff7b37;color:#422008}
+.orange-bold{background:#ed5512!important}
+.orange-bold .copy{top:12%;left:8%;right:5%}.orange-bold h1{font-size:133px;letter-spacing:-6px;line-height:1.03}.orange-bold h1 span{color:#fff}
+.orange-bold .copy p{font-size:31px;max-width:94%}
+.orange-bold .phone{top:38%;left:8%;width:95%;border:9px solid #26211e;border-radius:74px;transform:none;box-shadow:0 25px 60px #64200030}
+.orange-bold .orb{display:none}.orange-bold .label{display:none}.orange-bold .foot{background:#ed5512;color:#301100}
+.android.orange-air h1{font-size:94px;line-height:1.08}.android.orange-air .copy{top:14%}.android.orange-air .copy p{font-size:25px;max-width:810px;margin-top:25px}
+.android.orange-air .phone{top:41%;width:63%;left:18.5%;border-width:7px;border-radius:65px}
+.android.orange-bold h1{font-size:109px;line-height:1.02;letter-spacing:-4px}.android.orange-bold .copy p{font-size:25px}
+.android.orange-bold .phone{top:40%;left:8%;width:95%;border-width:8px;border-radius:62px}
+.brand{top:4.2%;left:7.4%;gap:0}
+#canvas .brand img{width:500px;height:auto;filter:none;display:block}
+#canvas.android .brand img{width:410px;height:auto;filter:none}
+.signal:not(.alt) .category,.orange-air .category,.orange-bold .category{color:#fff;font-weight:800}
 </style>
-<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/mark.png" alt="">Openline</div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="phone"><img id="screen" alt="Openline design reference"></div><div class="label"></div><div class="index"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH NATIVE CAPTURE</div></div>
+<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/wordmark-white.png" alt="Openline"></div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="phone"><img id="screen" alt="Openline design reference"></div><div class="label"></div><div class="index"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH NATIVE CAPTURE</div></div>
 <script type="module">
 const [config,art]=await Promise.all(['series.json','artwork.json'].map(async p=>(await fetch('./'+p)).json()));
 const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide'))||0)),s=config.series.find(x=>x.id===q.get('series'))||config.series[0],slide=art.slides[n],platform=q.get('platform')==='android'?'android':'ios';
 const canvas=document.querySelector('#canvas');canvas.className=s.id+' '+platform+(n%2?' alt':'');
+document.querySelector('.brand img').src=`./assets/wordmark-${s.id==='signal'&&n%2?'black':'white'}.png`;
 document.querySelector('h1').replaceChildren(document.createTextNode(s.heads[n][0]),document.createElement('br'),Object.assign(document.createElement('span'),{textContent:s.heads[n][1]}));
-document.querySelector('.copy p').textContent=slide.detail;
+document.querySelector('.copy p').textContent=n===config.differentiator?.slide?config.differentiator.detail:slide.detail;
 document.querySelector('#screen').src=slide.captures[platform];
 document.querySelector('.label').textContent=slide.short;
 document.querySelector('.index').textContent='0'+(n+1);
-document.querySelector('.backdrop').style.backgroundImage=`url('./assets/travel-${n%2?'city':'coast'}.webp')`;
 window.artworkReady=true;
 </script></html>

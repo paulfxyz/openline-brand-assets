@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.8.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.9.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,16 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.8.0:** A complete [store preview](https://openline-brand.fly.dev)
+**Current: v1.9.0.** Three orange treatments now remain in the
+[store preview](https://openline-brand.fly.dev): Original orange, Airy orange
+and Bold orange. The other four directions are discarded from current assets.
+One screenshot and one paragraph strengthen the story around leading network
+partners, choice and budget fit, without a “cheapest” or switching guarantee.
+The official wordmark is larger and white on orange, black on cream.
+[Download the 36 current screenshots](https://openline-brand.fly.dev/downloads/openline-orange-series.zip)
+or [editable sources](https://openline-brand.fly.dev/downloads/openline-orange-series-sources.zip).
+
+**Previous v1.8.0 release:** A complete [store preview](https://openline-brand.fly.dev)
 with **five screenshot directions**, six frames each, for both iPhone and Android.
 Signal, Editorial, Postcard, Product focus and After hours are creative options,
 not approved submissions. Compare them against actual, separately sourced Apple
@@ -530,6 +539,18 @@ For optional Vercel hosting, import this repository with root directory
 empty Vercel placeholder remains unused; the live deployment is on Fly.io.
 
 ## Changelog
+
+### v1.9.0: 2026-10-07
+
+- Retained the original orange composition and added Airy orange and Bold orange.
+- Removed Editorial, Postcard, Product focus and After hours from current files
+  and packages. The three remaining options contain 36 iPhone/Android PNGs.
+- Added “Big networks. More choice.” to screenshot 2 and a single accessible
+  network-quality/value paragraph to each store description.
+- Replaced the small text-based logo header with the larger official wordmark:
+  white on orange and black on cream, preserving source geometry.
+- Preserved the final icon, competitor comparisons and portable review workflow.
+- Added explicit claim boundaries and reset stale art/copy approvals on import.
 
 ### v1.8.0: 2026-10-07
 

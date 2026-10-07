@@ -1,5 +1,30 @@
 # Openline Brand Studio
 
+## v1.9.0: three orange options, one stronger reason to choose Openline
+
+Paul retained the original orange direction and discarded the other four.
+The current choices are **Original orange**, **Airy orange**, and **Bold orange**.
+Each has six iPhone and six Android images, for 36 current review PNGs.
+
+Only screenshot 2 adds the competitive story: **Big networks. More choice.**
+Its supporting line is “Leading network partners. Plans for your kind of trip.”
+One paragraph in each store description expresses quality, choice and budget fit.
+The other five screenshots retain the accessible travel/product story.
+
+No “cheapest”, savings percentage, automatic switching or universal multi-network
+access claim is made. Partner evidence must match the launch catalog before
+submission. See `public/downloads/positioning-claims.md`. The final icon is unchanged.
+Previously imported copy is preserved rather than overwritten.
+
+Current downloads:
+- https://openline-brand.fly.dev/downloads/openline-orange-series.zip
+- https://openline-brand.fly.dev/downloads/openline-orange-series-sources.zip
+
+The older five-series URLs redirect to these three-option packages on Fly.
+Non-orange images are removed from the current public files and downloads,
+but remain recoverable in Git history. The historical sections below describe
+previous releases, not current options.
+
 ## v1.8.0: five directions, complete store preview
 
 The studio now opens in **Store preview**, not the previous artwork gallery.

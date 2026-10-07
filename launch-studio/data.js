@@ -1,4 +1,5 @@
 import artwork from './public/artwork.json' with {type:'json'};
+import creative from './public/series.json' with {type:'json'};
 export const screens = artwork.slides;
 export const copyDefaults={
   apple:{
@@ -8,7 +9,7 @@ export const copyDefaults={
     keywords:'international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid',
     description:`Your next destination. Your choice of data.
 
-Find a travel eSIM, compare plans and keep your connection details in view with Openline.
+${creative.differentiator.paragraph}
 
 CHOOSE WITH THE DETAILS IN FRONT OF YOU
 Browse your destination, compare data allowances and duration, and review the price and activation conditions before you buy.
@@ -43,7 +44,7 @@ Provide tested steps for account deletion, support access, purchases and install
     shortDescription:'Find a travel eSIM, compare plans and keep your mobile data in view.',
     description:`Find a travel eSIM for your next destination.
 
-With Openline, compare data plans, find installation information and keep your travel eSIMs together.
+${creative.differentiator.paragraph}
 
 COMPARE BEFORE YOU BUY
 Browse a destination and review available data allowances, duration and prices. Check coverage, activation conditions and included services before choosing a plan.
@@ -71,10 +72,10 @@ export const fieldSpecs={
 export const tasks=[
  ['icon','Final icon visual choice approved','Creative','Both','done','Paul finalized the 43.5% white-square composition on 7 October 2026. Download the final all-formats pack. This approval covers the visual choice, not native integration or platform acceptance. Android adaptive 39.6dp legibility remains a native QA gate; 48dp fallback is preserved.','apple-icons','Paul','required'],
  ['native-icons','Integrate icons in release targets','Build','Both','todo','Import the Xcode catalog; merge Android resources; verify masks and dark/themed variants in the actual builds.','android-icons','Engineering','required'],
- ['art','Review the 12 screenshot compositions','Creative','Both','review','These are rendered from the supplied React design reference, not signed iOS or Android builds. Approve the direction only.','google-assets','Design','recommended'],
+ ['art','Choose and review an orange screenshot direction','Creative','Both','review','Three orange options, each with six iPhone and six Android compositions. Original orange is retained; screen 2 carries the network-choice story and the other five remain travel/product-led. These are React design references, not native captures. No final direction is approved.','google-assets','Design','recommended'],
  ['captures','Recapture from the native release builds','Creative','Both','blocked','Replace the design-reference imagery with accurate platform-native screens. Remove draft labels only after comparison and approval.','apple-screenshots','Engineering','required'],
  ['feature','Approve the Play feature graphic','Creative','Google','review','1024 × 500 RGB PNG included. Verify UI, language and claims against the Android build.','google-assets','Design','required'],
- ['copy','Verify store copy and every claim','Listing','Both','review','Check features, plan availability, pricing language and support information. No coverage numbers or activation-speed claims are assumed.','apple-copy','Product','required'],
+ ['copy','Verify store copy and every claim','Listing','Both','review','Verify the leading-network-partner statement against launch contracts and the actual destination/plan catalog. Check features, value positioning and support information. No cheapest, savings percentage, automatic switching, universal multi-network access, coverage number or speed guarantee is claimed.','apple-copy','Product','required'],
  ['locales','Choose launch languages','Listing','Both','todo','English draft supplied. Commission French and Portuguese localization only for supported app languages. Each needs reviewed text and screenshots.','google-assets','Product','recommended'],
  ['tablets','Decide supported device families','Build','Both','blocked','Phone-first is a proposal, not a build setting. If iPad/tablet support is enabled, create and verify native large-screen layouts and screenshots.','apple-screenshots','Engineering','conditional'],
  ['accounts','Verify publishing accounts','Accounts','Both','blocked','Confirm legal publishing entity, enrollment, agreements, contact details and account verification. Organization accounts are recommended for a company app.','google-copy-build','Founder','required'],
@@ -123,4 +124,4 @@ export const suggestedSettings=[
  ['Store identity','Public listing contacts','Support URL, support email, copyright and review contact','Unconfirmed','Enter verified public URLs, legal owner/year and operational contact details in the secure consoles. No reviewer credentials in this studio.','apple-copy'],
  ['Release controls','EU availability','Trader status and legal review first','Blocked','Confirm public legal/contact data before EU distribution.','apple-dsa']
 ].map(([group,field,value,status,detail,source])=>({group,field,value,status,detail,source}));
-export const initialWorkspace={schemaVersion:4,artworkRevision:3,previewRevision:4,preferredSeries:null,screenshotNotes:'',iconRevision:4,iconApproval:'approved-2026-10-07',iconSize:43.5,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};
+export const initialWorkspace={schemaVersion:4,artworkRevision:3,previewRevision:6,copyRevision:2,preferredSeries:null,screenshotNotes:'',iconRevision:4,iconApproval:'approved-2026-10-07',iconSize:43.5,iconTone:'light',copy:copyDefaults,tasks,titles:screens.map(s=>s.title),approvedScreens:[],settingsNotes:'',updatedAt:null};
