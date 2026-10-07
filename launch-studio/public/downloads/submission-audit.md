@@ -1,5 +1,18 @@
 # Openline submission preparation audit
 
+## Current status: v1.13.0, separate platform drafts
+
+The marketing master retains its approved OMDM pricing story. Separate submission
+drafts use more conservative overlay and metadata wording. Apple retains the OMDM
+process explanation without a lower-price promise; Google omits promotional pricing
+overlays and keeps the factual OMDM process explanation in the full description.
+Google's measured overlay area and tagline height are below 20%.
+
+These are not certified submissions. The underlying React reference captures still
+need replacement, including platform-accurate system chrome and resolution of
+BEST VALUE, unlimited/full-speed/hotspot claims, sample prices and activation states.
+Each platform ZIP includes explicit readiness gates and policy references.
+
 ## Current creative status: v1.12.1
 
 Owner correction restores explicit OMDM pricing positioning on screenshot 6:

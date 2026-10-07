@@ -1,5 +1,20 @@
 # Openline Brand Studio
 
+## Current: v1.13.0, separate submission variants
+
+The approved marketing master remains unchanged. Open either store listing preview
+and choose Submission draft for separate Apple/Google compositions and conservative
+metadata. Direct links: `#app-store-submission`, `#google-play-submission`.
+
+Downloads include `openline-apple-submission-draft.zip`,
+`openline-google-submission-draft.zip` and `openline-submission-sources.zip`.
+Google also includes a new neutral 1024 × 500 feature graphic.
+Build with `node scripts/render_submission.mjs` while Vite is running, then
+`python scripts/package_submission.py` and `python scripts/package_resources.py`.
+
+Both drafts remain blocked on actual native captures, visible sample data/claims,
+OMDM launch verification and store-console approval. See their readiness documents.
+
 ## Current: v1.12.1, OMDM pricing story restored
 
 Frame 6 on both platforms now reads “Smarter market. Better prices.”

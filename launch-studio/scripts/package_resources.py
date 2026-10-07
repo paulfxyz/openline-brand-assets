@@ -16,7 +16,10 @@ with zipfile.ZipFile(downloads/'openline-all-resources.zip','w',zipfile.ZIP_DEFL
     for name,dest in [
         ('openline-final-icon-all-formats.zip','icons/approved-icon-all-formats.zip'),
         ('openline-native-icons.zip','icons/native-icon-resources.zip'),
-        ('openline-orange-series-sources.zip','editable-artwork/screenshot-sources.zip')
+        ('openline-orange-series-sources.zip','editable-artwork/screenshot-sources.zip'),
+        ('openline-apple-submission-draft.zip','submission-drafts/apple.zip'),
+        ('openline-google-submission-draft.zip','submission-drafts/google.zip'),
+        ('openline-submission-sources.zip','editable-artwork/submission-sources.zip')
     ]: add(downloads/name,dest)
     for name in ['openline-store-copy.md','openline-store-settings.md','openline-release-checklist.md',
                  'openline-launch-workspace.json','store-requirements.md','submission-audit.md',
@@ -31,6 +34,9 @@ with zipfile.ZipFile(downloads/'openline-all-resources.zip','w',zipfile.ZIP_DEFL
 Current iPhone and Android screenshot designs, approved icon formats, native icon
 resources, editable screenshot sources, store copy, settings, checklist and policies.
 The icon choice is final; screenshots and feature graphic are review candidates.
+Separate Apple and Google submission drafts are included under submission-drafts/.
+They use conservative metadata and overlays without replacing the marketing master.
+Both remain blocked on native captures and release evidence; read their readiness notes.
 
 Both platforms end with “Smarter market. Better prices.” and an explicit OMDM
 supplier-comparison explanation. Comparative pricing needs launch evidence. The network dashboard

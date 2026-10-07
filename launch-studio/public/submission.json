@@ -1,0 +1,61 @@
+{
+  "revision": 1,
+  "status": "draft-native-captures-and-release-evidence-pending",
+  "marketingUnchanged": true,
+  "locale": "en-US",
+  "apple": {
+    "label": "Apple submission draft",
+    "width": 1320,
+    "height": 2868,
+    "frames": [
+      {"head":["Find your","next destination."],"detail":"Explore travel data plans for where you are going.","capture":"screen-countries.png"},
+      {"head":["Your purchase.","All the details."],"detail":"Keep your purchase confirmation and activation information close.","capture":"screen-purchase.png"},
+      {"head":["Your eSIM.","Ready to set up."],"detail":"Find the installation instructions for your device and plan.","capture":"screen-profile.png"},
+      {"head":["Your travel eSIMs.","Together."],"detail":"Keep your plans and their details in one place.","capture":"screen-esims.png"},
+      {"head":["Your data.","At a glance."],"detail":"See the connection and usage information available for your plan.","capture":"screen-dashboard.png"},
+      {"head":["A smarter market.","Your choice of plan."],"detail":"Openline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans.","capture":"screen-plans.png"}
+    ],
+    "metadata": {
+      "name":"Openline: Travel eSIM & Data",
+      "subtitle":"Travel plans. One place.",
+      "promotional":"Explore travel eSIM plans, review their details and find installation information. Keep your eSIMs and available usage information together in Openline.",
+      "keywords":"international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid",
+      "description":"Travel data, with the details in view.\n\nOpenline helps you explore travel eSIM plans, find installation information and keep your eSIMs together.\n\nFIND A PLAN FOR YOUR TRIP\nBrowse your destination and review the available data allowance, validity, price and activation conditions before choosing a plan.\n\nKEEP SETUP INFORMATION CLOSE\nFind your eSIM installation information and follow the instructions for your device and plan.\n\nVIEW YOUR PLANS\nKeep your travel eSIMs together and check the usage information available for your plan. Reporting and service availability can vary by plan.\n\nBEHIND THE PLANS\nOpenline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans. The plans available to you depend on your destination and the current catalog.\n\nCHECK BEFORE YOU BUY\nYour phone must support eSIM and be network-unlocked. Review coverage, validity, activation timing, fair-use conditions and included services. Do not assume a data plan includes calls, SMS or a phone number. Keeping your usual line active may result in charges from your home carrier.\n\nMobile data plans are purchased separately. Visit openline.com for support information."
+    }
+  },
+  "google": {
+    "label": "Google Play submission draft",
+    "width": 1080,
+    "height": 1920,
+    "frames": [
+      {"head":["Explore","your destination."],"detail":"Browse the travel data plans available for your trip.","capture":"screen-countries.png"},
+      {"head":["Your purchase.","In one view."],"detail":"Find your purchase confirmation and activation details.","capture":"screen-purchase.png"},
+      {"head":["Set up","your eSIM."],"detail":"Follow the installation instructions for your device and plan.","capture":"screen-profile-android.png"},
+      {"head":["Your eSIMs.","One place."],"detail":"Keep your travel plans and their details together.","capture":"screen-esims.png"},
+      {"head":["Check","your data."],"detail":"View the usage information available for your plan.","capture":"screen-dashboard.png"},
+      {"head":["Your trip.","Your plan."],"detail":"Review the data allowance, validity and conditions before choosing.","capture":"screen-plans.png"}
+    ],
+    "metadata": {
+      "name":"Openline: Travel eSIM & Data",
+      "shortDescription":"Explore travel eSIM plans, find setup details and view your data usage",
+      "description":"Explore travel eSIM plans with Openline.\n\nBROWSE YOUR DESTINATION\nReview available plans, data allowances, validity, prices and activation conditions before choosing.\n\nFIND INSTALLATION INFORMATION\nKeep your eSIM setup details in reach and follow the instructions for your device and plan.\n\nKEEP YOUR ESIMS TOGETHER\nView your travel eSIMs and the usage information available for each plan. Reporting and service availability can vary.\n\nHOW WE BUILD THE CATALOG\nOpenline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans. Available plans depend on your destination and the current catalog.\n\nBEFORE PURCHASING\nCheck that your phone supports eSIM and is network-unlocked. Review coverage, validity, activation timing, fair-use conditions and included services. Do not assume a data plan includes calls, SMS or a phone number. Your home carrier's charges may still apply if you keep your usual line active.\n\nMobile data plans are purchased separately. Visit openline.com for support information.",
+      "releaseNotes":"Explore travel eSIM plans, find installation details and keep your eSIMs together."
+    }
+  },
+  "gates": [
+    "Replace every React design reference with an accurate capture from the submitted native build. Use actual Android system chrome for Google Play, not shared iPhone-style status bars.",
+    "Verify all displayed prices, plan names, coverage, purchase states, activation instructions and usage information against the launch service.",
+    "Resolve the source plan screen's BEST VALUE and Unlimited data / full speed / hotspot included wording in the real app where unsupported. Source UI has not been cosmetically edited to conceal these issues.",
+    "Verify OMDM supplier comparison is operating as described. Remove the process paragraph and Apple's final subhead if it is not a launch feature.",
+    "Validate fair-use, throttling, hotspot and activation terms. Provide functioning support, privacy, deletion and reviewer-access information.",
+    "Confirm supported devices and store-required screenshot slots. These packages cover phone artwork only; no iPad or Android tablet assets are included.",
+    "Review and localize all listing metadata and overlays for each launch locale. These drafts are English (US) only.",
+    "Do not upload until release-owner approval and final store-console validation. These variants are not Apple or Google approval."
+  ],
+  "sources": [
+    "https://developer.apple.com/app-store/review/guidelines/",
+    "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/",
+    "https://support.google.com/googleplay/android-developer/answer/9866151?hl=en",
+    "https://support.google.com/googleplay/android-developer/answer/9898842?hl=en"
+  ]
+}
