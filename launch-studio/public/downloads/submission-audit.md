@@ -1,5 +1,18 @@
 # Openline submission preparation audit
 
+## Creative-status addendum: v1.8.0
+
+Revision 03 was rejected as a final visual direction and is now historical.
+Five new six-screen directions are available for review in both phone formats;
+none is selected or approved. They still use the supplied React design UI, not
+native captures. The final 43.5% icon is unchanged. The technical/compliance
+findings below remain applicable; this addition does not clear any submission gate.
+
+Compare at https://openline-brand.fly.dev and download the options separately:
+https://openline-brand.fly.dev/downloads/openline-five-series.zip
+
+The following audit describes the v1.7 foundation and known capture risks.
+
 Audited 7 October 2026. Creative package v1.7.0. The icon choice is final and
 the screenshot compositions are ready for native-image replacement. This is
 not a claim that only screenshots remain before submission: signed builds,

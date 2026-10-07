@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.7.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.8.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,13 +33,22 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**New in v1.7.0:** The **43.5% icon is final**, approved on 7 October 2026, and
+**New in v1.8.0:** A complete [store preview](https://openline-brand.fly.dev)
+with **five screenshot directions**, six frames each, for both iPhone and Android.
+Signal, Editorial, Postcard, Product focus and After hours are creative options,
+not approved submissions. Compare them against actual, separately sourced Apple
+and Google screenshots from Saily, Airalo and Holafly.
+[Download all five series](https://openline-brand.fly.dev/downloads/openline-five-series.zip)
+or their [editable sources](https://openline-brand.fly.dev/downloads/openline-five-series-sources.zip).
+Shortlists and notes travel with the exported workspace. R03 artwork is superseded.
+
+The **43.5% icon is final**, approved on 7 October 2026, and
 [downloadable in all practical formats](https://openline-brand.fly.dev/downloads/openline-final-icon-all-formats.zip).
-[Openline Brand Studio](https://openline-brand.fly.dev) now has airier,
-Saily-informed store compositions, stronger taglines, editable screenshot sources
-and an audited 33-item release checklist. The
+[Openline Brand Studio](https://openline-brand.fly.dev) retains
+editable listing copy and an audited 33-item release checklist. The foundation
 [launch kit](https://openline-brand.fly.dev/downloads/openline-launch-kit.zip)
-contains the full creative handoff and explicit remaining submission gates.
+contains icons, copy, explicit remaining submission gates and historical R03 artwork;
+the five new series are a separate download.
 The approved repository pack is [app-icons/final/](app-icons/final/);
 earlier delivery paths remain historical, not silently replaced.
 
@@ -521,6 +530,17 @@ For optional Vercel hosting, import this repository with root directory
 empty Vercel placeholder remains unused; the live deployment is on Fly.io.
 
 ## Changelog
+
+### v1.8.0: 2026-10-07
+
+- Added a complete phone-store preview, equal-width competitor comparison and
+  all-five-sequences review view, with full-size dialogs and platform switching.
+- Created 60 new RGB PNG compositions across five directions, with WebP previews,
+  per-series archives, an all-five bundle, contact sheets and editable sources.
+- Included 36 actual, source-linked competitor screenshots and six icons from
+  Saily, Airalo and Holafly. These reference assets are excluded from Openline ZIPs.
+- Added a portable shortlist and review notes without implying final approval.
+- Preserved the approved 43.5% icon and clearly archived superseded R03 artwork.
 
 ### v1.7.0: 2026-10-07
 

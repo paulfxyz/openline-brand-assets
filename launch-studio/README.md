@@ -1,5 +1,41 @@
 # Openline Brand Studio
 
+## v1.8.0: five directions, complete store preview
+
+The studio now opens in **Store preview**, not the previous artwork gallery.
+Compare five complete creative directions: Signal, Editorial, Postcard, Product focus,
+and After hours. Each has six iPhone and six Android compositions, for 60 review PNGs.
+All five remain options; **no screenshot series is approved or automatically selected**.
+The approved 43.5% flat icon is unchanged.
+
+- **Store listing:** approximate Apple/Google listing shells, 375/390/430px options,
+  all six swipeable images, editable workspace listing copy, and the approved icon.
+- **Compare brands:** equal-width frame comparisons plus full strips for Openline,
+  Saily, Airalo and Holafly. Actual source-linked images were collected separately
+  from each platform on 7 October 2026, not fabricated or substituted.
+- **All five series:** every sequence together, full-size image dialogs with keyboard
+  navigation, per-series downloads, all-five archive and editable sources.
+- **Decision state:** shortlist a direction and write review notes; Save workspace
+  exports both. Import restores schema 4 and earlier workspaces. No shared persistence.
+- **Prior artwork:** revision 03 is retained as superseded, not a final direction.
+
+All artwork remains a design reference based on supplied React screens, with unverified
+sample data. Replace with accurate native captures before store submission. Postcard's
+travel backdrops are original AI-generated illustrations. Competitor assets are excluded
+from Openline download bundles and carry attribution in the preview.
+
+Downloads:
+[All five series](https://openline-brand.fly.dev/downloads/openline-five-series.zip),
+[Editable sources](https://openline-brand.fly.dev/downloads/openline-five-series-sources.zip),
+[Final icon](https://openline-brand.fly.dev/downloads/openline-final-icon-all-formats.zip).
+
+Rebuild new artwork: run Vite on port 5173, then `node scripts/render_series.mjs` and
+`python scripts/package_series.py`. The PNG outputs are RGB; WebP derivatives serve
+the preview. `series-layout-qa.json` records the 60 text/device overlap checks.
+
+The following sections document the earlier launch-kit foundation. References to
+the 12 R03 images describe the retained historical set, not the new shortlisted artwork.
+
 App icon review, store artwork, editable English listing drafts, suggested settings
 and a 33-item launch checklist. This is a static React/Vite application
 published at [openline-brand.fly.dev](https://openline-brand.fly.dev).

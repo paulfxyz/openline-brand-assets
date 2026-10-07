@@ -1,0 +1,436 @@
+{
+  "checkedAt": "2026-10-07",
+  "locale": "US English; Apple US storefront and Google Play hl=en_US&gl=US",
+  "attribution": "App icons and store screenshot artwork belong to Saily, Airalo, Holafly and their respective rights holders. Apple App Store and Google Play listing assets are reproduced for comparative review; no affiliation or endorsement is implied.",
+  "disclaimer": "Observed public listing set, not a universal or exhaustive set. Screenshot artwork and order may differ by storefront, language, device, campaign, experiment, viewer and date. Apple and Google assets were collected separately; no cross-platform substitutions.",
+  "imageProcessing": "Downloaded source images are proportionally resized to no more than 1200 pixels tall and optimized as WebP; no artwork, wording, backgrounds or screenshots are fabricated or recomposed.",
+  "brands": [
+    {
+      "id": "saily",
+      "name": "Saily",
+      "apple": {
+        "url": "https://apps.apple.com/us/app/saily-esim-data-for-travel/id6475045151",
+        "title": "Saily: eSIM Data for Travel",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/saily-apple-01.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ca/56/46/ca56468e-b65a-e2a7-d303-e6fd04df1ada/ap-ios-cpp-assets-update-_U005ben-us_U005d-1284x2778-01.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 1
+          },
+          {
+            "src": "./references/saily-apple-02.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/64/87/a8/6487a8d3-0ecb-3c54-0878-bf0f7efd6450/ap-ios-cpp-assets-update-unlimited-plan-_U005ben-us_U005d-1284x2778-03-V2.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 2
+          },
+          {
+            "src": "./references/saily-apple-03.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ac/6f/fa/ac6ffa63-adac-87f8-30b4-f8c995f4ba36/ap-ios-cpp-assets-update-phone-number-_U005ben_U005d-1284x2778-02-V2.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 3
+          },
+          {
+            "src": "./references/saily-apple-04.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/64/7c/4f/647c4f2c-09d6-4819-fa72-99dfc515cbc4/ap-ios-cpp-assets-update-_U005ben-us_U005d-1284x2778-02.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 4
+          },
+          {
+            "src": "./references/saily-apple-05.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/97/7b/28/977b28d5-1149-d80e-e534-3492041c6472/ap-ios-cpp-assets-update-_U005ben-us_U005d-1284x2778-03.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 5
+          },
+          {
+            "src": "./references/saily-apple-06.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0a/98/c7/0a98c731-362e-cb33-41f7-49d90aabf674/ap-ios-cpp-assets-update-_U005ben-us_U005d-1284x2778-04.jpg/600x1300bb.webp",
+            "width": 555,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1298,
+            "order": 6
+          }
+        ],
+        "subtitle": "Prepaid plans & second number",
+        "observedScreenshotCount": 6,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/saily-icon.webp",
+        "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/71/cc/26/71cc266a-6ba3-8292-7b0e-63afc73d2cc8/Placeholder.mill/400x400bb-75.webp",
+        "iconWidth": 400,
+        "iconHeight": 400
+      },
+      "google": {
+        "url": "https://play.google.com/store/apps/details?id=com.saily.android&hl=en_US&gl=US",
+        "title": "Saily: eSIM Data for Travel",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/saily-google-01.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/k83PGVq4h4zJQ_yzPNWtMwNK-0sZBge1wm7CXDO5uhysRPy0ZiwFfpZD-QDnRVKOwsn-dECNL9k_KafcnuVKAQ",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 1
+          },
+          {
+            "src": "./references/saily-google-02.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/J2OYJ39qCCiQ1dJWH5N1oybTC-PvmNAhVBTpQw01xBmcGkz17bhZCDjrlh_t3kZ39XXgA4YiAKbTFNhCCH6cLQ",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 2
+          },
+          {
+            "src": "./references/saily-google-03.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/uYorHozjQhGpufmxtV1lRB8V-FdyUY8qg_8g-3nMP4ApNtOdMtyE03G71nrT-ysvnqrwA7mnDeCJhT9aqXXOZEU",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 3
+          },
+          {
+            "src": "./references/saily-google-04.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/GjQB_jD_PLmVfWGJZTgPzP4WatEBtSKuku1sTB4xCFnxXo7Tu5UiPFwXsIT_YEhmekqeH6EIW1P82n94VvJmu-M",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 4
+          },
+          {
+            "src": "./references/saily-google-05.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/R8YsmeyOhS6HPN79Wtk7EMRBT50UD129hdYgbdXkp3Qqh0g1G8v9SLCi6RNq1FFsx2gJDis4WkJohbwQIk10",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 5
+          },
+          {
+            "src": "./references/saily-google-06.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/SfeC0SbIUjyqS7OxE8qk1RGPTAUPoz2-zoFyElk7b9MZXjls_07WXVJ0LK2RoSlUGftgQnIEtBBtbIFNV8fGNXQ",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 6
+          }
+        ],
+        "observedScreenshotCount": 6,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/saily-google-icon.webp",
+        "iconSourceUrl": "https://play-lh.googleusercontent.com/bd2-mAEW8Ud-TiHCEhOo1A-hpWQzeQI2VDhmslSdakF1yVisGstC-59QGpLJJ59T3cxVAYN-Fatpf5Vtm2wDiQ=w480-h960",
+        "iconWidth": 480,
+        "iconHeight": 480,
+        "resolutionNote": "Exact bare image URLs from the returned Google Play embedded listing data resolve to 512-pixel-tall images. Preserved at native resolution, without upscaling."
+      },
+      "icon": "./references/saily-icon.webp",
+      "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/71/cc/26/71cc266a-6ba3-8292-7b0e-63afc73d2cc8/Placeholder.mill/400x400bb-75.webp"
+    },
+    {
+      "id": "airalo",
+      "name": "Airalo",
+      "apple": {
+        "url": "https://apps.apple.com/us/app/airalo-esim-travel-internet/id1475911720",
+        "title": "Airalo: eSIM for travel & data",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/airalo-apple-01.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7b/2f/81/7b2f81e0-648c-656e-90a7-e53057bbb653/0_APP_IPHONE_65_0.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 1
+          },
+          {
+            "src": "./references/airalo-apple-02.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/6c/ba/1b/6cba1b2e-e9a7-f1ef-63e3-257512dd8063/1_APP_IPHONE_65_1.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 2
+          },
+          {
+            "src": "./references/airalo-apple-03.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/81/92/4e/81924ee1-5325-c20e-ef27-d9b5738fcdb8/2_APP_IPHONE_65_2.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 3
+          },
+          {
+            "src": "./references/airalo-apple-04.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/d8/7e/e5/d87ee532-77d1-b5b3-ab71-1951650bddaf/3_APP_IPHONE_65_3.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 4
+          },
+          {
+            "src": "./references/airalo-apple-05.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f2/d3/be/f2d3bee6-ed74-3487-f478-1fcbed31d00c/4_APP_IPHONE_65_4.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 5
+          },
+          {
+            "src": "./references/airalo-apple-06.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0e/8d/36/0e8d3634-22a2-1b10-5059-dd85cc989e70/5_APP_IPHONE_65_5.png/600x1300bb.webp",
+            "width": 554,
+            "height": 1200,
+            "sourceWidth": 600,
+            "sourceHeight": 1299,
+            "order": 6
+          }
+        ],
+        "subtitle": "Stay connected anywhere",
+        "observedScreenshotCount": 6,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/airalo-icon.webp",
+        "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/20/7d/8e/207d8e0f-60c6-c3b5-55f5-d9e52677f5f6/Placeholder.mill/400x400bb-75.webp",
+        "iconWidth": 400,
+        "iconHeight": 400
+      },
+      "google": {
+        "url": "https://play.google.com/store/apps/details?id=com.mobillium.airalo&hl=en_US&gl=US",
+        "title": "Airalo: eSIM for travel & data",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/airalo-google-01.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/BPFatpwc92qzVo2TXoC7sDRZXy0XgCRzBC-HWEEt2FM6ZZdnx00hc4sW48zolZtQJ_M90jLOKE5EmkkJqYPICg",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 1
+          },
+          {
+            "src": "./references/airalo-google-02.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/4S9h7BnZcNP-aYn5rUI3O6XY9buL6rZQHbyECdKz9_YMkO9VJsd6addfYaJT5EMgcbooTUd0a-oQC8f2wWRIFg",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 2
+          },
+          {
+            "src": "./references/airalo-google-03.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/hOT-IZLRwcEpEK3XlTZHLYsYemcUhst1pBOoFgogAvb6v_p4k43jNCGOI1Oc_IjJk6kZAPD6K5UFYcsy9bauvtE",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 3
+          },
+          {
+            "src": "./references/airalo-google-04.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/Obl4iLIQjKIMd8ehbg4qHZwZOh6HB2QCZM40MxQavxnti0MOf4WKHxsz0OmnUCkLln3cObPgPY1HoAVx-wzXmA",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 4
+          },
+          {
+            "src": "./references/airalo-google-05.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/6mozZBfTvpTBMKRXiHXQgTC-L1dUA3PX5rtqNTNnb76vFnGPLrzGCzL0Y6DXPOVLGDTx7nUudngTzxCBQmnSQw",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 5
+          },
+          {
+            "src": "./references/airalo-google-06.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/mv9yy9Cm5B-0_8dWRaEpxZooVvSpHakqC1qP-2TScfyFFZeFQ9ZrtFbF7B3kHTC_8jRPx8g-x1RbxSrPoBecaA",
+            "width": 288,
+            "height": 512,
+            "sourceWidth": 288,
+            "sourceHeight": 512,
+            "order": 6
+          }
+        ],
+        "observedScreenshotCount": 8,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/airalo-google-icon.webp",
+        "iconSourceUrl": "https://play-lh.googleusercontent.com/OLnD24XQbnJpxDzJ7nmdHm1AvwDUC2vV47rcKCWU0_yPsOAjhwp09TBgoyGkZrFOOY68UN03wgto3_Di1pqiRSE=w480-h960",
+        "iconWidth": 480,
+        "iconHeight": 480,
+        "resolutionNote": "Exact bare image URLs from the returned Google Play embedded listing data resolve to 512-pixel-tall images. Preserved at native resolution, without upscaling."
+      },
+      "icon": "./references/airalo-icon.webp",
+      "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/20/7d/8e/207d8e0f-60c6-c3b5-55f5-d9e52677f5f6/Placeholder.mill/400x400bb-75.webp"
+    },
+    {
+      "id": "holafly",
+      "name": "Holafly",
+      "apple": {
+        "url": "https://apps.apple.com/us/app/holafly-travel-esim/id1629600786",
+        "title": "Holafly eSIM: Unlimited Data",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/holafly-apple-01.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/30/89/81/308981e0-4a1d-981f-60f9-7c30b0073d2b/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-1.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 1
+          },
+          {
+            "src": "./references/holafly-apple-02.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/30/9a/ef/309aef25-04ab-9cc3-e756-097f85e647a8/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-2.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 2
+          },
+          {
+            "src": "./references/holafly-apple-03.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/be/fc/53/befc53fa-dcf5-25a7-42c9-7441bfa17cc5/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-4.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 3
+          },
+          {
+            "src": "./references/holafly-apple-04.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/81/7e/81/817e81d1-0b9f-f934-cba8-7ab7a9c5e977/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-5.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 4
+          },
+          {
+            "src": "./references/holafly-apple-05.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/78/00/8d/78008d0a-7e0f-84a9-fe4e-b6f562fc177c/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-6.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 5
+          },
+          {
+            "src": "./references/holafly-apple-06.webp",
+            "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a7/ef/49/a7ef4980-c2c8-33f8-18eb-2d1855044f0a/AN2834-EN_U0028US_U0029-APP-STATIC-VT-1320X2868-7.png/600x1300bb.webp",
+            "width": 552,
+            "height": 1200,
+            "sourceWidth": 598,
+            "sourceHeight": 1300,
+            "order": 6
+          }
+        ],
+        "subtitle": "Travel SIM Card & WiFi Hotspot",
+        "observedScreenshotCount": 6,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/holafly-icon.webp",
+        "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/cc/60/4c/cc604cb4-537e-88d1-2ad3-6f3723d91f2c/Placeholder.mill/400x400bb-75.webp",
+        "iconWidth": 400,
+        "iconHeight": 400
+      },
+      "google": {
+        "url": "https://play.google.com/store/apps/details?id=com.holafly.holafly&hl=en_US&gl=US",
+        "title": "Holafly eSIM: Unlimited Data",
+        "available": true,
+        "screenshots": [
+          {
+            "src": "./references/holafly-google-01.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/cE18s30_6_1ZGHozrJwzzpcKEUV0672nIaX_jyMDFxwlZ4XkRvidG0olXfXGLJ8wiXAA52NQclzoZXJiHvvj4Z4",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 1
+          },
+          {
+            "src": "./references/holafly-google-02.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/jtMewRQUy8fY1MxvBd577N6xZ5LfNMQuRMUp5pyOcMvipL2B36HqJ7YIl7G9Tzeab12LBy72mAdTvVQfBtDCb-M",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 2
+          },
+          {
+            "src": "./references/holafly-google-03.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/j_zU1tzcGhk8UVSojCVyUjuPZuuwWixGmqEzKBfvMTIzW6vBoCbyt00XndDi9ZWJIYYRi4TYQjp7pikxE4QJPw",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 3
+          },
+          {
+            "src": "./references/holafly-google-04.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/HgJ09M6BOw54dp5cWB3VfcRysM66VirlJmqe-uwLzD6IJiJwWq4ro_RyvL-gdX_wx-ncj8YHrqlLOG2YZy0_Yos",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 4
+          },
+          {
+            "src": "./references/holafly-google-05.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/3WRgptKK0dFR5NTVUwWsBxXQBioBT9FF2ipxaAdQrMTxGS_6J0mSruoEc3mNksxdOlB7wMsnGdOHd0d-wHmes5w",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 5
+          },
+          {
+            "src": "./references/holafly-google-06.webp",
+            "sourceUrl": "https://play-lh.googleusercontent.com/HspCqQiO-F4XCjMcQLAdQoUZxuFj15JDvH0-RIl3yAPh3qTZ92KthUB17CF9GFhl-BmcLhvqWiiSPt3C2So5PQ",
+            "width": 236,
+            "height": 512,
+            "sourceWidth": 236,
+            "sourceHeight": 512,
+            "order": 6
+          }
+        ],
+        "observedScreenshotCount": 16,
+        "selection": "First six screenshot images in the returned public listing order; videos excluded.",
+        "icon": "./references/holafly-google-icon.webp",
+        "iconSourceUrl": "https://play-lh.googleusercontent.com/R7ZtwBNNc2GoRmhi-rVKIyDE7PdQgmL4uKIUpNqbhiFD2CtcAOWc6C_OvJS4YnvvZqIbIePpl5sJ4szwDXWP4vU=w480-h960",
+        "iconWidth": 480,
+        "iconHeight": 480,
+        "resolutionNote": "Exact bare image URLs from the returned Google Play embedded listing data resolve to 512-pixel-tall images. Preserved at native resolution, without upscaling."
+      },
+      "icon": "./references/holafly-icon.webp",
+      "iconSourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/cc/60/4c/cc604cb4-537e-88d1-2ad3-6f3723d91f2c/Placeholder.mill/400x400bb-75.webp"
+    }
+  ],
+  "retrievalNote": "Official listing HTML retrieved using pplx_sdk.content.fetch(return_html=True). Image fetch gateway rejected asset requests; exact image URLs extracted from the returned listing HTML were downloaded directly as an explicitly authorized fallback."
+}

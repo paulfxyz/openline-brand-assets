@@ -1,6 +1,9 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "artworkRevision": 3,
+  "previewRevision": 4,
+  "preferredSeries": null,
+  "screenshotNotes": "",
   "iconRevision": 4,
   "iconApproval": "approved-2026-10-07",
   "iconSize": 43.5,

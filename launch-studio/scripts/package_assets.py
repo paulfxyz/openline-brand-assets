@@ -45,7 +45,10 @@ for i in range(6):
 sheet.save(assets/'artwork-contact-sheet.jpg',quality=92)
 with zipfile.ZipFile(downloads/'openline-launch-kit.zip','w',zipfile.ZIP_DEFLATED) as z:
     for name in ['openline-final-icon-all-formats.zip','openline-native-icons.zip','openline-store-artwork.zip','openline-screenshot-sources.zip','screenshot-handoff.md','submission-audit.md','google-artwork-alt-text.json','console-metadata.json','openline-store-copy.md','openline-store-settings.md','openline-release-checklist.md','openline-launch-workspace.json','store-requirements.md','competitor-review.md','asset-manifest.json']:
-        z.write(downloads/name,name)
+        z.write(downloads/name,('archive-r03/' if name in ['openline-store-artwork.zip','openline-screenshot-sources.zip','asset-manifest.json','google-artwork-alt-text.json'] else '')+name)
+    z.write(downloads/'five-series-handoff.md','five-series-handoff.md')
+    z.write(downloads/'five-series-manifest.json','five-series-manifest.json')
+    z.writestr('CURRENT-SCREENSHOT-OPTIONS.md','# Current creative review / Revision 04\n\nNo screenshot series is selected. Download the five new options separately:\n\nhttps://openline-brand.fly.dev/downloads/openline-five-series.zip\n\nEditable sources:\nhttps://openline-brand.fly.dev/downloads/openline-five-series-sources.zip\n\nThe archive-r03 folder holds superseded reference artwork, not the current selection. The final 43.5% icon remains approved. Competitor imagery is excluded from every handoff package.\n')
     z.write(root/'README.md','README.md')
     z.write(root/'sources.json','official-sources.json')
 print('Validated 12 RGB store compositions and feature graphic; packaged launch kit.')

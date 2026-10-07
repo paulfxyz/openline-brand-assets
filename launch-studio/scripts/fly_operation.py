@@ -51,7 +51,7 @@ elif args.operation in ["machines", "create-machine", "update-machine"]:
             {"guest_path": "/tmp/openline-bootstrap.sh",
              "raw_value": base64.b64encode((root / "hosting/bootstrap.sh").read_bytes()).decode()},
             {"guest_path": "/etc/nginx/conf.d/default.conf",
-             "raw_value": base64.b64encode((root / "hosting/nginx.conf").read_bytes()).decode()}
+             "raw_value": base64.b64encode((root / "hosting/nginx.conf").read_text().replace("__SOURCE_COMMIT__", args.commit).encode()).decode()}
         ]
         method = "POST"
         payload = {

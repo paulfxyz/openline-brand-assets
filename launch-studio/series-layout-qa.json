@@ -1,0 +1,1982 @@
+[
+  {
+    "series": "signal",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.0618896484375,
+        "bottom": 3195.1409912109375,
+        "left": 94.34071350097656,
+        "right": 1318.0499420166016
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.0618896484375,
+        "bottom": 3195.1409912109375,
+        "left": 15.137587547302246,
+        "right": 1238.8468160629272
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.0618896484375,
+        "bottom": 3195.1409912109375,
+        "left": 94.34071350097656,
+        "right": 1318.0499420166016
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.0618896484375,
+        "bottom": 3195.1409912109375,
+        "left": 15.137587547302246,
+        "right": 1238.8468160629272
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.0618896484375,
+        "bottom": 3195.1409912109375,
+        "left": 94.34071350097656,
+        "right": 1318.0499420166016
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 718.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 991.06640625,
+        "bottom": 3197.51171875,
+        "left": 15.034090042114258,
+        "right": 1238.9503498077393
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 634.890625,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.004638671875,
+        "bottom": 2433.245361328125,
+        "left": 101.53721618652344,
+        "right": 1064.8533782958984
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.004638671875,
+        "bottom": 2433.245361328125,
+        "left": 15.13096809387207,
+        "right": 978.4471302032471
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.0081787109375,
+        "bottom": 2435.101318359375,
+        "left": 101.45619201660156,
+        "right": 1064.9344635009766
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.004638671875,
+        "bottom": 2433.245361328125,
+        "left": 15.13096809387207,
+        "right": 978.4471302032471
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.004638671875,
+        "bottom": 2433.245361328125,
+        "left": 101.53721618652344,
+        "right": 1064.8533782958984
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "signal",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 530.6875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 697.0081787109375,
+        "bottom": 2435.101318359375,
+        "left": 15.049941062927246,
+        "right": 978.5282125473022
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 467.1875,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3189.703125,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3189.703125,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3189.703125,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3189.703125,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3189.703125,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 430.1875,
+        "bottom": 798.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1118.515625,
+        "bottom": 3192.015625,
+        "left": 409.1875,
+        "right": 1425.578125
+      },
+      "head": {
+        "top": 430.1875,
+        "bottom": 717.21875,
+        "left": 105.59375,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2477.453125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2477.453125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2479.3125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2477.453125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2477.453125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "editorial",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 551.46875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 806.390625,
+        "bottom": 2479.3125,
+        "left": 356.390625,
+        "right": 1177.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 487.96875,
+        "left": 86.390625,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2929.53125,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2929.53125,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2929.53125,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2929.53125,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2929.53125,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 734.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "phone": {
+        "top": 1075.5,
+        "bottom": 2931.609375,
+        "left": 204.59375,
+        "right": 1115.390625
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 657.328125,
+        "left": 79.1875,
+        "right": 1240.8125
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2236.140625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2236.140625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2237.765625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2236.140625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2236.140625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "postcard",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 526.5,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "phone": {
+        "top": 787.1875,
+        "bottom": 2237.765625,
+        "left": 183.59375,
+        "right": 896.390625
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 463,
+        "left": 64.796875,
+        "right": 1015.203125
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3882.65625,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3882.65625,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3882.65625,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3882.65625,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3882.65625,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 372.828125,
+        "bottom": 706.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "phone": {
+        "top": 1089.828125,
+        "bottom": 3885.875,
+        "left": 105.59375,
+        "right": 1491.59375
+      },
+      "head": {
+        "top": 372.828125,
+        "bottom": 622.703125,
+        "left": 105.59375,
+        "right": 1214.40625
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3060.21875,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3060.21875,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3062.84375,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3060.21875,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3060.21875,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "focus",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 528.46875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "phone": {
+        "top": 768,
+        "bottom": 3062.84375,
+        "left": 86.390625,
+        "right": 1231.1875
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 464.96875,
+        "left": 86.390625,
+        "right": 993.609375
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6060791015625,
+        "bottom": 3051.909423828125,
+        "left": 141.08802795410156,
+        "right": 1271.3026275634766
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6060791015625,
+        "bottom": 3051.909423828125,
+        "left": 141.08802795410156,
+        "right": 1271.3026275634766
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6060791015625,
+        "bottom": 3051.909423828125,
+        "left": 141.08802795410156,
+        "right": 1271.3026275634766
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6060791015625,
+        "bottom": 3051.909423828125,
+        "left": 141.08802795410156,
+        "right": 1271.3026275634766
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6060791015625,
+        "bottom": 3051.909423828125,
+        "left": 141.08802795410156,
+        "right": 1271.3026275634766
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "bounds": {
+      "copy": {
+        "top": 401.515625,
+        "bottom": 748.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "phone": {
+        "top": 1098.6138916015625,
+        "bottom": 3053.97998046875,
+        "left": 140.96139526367188,
+        "right": 1271.4291687011719
+      },
+      "head": {
+        "top": 401.515625,
+        "bottom": 667.734375,
+        "left": 105.59375,
+        "right": 1227.609375
+      },
+      "footer": {
+        "top": 2796,
+        "bottom": 2868,
+        "left": 0,
+        "right": 1320
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0552368164062,
+        "bottom": 2384.5230102539062,
+        "left": 114.2999038696289,
+        "right": 1052.075050354004
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0552368164062,
+        "bottom": 2384.5230102539062,
+        "left": 114.2999038696289,
+        "right": 1052.075050354004
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0616455078125,
+        "bottom": 2386.235107421875,
+        "left": 114.19517517089844,
+        "right": 1052.1797943115234
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0552368164062,
+        "bottom": 2384.5230102539062,
+        "left": 114.2999038696289,
+        "right": 1052.075050354004
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0552368164062,
+        "bottom": 2384.5230102539062,
+        "left": 114.2999038696289,
+        "right": 1052.075050354004
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  },
+  {
+    "series": "night",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "bounds": {
+      "copy": {
+        "top": 259.1875,
+        "bottom": 534.84375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "phone": {
+        "top": 766.0616455078125,
+        "bottom": 2386.235107421875,
+        "left": 114.19517517089844,
+        "right": 1052.1797943115234
+      },
+      "head": {
+        "top": 259.1875,
+        "bottom": 471.34375,
+        "left": 86.390625,
+        "right": 1004.40625
+      },
+      "footer": {
+        "top": 1864,
+        "bottom": 1920,
+        "left": 0,
+        "right": 1080
+      }
+    },
+    "status": "design-reference-not-native-capture"
+  }
+]

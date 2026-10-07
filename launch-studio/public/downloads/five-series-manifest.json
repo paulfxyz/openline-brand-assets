@@ -1,0 +1,542 @@
+[
+  {
+    "series": "signal",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "59011db62fd39c5c59b9e3c770843562a47801914f716d7a3a335de4721dda9c"
+  },
+  {
+    "series": "signal",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "d5f477f9b6e4bb5ab87b968e1daec46eb0c00011ccd713d4a50e883ee23f62a3"
+  },
+  {
+    "series": "signal",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "7ec06e11b1b9dd3113acded91e7bc26815d6023c492bb18b71358ab691bc0b68"
+  },
+  {
+    "series": "signal",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "08174f13a83612e150ec7e56ac23b3c86bbf4603a4e97537993fb2c709a92536"
+  },
+  {
+    "series": "signal",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "83e595fd05f8720b194e273d2d556f194b014684260f5a0fcbf452444b1817b3"
+  },
+  {
+    "series": "signal",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "6bd38fa360ede255bdde4c803623b8bca903417b93e7d596802d02e483d50c5b"
+  },
+  {
+    "series": "signal",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "c2b0b552571d157937279628b14a01b2bdd34d55a187e804f14acd6786434624"
+  },
+  {
+    "series": "signal",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "c7d584dc4928af4a86ea6cc6f29216a3c0d5b217c1526d2c577154a878a3ebf4"
+  },
+  {
+    "series": "signal",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "2a9445aa1f0ce279bd8fef15f1f79a8ceb82cfbbbc366da499f2fcdcecce3b60"
+  },
+  {
+    "series": "signal",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "5ddc12d04c94017be58dcc2dfef5dbf72b2bef7c8933e2cfcd7b7b1202f04fae"
+  },
+  {
+    "series": "signal",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "a7e8a5dfc86ffd35021d05a535a9edd15e73479927440f9b7d66a4a3313de3f4"
+  },
+  {
+    "series": "signal",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "2a67a44a8675200a1a9be532ba68a2aae3aa43c0043360263b4fd858660ee616"
+  },
+  {
+    "series": "editorial",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "0246f06f8e3d87937a0aec33c6cd346b36175681d9d596ea2efa8db532a44135"
+  },
+  {
+    "series": "editorial",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "46d7ac7871f368e30435617c20a539eb5b5fdfaef0721921d63644f58243fb78"
+  },
+  {
+    "series": "editorial",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "4e8ec2f81b3377b8f97cf21d0b61672588ce5e53e9a37134483ec2443ad76050"
+  },
+  {
+    "series": "editorial",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "3155127d98fa21b2e255f17440f7b2cb355c893e0a105146f29e839bf3a03461"
+  },
+  {
+    "series": "editorial",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "b3572cf69e25266158cb431cb69a568b5801819b795f7d994b69b1274f342245"
+  },
+  {
+    "series": "editorial",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "d8b436f599d442e3ed1d506eea0fd1bc5c4abd3680d69ae920ecca6e58cd047b"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "86bc0207f85faacacd87fe947fbb6cb9228e632fd29aedb4c606cb7676310ece"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "671dc0ced36dbf99e771f89692fb2cc6b1d047288e59f29ca7c056f31a923eea"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "1a4388d595b6384f6081300e29cbeaadfd7466a7efe83c9264cccc1b09eb91ab"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "b8c345def1b4f6d1a026b1fc43f4c2d9788476031f93d93b2f50134fc0bb40fc"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "5fce309d80abccc8df725435dc017381c721c4814dac99b0c1a904eea8d4093c"
+  },
+  {
+    "series": "editorial",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "2f63b78ca61d4eb30499784d9536856f1b920163527c524c781563b8f72c8f61"
+  },
+  {
+    "series": "postcard",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "79fdfde4b67e88a71e388e256488fa71f826224fac6532ab7c53ed95ad1b3397"
+  },
+  {
+    "series": "postcard",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "765b90f2ab636750d80de2f21fc4aeadf31326c8c5d58652081743f81fbb1217"
+  },
+  {
+    "series": "postcard",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "6d86b91d4f22b894ae0239df8ad0e5d0d9e56f207dbaa2a629aefcbfdab864b6"
+  },
+  {
+    "series": "postcard",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "fbc65bc23f32584d8c1ebe68dd4d8fce55c63b4cf38ece607f2e45b707daad89"
+  },
+  {
+    "series": "postcard",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "c30f923a92e941619d4be86c081c60782c5b0299ae38cc1744f4d2c1dec65c93"
+  },
+  {
+    "series": "postcard",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "9936f6c0ec260ccf178f8a62f6a94cb1a946021ac507768159549419ee6584b5"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "5f09015d139d83fbdc2ab22c5c2a78b9faef932d9da46e95ba3e216b2c6e6832"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "76c2f961adc868a76389dc22ec4608b92351ba37f708d1051f603f874f9f0be5"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "dc7b5704f67262042094286954092bb15e417445be79cf74af9ae3e254254fef"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "7b42ef5cd67378d17c601afd5c70ca4581579fe914899e31453810277cdad149"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "2c090c7de4bff7b6a484de5c3889bc6d15cd838033810f204b921c3aafe382b6"
+  },
+  {
+    "series": "postcard",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "31b6f7979a6c6c48da87a6271ca7aebc1a89c569990583221ad8ae32115dd2d7"
+  },
+  {
+    "series": "focus",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "c19425444878b94c218bf65ce1da367c98e3718c976450d3f90db1ae27f3efd5"
+  },
+  {
+    "series": "focus",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "f6e9421da9b5cf1215d3b7f22c1734a864ae066099e849afd8ea20c519706f2b"
+  },
+  {
+    "series": "focus",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "aec997ef9f2753b1ebb6116eed6a73cbeb55e33771b72ae69c8a129f939f1643"
+  },
+  {
+    "series": "focus",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "3b3297c9690f6bfe8d99eb4f270f51b12523c288740c2dd96875309728b74ae2"
+  },
+  {
+    "series": "focus",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "3d0fed9bc635b8466b97fe67fbd6b21d6af878cf89b10dbf163758b249ef349d"
+  },
+  {
+    "series": "focus",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "7beb1f0a1d0ad50eb444eaad1082f6ab09fe4b7141f8536da02c54754debc231"
+  },
+  {
+    "series": "focus",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "ab077accc15e1208653e13a7e613e77f65844a97c6cc3840a8ae74df1063174e"
+  },
+  {
+    "series": "focus",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "7da01645c1deb3afc49502d924828313e03b1ac8ab7aae1b6000407b9270fa44"
+  },
+  {
+    "series": "focus",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "f8e09364aa95d82be5a676bf263b0e68c2d3785bca56935c1232433a8cf4bb56"
+  },
+  {
+    "series": "focus",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "7354beb094b488a866c65802fd349ad1ace878760222002171556ed3197f0f60"
+  },
+  {
+    "series": "focus",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "fe702e1f430e1c562d871b4cc530264e225473f6f93da7f8b4c30d2aaa62c556"
+  },
+  {
+    "series": "focus",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "fd4eebca38ee3caab0dd7600bae6719c80ce588fdf07ad8cfb1678f7ae8fcf70"
+  },
+  {
+    "series": "night",
+    "file": "android-01.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "ecd6adb3f6b8fb60b9065689d462aaf6dba9d55d53d001dae417e2df7aea0401"
+  },
+  {
+    "series": "night",
+    "file": "android-02.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "959f7fb021f38f022013936449981a73d7689b6237e845544dd6e4afcdcbdf05"
+  },
+  {
+    "series": "night",
+    "file": "android-03.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "8d495d9fd850c992225a2c432a1a3f29b5fd30657d061a964700bf47f98bcb5e"
+  },
+  {
+    "series": "night",
+    "file": "android-04.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "eb8d544c9f6e060e61bd898af073a279d8216baa7102772c68a19c40f4bac450"
+  },
+  {
+    "series": "night",
+    "file": "android-05.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "8232e16468335b4f36c7ece018bbd06bd951e204a9664c10870dd4ed5bbe981b"
+  },
+  {
+    "series": "night",
+    "file": "android-06.png",
+    "width": 1080,
+    "height": 1920,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "9a974bead5976ae8c55e7a51135a7d7b967474aa0ce07bf46fef9f379113a52b"
+  },
+  {
+    "series": "night",
+    "file": "ios-01.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "cf43b5ad728b9e75b3bc1db1ded2cedb9c7b5803e4b757153523feecaaa3d9a2"
+  },
+  {
+    "series": "night",
+    "file": "ios-02.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "6a792453caf5291063b91bbc24c97a01fe0cb3959c21b8e3878ffaeb16d6e058"
+  },
+  {
+    "series": "night",
+    "file": "ios-03.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "cb3421660b8196eecf9087c66dd604fbc217778cc444d77bbda309c31799e5be"
+  },
+  {
+    "series": "night",
+    "file": "ios-04.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "c52cce1337449a51036e99395f7fb5e216230bbb39bf3bdb0b005936f3be6f18"
+  },
+  {
+    "series": "night",
+    "file": "ios-05.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "582a1b7834637961dcbd2c24320e963ea944e2d7407eeea560da596bbaf8f443"
+  },
+  {
+    "series": "night",
+    "file": "ios-06.png",
+    "width": 1320,
+    "height": 2868,
+    "mode": "RGB",
+    "status": "design-reference-not-native-capture",
+    "sha256": "4ea2c6988aa7dfe9da12a72fab0f286bb6f35f7f6f213a8bdf5ea77649178c2e"
+  }
+]
