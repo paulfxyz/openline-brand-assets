@@ -1,6 +1,18 @@
 # Openline Brand Studio
 
-## Current: v1.10.0, Original orange only
+## Current: v1.10.1, coherent benefit illustrations
+
+Frames 2 and 6 no longer reuse unrelated mobile captures. Frame 2 is a bespoke
+network-route illustration connecting multiple partners through Openline to an
+alternative eSIM profile. Frame 6 shows supplier offer cards, the OMDM comparison
+layer and the resulting travel-plan benefit. No invented native controls,
+retail prices, savings figures or carrier endorsements are shown.
+
+These two frames are explicitly labeled benefit illustrations, not app screens.
+The other four frames still use supplied React UI references. All remain drafts
+pending native capture, claims verification and store-specific review.
+
+## Previous: v1.10.0, Original orange only
 
 Only option 1 remains. The header uses the real Openline icon and the Openline
 name, white on orange and black on cream, never the underscore wordmark.

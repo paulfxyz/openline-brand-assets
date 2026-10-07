@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><meta charset="UTF-8"><title>Openline / five directions / review artwork</title>
+<html lang="en"><meta charset="UTF-8"><title>Openline / Original orange / review artwork</title>
 <style>
 @font-face{font-family:Inter;src:url('./fonts/inter-latin-600-normal.woff2');font-weight:600}
 @font-face{font-family:Inter;src:url('./fonts/inter-latin-800-normal.woff2');font-weight:800}
@@ -112,8 +112,54 @@ h1{margin:0;font-size:126px;font-weight:800;line-height:1.04;letter-spacing:-6px
 .android.network .phone,.android.market .phone{top:45%;left:18%;width:65%;border-radius:63px}
 .android.market .phone{left:16%;width:69%}
 .android .qualification{font-size:16px;padding:14px 17px;bottom:4.3%}
+.network .phone,.market .phone,.network .story-flow,.market .story-flow{display:none}
+.benefit-art{display:none;position:absolute;left:8%;right:8%;top:33%;height:57%;z-index:3;container-type:inline-size}
+.network .benefit-art,.market .benefit-art{display:block}
+.network .orb{top:48%;left:-37%;width:1600px;height:1600px;background:#ff8a4b}
+.market .orb{top:65%;left:38%;background:#ff934f}
+.partner-row{display:flex;justify-content:space-between;gap:3cqw}
+.partner-card{width:31%;height:22cqw;border:2px solid #ffffff80;border-radius:3cqw;background:#ffffff24;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2cqw}
+.partner-card strong{font-size:2.9cqw;letter-spacing:-.1cqw}.partner-card small{font-size:1.8cqw}
+.bars{height:7cqw;display:flex;align-items:flex-end;gap:1cqw}
+.bars i{display:block;width:1.5cqw;background:#fff;border-radius:.5cqw;height:25%}.bars i:nth-child(2){height:50%}.bars i:nth-child(3){height:75%}.bars i:nth-child(4){height:100%}
+.routes{height:23cqw;position:relative;margin:0 14%}
+.routes:before,.routes:after{content:"";position:absolute;top:0;width:50%;height:17cqw;border-bottom:3px solid #fff;border-radius:0 0 0 7cqw;border-left:3px solid #fff}
+.routes:after{right:0;border-left:0;border-right:3px solid #fff;border-radius:0 0 7cqw 0}
+.routes i{position:absolute;left:50%;height:100%;width:3px;background:#fff}
+.connection-hub{width:26cqw;height:26cqw;margin:-1cqw auto 0;background:#fff;border-radius:7cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 3cqw 7cqw #87360020;position:relative;z-index:2}
+.connection-hub img{width:15cqw;height:15cqw;object-fit:contain}
+.route-stem{width:3px;background:#fff;height:9cqw;margin:auto}
+.esim-ticket{background:#fff5e9;border-radius:5cqw;padding:5cqw;display:flex;align-items:center;gap:4cqw;box-shadow:0 3cqw 8cqw #87360015}
+.sim-chip{width:12cqw;height:15cqw;border:3px solid #ed5d18;border-radius:2cqw 5cqw 2cqw 2cqw;display:grid;place-items:center;flex:none}
+.sim-chip:after{content:"";width:6cqw;height:7cqw;border:2px solid #ed5d18;border-radius:1cqw;background:linear-gradient(90deg,transparent 45%,#ed5d18 46%,#ed5d18 51%,transparent 52%),linear-gradient(transparent 45%,#ed5d18 46%,#ed5d18 51%,transparent 52%)}
+.esim-ticket small,.value-plan small{font-size:2cqw;letter-spacing:.25cqw;text-transform:uppercase;color:#8d4828}
+.esim-ticket h2{font-size:5.7cqw;line-height:1.1;letter-spacing:-.25cqw;margin:1.5cqw 0}
+.esim-ticket p{font-size:2.6cqw;line-height:1.4;margin:0;color:#655247}
+.benefit-caption{text-align:center;font-size:3.1cqw;line-height:1.5;margin:6cqw 5cqw 0;letter-spacing:-.08cqw}
+.benefit-caption strong{font-weight:800}
+.offer-stack{position:relative;height:41cqw;margin:0 4cqw}
+.offer-slip{position:absolute;left:0;top:0;width:76cqw;height:25cqw;padding:3.5cqw 4.5cqw;background:#fff4e8;border:2px solid #f4cdb6;border-radius:3cqw;transform:rotate(-7deg);box-shadow:0 2cqw 5cqw #9e360018}
+.offer-slip:nth-child(2){top:7cqw;left:6cqw;transform:rotate(4deg);background:#ffe5d0}
+.offer-slip:nth-child(3){top:15cqw;left:12cqw;transform:rotate(-2deg);background:#fff}
+.offer-top{display:flex;justify-content:space-between;align-items:center;font-size:2.4cqw;color:#776258}.offer-top b{font-size:2cqw;border:1px solid #e5d7cf;border-radius:2cqw;padding:.7cqw 1.5cqw;font-weight:600}
+.offer-slip h2{font-size:5cqw;margin:2cqw 0 1cqw;letter-spacing:-.15cqw}.offer-slip p{font-size:2.2cqw;color:#776258;margin:0}
+.market-connector{height:7cqw;border-left:3px dashed #fff;margin-left:50%}
+.market-engine{background:#25211e;color:#fff;border-radius:4cqw;padding:4cqw 5cqw;display:flex;align-items:center;gap:4cqw;box-shadow:0 3cqw 7cqw #7c2a0020}
+.market-engine img{width:11cqw;height:11cqw;filter:brightness(0) invert(1)}
+.market-engine small{font-size:1.8cqw;color:#ffc8a8;letter-spacing:.1cqw}.market-engine h2{margin:.7cqw 0;font-size:5.5cqw;letter-spacing:-.15cqw}.market-engine p{margin:0;font-size:2.4cqw;color:#fff1e8}
+.value-plan{background:#fff5e9;border-radius:4cqw;padding:4.5cqw 5cqw;position:relative}
+.value-plan h2{font-size:6.6cqw;line-height:1.05;letter-spacing:-.3cqw;margin:2cqw 0 3cqw}
+.value-plan .plan-meta{display:flex;gap:1.7cqw}.plan-meta span{font-size:2cqw;padding:1.2cqw 2cqw;border:1px solid #e7cbb8;border-radius:2cqw}
+.value-plan .value-seal{position:absolute;right:5cqw;top:5cqw;width:10cqw;height:10cqw;border:2px solid #ff6418;border-radius:50%;display:grid;place-items:center;color:#e95b12;font-size:5cqw}
+.market .benefit-caption{margin-top:4cqw}
+.android .benefit-art{top:34%;height:55%}
+.android .partner-card{height:19cqw}.android .routes{height:13cqw}.android .routes:before,.android .routes:after{height:9cqw}
+.android .connection-hub{width:22cqw;height:22cqw;border-radius:6cqw}.android .connection-hub img{width:13cqw;height:13cqw}
+.android .route-stem{height:5cqw}.android .esim-ticket{padding:3.8cqw}.android .benefit-caption{margin-top:3cqw;font-size:2.9cqw}
+.android .offer-stack{height:33cqw}.android .offer-slip{height:22cqw;padding:2.5cqw 4cqw}.android .offer-slip:nth-child(2){top:5cqw}.android .offer-slip:nth-child(3){top:10cqw}
+.android .market-connector{height:4cqw}.android .market-engine{padding:3cqw 5cqw}.android .value-plan{padding:3cqw 5cqw}.android .value-plan h2{font-size:5.9cqw;margin:1.5cqw 0 2cqw}
 </style>
-<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/mark.png" alt=""><span>Openline</span></div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="story-flow"></div><div class="phone"><img id="screen" alt="Openline design reference"></div><div class="label"></div><div class="index"></div><div class="qualification"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH NATIVE CAPTURE</div></div>
+<div id="canvas"><div class="backdrop"></div><div class="orb"></div><div class="brand"><img src="./assets/mark.png" alt=""><span>Openline</span></div><div class="category">TRAVEL eSIM</div><div class="copy"><h1></h1><p></p></div><div class="story-flow"></div><div class="benefit-art"></div><div class="phone"><img id="screen" alt="Openline design reference"></div><div class="label"></div><div class="index"></div><div class="qualification"></div><div class="foot">DESIGN REFERENCE · SAMPLE DATA · REPLACE WITH NATIVE CAPTURE</div></div>
 <script type="module">
 const [config,art]=await Promise.all(['series.json','artwork.json'].map(async p=>(await fetch('./'+p)).json()));
 const q=new URLSearchParams(location.search),n=Math.max(0,Math.min(5,Number(q.get('slide'))||0)),s=config.series.find(x=>x.id===q.get('series'))||config.series[0],slide=art.slides[n],platform=q.get('platform')==='android'?'android':'ios';
@@ -127,9 +173,16 @@ document.querySelector('.label').textContent=story?.label||slide.short;
 document.querySelector('.index').textContent='0'+(n+1);
 document.querySelector('.qualification').textContent=story?.qualification||'';
 if(story){
- const cards=network?[['Multiple partners','More than one route'],['Openline','Your connectivity team'],['Another eSIM','If an alternative is needed']]:[['Supplier offers','Compared in our market'],['OMDM','Openline data market'],['Your travel plan','Value from smarter sourcing']];
- const row=document.querySelector('.story-flow');
- cards.forEach(([title,detail],i)=>{if(i){const arrow=document.createElement('span');arrow.className='flow-arrow';arrow.textContent='→';row.append(arrow)}const card=document.createElement('div');card.className='flow-card'+(i===1?' ours':'');if(i===1){const mark=new Image();mark.src='./assets/mark.png';mark.alt='';card.append(mark)}const label=document.createElement('span');label.textContent=title;const small=document.createElement('small');small.textContent=detail;card.append(label,small);row.append(card)});
+ document.querySelector('.benefit-art').innerHTML=network?`
+ <div class="partner-row">${[1,2,3].map(()=>`<div class="partner-card"><div class="bars"><i></i><i></i><i></i><i></i></div><strong>Network partner</strong><small>Illustrative route</small></div>`).join('')}</div>
+ <div class="routes"><i></i></div><div class="connection-hub"><img src="./assets/mark.png" alt="Openline"></div><div class="route-stem"></div>
+ <div class="esim-ticket"><div class="sim-chip"></div><div><small>More flexibility behind your eSIM</small><h2>A different route.<br>When you need it.</h2><p>A replacement profile, where available.</p></div></div>
+ <p class="benefit-caption"><strong>Not tied to just one partner.</strong><br>More options for your connection.</p>`:`
+ <div class="offer-stack">${[1,2,3].map(()=>`<div class="offer-slip"><div class="offer-top"><span>NETWORK SUPPLIER</span><b>DATA OFFER</b></div><h2>Travel data</h2><p>Destination · Data · Validity · Cost</p></div>`).join('')}</div>
+ <div class="market-connector"></div><div class="market-engine"><img src="./assets/mark.png" alt=""><div><small>OPENLINE MOBILE DATA MARKET</small><h2>We compare the offers.</h2><p>Smarter sourcing, behind the scenes.</p></div></div>
+ <div class="market-connector"></div><div class="value-plan"><small>The benefit for you</small><span class="value-seal">↓</span><h2>Better value.<br>For your trip.</h2><div class="plan-meta"><span>Your destination</span><span>Your data</span><span>Your budget</span></div></div>
+ <p class="benefit-caption">The market works in the background.<br><strong>You just choose your travel plan.</strong></p>`;
+ document.querySelector('.foot').textContent='BENEFIT ILLUSTRATION · NOT AN APP SCREEN · CLAIMS REQUIRE LAUNCH VALIDATION';
 }
 window.artworkReady=true;
 </script></html>

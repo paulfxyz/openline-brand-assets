@@ -1,5 +1,5 @@
 {
-  "revision":8,
+  "revision":9,
   "status":"design-reference-not-native-capture",
   "selectedSeries":"signal",
   "differentiator":{
@@ -8,14 +8,14 @@
     "paragraph":"Openline works with multiple leading network partners, not just one. If your service needs a different route, we can try to provide a replacement eSIM profile where an alternative is available. Behind our plans, the Openline Mobile Data Market (OMDM) compares supplier offers to help us source data at better prices and build better-value travel plans. Network options depend on your destination and plan, and a profile change may require setup on your phone.",
     "status":"Owner-confirmed product positioning. Validate launch availability, sourcing workflow and retail price evidence before store submission.",
     "boundaries":["No cheapest or quantified savings claim","No instant, invisible or automatic profile-replacement guarantee","No universal multi-network access","No fixed speed guarantee","Unlimited plans remain subject to local network fair-use rules"],
-    "captures":{"ios":"./assets/screen-profile.png","android":"./assets/screen-profile-android.png"},
+    "visual":"Purpose-built network-route illustration; not native UI. No setup capture reused.",
     "label":"Another eSIM profile, if needed",
     "qualification":"Alternative availability varies. A profile change may require setup."
   },
   "market":{
     "slide":5,
     "detail":"We compare supplier offers through our data market to build better-value travel plans.",
-    "captures":{"ios":"./assets/screen-plans.png","android":"./assets/screen-plans.png"},
+    "visual":"Purpose-built supplier-offer to OMDM to travel-plan illustration; no sample retail pricing or duration-selector capture.",
     "label":"Openline Mobile Data Market",
     "qualification":"Plan prices vary by destination, data allowance and validity."
   },

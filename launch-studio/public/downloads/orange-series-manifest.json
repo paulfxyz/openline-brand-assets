@@ -15,7 +15,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "2f4e90b53185e4d079130797212e00f0f18301fb1da16286ce462233adc190e4"
+    "sha256": "16175f3f02fa7ccee0684539c9bd7aca532fc9b913d99b61a0a7fd4d93838fb1"
   },
   {
     "series": "signal",
@@ -51,7 +51,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "a0c5d939dc4b8be7e92a2763eecf735458520834fbb15ca241fe314338267ccf"
+    "sha256": "e40fd9b1b236df47855d31fdb241985d56df6158fdbda1b73d53fdc876c4c5d4"
   },
   {
     "series": "signal",
@@ -69,7 +69,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "41d821b40f307835238a82224abac0126907c38a6480ace9709d5c84b34efd29"
+    "sha256": "ebe080c7ef62b2678534462f2e9389f6391ac0fb8deeb9bfdb292b3b0e4cff45"
   },
   {
     "series": "signal",
@@ -105,6 +105,6 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "98cb7589f4721ff133b6456ae938dc2d9660c87755bb49eece4fb4576f83adac"
+    "sha256": "959bd080bd7ace1611fedb439aa07db79d5360aa37b2241b7ea971204bd44d54"
   }
 ]

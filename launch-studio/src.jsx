@@ -60,6 +60,7 @@ function Workspace(){
  if(d.iconRevision!==4)clean.tasks=clean.tasks.map(t=>t.id==='icon'?{...t,status:'done',notes:t.notes+'\nVisual choice finalized by Paul on 7 October 2026: 43.5%. Native QA remains separate.'}:t);
  if(d.schemaVersion<3)clean.tasks=clean.tasks.map(t=>['sdk-manifest','trader','release'].includes(t.id)&&t.status==='done'?{...t,status:'review',notes:t.notes+'\nAudit expanded this requirement on 7 October 2026. Re-check the new detail.'}:t);
  if((d.previewRevision||0)<8)clean.tasks=clean.tasks.map(t=>['art','copy'].includes(t.id)&&t.status==='done'?{...t,status:'review',notes:t.notes+'\nOriginal orange is now selected. Network/profile and OMDM price positioning need review. Imported listing copy is preserved; the latest baseline is in the copy download.'}:t);
+ if((d.previewRevision||0)<9)clean.tasks=clean.tasks.map(t=>t.id==='art'&&t.status==='done'?{...t,status:'review',notes:t.notes+'\nFrames 2 and 6 are now benefit illustrations, not native UI. Review the updated visuals before approval.'}:t);
  clean.settingsNotes=typeof d.settingsNotes==='string'?d.settingsNotes.slice(0,10000):'';setWs(clean);setDirty(false);setToast(d.artworkRevision!==3?'Workspace restored. Old artwork approvals cleared; final icon locked to 43.5%.':'Workspace restored with the final 43.5% icon.');
  }).catch(()=>setToast('That is not a valid Openline workspace file. Nothing was changed.'));e.target.value=''}
  function patchTask(id,patch){change(old=>({tasks:old.tasks.map(t=>t.id===id?{...t,...patch}:t)}))}

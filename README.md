@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.10.0-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.10.1-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,9 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**Current: v1.10.0.** Only Original orange remains in the
+**Current: v1.10.1.** Frames 2 and 6 now use purpose-built network and OMDM benefit
+illustrations, not duplicated setup or unrelated plan-duration screens.
+Only Original orange remains in the
 [store preview](https://openline-brand.fly.dev). Screenshot 2 explains the
 multi-partner/profile-replacement approach; screenshot 6 explains how the OMDM
 market supports smarter sourcing and better-value travel plans.

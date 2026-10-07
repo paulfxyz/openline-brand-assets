@@ -1,6 +1,15 @@
 # Openline submission preparation audit
 
-## Current creative status: v1.10.0
+## Current creative status: v1.10.1
+
+Frames 2 and 6 replace mismatched app captures with purpose-built explanatory
+artwork. Network routes converge on Openline and an alternative eSIM; supplier
+offer cards flow through OMDM to a travel-plan benefit. Both are explicitly
+labeled illustrations, not native app UI. The other four UI references and
+approved icon remain unchanged. Review store-specific treatment of explanatory
+artwork and all launch claims before submission.
+
+## Previous creative status: v1.10.0
 
 Only Original orange remains: six iPhone and six Android compositions. The actual
 Openline icon replaces the underscore wordmark. Screen 2 explains multiple network
