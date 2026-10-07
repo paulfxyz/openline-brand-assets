@@ -6,7 +6,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "10d738561a95c3ee6401412e8518070c0b35485adbbf614b727de47196624042"
+    "sha256": "e2f7f28450ab31a29dc2b28ab809b213744e12b5cba83a2fa8d3d2a9775607d5"
   },
   {
     "series": "signal",
@@ -15,7 +15,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "0186f58f8a9b14830011e37ea5c1e4bcc5cb5ef1808da5bac9531bbce5d2fe8f"
+    "sha256": "2f4e90b53185e4d079130797212e00f0f18301fb1da16286ce462233adc190e4"
   },
   {
     "series": "signal",
@@ -24,7 +24,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "2f169321ac7a76ef890b8b56d5dc78b5f9a2a08afa04f261ec8b94c225487fc2"
+    "sha256": "fd3dbfa094d04e80c51b718a48abd01817dc7320b9ee1c2526041bf49515c697"
   },
   {
     "series": "signal",
@@ -33,7 +33,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "c1310abd52a245fd2a506186f23ef93bca7e0c4c61567ed22c9456f2da771793"
+    "sha256": "44431a7437ded2e01ec5a44b00f77263291d5b7c19091a780e88a17736ecaab9"
   },
   {
     "series": "signal",
@@ -42,7 +42,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "099c77e284272061e8ee2daa41bbcd11cf57f1e10392bc1bb040e2b45cc22c5b"
+    "sha256": "f61844b084e7b1301ad67e509536de3ec5694a51df1ca4a4418cc736bfc08842"
   },
   {
     "series": "signal",
@@ -51,7 +51,7 @@
     "height": 1920,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "17d3fa3e214cbcb73a965a98194ef122cf9fc7696aadbadcc9d65ad83f0911f0"
+    "sha256": "a0c5d939dc4b8be7e92a2763eecf735458520834fbb15ca241fe314338267ccf"
   },
   {
     "series": "signal",
@@ -60,7 +60,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "a0f4022b44635f6c46d44a0d08f7c2a568b97d57ecc976ff3e6dbdc15b804b66"
+    "sha256": "c86c38ddc6d29725934211ae7e8a1c44b701bd106696fe0c5bc99ec96afba3d5"
   },
   {
     "series": "signal",
@@ -69,7 +69,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "44ee28caa634f0f0685e1f1bce1d3bbd930b168817fbcccce9a31f9dabf71b7a"
+    "sha256": "41d821b40f307835238a82224abac0126907c38a6480ace9709d5c84b34efd29"
   },
   {
     "series": "signal",
@@ -78,7 +78,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "f71711a3279954f5c80cd11867d0ef6228915d3c7ee7299b377c9179fd636d2c"
+    "sha256": "5da93c983ab3d880f606d9acc73addb69ef0d051f91216b1cc1a53a4727fb0c8"
   },
   {
     "series": "signal",
@@ -87,7 +87,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "a18563ef147f0df4acf94422c047187f05a39c61095a8abacaf779ba404d8b6b"
+    "sha256": "8e7034a5216d1ef59183b51d27839d8d657f4744fa6335c962ac67a0d2f94599"
   },
   {
     "series": "signal",
@@ -96,7 +96,7 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "0718187c9c63548d681f50dc7ea5f559f1a4e6f3f304f72fc76b0ea4b5580bec"
+    "sha256": "b56783c62bed18a64a973e8c457aabaf415afa384660bfa8b0a6aa7281c80f99"
   },
   {
     "series": "signal",
@@ -105,222 +105,6 @@
     "height": 2868,
     "mode": "RGB",
     "status": "design-reference-not-native-capture",
-    "sha256": "e7c689232a293f63039eb768c22d2ac04a9dc29095181e5128885c04627088d8"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-01.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "ccc50a26bae83e0cbaa160892c4a51ec14d6e3de865c110af65b45735d0d4735"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-02.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "fcc199087961008c3b0dec10e53e3a6e683ef28e7ef4b4e724b8abafd4e86c46"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-03.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "66603a40e9c51699fb0635d5f27870412349e36b60600699035995ebf8253142"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-04.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "f798955b2248e8eec615e1daaad8dd38e3b7f1ee042282e2c9e1b82a21438df3"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-05.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "ca44991cda18af2ee62d5e5160cbd2ed2094702543cc0561a7e49c31ddd1bdcf"
-  },
-  {
-    "series": "orange-air",
-    "file": "android-06.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "ff616e0a0dd9ab2923f232ca69be7aed237670a9e6d386a855b4f256fcde42d3"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-01.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "79d2d2be1e69747c814698bfec1759c10108931d8bbe047bfc49d84ebcfc0b15"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-02.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "1e6da2e999bfb7782dc17d71887f3e9ce5b5b69a6d9a2a24c5e6f68c2acdb65b"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-03.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "5fcfe0d4ec9cb04c9ee87016daa0c4c40c987f8d36491f9be15063aef55dc0ea"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-04.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "59c6b6ba057d25c3b6491785b6505c72746916cee2e8aef78d3fdc958ac5af0c"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-05.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "8001a8ba301ac7a6fde2d1e15928a7809efb995ba96fb46c78122523ffdedca8"
-  },
-  {
-    "series": "orange-air",
-    "file": "ios-06.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "20e6f99c8d3083be8b05df1729dfc5b20d37dce8cdc23a616586716e5f84b599"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-01.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "1c0b4a7d086ddf1f99c20d6e121d305ad98f89f86da851cc58ae3a83d8b5387f"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-02.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "f433d897585df699283902447d1c7a1bb7e3d1c96683b4325a6420db6ff2b3d9"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-03.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "05491b685f6925efef6baf063706ce0b81b382c89579aa1e21383041758ea46c"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-04.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "196dbc07d9592d1b8db0f7a1f7cc4cc76b33feab1139e4e1394c1cae69959a6b"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-05.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "649b7df7282bce3da734d5641228407b0533b4a73e2c031e4107aae1a6acdc01"
-  },
-  {
-    "series": "orange-bold",
-    "file": "android-06.png",
-    "width": 1080,
-    "height": 1920,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "7ec2978dafabfb70d81f1ee1f3bb826bde97f61ddd490f06cbee714fe111fab9"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-01.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "b8a7fe6f6467ede5903a91d2d0be3bb1cf1389e3390ded70e8a5312244cad1ba"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-02.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "e8fb36511fa944c17230f6901a922a28616e937eec824e6e0fa56762647a1331"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-03.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "daf28be61e25a97cb2e66847077484659ad5d2bf30cc313d651c2c3e3d07996e"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-04.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "5e455cc59a57a30ece0e15cc4f655980b1019f0e48ca3676b1a54cd558ef3c30"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-05.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "0f0a3887be261e9ab500c8e7200f29bc87c80fc257246a5539f426976c948a88"
-  },
-  {
-    "series": "orange-bold",
-    "file": "ios-06.png",
-    "width": 1320,
-    "height": 2868,
-    "mode": "RGB",
-    "status": "design-reference-not-native-capture",
-    "sha256": "f4f6003450be6d211a8a43e1a1ed4e721030e2675bcd653f307def8772802b99"
+    "sha256": "98cb7589f4721ff133b6456ae938dc2d9660c87755bb49eece4fb4576f83adac"
   }
 ]

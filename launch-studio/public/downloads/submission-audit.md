@@ -1,6 +1,16 @@
 # Openline submission preparation audit
 
-## Current creative status: v1.9.0
+## Current creative status: v1.10.0
+
+Only Original orange remains: six iPhone and six Android compositions. The actual
+Openline icon replaces the underscore wordmark. Screen 2 explains multiple network
+partners and best-effort alternative eSIM profiles; screen 6 explains OMDM supplier
+comparison and better-value plans. One description paragraph covers both.
+These are owner-provided product propositions, not verified comparative price
+claims. Validate sourcing, retail value and profile-replacement availability before
+store submission. Native captures, build and compliance gates remain open.
+
+## Historical creative status: v1.9.0
 
 Paul retained orange and discarded the other directions. There are now three
 orange options (36 phone compositions); no final option is approved. Screen 2

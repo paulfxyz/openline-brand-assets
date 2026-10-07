@@ -10,9 +10,9 @@ The final flat icon visual choice is approved. Native integration, capture repla
   Owner: Engineering
   Import the Xcode catalog; merge Android resources; verify masks and dark/themed variants in the actual builds.
 
-- [ ] Choose and review an orange screenshot direction (Both; recommended; review)
+- [ ] Review the selected orange screenshot sequence (Both; recommended; review)
   Owner: Design
-  Three orange options, each with six iPhone and six Android compositions. Original orange is retained; screen 2 carries the network-choice story and the other five remain travel/product-led. These are React design references, not native captures. No final direction is approved.
+  Original orange is selected: six iPhone and six Android compositions. Screen 2 explains multiple partners and best-effort profile replacement; screen 6 explains OMDM sourcing/value. Other screens remain travel-led. Native captures and final image approval are still pending.
 
 - [ ] Recapture from the native release builds (Both; required; blocked)
   Owner: Engineering
@@ -24,7 +24,7 @@ The final flat icon visual choice is approved. Native integration, capture repla
 
 - [ ] Verify store copy and every claim (Both; required; review)
   Owner: Product
-  Verify the leading-network-partner statement against launch contracts and the actual destination/plan catalog. Check features, value positioning and support information. No cheapest, savings percentage, automatic switching, universal multi-network access, coverage number or speed guarantee is claimed.
+  Verify network partners, best-effort replacement-profile operations and OMDM supplier comparison against the launch service. Substantiate better-price/value positioning with sourcing and comparable retail evidence before submission. No cheapest, quantified savings, instant switching or universal multi-network guarantee. Unlimited plans remain subject to local fair-use rules.
 
 - [ ] Choose launch languages (Both; recommended; todo)
   Owner: Product

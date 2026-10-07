@@ -14,6 +14,10 @@ for(const series of config.series){
    await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode()));const bg=getComputedStyle(document.querySelector('.backdrop')).backgroundImage.match(/url\(["']?(.*?)["']?\)/)?.[1];if(bg){const i=new Image();i.src=bg;await i.decode()}});
    const bounds=await page.evaluate(()=>{const b=s=>{const r=document.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right}};return {copy:b('.copy'),phone:b('.phone'),head:b('h1'),footer:b('.foot')}});
    if(bounds.copy.bottom>bounds.phone.top-10)throw Error(`Copy/phone overlap ${series.id} ${platform} ${i}: ${JSON.stringify(bounds)}`);
+   if(i===config.differentiator.slide||i===config.market.slide){
+    const flow=await page.locator('.story-flow').boundingBox();
+    if(bounds.copy.bottom>flow.y-10||flow.y+flow.height>bounds.phone.top-10)throw Error(`Story flow overlap ${platform} ${i}`);
+   }
    const file=`${platform}-${String(i+1).padStart(2,'0')}.png`;
    await page.screenshot({path:path.join(dir,file)});
    report.push({series:series.id,file,width,height,bounds,status:config.status});

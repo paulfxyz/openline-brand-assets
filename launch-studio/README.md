@@ -1,5 +1,28 @@
 # Openline Brand Studio
 
+## Current: v1.10.0, Original orange only
+
+Only option 1 remains. The header uses the real Openline icon and the Openline
+name, white on orange and black on cream, never the underscore wordmark.
+
+Screenshot 2 now shows **More networks. More ways to connect.** A partner/profile
+flow and the supplied eSIM-profile screen explain best-effort profile replacement.
+The final screenshot shows **A smarter market. For better prices.** A supplier
+offers → OMDM → travel plan flow accompanies the supplied plan screen.
+
+One description paragraph covers both mechanisms in plain language. No cheapest,
+savings percentage, instant switching or universal access guarantee is made.
+See `positioning-claims.md` for native, evidence and store-specific pricing gates.
+The current download has 12 PNGs, not three options. The final app icon is unchanged.
+Earlier release sections below are historical.
+
+## v1.9.1: use the icon, not the underscore wordmark
+
+The screenshot header uses the canonical Openline icon with the name Openline,
+not the `_Openline` wordmark. The icon and name are prominent white on orange;
+cream frames use black. All 36 PNGs, previews, contact sheets and ZIPs are rebuilt.
+The approved app-icon package, three orange layouts and store copy are unchanged.
+
 ## v1.9.0: three orange options, one stronger reason to choose Openline
 
 Paul retained the original orange direction and discarded the other four.

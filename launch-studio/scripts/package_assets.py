@@ -49,7 +49,7 @@ with zipfile.ZipFile(downloads/'openline-launch-kit.zip','w',zipfile.ZIP_DEFLATE
     z.write(downloads/'orange-series-handoff.md','orange-series-handoff.md')
     z.write(downloads/'orange-series-manifest.json','orange-series-manifest.json')
     z.write(downloads/'positioning-claims.md','positioning-claims.md')
-    z.writestr('CURRENT-SCREENSHOT-OPTIONS.md','# Current creative review / Revision 06\n\nThree orange options, with the original retained and non-orange directions discarded. No final series is selected. Download:\n\nhttps://openline-brand.fly.dev/downloads/openline-orange-series.zip\n\nEditable sources:\nhttps://openline-brand.fly.dev/downloads/openline-orange-series-sources.zip\n\nThe archive-r03 folder holds superseded reference artwork, not the current selection. The final 43.5% icon remains approved. Competitor imagery is excluded from every handoff package.\n')
+    z.writestr('CURRENT-SCREENSHOT-OPTIONS.md','# Current creative review / Revision 08\n\nOnly Original orange remains. Screenshot 2 explains network flexibility; screenshot 6 explains OMDM sourcing/value. Native captures and claim verification are pending. Download:\n\nhttps://openline-brand.fly.dev/downloads/openline-orange-series.zip\n\nEditable sources:\nhttps://openline-brand.fly.dev/downloads/openline-orange-series-sources.zip\n\nThe archive-r03 folder holds superseded artwork. The final 43.5% app icon is unchanged; screenshot headers use the real icon, not the underscore wordmark. Competitor imagery is excluded from every handoff package.\n')
     z.write(root/'README.md','README.md')
     z.write(root/'sources.json','official-sources.json')
 print('Validated 12 RGB store compositions and feature graphic; packaged launch kit.')

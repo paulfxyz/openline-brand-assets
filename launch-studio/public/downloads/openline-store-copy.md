@@ -32,7 +32,7 @@ international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid
 
 Your next destination. Your choice of data.
 
-Good travel data should give you both quality and value. Openline brings together leading mobile network partners, so you can compare plans for your destination and choose what fits your trip and budget. Available networks and service conditions vary by destination and plan.
+Openline works with multiple leading network partners, not just one. If your service needs a different route, we can try to provide a replacement eSIM profile where an alternative is available. Behind our plans, the Openline Mobile Data Market (OMDM) compares supplier offers to help us source data at better prices and build better-value travel plans. Network options depend on your destination and plan, and a profile change may require setup on your phone.
 
 CHOOSE WITH THE DETAILS IN FRONT OF YOU
 Browse your destination, compare data allowances and duration, and review the price and activation conditions before you buy.
@@ -53,7 +53,7 @@ Openline is free to download. Mobile data plans are purchased separately. Availa
 
 Visit openline.com for support information.
 
-1372 / 4000 characters
+1556 / 4000 characters
 
 ### Review notes template
 
@@ -87,7 +87,7 @@ Find a travel eSIM, compare plans and keep your mobile data in view.
 
 Find a travel eSIM for your next destination.
 
-Good travel data should give you both quality and value. Openline brings together leading mobile network partners, so you can compare plans for your destination and choose what fits your trip and budget. Available networks and service conditions vary by destination and plan.
+Openline works with multiple leading network partners, not just one. If your service needs a different route, we can try to provide a replacement eSIM profile where an alternative is available. Behind our plans, the Openline Mobile Data Market (OMDM) compares supplier offers to help us source data at better prices and build better-value travel plans. Network options depend on your destination and plan, and a profile change may require setup on your phone.
 
 COMPARE BEFORE YOU BUY
 Browse a destination and review available data allowances, duration and prices. Check coverage, activation conditions and included services before choosing a plan.
@@ -106,7 +106,7 @@ Mobile data plans are purchased separately from this free app. Coverage, validit
 
 Visit openline.com for support information.
 
-1342 / 4000 characters
+1526 / 4000 characters
 
 ### Release notes draft
 

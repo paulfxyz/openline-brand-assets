@@ -63,7 +63,7 @@ Live: https://openline-brand.fly.dev
 - App: `openline-brand`
 - Machine: `8d7155be3ed118` (`openline-brand-web`)
 - HTTPS and `/healthz` verified; Fly health check passing.
-- Nine views include the three-orange-options preview; the final 43.5% icon remains locked.
+- Nine views include the selected Original orange preview; the final 43.5% icon remains locked.
 - Shared IPv4 and IPv6 allocated. No dedicated IPv4, database or volume.
 - Madrid rejected new provisioning; Paris was used instead.
 
