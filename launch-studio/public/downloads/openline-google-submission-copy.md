@@ -8,30 +8,32 @@ Openline: Travel eSIM & Data
 
 ## shortDescription
 
-Explore travel eSIM plans, find setup details and view your data usage
+Find travel eSIM plans, follow setup steps and keep your data in view
 
 ## description
 
-Explore travel eSIM plans with Openline.
+Find a data plan for your next destination.
 
-BROWSE YOUR DESTINATION
-Review available plans, data allowances, validity, prices and activation conditions before choosing.
+Openline brings travel eSIM plans, setup information and your available usage details into one place.
 
-FIND INSTALLATION INFORMATION
-Keep your eSIM setup details in reach and follow the instructions for your device and plan.
+Choose with the details in view
+Browse your destination and compare data allowances, duration and prices. Check coverage and activation conditions before purchasing.
 
-KEEP YOUR ESIMS TOGETHER
-View your travel eSIMs and the usage information available for each plan. Reporting and service availability can vary.
+Keep setup within reach
+Find your purchase code and installation information. Follow the setup steps for your phone and plan.
 
-HOW WE BUILD THE CATALOG
-Openline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans. Available plans depend on your destination and the current catalog.
+See your travel data
+Keep your eSIMs together and view the usage information shown for each plan. Availability and usage reporting vary by plan.
 
-BEFORE PURCHASING
-Check that your phone supports eSIM and is network-unlocked. Review coverage, validity, activation timing, fair-use conditions and included services. Do not assume a data plan includes calls, SMS or a phone number. Your home carrier's charges may still apply if you keep your usual line active.
+How we build the catalog
+The Openline Mobile Data Market (OMDM) compares supplier offers to build our travel-plan catalog. Your choices depend on the destination and current offers.
 
-Mobile data plans are purchased separately. Visit openline.com for support information.
+Before you go
+Check that your phone supports eSIM and is network-unlocked. Review each plan's validity, activation timing, fair-use terms and included services. Calls, texts and a phone number are included only where the plan says so. Your home carrier may charge you if you keep your usual line active.
+
+Mobile data plans are purchased separately. For support information, visit openline.com.
 
 ## releaseNotes
 
-Explore travel eSIM plans, find installation details and keep your eSIMs together.
+Welcome to Openline. Find travel eSIM plans, follow the setup steps and keep your eSIMs together.
 

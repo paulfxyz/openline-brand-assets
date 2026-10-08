@@ -1,5 +1,5 @@
 {
-  "revision": 3,
+  "revision": 4,
   "visualDirection": "Approved Openline orange/cream system with large angled app panels, generous space and bold typography. Conservative store-specific copy is retained.",
   "status": "draft-native-captures-and-release-evidence-pending",
   "marketingUnchanged": true,
@@ -9,19 +9,19 @@
     "width": 1320,
     "height": 2868,
     "frames": [
-      {"head":["Find your","next destination."],"detail":"Explore travel data plans for where you are going.","capture":"screen-countries.png"},
-      {"head":["Your purchase.","All the details."],"detail":"Keep your purchase confirmation and activation information close.","capture":"screen-purchase.png"},
-      {"head":["Your eSIM.","Ready to set up."],"detail":"Find the installation instructions for your device and plan.","capture":"screen-profile.png"},
-      {"head":["Your travel eSIMs.","Together."],"detail":"Keep your plans and their details in one place.","capture":"screen-esims.png"},
-      {"head":["Your data.","At a glance."],"detail":"See the connection and usage information available for your plan.","capture":"screen-dashboard.png"},
-      {"head":["Smarter market.","More choice."],"detail":"Openline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans.","capture":"screen-plans.png"}
+      {"head":["Where to next?","Find your eSIM."],"detail":"Explore data plans for your next destination.","capture":"screen-countries.png"},
+      {"head":["Your purchase.","Details at hand."],"detail":"Keep your purchase code and activation details together.","capture":"screen-purchase.png"},
+      {"head":["Your eSIM.","Ready to set up."],"detail":"Follow the setup steps for your phone and plan.","capture":"screen-profile.png"},
+      {"head":["All your eSIMs.","One place."],"detail":"Keep your travel eSIMs and plan details together.","capture":"screen-esims.png"},
+      {"head":["Your data.","At a glance."],"detail":"Check the usage shown for your current plan.","capture":"screen-dashboard.png"},
+      {"head":["Our market.","Your choice."],"detail":"Our Openline Mobile Data Market (OMDM) compares supplier offers to build travel plans.","capture":"screen-plans.png"}
     ],
     "metadata": {
       "name":"Openline: Travel eSIM & Data",
-      "subtitle":"Travel plans. One place.",
-      "promotional":"Explore travel eSIM plans, review their details and find installation information. Keep your eSIMs and available usage information together in Openline.",
+      "subtitle":"Travel data, in your hands",
+      "promotional":"Find an eSIM for your next trip. Compare plan details, follow the setup steps and keep your travel data in view.",
       "keywords":"international,roaming,internet,connectivity,abroad,holiday,mobile,prepaid",
-      "description":"Travel data, with the details in view.\n\nOpenline helps you explore travel eSIM plans, find installation information and keep your eSIMs together.\n\nFIND A PLAN FOR YOUR TRIP\nBrowse your destination and review the available data allowance, validity, price and activation conditions before choosing a plan.\n\nKEEP SETUP INFORMATION CLOSE\nFind your eSIM installation information and follow the instructions for your device and plan.\n\nVIEW YOUR PLANS\nKeep your travel eSIMs together and check the usage information available for your plan. Reporting and service availability can vary by plan.\n\nBEHIND THE PLANS\nOpenline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans. The plans available to you depend on your destination and the current catalog.\n\nCHECK BEFORE YOU BUY\nYour phone must support eSIM and be network-unlocked. Review coverage, validity, activation timing, fair-use conditions and included services. Do not assume a data plan includes calls, SMS or a phone number. Keeping your usual line active may result in charges from your home carrier.\n\nMobile data plans are purchased separately. Visit openline.com for support information."
+      "description":"Your next trip starts with a plan.\n\nBrowse travel eSIMs for your destination, compare the details and keep your plans in one place with Openline.\n\nFind a plan for your trip\nExplore available plans and compare their data allowance, duration and price. Check coverage and activation conditions before you buy.\n\nKeep setup within reach\nFind your purchase code and installation information, then follow the setup steps for your phone and plan.\n\nSee your travel data\nView your eSIMs and the usage information shown for each plan. Availability and usage reporting vary by plan.\n\nA market behind your plan\nThe Openline Mobile Data Market (OMDM) compares supplier offers to build our travel-plan catalog. Your available choices depend on the destination and current offers.\n\nBefore you go\nYou'll need an eSIM-compatible, network-unlocked phone. Check each plan's validity, activation timing, fair-use terms and included services. Calls, texts and a phone number are included only where the plan says so. Your home carrier may charge you if you keep your usual line active.\n\nMobile data plans are purchased separately. For support information, visit openline.com."
     }
   },
   "google": {
@@ -29,18 +29,18 @@
     "width": 1080,
     "height": 1920,
     "frames": [
-      {"head":["Explore","your destination."],"detail":"Browse the travel data plans available for your trip.","capture":"screen-countries.png"},
-      {"head":["Your purchase.","In one view."],"detail":"Find your purchase confirmation and activation details.","capture":"screen-purchase.png"},
-      {"head":["Set up","your eSIM."],"detail":"Follow the installation instructions for your device and plan.","capture":"screen-profile-android.png"},
-      {"head":["Your eSIMs.","One place."],"detail":"Keep your travel plans and their details together.","capture":"screen-esims.png"},
-      {"head":["Check","your data."],"detail":"View the usage information available for your plan.","capture":"screen-dashboard.png"},
-      {"head":["Your trip.","Your plan."],"detail":"Review the data allowance, validity and conditions before choosing.","capture":"screen-plans.png"}
+      {"head":["Where to next?","Find your eSIM."],"detail":"Explore data plans for your next destination.","capture":"screen-countries.png"},
+      {"head":["Your purchase.","Details at hand."],"detail":"Keep your purchase code and activation details together.","capture":"screen-purchase.png"},
+      {"head":["Set up","your eSIM."],"detail":"Follow the setup steps for your phone and plan.","capture":"screen-profile-android.png"},
+      {"head":["All your eSIMs.","One place."],"detail":"Keep your travel eSIMs and plan details together.","capture":"screen-esims.png"},
+      {"head":["Your data.","At a glance."],"detail":"Check the usage shown for your current plan.","capture":"screen-dashboard.png"},
+      {"head":["Your trip.","Your plan."],"detail":"Choose the data and duration that fit your trip.","capture":"screen-plans.png"}
     ],
     "metadata": {
       "name":"Openline: Travel eSIM & Data",
-      "shortDescription":"Explore travel eSIM plans, find setup details and view your data usage",
-      "description":"Explore travel eSIM plans with Openline.\n\nBROWSE YOUR DESTINATION\nReview available plans, data allowances, validity, prices and activation conditions before choosing.\n\nFIND INSTALLATION INFORMATION\nKeep your eSIM setup details in reach and follow the instructions for your device and plan.\n\nKEEP YOUR ESIMS TOGETHER\nView your travel eSIMs and the usage information available for each plan. Reporting and service availability can vary.\n\nHOW WE BUILD THE CATALOG\nOpenline Mobile Data Market (OMDM) compares supplier offers to help us build travel plans. Available plans depend on your destination and the current catalog.\n\nBEFORE PURCHASING\nCheck that your phone supports eSIM and is network-unlocked. Review coverage, validity, activation timing, fair-use conditions and included services. Do not assume a data plan includes calls, SMS or a phone number. Your home carrier's charges may still apply if you keep your usual line active.\n\nMobile data plans are purchased separately. Visit openline.com for support information.",
-      "releaseNotes":"Explore travel eSIM plans, find installation details and keep your eSIMs together."
+      "shortDescription":"Find travel eSIM plans, follow setup steps and keep your data in view",
+      "description":"Find a data plan for your next destination.\n\nOpenline brings travel eSIM plans, setup information and your available usage details into one place.\n\nChoose with the details in view\nBrowse your destination and compare data allowances, duration and prices. Check coverage and activation conditions before purchasing.\n\nKeep setup within reach\nFind your purchase code and installation information. Follow the setup steps for your phone and plan.\n\nSee your travel data\nKeep your eSIMs together and view the usage information shown for each plan. Availability and usage reporting vary by plan.\n\nHow we build the catalog\nThe Openline Mobile Data Market (OMDM) compares supplier offers to build our travel-plan catalog. Your choices depend on the destination and current offers.\n\nBefore you go\nCheck that your phone supports eSIM and is network-unlocked. Review each plan's validity, activation timing, fair-use terms and included services. Calls, texts and a phone number are included only where the plan says so. Your home carrier may charge you if you keep your usual line active.\n\nMobile data plans are purchased separately. For support information, visit openline.com.",
+      "releaseNotes":"Welcome to Openline. Find travel eSIM plans, follow the setup steps and keep your eSIMs together."
     }
   },
   "gates": [

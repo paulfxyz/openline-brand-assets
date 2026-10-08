@@ -24,7 +24,7 @@ with zipfile.ZipFile(downloads/'openline-all-resources.zip','w',zipfile.ZIP_DEFL
     for name in ['openline-store-copy.md','openline-store-settings.md','openline-release-checklist.md',
                  'openline-launch-workspace.json','store-requirements.md','submission-audit.md',
                  'screenshot-compliance-review.md','positioning-claims.md','orange-series-handoff.md',
-                 'orange-series-manifest.json','console-metadata.json']:
+                 'orange-series-manifest.json','console-metadata.json','submission-copy-review.md']:
         add(downloads/name,'handoff/'+name)
     add(root/'sources.json','handoff/official-sources.json')
     add(public/'series.json','editable-artwork/series.json')

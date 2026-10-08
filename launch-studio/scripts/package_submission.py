@@ -45,9 +45,11 @@ for platform in ['apple','google']:
         z.writestr('screenshot-manifest.json',json.dumps(manifest,indent=2))
         z.writestr('layout-qa.json',json.dumps([x for x in qa if x['platform']==platform],indent=2))
         z.writestr('readiness.json',json.dumps({'status':config['status'],'gates':config['gates']},indent=2))
+        z.write(out/'submission-copy-review.md','copy-review.md')
         icon='apple-icon-1024.png' if platform=='apple' else 'google-play-icon-512.png'
         z.write(public/'assets'/icon,'icon/'+icon)
 with zipfile.ZipFile(out/'openline-submission-sources.zip','w',zipfile.ZIP_DEFLATED) as z:
+    z.write(out/'submission-copy-review.md','public/downloads/submission-copy-review.md')
     for name in ['submission.json','render-submission.html']:z.write(public/name,'public/'+name)
     for p in (public/'fonts').rglob('*'):
         if p.is_file():z.write(p,'public/fonts/'+str(p.relative_to(public/'fonts')))

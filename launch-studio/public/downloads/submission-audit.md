@@ -1,5 +1,14 @@
 # Openline submission preparation audit
 
+## Current status: v1.13.3, submission wording reviewed 8 October
+
+Shorter feature-led copy and scannable descriptions replace administrative wording.
+Apple's “Our market. Your choice.” avoids a comparative choice claim while
+retaining factual OMDM detail. The marketing master is unchanged.
+See submission-copy-review.md for official Apple references and the exact limits
+of this copy review. Actual functionality, OMDM operations and native captures
+still require verification; this is not an app-wide or store compliance sign-off.
+
 ## Current status: v1.13.2, larger supporting text
 
 White supporting copy on orange and near-black on cream, increased to 42px on

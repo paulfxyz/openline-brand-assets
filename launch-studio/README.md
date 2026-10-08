@@ -1,5 +1,13 @@
 # Openline Brand Studio
 
+## Current: v1.13.3, polished submission copy
+
+The separate Apple/Google drafts have shorter, more natural feature-led copy and
+scannable descriptions. Apple keeps factual OMDM detail under “Our market.
+Your choice.” Marketing positioning and approved visual style remain unchanged.
+See `downloads/submission-copy-review.md` for the dated policy assessment and
+remaining release-verification gates; wording alone is not a compliance sign-off.
+
 ## Current: v1.13.2, more legible supporting copy
 
 All current screenshot editions use larger supporting text: 42px on iPhone and

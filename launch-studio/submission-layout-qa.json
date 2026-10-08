@@ -90,16 +90,16 @@
     "frame": 3,
     "width": 1320,
     "height": 2868,
-    "taglineHeightRatio": 0.14492895746164575,
-    "overlayBoundingAreaRatio": 0.13533667800624083,
+    "taglineHeightRatio": 0.12442795502092051,
+    "overlayBoundingAreaRatio": 0.1179105832587735,
     "bounds": {
       "copy": {
         "top": 372.828125,
-        "bottom": 788.484375,
+        "bottom": 729.6875,
         "left": 105.59375,
         "right": 1227.609375,
         "width": 1122.015625,
-        "height": 415.65625
+        "height": 356.859375
       },
       "brand": {
         "top": 120.453125,
@@ -176,16 +176,16 @@
     "frame": 5,
     "width": 1320,
     "height": 2868,
-    "taglineHeightRatio": 0.14492895746164575,
-    "overlayBoundingAreaRatio": 0.13533667800624083,
+    "taglineHeightRatio": 0.12442795502092051,
+    "overlayBoundingAreaRatio": 0.1179105832587735,
     "bounds": {
       "copy": {
         "top": 372.828125,
-        "bottom": 788.484375,
+        "bottom": 729.6875,
         "left": 105.59375,
         "right": 1227.609375,
         "width": 1122.015625,
-        "height": 415.65625
+        "height": 356.859375
       },
       "brand": {
         "top": 120.453125,
@@ -219,16 +219,16 @@
     "frame": 6,
     "width": 1320,
     "height": 2868,
-    "taglineHeightRatio": 0.21673422245467225,
-    "overlayBoundingAreaRatio": 0.19637200321793874,
+    "taglineHeightRatio": 0.1623409170153417,
+    "overlayBoundingAreaRatio": 0.15013704973435815,
     "bounds": {
       "copy": {
         "top": 372.828125,
-        "bottom": 994.421875,
+        "bottom": 838.421875,
         "left": 105.59375,
         "right": 1227.609375,
         "width": 1122.015625,
-        "height": 621.59375
+        "height": 465.59375
       },
       "brand": {
         "top": 120.453125,
@@ -248,11 +248,11 @@
       },
       "headline": {
         "top": 372.828125,
-        "bottom": 840.828125,
+        "bottom": 684.828125,
         "left": 105.59375,
         "right": 1227.609375,
         "width": 1122.015625,
-        "height": 468
+        "height": 312
       }
     },
     "status": "draft-native-captures-and-release-evidence-pending"
@@ -348,16 +348,16 @@
     "frame": 3,
     "width": 1080,
     "height": 1920,
-    "taglineHeightRatio": 0.17145182291666666,
-    "overlayBoundingAreaRatio": 0.1605274205148956,
+    "taglineHeightRatio": 0.14666341145833334,
+    "overlayBoundingAreaRatio": 0.13945691214667427,
     "bounds": {
       "copy": {
         "top": 259.1875,
-        "bottom": 588.375,
+        "bottom": 540.78125,
         "left": 86.390625,
         "right": 1004.40625,
         "width": 918.015625,
-        "height": 329.1875
+        "height": 281.59375
       },
       "brand": {
         "top": 80.625,
@@ -477,16 +477,16 @@
     "frame": 6,
     "width": 1080,
     "height": 1920,
-    "taglineHeightRatio": 0.19527994791666667,
-    "overlayBoundingAreaRatio": 0.18078167150050034,
+    "taglineHeightRatio": 0.17049153645833334,
+    "overlayBoundingAreaRatio": 0.159711163132279,
     "bounds": {
       "copy": {
         "top": 259.1875,
-        "bottom": 634.125,
+        "bottom": 586.53125,
         "left": 86.390625,
         "right": 1004.40625,
         "width": 918.015625,
-        "height": 374.9375
+        "height": 327.34375
       },
       "brand": {
         "top": 80.625,
