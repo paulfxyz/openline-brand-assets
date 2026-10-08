@@ -1,5 +1,10 @@
 # Openline Brand Studio
 
+## Current: v1.13.4, final App Store panels inclined
+
+Marketing frames 5 and 6 now incline left/right by 3 degrees, matching the
+existing Apple submission treatment. All wording and other styling are unchanged.
+
 ## Current: v1.13.3, polished submission copy
 
 The separate Apple/Google drafts have shorter, more natural feature-led copy and

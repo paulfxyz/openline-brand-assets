@@ -9,7 +9,7 @@
 
 **Openline's public brand library: identity, motion, app icons, mobile Figma and React sources, web styles, payment logos, email templates and WorkAdventure previews.**
 
-[![Version](https://img.shields.io/badge/media--kit-v1.13.3-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
+[![Version](https://img.shields.io/badge/media--kit-v1.13.4-FF6616?style=flat-square)](https://github.com/paulfxyz/openline-brand-assets/releases)
 [![Launch studio](https://img.shields.io/badge/launch%20studio-live%20on%20Fly.io-FF6616?style=flat-square)](https://openline-brand.fly.dev)
 [![License](https://img.shields.io/badge/license-Brand%20Usage%20Policy-1A1A1A?style=flat-square)](#usage-policy)
 [![Mobile](https://img.shields.io/badge/mobile-19%20screens-2563EB?style=flat-square)](mobile/)
@@ -33,7 +33,8 @@ This repository is the **single source of truth** for everything that visually r
 
 Since **v1.2** it also holds the **applied brand surfaces**: the payment-method logo library, the transactional email templates and signatures, Figma code exports, and the Openline × WorkAdventure SDK app previews.
 
-**Current: v1.13.3.** Polished, shorter submission wording with a dated policy
+**Current: v1.13.4.** The final two App Store marketing panels now have the same
+gentle inclination as the submission set. Polished, shorter submission wording with a dated policy
 review and explicit remaining verification gates. Larger supporting copy across all screenshot editions,
 always white on orange and near-black on cream. Separate [Apple submission drafts](https://openline-brand.fly.dev/#app-store-submission)
 and [Google submission drafts](https://openline-brand.fly.dev/#google-play-submission)
